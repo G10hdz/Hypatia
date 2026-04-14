@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hypatia — Knowledge Platform</title>
+  <link rel="icon" href="./favicon.ico" sizes="any">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0c0f0f;
+      --panel: #1a1d1d;
+      --panel-2: #1f2222;
+      --text: #e1e3e2;
+      --muted: #9a9ca0;
+      --accent: #C4B5E3;
+      --accent-2: #ffcfec;
+      --accent-3: #98FF98;
+      --border: #2a2d2d;
+      --shadow: 0 16px 45px rgba(0, 0, 0, 0.35);
+      --glow-lavender: 0 0 24px rgba(196, 181, 227, 0.2);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Space Grotesk", sans-serif;
+      background:
+        radial-gradient(circle at 15% 0%, rgba(196, 181, 227, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 85% 15%, rgba(255, 207, 236, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 50% 100%, rgba(152, 255, 152, 0.06) 0%, transparent 40%),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+      padding: 24px;
+    }
+    .app-shell { max-width: 900px; margin: 0 auto; }
+    .brand {
+      font-family: "Outfit", sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2), var(--accent-3));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .subtitle {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 55ch;
+      margin-bottom: 40px;
+    }
+    .modules {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .module-card {
+      background: linear-gradient(180deg, rgba(31, 34, 34, 0.85), rgba(26, 29, 29, 0.95));
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(42, 45, 45, 0.2);
+      border-radius: 1.5rem;
+      padding: 28px;
+      text-decoration: none;
+      color: var(--text);
+      transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .module-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
+    .module-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 55px rgba(0, 0, 0, 0.4), var(--glow-lavender);
+      border-color: var(--accent);
+    }
+    .module-icon {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+    }
+    .module-card h2 {
+      font-family: "Outfit", sans-serif;
+      font-size: 1.4rem;
+      margin-bottom: 6px;
+    }
+    .module-card p {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .module-stats {
+      display: flex;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .module-stat {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 4px 10px;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .module-stat strong {
+      color: var(--accent-3);
+    }
+    footer {
+      margin-top: 48px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <h1 class="brand">Hypatia</h1>
+    <p class="subtitle">
+      A knowledge platform for neurodivergent minds — bite-sized study sessions, visual feedback, and gamified progress.
+    </p>
+
+    <div class="modules">
+      <a href="CubPrep/index.html" class="module-card">
+        <div class="module-icon">🐾</div>
+        <h2>CubPrep</h2>
+        <p>UNAM Area 1 exam simulator — Physical-Mathematical Sciences & Engineering</p>
+        <div class="module-stats">
+          <span class="module-stat"><strong>9,296</strong> questions</span>
+          <span class="module-stat">~41% AI explanations</span>
+          <span class="module-stat">4 study modes</span>
+        </div>
+      </a>
+
+      <a href="SAA-C03/index.html" class="module-card" style="--card-accent: #ff9900;">
+        <div class="module-icon">☁️</div>
+        <h2>PrepAWS</h2>
+        <p>AWS Solutions Architect Associate (SAA-C03) certification prep</p>
+        <div class="module-stats">
+          <span class="module-stat"><strong>522</strong> questions</span>
+          <span class="module-stat">5 domains covered</span>
+          <span class="module-stat">3 study modes</span>
+        </div>
+      </a>
+    </div>
+
+    <footer>
+      Built by Gio 💜 with love for Lalito, piensa en tu futuro bro 🎯
+    </footer>
+  </div>
+</body>
+</html>

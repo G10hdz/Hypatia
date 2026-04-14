@@ -1,0 +1,4361 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrepAWS | SAA-C03</title>
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0c0f0f;
+      --panel: #1a1d1d;
+      --panel-2: #1f2222;
+      --text: #e1e3e2;
+      --muted: #9a9ca0;
+      --accent: #C4B5E3;
+      --accent-2: #ffcfec;
+      --accent-3: #98FF98;
+      --danger: #b41340;
+      --success: #98FF98;
+      --border: #2a2d2d;
+      --shadow: 0 16px 45px rgba(0, 0, 0, 0.35);
+      --glow-lavender: 0 0 24px rgba(196, 181, 227, 0.2);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Space Grotesk", sans-serif;
+      background:
+        radial-gradient(circle at 15% 0%, rgba(196, 181, 227, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 85% 15%, rgba(255, 207, 236, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 50% 100%, rgba(152, 255, 152, 0.06) 0%, transparent 40%),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+      padding: 24px;
+    }
+
+    .app-shell {
+      max-width: 1080px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .brand h1 {
+      font-family: "Outfit", sans-serif;
+      font-size: clamp(2rem, 4.6vw, 3.4rem);
+      letter-spacing: 0.06em;
+      line-height: 1;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .brand p {
+      color: var(--muted);
+      max-width: 60ch;
+      font-size: 0.95rem;
+    }
+
+    .back-home-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      margin-bottom: 8px;
+      transition: color 150ms ease;
+    }
+
+    .back-home-link:hover {
+      color: var(--accent-3);
+    }
+
+    .points-chip {
+      background: rgba(31, 34, 34, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(42, 45, 45, 0.2);
+      border-radius: 0.75rem;
+      padding: 14px 16px;
+      min-width: 180px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .target-chip {
+      background: rgba(31, 34, 34, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(42, 45, 45, 0.2);
+      border-radius: 0.75rem;
+      padding: 14px 16px;
+      min-width: 200px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .target-chip small {
+      display: block;
+      color: var(--muted);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.68rem;
+    }
+
+    .target-chip strong {
+      font-size: 1.35rem;
+      color: var(--accent-2);
+    }
+
+    .target-bar {
+      margin-top: 8px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .target-bar-fill {
+      height: 100%;
+      width: 0;
+      border-radius: 999px;
+      transition: width 300ms ease, background-color 300ms ease;
+    }
+
+    .target-bar-fill.low {
+      background: var(--danger);
+    }
+
+    .target-bar-fill.mid {
+      background: #fbbf24;
+    }
+
+    .target-bar-fill.high {
+      background: var(--accent-3);
+    }
+
+    .points-chip small {
+      display: block;
+      color: var(--muted);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.68rem;
+    }
+
+    .points-chip strong {
+      font-size: 1.35rem;
+      color: var(--accent-3);
+    }
+
+    .chip-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .chip-pill {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 3px 8px;
+      font-size: 0.72rem;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    .chip-pill.hot {
+      border-color: rgba(0, 212, 170, 0.52);
+      color: #b9ffe9;
+      animation: pulse 700ms ease;
+    }
+
+    .screen {
+      display: none;
+      animation: fade-in 240ms ease;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .panel {
+      background: linear-gradient(180deg, rgba(31, 34, 34, 0.85), rgba(26, 29, 29, 0.95));
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(42, 45, 45, 0.2);
+      border-radius: 1.5rem;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      transition: border-color 200ms ease;
+    }
+
+    .panel:hover {
+      border-color: rgba(196, 181, 227, 0.15);
+    }
+
+    .panel h2,
+    .panel h3 {
+      font-family: "Outfit", sans-serif;
+      letter-spacing: 0.04em;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+
+    .panel p {
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .stat-card {
+      background: rgba(27, 29, 29, 0.6);
+      border: 1px solid rgba(42, 45, 45, 0.1);
+      border-radius: 1rem;
+      padding: 16px;
+      transition: all 200ms ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: "";
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 80px;
+      height: 80px;
+      background: var(--accent);
+      opacity: 0.04;
+      border-radius: 50%;
+      filter: blur(24px);
+      transition: opacity 200ms ease;
+    }
+
+    .stat-card:hover::before {
+      opacity: 0.08;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(196, 181, 227, 0.2);
+    }
+
+    .stat-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    .stat-card strong {
+      font-size: 1.5rem;
+      color: var(--text);
+      font-weight: 900;
+    }
+
+    .start-panel {
+      grid-column: span 5;
+    }
+
+    .summary-panel {
+      grid-column: span 7;
+    }
+
+    .custom-panel,
+    .history-panel,
+    .subject-panel {
+      grid-column: span 12;
+    }
+
+    .subject-grid,
+    .history-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .subject-item,
+    .history-item {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .subject-item strong,
+    .history-item strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .history-item small {
+      color: var(--muted);
+    }
+
+    form {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .form-row {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    input,
+    textarea,
+    button {
+      border-radius: 0.75rem;
+      border: 1px solid rgba(42, 45, 45, 0.3);
+      background: rgba(53, 56, 56, 0.5);
+      color: var(--text);
+      font: inherit;
+      padding: 10px 14px;
+      width: 100%;
+      transition: border-color 150ms ease, box-shadow 150ms ease;
+    }
+
+    select {
+      border-radius: 0.75rem;
+      border: 1px solid rgba(42, 45, 45, 0.3);
+      background: rgba(31, 34, 34, 0.85);
+      color: var(--text);
+      font: inherit;
+      padding: 10px 14px;
+      width: 100%;
+      cursor: pointer;
+      transition: border-color 150ms ease, box-shadow 150ms ease;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C4B5E3' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+    }
+
+    select option {
+      background: #1f2222;
+      color: var(--text);
+      padding: 8px;
+    }
+
+    textarea {
+      min-height: 88px;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus,
+    button:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(196, 181, 227, 0.2);
+    }
+
+    button {
+      cursor: pointer;
+      font-weight: 700;
+      transition: transform 120ms ease, background-color 120ms ease;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #d7c7f6);
+      border-color: transparent;
+      color: #0c0f0f;
+      box-shadow: 0 4px 24px rgba(196, 181, 227, 0.25);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px) scale(1.01);
+      box-shadow: 0 8px 32px rgba(196, 181, 227, 0.35);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(42, 45, 45, 0.3);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-1px);
+      border-color: var(--accent);
+    }
+
+    .status {
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      padding: 10px;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .status.success {
+      border-color: rgba(0, 212, 170, 0.55);
+      color: #b0ffe8;
+    }
+
+    .status.error {
+      border-color: rgba(255, 93, 115, 0.52);
+      color: #ffc8d2;
+    }
+
+    .quiz-head {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .meta-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    .timer {
+      font-weight: 700;
+      color: var(--accent-3);
+    }
+
+    .timer.warn {
+      color: var(--accent-2);
+    }
+
+    .timer.critical {
+      color: var(--danger);
+      animation: pulse 500ms ease infinite;
+    }
+
+    /* Enhanced timer display */
+    .timer-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .timer-ring {
+      width: 32px;
+      height: 32px;
+      position: relative;
+    }
+
+    .timer-ring svg {
+      transform: rotate(-90deg);
+    }
+
+    .timer-ring-bg {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.08);
+      stroke-width: 3;
+    }
+
+    .timer-ring-fill {
+      fill: none;
+      stroke: var(--accent-3);
+      stroke-width: 3;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 1s linear, stroke 300ms ease;
+    }
+
+    .timer-ring-fill.warn {
+      stroke: var(--accent-2);
+    }
+
+    .timer-ring-fill.critical {
+      stroke: var(--danger);
+    }
+
+    .speed-badge {
+      font-size: 0.68rem;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .speed-badge.fast {
+      background: rgba(0, 212, 170, 0.15);
+      color: var(--accent-3);
+    }
+
+    .speed-badge.slow {
+      background: rgba(255, 107, 157, 0.15);
+      color: var(--accent-2);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 10px;
+      background: #1a1a2e;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+      transition: width 200ms ease;
+    }
+
+    .quiz-card {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: rgba(255, 255, 255, 0.02);
+      margin-bottom: 12px;
+    }
+
+    .quiz-card h2 {
+      font-size: clamp(1.12rem, 3.1vw, 1.36rem);
+      margin-bottom: 12px;
+    }
+
+    .options {
+      display: grid;
+      gap: 10px;
+    }
+
+    .option {
+      text-align: left;
+      background: rgba(42, 45, 45, 0.3);
+      border: 1px solid rgba(42, 45, 45, 0.25);
+      color: var(--text);
+      border-radius: 0.75rem;
+      padding: 12px 14px;
+      transition: transform 120ms ease, border-color 120ms ease, background-color 120ms ease, box-shadow 120ms ease;
+    }
+
+    .option:hover {
+      transform: translateY(-1px) scale(1.005);
+      border-color: rgba(196, 181, 227, 0.5);
+      background: rgba(196, 181, 227, 0.06);
+      box-shadow: 0 2px 12px rgba(196, 181, 227, 0.1);
+    }
+
+    .option:disabled {
+      opacity: 1;
+    }
+
+    .option.correct {
+      border-color: rgba(152, 255, 152, 0.5);
+      background: rgba(152, 255, 152, 0.12);
+      box-shadow: 0 0 16px rgba(152, 255, 152, 0.15);
+    }
+
+    .option.wrong {
+      border-color: rgba(180, 19, 64, 0.6);
+      background: rgba(180, 19, 64, 0.12);
+      box-shadow: 0 0 16px rgba(180, 19, 64, 0.1);
+    }
+
+    .tip {
+      margin-top: 12px;
+      border-left: 3px solid var(--accent-3);
+      padding-left: 10px;
+      color: #bcffef;
+      font-size: 0.92rem;
+    }
+
+    .feedback {
+      margin-top: 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.015);
+      display: none;
+      gap: 6px;
+    }
+
+    .feedback.visible {
+      display: grid;
+    }
+
+    .feedback.success {
+      border-color: rgba(0, 212, 170, 0.45);
+      background: rgba(0, 212, 170, 0.12);
+    }
+
+    .feedback.error {
+      border-color: rgba(255, 93, 115, 0.45);
+      background: rgba(255, 93, 115, 0.12);
+    }
+
+    .feedback h3 {
+      font-family: "Outfit", sans-serif;
+      letter-spacing: 0.02em;
+    }
+
+    .feedback small {
+      color: var(--muted);
+    }
+
+    /* ADHD-friendly: Question type badge */
+    .question-type-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, rgba(108, 99, 255, 0.22), rgba(0, 212, 170, 0.18));
+      border: 1px solid rgba(108, 99, 255, 0.45);
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #c8c2ff;
+      margin-bottom: 10px;
+    }
+
+    .question-type-badge.type-analisis {
+      background: linear-gradient(135deg, rgba(108, 99, 255, 0.25), rgba(108, 99, 255, 0.15));
+      border-color: rgba(108, 99, 255, 0.55);
+      color: #d4ceff;
+    }
+
+    .question-type-badge.type-concepto {
+      background: linear-gradient(135deg, rgba(255, 107, 157, 0.22), rgba(255, 107, 157, 0.12));
+      border-color: rgba(255, 107, 157, 0.5);
+      color: #ffc4dd;
+    }
+
+    .question-type-badge.type-aplicacion {
+      background: linear-gradient(135deg, rgba(0, 212, 170, 0.22), rgba(0, 212, 170, 0.12));
+      border-color: rgba(0, 212, 170, 0.5);
+      color: #b9ffe9;
+    }
+
+    /* ADHD-friendly: Extended pedagogical feedback */
+    .explanation-section {
+      margin-top: 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.025);
+      animation: explanation-reveal 320ms ease-out forwards;
+    }
+
+    .explanation-section.correct-reason {
+      border-left: 3px solid var(--accent-3);
+      background: rgba(0, 212, 170, 0.06);
+    }
+
+    .explanation-section.distractor-analysis {
+      border-left: 3px solid var(--accent);
+      background: rgba(108, 99, 255, 0.06);
+    }
+
+    .explanation-section h4 {
+      font-family: "Outfit", sans-serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .explanation-section p {
+      color: #e0e4f8;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .explanation-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .explanation-section ul li {
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: #c8cce6;
+      font-size: 0.86rem;
+      line-height: 1.5;
+    }
+
+    .explanation-section ul li:last-child {
+      border-bottom: none;
+    }
+
+    .explanation-section ul li strong {
+      color: var(--accent-2);
+      font-weight: 700;
+    }
+
+    /* Report wrong answer button */
+    .report-answer-bar {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+
+    .btn-report {
+      background: rgba(255, 107, 157, 0.1);
+      color: var(--accent-2);
+      border: 1px solid var(--accent-2);
+      border-radius: 10px;
+      padding: 8px 16px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      width: 100%;
+    }
+
+    .btn-report:hover {
+      background: rgba(255, 107, 157, 0.2);
+      transform: translateY(-1px);
+    }
+
+    .btn-report:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn-report.reported {
+      background: rgba(255, 107, 157, 0.25);
+      border-color: var(--accent-2);
+    }
+
+    #report-answer-status {
+      display: block;
+      margin-top: 6px;
+      text-align: center;
+      color: var(--accent-2);
+      font-size: 0.78rem;
+    }
+
+    .explanation-fallback {
+      color: var(--muted);
+      font-style: italic;
+      font-size: 0.85rem;
+    }
+
+    /* Nav tab bar */
+    .nav-tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 20px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 6px;
+    }
+
+    .nav-tab {
+      flex: 1;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      color: var(--muted);
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 0.88rem;
+      font-weight: 500;
+      padding: 9px 14px;
+      cursor: pointer;
+      transition: all 180ms ease;
+      text-align: center;
+      width: auto;
+    }
+
+    .nav-tab:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-tab.active {
+      background: rgba(108, 99, 255, 0.18);
+      border-color: rgba(108, 99, 255, 0.4);
+      color: var(--text);
+    }
+
+    /* Study guide iframe screen */
+    #study-guide-screen iframe {
+      width: 100%;
+      height: calc(100vh - 80px);
+      min-height: 500px;
+      border: none;
+      border-radius: 16px;
+      background: var(--panel);
+    }
+
+    /* Resource links in feedback */
+    .resource-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+      padding: 12px 14px;
+      background: rgba(108, 99, 255, 0.07);
+      border: 1px solid rgba(108, 99, 255, 0.2);
+      border-radius: 10px;
+    }
+
+    .resource-links a {
+      color: var(--accent);
+      font-size: 0.82rem;
+      font-weight: 500;
+      text-decoration: none;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: rgba(108, 99, 255, 0.12);
+      border: 1px solid rgba(108, 99, 255, 0.25);
+      transition: all 160ms ease;
+    }
+
+    .resource-links a:hover {
+      background: rgba(108, 99, 255, 0.25);
+      color: #c8c2ff;
+    }
+
+    .resource-links a.video-link {
+      color: var(--accent-2);
+      background: rgba(255, 107, 157, 0.1);
+      border-color: rgba(255, 107, 157, 0.25);
+    }
+
+    .resource-links a.video-link:hover {
+      background: rgba(255, 107, 157, 0.22);
+      color: #ffc4dd;
+    }
+
+    .resource-links-label {
+      width: 100%;
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 2px;
+    }
+
+    @keyframes explanation-reveal {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .quiz-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .kbd-hint {
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .combo {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 3px 9px;
+      font-size: 0.75rem;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .combo.hot {
+      border-color: rgba(0, 212, 170, 0.65);
+      color: #c3fff0;
+      background: rgba(0, 212, 170, 0.14);
+      animation: pulse 620ms ease;
+    }
+
+    .report-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    .report-box {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.02);
+      padding: 12px;
+    }
+
+    .list {
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .list li {
+      list-style: none;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 9px 10px;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .toast {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 999;
+      background: #151827;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      min-width: 220px;
+      color: var(--text);
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .xp-pop {
+      position: fixed;
+      right: 26px;
+      top: 40px;
+      z-index: 1000;
+      background: rgba(0, 212, 170, 0.16);
+      border: 1px solid rgba(0, 212, 170, 0.5);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.85rem;
+      color: #b9ffe8;
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+    }
+
+    .xp-pop.show {
+      animation: rise 760ms ease forwards;
+    }
+
+    /* Gap visualization chart */
+    .gap-chart {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .gap-bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .gap-bar-track {
+      width: 100%;
+      height: 60px;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 6px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gap-bar-fill {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      transition: height 300ms ease;
+      border-radius: 6px;
+    }
+
+    .gap-bar-fill.good {
+      background: linear-gradient(to top, var(--accent-3), rgba(0, 212, 170, 0.6));
+    }
+
+    .gap-bar-fill.medium {
+      background: linear-gradient(to top, #fbbf24, rgba(251, 191, 36, 0.6));
+    }
+
+    .gap-bar-fill.bad {
+      background: linear-gradient(to top, var(--danger), rgba(255, 93, 115, 0.6));
+    }
+
+    .gap-bar-label {
+      font-size: 0.68rem;
+      color: var(--muted);
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .gap-bar-value {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* Study recommendations */
+    .recommendation-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: rgba(108, 99, 255, 0.06);
+      border-left: 3px solid var(--accent);
+      margin-top: 10px;
+    }
+
+    .recommendation-card h4 {
+      font-family: "Outfit", sans-serif;
+      font-size: 0.85rem;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .recommendation-card p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .recommendation-card .action-btn {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 5px 10px;
+      background: rgba(108, 99, 255, 0.15);
+      border: 1px solid rgba(108, 99, 255, 0.4);
+      border-radius: 6px;
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: background 150ms ease;
+    }
+
+    .recommendation-card .action-btn:hover {
+      background: rgba(108, 99, 255, 0.25);
+    }
+
+    /* Study modes: topic filter chips */
+    .topic-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .topic-chip {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 4px 12px;
+      font-size: 0.74rem;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.03);
+      cursor: pointer;
+      transition: all 150ms ease;
+      user-select: none;
+    }
+
+    .topic-chip:hover {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    .topic-chip.active {
+      background: rgba(108, 99, 255, 0.2);
+      border-color: var(--accent);
+      color: #d4ceff;
+    }
+
+    /* Study modes: mode cards */
+    .mode-cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .mode-card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.02);
+      cursor: pointer;
+      transition: all 150ms ease;
+    }
+
+    .mode-card:hover {
+      border-color: var(--accent);
+      background: rgba(108, 99, 255, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .mode-card h4 {
+      font-family: "Outfit", sans-serif;
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+
+    .mode-card p {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .mode-card .mode-badge {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 700;
+    }
+
+    .mode-card .mode-badge.blue { background: rgba(108,99,255,0.18); color: #c8c2ff; }
+    .mode-card .mode-badge.green { background: rgba(0,212,170,0.18); color: #b9ffe9; }
+    .mode-card .mode-badge.pink { background: rgba(255,107,157,0.18); color: #ffc4dd; }
+    .mode-card .mode-badge.yellow { background: rgba(251,191,36,0.18); color: #fde68a; }
+
+    /* Learning objective badge */
+    .learning-objective {
+      margin-top: 8px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      background: rgba(251,191,36,0.08);
+      border: 1px solid rgba(251,191,36,0.25);
+      font-size: 0.8rem;
+      color: #fde68a;
+      line-height: 1.4;
+    }
+
+    .learning-objective strong {
+      color: #fbbf24;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .confetti-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 998;
+    }
+
+    .particle {
+      position: absolute;
+      width: 8px;
+      height: 14px;
+      border-radius: 999px;
+      opacity: 0.92;
+      animation: fall 850ms ease forwards;
+    }
+
+    .shake {
+      animation: shake 260ms linear;
+    }
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-6px); }
+      40% { transform: translateX(6px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
+    }
+
+    @keyframes fall {
+      from {
+        transform: translateY(-10px) rotate(0deg);
+      }
+      to {
+        transform: translateY(100vh) rotate(320deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes rise {
+      0% {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      25% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-26px);
+      }
+    }
+
+    /* === FEATURE 1: Subject card color coding by accuracy === */
+    .subject-item.accuracy-good {
+      border-left: 3px solid var(--accent-3);
+      background: rgba(0, 212, 170, 0.05);
+    }
+    .subject-item.accuracy-mid {
+      border-left: 3px solid #fbbf24;
+      background: rgba(251, 191, 36, 0.05);
+    }
+    .subject-item.accuracy-bad {
+      border-left: 3px solid var(--danger);
+      background: rgba(255, 93, 115, 0.05);
+    }
+
+    /* === FEATURE 2: Topic breakdown in report === */
+    .topic-breakdown-item {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 9px 10px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .topic-breakdown-item.accuracy-bad  { border-left: 3px solid var(--danger); }
+    .topic-breakdown-item.accuracy-mid  { border-left: 3px solid #fbbf24; }
+    .topic-breakdown-item.accuracy-good { border-left: 3px solid var(--accent-3); }
+    .topic-breakdown-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.83rem;
+    }
+    .topic-breakdown-meta strong { color: var(--text); }
+    .topic-breakdown-meta span   { color: var(--muted); font-weight: 700; }
+
+    /* === FEATURE 3: Streak fire display in quiz === */
+    .streak-fire {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--muted);
+      transition: all 200ms ease;
+    }
+    .streak-fire.active {
+      border-color: rgba(255, 107, 157, 0.65);
+      background: rgba(255, 107, 157, 0.12);
+      color: #ffc4dd;
+      animation: pulse 500ms ease;
+    }
+    .streak-fire.blazing {
+      border-color: rgba(251, 191, 36, 0.7);
+      background: rgba(251, 191, 36, 0.12);
+      color: #fde68a;
+    }
+
+    /* === FEATURE 3: Milestone toast upgrade === */
+    .toast.milestone {
+      border-color: rgba(0, 212, 170, 0.6);
+      background: rgba(0, 212, 170, 0.12);
+      color: #b9ffe9;
+      font-size: 1rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    /* === ANIMATIONS: Easing tokens === */
+    :root {
+      --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+      --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes slide-up-in {
+      from { opacity: 0; transform: translateY(28px) scale(0.98); }
+      to   { opacity: 1; transform: translateY(0)   scale(1); }
+    }
+
+    @keyframes count-pop {
+      0%   { transform: scale(1); }
+      45%  { transform: scale(1.22); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes stagger-in {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes streak-burst {
+      0%   { transform: scale(1); }
+      25%  { transform: scale(1.35); }
+      55%  { transform: scale(0.92); }
+      80%  { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes border-reveal {
+      from { border-left-width: 0; opacity: 0.4; }
+      to   { border-left-width: 3px; opacity: 1; }
+    }
+
+    @keyframes score-flash-good {
+      0%   { box-shadow: 0 0 0 0 rgba(0,212,170,0); }
+      40%  { box-shadow: 0 0 0 8px rgba(0,212,170,0.25); }
+      100% { box-shadow: 0 0 0 0 rgba(0,212,170,0); }
+    }
+
+    .subject-item.accuracy-good,
+    .subject-item.accuracy-mid,
+    .subject-item.accuracy-bad {
+      animation: border-reveal 380ms var(--ease-out-expo) both;
+    }
+
+    .report-box h3 {
+      transition: transform 180ms var(--ease-out-quart);
+    }
+    .report-box h3.counter-done {
+      animation: count-pop 280ms var(--ease-out-quart);
+    }
+
+    /* Touch target fix for mobile */
+    .topic-chip {
+      min-height: 36px;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    /* Toggle button for custom form */
+    .toggle-btn {
+      background: rgba(108, 99, 255, 0.12);
+      border: 1px solid rgba(108, 99, 255, 0.4);
+      border-radius: 8px;
+      color: var(--accent);
+      font: inherit;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 5px 12px;
+      cursor: pointer;
+      transition: background 150ms ease;
+      white-space: nowrap;
+      width: auto;
+    }
+    .toggle-btn:hover { background: rgba(108, 99, 255, 0.22); }
+
+    /* Onboarding nudge for first-time users */
+    .onboarding-nudge {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px dashed rgba(108, 99, 255, 0.45);
+      background: rgba(108, 99, 255, 0.06);
+      animation: fade-in 400ms var(--ease-out-quart) both;
+    }
+    .onboarding-nudge h4 {
+      font-family: "Outfit", sans-serif;
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
+    .onboarding-nudge p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Subject card clickable state */
+    .subject-item[data-subject] {
+      cursor: pointer;
+      transition: transform 120ms ease, border-color 200ms ease, box-shadow 200ms ease;
+    }
+    .subject-item[data-subject]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    }
+
+    /* === POLISH: Streak break flash === */
+    @keyframes streak-break {
+      0%   { background: rgba(255,93,115,0); }
+      20%  { background: rgba(255,93,115,0.18); }
+      100% { background: rgba(255,93,115,0); }
+    }
+    .quiz-card.streak-lost {
+      animation: streak-break 600ms ease forwards;
+    }
+
+    /* === POLISH: Progress bar more prominent === */
+    .progress-track {
+      height: 14px !important;
+    }
+    .progress-fill {
+      box-shadow: 0 0 10px rgba(108,99,255,0.5);
+    }
+    .quiz-progress-label {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-align: right;
+      margin-bottom: 3px;
+    }
+
+    /* === POLISH: Empty states === */
+    .empty-state {
+      text-align: center;
+      padding: 24px 16px;
+      color: var(--muted);
+    }
+    .empty-state .empty-icon {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 8px;
+      opacity: 0.6;
+    }
+    .empty-state p {
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+    .empty-state strong {
+      display: block;
+      color: var(--text);
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+
+    /* === POLISH: Motivational report banner === */
+    .report-banner {
+      margin: 14px 0 0;
+      padding: 12px 16px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(0,212,170,0.14), rgba(108,99,255,0.12));
+      border: 1px solid rgba(0,212,170,0.4);
+      font-family: "Outfit", sans-serif;
+      font-size: 1.05rem;
+      color: #b9ffe9;
+      animation: slide-up-in 380ms var(--ease-out-quart) 800ms both;
+    }
+
+    /* === AVATARS === */
+    .avatar-picker {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .avatar-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      cursor: pointer;
+      transition: all 140ms ease;
+      font-size: 0.65rem;
+      color: var(--muted);
+      width: auto;
+    }
+    .avatar-btn .av-emoji { font-size: 1.6rem; line-height: 1; }
+    .avatar-btn .av-name { font-weight: 700; color: var(--text); letter-spacing: 0.02em; }
+    .avatar-btn:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .avatar-btn.selected {
+      border-color: var(--accent);
+      background: rgba(108,99,255,0.16);
+      box-shadow: 0 0 12px rgba(108,99,255,0.3);
+    }
+    .topbar-avatar {
+      font-size: 1.6rem;
+      line-height: 1;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      transition: transform 200ms var(--ease-out-quart);
+    }
+    .topbar-avatar.react-correct {
+      animation: streak-burst 420ms var(--ease-out-quart);
+      border-color: rgba(0,212,170,0.6);
+      background: rgba(0,212,170,0.12);
+    }
+    .topbar-avatar.react-wrong {
+      animation: shake 400ms ease;
+      border-color: rgba(180,19,64,0.6);
+      background: rgba(180,19,64,0.12);
+    }
+
+    /* === CUSTOM AVATAR CREATOR === */
+    .custom-avatar-creator {
+      margin-top: 14px;
+      padding: 16px;
+      border: 1px dashed rgba(108,99,255,0.3);
+      border-radius: 1rem;
+      background: rgba(108,99,255,0.04);
+    }
+    .custom-avatar-creator h4 {
+      font-family: "Outfit", sans-serif;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+    }
+    .custom-avatar-controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .emoji-input {
+      width: 56px;
+      height: 56px;
+      font-size: 1.8rem;
+      text-align: center;
+      padding: 8px;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(42,45,45,0.3);
+      background: rgba(53,56,56,0.5);
+      color: var(--text);
+      transition: border-color 150ms ease;
+    }
+    .emoji-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(108,99,255,0.2);
+    }
+    .name-input {
+      flex: 1;
+      min-width: 120px;
+      padding: 10px 14px;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(42,45,45,0.3);
+      background: rgba(53,56,56,0.5);
+      color: var(--text);
+      font: inherit;
+      font-size: 0.85rem;
+      transition: border-color 150ms ease;
+    }
+    .name-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(108,99,255,0.2);
+    }
+    .randomize-btn {
+      background: rgba(255,207,236,0.1);
+      border: 1px solid rgba(255,207,236,0.3);
+      border-radius: 0.75rem;
+      padding: 10px 14px;
+      color: var(--accent-2);
+      font: inherit;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 150ms ease;
+      white-space: nowrap;
+      width: auto;
+    }
+    .randomize-btn:hover {
+      background: rgba(255,207,236,0.18);
+      transform: translateY(-1px);
+    }
+    .apply-avatar-btn {
+      background: linear-gradient(135deg, var(--accent), #d7c7f6);
+      border: none;
+      border-radius: 0.75rem;
+      padding: 10px 18px;
+      color: #0c0f0f;
+      font: inherit;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 150ms ease;
+      white-space: nowrap;
+      width: auto;
+      box-shadow: 0 4px 16px rgba(108,99,255,0.25);
+    }
+    .apply-avatar-btn:hover {
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 6px 24px rgba(108,99,255,0.35);
+    }
+    .apply-avatar-btn:active {
+      transform: scale(0.98);
+    }
+    .toggle-btn {
+      background: rgba(255,255,255,0.04);
+      border: 1px dashed rgba(108,99,255,0.25);
+      border-radius: 0.75rem;
+      padding: 8px 14px;
+      color: var(--muted);
+      font: inherit;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 150ms ease;
+      width: auto;
+    }
+    .toggle-btn:hover {
+      background: rgba(108,99,255,0.08);
+      color: var(--accent);
+      border-color: rgba(108,99,255,0.4);
+    }
+    .emoji-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));
+      gap: 6px;
+      margin-top: 12px;
+    }
+    .emoji-option {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(42,45,45,0.2);
+      background: rgba(27,29,29,0.4);
+      cursor: pointer;
+      font-size: 1.4rem;
+      transition: all 120ms ease;
+      min-height: 44px;
+    }
+    .emoji-option:hover {
+      border-color: var(--accent);
+      background: rgba(108,99,255,0.08);
+      transform: scale(1.05);
+    }
+    .emoji-option.selected {
+      border-color: var(--accent);
+      background: rgba(108,99,255,0.15);
+      box-shadow: 0 0 12px rgba(108,99,255,0.25);
+      transform: scale(1.05);
+    }
+    .topbar-avatar.react-wrong {
+      animation: shake 260ms ease;
+      border-color: rgba(255,93,115,0.6);
+    }
+
+    /* === POLISH: Mobile topbar compact === */
+    @media (max-width: 640px) {
+      .brand p { display: none; }
+      .points-chip, .target-chip { min-width: unset; padding: 10px 12px; }
+      .topbar { gap: 10px; }
+      .topbar-avatar { width: 36px; height: 36px; font-size: 1.3rem; }
+    }
+
+    /* Reduced motion: respect user preference */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* === FEATURE 4: Review mode card states === */
+    .mode-card.review-empty .mode-badge {
+      opacity: 0.45;
+    }
+    .mode-card.review-has-items .mode-badge {
+      background: rgba(251, 191, 36, 0.3);
+      color: #fde68a;
+      border: 1px solid rgba(251, 191, 36, 0.5);
+      animation: pulse 800ms ease;
+    }
+
+    @media (max-width: 920px) {
+      body {
+        padding: 14px;
+      }
+
+      .summary-panel,
+      .start-panel,
+      .custom-panel,
+      .history-panel,
+      .subject-panel {
+        grid-column: span 12;
+      }
+
+      .stats-grid,
+      .subject-grid,
+      .history-grid,
+      .report-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar {
+        flex-direction: column;
+      }
+
+      .points-chip,
+      .target-chip {
+        width: 100%;
+      }
+
+      .quiz-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .xp-pop {
+        right: 12px;
+        top: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <a href="../index.html" class="back-home-link">← Hypatia</a>
+        <h1>PrepAWS</h1>
+        <p>Bloques cortos, feedback inmediato y reportes de gaps para preparar AWS SAA-C03.</p>
+      </div>
+      <div id="topbar-avatar" class="topbar-avatar" title="Tu avatar" aria-hidden="true">🐱</div>
+      <div class="points-chip">
+        <small>Total points</small>
+        <strong id="top-total-points">0</strong>
+        <div class="chip-row">
+          <span id="top-streak-pill" class="chip-pill">Streak 0</span>
+          <span id="top-best-pill" class="chip-pill">Best 0</span>
+        </div>
+      </div>
+      <div class="target-chip">
+        <small>AWS SAA-C03 Passing Score</small>
+        <strong id="target-score">--</strong>
+        <div class="target-bar">
+          <div id="target-bar-fill" class="target-bar-fill low"></div>
+        </div>
+        <div class="chip-row">
+          <span id="target-label" class="chip-pill">Completa un bloque</span>
+        </div>
+      </div>
+    </header>
+
+    <nav class="nav-tabs" role="tablist" aria-label="App sections">
+      <button class="nav-tab active" role="tab" data-screen="home-screen" aria-selected="true">🏠 Home</button>
+      <button class="nav-tab" role="tab" data-screen="study-guide-screen" aria-selected="false">📖 Study Guide</button>
+    </nav>
+
+    <main>
+      <section id="home-screen" class="screen active">
+        <div class="grid">
+          <article class="panel summary-panel">
+            <h2>Your progress</h2>
+            <p>Stats saved in localStorage — pick up exactly where you left off.</p>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <span>Current streak</span>
+                <strong id="stat-streak">0</strong>
+              </div>
+              <div class="stat-card">
+                <span>Total answered</span>
+                <strong id="stat-answered">0</strong>
+              </div>
+              <div class="stat-card">
+                <span>Global accuracy</span>
+                <strong id="stat-accuracy">0%</strong>
+              </div>
+            </div>
+            <div id="onboarding-nudge" class="onboarding-nudge" style="display:none;">
+              <h4>¡Tu primer bloque te espera! 🚀</h4>
+              <p>Pick a study mode on the right and press <strong>Start</strong>. Your stats and gaps will appear here automatically.</p>
+            </div>
+
+            <!-- Avatar picker -->
+            <div style="margin-top:16px;">
+              <small style="color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-size:0.7rem;">Your avatar</small>
+              <div id="avatar-picker" class="avatar-picker"></div>
+
+              <!-- Custom avatar creator -->
+              <div id="custom-avatar-creator" class="custom-avatar-creator" style="display:none;">
+                <h4>✨ Create custom avatar</h4>
+                <div class="custom-avatar-controls">
+                  <input id="custom-avatar-emoji" class="emoji-input" type="text" maxlength="2" value="🐱" placeholder="🐱">
+                  <input id="custom-avatar-name" class="name-input" type="text" maxlength="20" placeholder="Avatar name">
+                  <button id="randomize-name-btn" class="randomize-btn" type="button">🎲 Random</button>
+                  <button id="apply-custom-avatar-btn" class="apply-avatar-btn" type="button">Apply</button>
+                </div>
+                <!-- Quick emoji grid -->
+                <div id="emoji-grid" class="emoji-grid"></div>
+              </div>
+
+              <button id="toggle-custom-avatar-btn" class="toggle-btn" style="margin-top:10px;" type="button">+ Create custom</button>
+            </div>
+
+            <div id="trend-section" style="margin-top:14px;display:none;">
+              <small style="color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-size:0.7rem;">Trend (last 5 blocks)</small>
+              <div id="trend-bars" style="display:flex;gap:4px;align-items:flex-end;height:32px;margin-top:6px;"></div>
+              <div id="trend-values" style="display:flex;gap:4px;margin-top:4px;"></div>
+            </div>
+            <div id="weakness-section" style="margin-top:14px;display:none;">
+              <small style="color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-size:0.7rem;">Weak areas</small>
+              <ul id="weakness-list" class="list" style="margin-top:6px;"></ul>
+            </div>
+
+            <!-- Gap visualization by subject -->
+            <div id="gap-section" style="margin-top:16px;display:none;">
+              <small style="color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-size:0.7rem;">Accuracy by domain</small>
+              <div id="gap-chart" class="gap-chart"></div>
+            </div>
+
+            <!-- Study recommendations -->
+            <div id="recommendations-section" style="margin-top:16px;display:none;">
+              <small style="color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-size:0.7rem;">Study recommendations</small>
+              <div id="recommendations-list"></div>
+            </div>
+
+            <div id="mock-section" style="margin-top:14px;display:none;">
+              <small style="color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-size:0.7rem;">Mock exams SAA-C03 (passing: 720/1000)</small>
+              <div id="mock-bars" style="display:flex;gap:6px;align-items:flex-end;height:48px;margin-top:6px;position:relative;"></div>
+              <div id="mock-values" style="display:flex;gap:6px;margin-top:4px;"></div>
+            </div>
+          </article>
+
+          <article class="panel start-panel">
+            <h3>How to practice</h3>
+            <p>Choose a study mode. Real SAA-C03 exam: 65 questions, 130 minutes, across 4 domains.</p>
+
+            <div class="mode-cards">
+              <div class="mode-card" data-mode="subject">
+                <h4>📚 Domain block</h4>
+                <p>15 questions from one domain. Best for drilling weak areas.</p>
+                <span class="mode-badge blue">Focused</span>
+              </div>
+              <div class="mode-card" data-mode="topic">
+                <h4>🎯 Service focus</h4>
+                <p>Practice only S3, only EC2, only RDS, only IAM...</p>
+                <span class="mode-badge green">Precision</span>
+              </div>
+              <div class="mode-card" data-mode="mock">
+                <h4>📝 Mock exam</h4>
+                <p>65 questions, 130 minutes. Real SAA-C03 domain distribution.</p>
+                <span class="mode-badge pink">Full exam</span>
+              </div>
+              <div class="mode-card" data-mode="review">
+                <h4>🔄 Review errors</h4>
+                <p>Questions you missed, prioritized by spaced repetition.</p>
+                <span class="mode-badge yellow" id="review-count-badge">0 pendientes</span>
+              </div>
+            </div>
+
+            <!-- Subject selector for mode "subject" -->
+            <form id="start-form" style="margin-top:12px;">
+              <div id="subject-select-area">
+                <label>
+                  Domain
+                  <select id="start-materia" required></select>
+                </label>
+                <!-- Topic chips appear here when a subject is selected -->
+                <div id="topic-filter-area" class="topic-chips" style="margin-top:8px;"></div>
+              </div>
+
+              <button type="submit" class="btn-primary" style="margin-top:10px;">Start block (15 questions)</button>
+            </form>
+
+            <div id="start-status" class="status">Select a mode to start.</div>
+          </article>
+
+          <article class="panel subject-panel">
+            <h3>Domain breakdown</h3>
+            <div id="subject-stats" class="subject-grid"></div>
+          </article>
+
+          <article class="panel history-panel">
+            <h3>Historial reciente</h3>
+            <div id="history-list" class="history-grid"></div>
+          </article>
+
+          <article class="panel custom-panel">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+              <h3 style="margin:0;">Add custom question</h3>
+              <button id="toggle-custom-form" type="button" class="toggle-btn" aria-expanded="false">+ Agregar</button>
+            </div>
+            <div id="custom-form-body" style="display:none;margin-top:10px;animation:slide-up-in 320ms var(--ease-out-quart) both;">
+            <p>Each question must have an explanation. Saved in localStorage and added to the question bank.</p>
+            <form id="custom-question-form">
+              <div class="form-row">
+                <label>
+                  Domain
+                  <select id="custom-materia" required></select>
+                </label>
+                <label>
+                  Service/Topic
+                  <input id="custom-tema" type="text" maxlength="40" required placeholder="e.g. s3, ec2, iam">
+                </label>
+              </div>
+              <div class="form-row">
+                <label>
+                  Difficulty (1-3)
+                  <select id="custom-dificultad" required>
+                    <option value="1">1 - Easy</option>
+                    <option value="2" selected>2 - Medium</option>
+                    <option value="3">3 - Hard</option>
+                  </select>
+                </label>
+                <label>
+                  Correct (0-3)
+                  <select id="custom-correcta" required>
+                    <option value="0">0 (option A)</option>
+                    <option value="1">1 (option B)</option>
+                    <option value="2">2 (option C)</option>
+                    <option value="3">3 (option D)</option>
+                  </select>
+                </label>
+              </div>
+
+              <label>
+                Question
+                <textarea id="custom-pregunta" required placeholder="Write an AWS SAA-C03 style question"></textarea>
+              </label>
+
+              <div class="form-row">
+                <label>
+                  Option A
+                  <input id="custom-op-a" type="text" required>
+                </label>
+                <label>
+                  Option B
+                  <input id="custom-op-b" type="text" required>
+                </label>
+              </div>
+              <div class="form-row">
+                <label>
+                  Option C
+                  <input id="custom-op-c" type="text" required>
+                </label>
+                <label>
+                  Option D
+                  <input id="custom-op-d" type="text" required>
+                </label>
+              </div>
+
+              <label>
+                Explanation
+                <textarea id="custom-explicacion" required placeholder="Why that is the correct answer"></textarea>
+              </label>
+
+              <label>
+                Distractor analysis (optional, one per line, format: "B|reason")
+                <textarea id="custom-distractores" placeholder="B|No aplica porque...&#10;C|Este seria el resultado si...&#10;D|Confunde el concepto con..."></textarea>
+              </label>
+
+              <label>
+                Tip (optional)
+                <input id="custom-tip" type="text" placeholder="Shortcut or memory hook">
+              </label>
+
+              <button type="submit" class="btn-secondary">Save question</button>
+            </form>
+            <div id="custom-status" class="status">Your custom questions are included in new blocks.</div>
+            </div><!-- /custom-form-body -->
+          </article>
+        </div>
+      </section>
+
+      <section id="quiz-screen" class="screen">
+        <article class="panel">
+          <div style="margin-bottom:12px;">
+            <button id="quiz-back-home-btn" class="btn-secondary" style="width:auto;padding:6px 14px;font-size:0.8rem;" type="button">← Home</button>
+          </div>
+          <div class="quiz-head">
+            <div class="meta-line">
+              <span id="quiz-progress">Question 1 / 15</span>
+              <span id="quiz-materia">Domain</span>
+              <span id="quiz-combo" class="combo">Combo x0</span>
+              <span id="quiz-streak-fire" class="streak-fire" aria-label="Current streak">🔥 0</span>
+              <div class="timer-container">
+                <div class="timer-ring">
+                  <svg width="32" height="32">
+                    <circle class="timer-ring-bg" cx="16" cy="16" r="13"></circle>
+                    <circle id="timer-ring-fill" class="timer-ring-fill" cx="16" cy="16" r="13"
+                      stroke-dasharray="81.68"
+                      stroke-dashoffset="0"></circle>
+                  </svg>
+                </div>
+                <span class="timer" id="quiz-timer">0s</span>
+                <span id="speed-badge" class="speed-badge" style="display:none;"></span>
+              </div>
+            </div>
+            <div id="quiz-progress-label" class="quiz-progress-label">0 / 0</div>
+            <div class="progress-track">
+              <div id="quiz-progress-fill" class="progress-fill"></div>
+            </div>
+          </div>
+
+          <article id="question-card" class="quiz-card">
+            <div id="question-type-badge" class="question-type-badge" style="display:none;"></div>
+            <h2 id="quiz-question">Question</h2>
+            <div id="learning-objective" class="learning-objective" style="display:none;">
+              <strong>Learning objective:</strong>
+              <span id="learning-objective-text"></span>
+            </div>
+            <div id="quiz-options" class="options"></div>
+            <p id="quiz-tip" class="tip"></p>
+
+            <div id="quiz-feedback" class="feedback">
+              <h3 id="feedback-title">Feedback</h3>
+              <p id="feedback-message"></p>
+              <p id="feedback-explanation"></p>
+              <small id="feedback-meta"></small>
+
+              <!-- ADHD-friendly: Extended pedagogical feedback -->
+              <div id="explanation-correct-section" class="explanation-section correct-reason" style="display:none;">
+                <h4>Why is this correct?</h4>
+                <p id="explanation-correct-text"></p>
+              </div>
+
+              <div id="explanation-distractors-section" class="explanation-section distractor-analysis" style="display:none;">
+                <h4>Distractor analysis</h4>
+                <ul id="explanation-distractors-list"></ul>
+              </div>
+
+              <!-- Learn more: resource links from enhanced_explanations.json -->
+              <div id="resource-links-section" class="resource-links" style="display:none;"></div>
+
+              <!-- Report wrong answer button -->
+              <div id="report-answer-section" class="report-answer-bar" style="display:none;">
+                <button id="report-answer-btn" class="btn-report">
+                  🚩 Wrong answer in the bank?
+                </button>
+                <small id="report-answer-status" style="display:none;"></small>
+              </div>
+            </div>
+          </article>
+
+          <div class="quiz-actions">
+            <small class="kbd-hint">Shortcuts: 1-4 or A-D to answer, Enter for next.</small>
+            <button id="next-question-btn" class="btn-primary" disabled>Next</button>
+          </div>
+        </article>
+      </section>
+
+      <section id="report-screen" class="screen">
+        <article class="panel">
+          <h2>Block report</h2>
+          <p id="report-summary">Summary...</p>
+
+          <div class="report-grid">
+            <div class="report-box">
+              <small>Accuracy</small>
+              <h3 id="report-accuracy">0%</h3>
+            </div>
+            <div class="report-box">
+              <small>Avg time</small>
+              <h3 id="report-avg-time">0s</h3>
+            </div>
+            <div class="report-box">
+              <small>Block points</small>
+              <h3 id="report-points">0</h3>
+            </div>
+          </div>
+          <div id="report-banner" class="report-banner" style="display:none;"></div>
+
+          <div class="grid">
+            <article class="panel" style="grid-column: span 6;">
+              <h3>Slowest topics</h3>
+              <ul id="report-slow-topics" class="list"></ul>
+            </article>
+            <article class="panel" style="grid-column: span 6;">
+              <h3>Most missed topics</h3>
+              <ul id="report-wrong-topics" class="list"></ul>
+            </article>
+          </div>
+
+          <div id="topic-breakdown-section" style="display:none;margin-top:16px;">
+            <small style="color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-size:0.7rem;">By topic — worst to best</small>
+            <ul id="topic-breakdown-list" class="list" style="margin-top:8px;"></ul>
+          </div>
+
+          <div class="quiz-actions">
+            <button id="retry-btn" class="btn-secondary">Retry</button>
+            <button id="back-home-btn" class="btn-primary">Back home</button>
+          </div>
+        </article>
+      </section>
+
+      <section id="study-guide-screen" class="screen">
+        <iframe src="./study-guide.html" title="Study Guide" loading="lazy" allowfullscreen></iframe>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <div id="xp-pop" class="xp-pop" aria-hidden="true"></div>
+  <div id="confetti-layer" class="confetti-layer" aria-hidden="true"></div>
+
+  <script>
+    fetch('./enhanced_explanations.json')
+      .then(r => r.json())
+      .then(d => { window.ENHANCED_EXPLANATIONS = d; })
+      .catch(() => {});
+  </script>
+  <script src="./questions.js"></script>
+  <script>
+    // Strip leftover markdown/HTML fragments from PDF ingestion artifacts
+    function cleanText(text) {
+      if (!text) return "";
+      return text
+        .replace(/<details[\s\S]*?<\/details>/gi, "")  // remove <details>...</details>
+        .replace(/<summary[\s\S]*?<\/summary>/gi, "")  // remove <summary>...</summary>
+        .replace(/<[^>]+>/g, "")                       // strip any remaining HTML tags
+        .replace(/\*\*(.*?)\*\*/g, "$1")               // **bold** → plain
+        .replace(/__(.*?)__/g, "$1")                   // __bold__ → plain
+        .replace(/\*(.*?)\*/g, "$1")                   // *italic* → plain
+        .replace(/`([^`]+)`/g, "$1")                   // `code` → plain
+        .replace(/#+\s*/g, "")                         // ## headings → plain
+        .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")       // [link](url) → text only
+        .replace(/^[-*]\s+/gm, "")                     // strip bullet dashes/asterisks
+        .replace(/\n{3,}/g, "\n\n")                    // collapse excessive newlines
+        .replace(/^[-—–]{3,}$/gm, "")                  // remove horizontal rules
+        .trim();
+    }
+
+    // Returns { docUrl, videos: [{title, url}] } from ENHANCED_EXPLANATIONS for a question's topic.
+    // Gracefully returns null if data is unavailable.
+    function getResourceLinks(question) {
+      if (!window.ENHANCED_EXPLANATIONS || !question || !question.tema) return null;
+      const needle = question.tema.toLowerCase().trim();
+      const data = window.ENHANCED_EXPLANATIONS;
+      // data can be { domains: { [domain]: { [topic]: { docUrl, videos } } } }
+      // or a flat { [topic]: { docUrl, videos } } — handle both
+      let topicData = null;
+      if (data.domains) {
+        for (const domain of Object.values(data.domains)) {
+          for (const [key, val] of Object.entries(domain)) {
+            if (key.toLowerCase() === needle) { topicData = val; break; }
+          }
+          if (topicData) break;
+        }
+      } else {
+        for (const [key, val] of Object.entries(data)) {
+          if (key.toLowerCase() === needle) { topicData = val; break; }
+        }
+      }
+      if (!topicData) return null;
+      return {
+        docUrl: topicData.docUrl || null,
+        videos: Array.isArray(topicData.videos) ? topicData.videos.slice(0, 2) : []
+      };
+    }
+
+    const STORAGE_KEYS = {
+      stats: "prepaws.stats.v1",
+      customQuestions: "prepaws.custom-questions.v1",
+      wrongQuestions: "prepaws.wrong-questions.v1",
+      mockHistory: "prepaws.mock-history.v1",
+      flaggedAnswers: "prepaws.flagged-answers.v1",
+      avatar: "prepaws.avatar.v1",
+      avatarCustom: "prepaws.avatar.custom.v1"
+    };
+
+    // === AVATAR SYSTEM ===
+    const AVATARS = [
+      { id: "cat",    emoji: "🐱", name: "Nyan",    tagline: "speedrun master" },
+      { id: "robot",  emoji: "🤖", name: "Unit-01",  tagline: "never crashes" },
+      { id: "fire",   emoji: "🔥", name: "Pyro",     tagline: "combo lord" },
+      { id: "alien",  emoji: "👾", name: "Glitch",   tagline: "bug hunter" },
+      { id: "dragon", emoji: "🐉", name: "Drak",     tagline: "lore master" },
+      { id: "skull",  emoji: "💀", name: "Ded",      tagline: "respawn champ" },
+      { id: "ninja",  emoji: "🥷", name: "Sombra",   tagline: "silent grinder" },
+      { id: "star",   emoji: "⭐", name: "Lumina",   tagline: "accuracy queen" }
+    ];
+
+    let currentAvatar = AVATARS[0];
+
+    const TARGET_SCORE = 720; // SAA-C03 passing score out of 1000
+
+    // SAA-C03 mock exam domain distribution (65 questions total, official percentages)
+    const SAA_DISTRIBUTION = {
+      "Design Secure Architectures": 20,          // 30%
+      "Design Resilient Architectures": 17,        // 26%
+      "Design High-Performing Architectures": 16,  // 24%
+      "Design Cost-Optimized Architectures": 12    // 20%
+    };
+
+    const SUBJECT_LABELS = {
+      secure_architectures: "Secure Architectures",
+      resilient_architectures: "Resilient Architectures",
+      high_performing_architectures: "High-Performing",
+      cost_optimized_architectures: "Cost-Optimized",
+      operational_excellence_architectures: "Operational Excellence",
+      general: "General AWS"
+    };
+
+    // AWS service/topic type classification
+    const QUESTION_TYPE_MAP = {
+      "aws-architect":  { type: "Architecture Design", class: "type-analisis" },
+      "s3":             { type: "Storage",             class: "type-aplicacion" },
+      "ec2":            { type: "Compute",             class: "type-aplicacion" },
+      "rds":            { type: "Database",            class: "type-aplicacion" },
+      "iam":            { type: "Security & IAM",      class: "type-analisis" },
+      "lambda":         { type: "Serverless",          class: "type-aplicacion" },
+      "config":         { type: "Governance",          class: "type-concepto" },
+      "dynamodb":       { type: "NoSQL Database",      class: "type-aplicacion" },
+      "sqs":            { type: "Messaging",           class: "type-concepto" },
+      "cloudfront":     { type: "CDN & Edge",          class: "type-aplicacion" },
+      "ebs":            { type: "Block Storage",       class: "type-aplicacion" },
+      "auto-scaling":   { type: "Scalability",         class: "type-analisis" },
+      "aurora":         { type: "Managed DB",          class: "type-aplicacion" },
+      "cloudtrail":     { type: "Audit & Logging",     class: "type-concepto" },
+      "route-53":       { type: "DNS & Routing",       class: "type-analisis" },
+      "kms":            { type: "Encryption",          class: "type-analisis" },
+      "cloudwatch":     { type: "Monitoring",          class: "type-concepto" },
+      "direct-connect": { type: "Networking",          class: "type-analisis" },
+      "waf":            { type: "Security",            class: "type-analisis" },
+      "nat-gateway":    { type: "Networking",          class: "type-aplicacion" },
+      "eks":            { type: "Containers",          class: "type-aplicacion" },
+      "sns":            { type: "Messaging",           class: "type-concepto" },
+      "ecs":            { type: "Containers",          class: "type-aplicacion" },
+      "organizations":  { type: "Multi-Account",       class: "type-concepto" },
+      "redshift":       { type: "Data Warehouse",      class: "type-aplicacion" },
+      "vpc-endpoint":   { type: "Networking",          class: "type-analisis" },
+      "kinesis":        { type: "Streaming",           class: "type-aplicacion" },
+      "athena":         { type: "Analytics",           class: "type-aplicacion" },
+      "api-gateway":    { type: "API",                 class: "type-aplicacion" }
+    };
+
+    // Learning objectives per AWS service (what each question tests)
+    const LEARNING_OBJECTIVES = {
+      // AWS services
+      "aws-architect":  "Tests your ability to design multi-tier, scalable, and resilient architectures on AWS.",
+      "s3":             "Covers S3 storage classes, lifecycle policies, access control, versioning, and replication.",
+      "ec2":            "Tests EC2 instance types, placement groups, purchase options, and AMI management.",
+      "rds":            "Covers RDS Multi-AZ, Read Replicas, backup/restore, and engine selection.",
+      "iam":            "Tests IAM roles, policies, identity federation, STS, and least-privilege design.",
+      "lambda":         "Covers serverless patterns, invocation types, concurrency, and event sources.",
+      "config":         "Tests AWS Config rules, compliance evaluation, and resource change tracking.",
+      "dynamodb":       "Covers DynamoDB keys, indexes (GSI/LSI), streams, and capacity modes.",
+      "sqs":            "Tests SQS queue types (standard vs FIFO), visibility timeout, and DLQ patterns.",
+      "cloudfront":     "Covers CloudFront distributions, origins, caching policies, and signed URLs.",
+      "ebs":            "Tests EBS volume types (gp3, io2, st1, sc1), snapshots, and encryption.",
+      "auto-scaling":   "Covers ASG scaling policies, cooldowns, lifecycle hooks, and target tracking.",
+      "aurora":         "Tests Aurora Global Database, Aurora Serverless, and cluster endpoints.",
+      "cloudtrail":     "Covers CloudTrail log file validation, multi-region trails, and S3 delivery.",
+      "route-53":       "Tests Route 53 routing policies: latency, failover, weighted, geolocation.",
+      "kms":            "Covers KMS key types, envelope encryption, key policies, and CMK rotation.",
+      "cloudwatch":     "Tests CloudWatch metrics, alarms, dashboards, Logs Insights, and EventBridge.",
+      "direct-connect": "Covers Direct Connect connections, virtual interfaces, and hybrid networking.",
+      "waf":            "Tests WAF rules, rate limiting, managed rule groups, and integration with ALB/CloudFront.",
+      "nat-gateway":    "Covers NAT Gateway vs NAT instance, AZ-level HA, and private subnet internet access.",
+      "eks":            "Tests EKS node groups, Fargate profiles, and container orchestration patterns.",
+      "sns":            "Covers SNS topics, subscription filters, fan-out patterns, and message attributes.",
+      "ecs":            "Tests ECS launch types (EC2 vs Fargate), task definitions, and service scaling.",
+      "organizations":  "Covers AWS Organizations SCPs, OUs, consolidated billing, and account management.",
+      "redshift":       "Tests Redshift cluster types, distribution styles, sort keys, and Spectrum.",
+      "vpc-endpoint":   "Covers interface vs gateway VPC endpoints and PrivateLink patterns.",
+      "kinesis":        "Tests Kinesis Data Streams shards, Kinesis Firehose, and consumer patterns.",
+      "athena":         "Covers Athena query optimization, partitioning, and Glue catalog integration.",
+      "api-gateway":    "Tests API Gateway types (REST, HTTP, WebSocket), throttling, and caching."
+    };
+
+    function getLearningObjective(question) {
+      const tema = question.tema ? question.tema.toLowerCase() : "";
+      return LEARNING_OBJECTIVES[tema] || null;
+    }
+
+    // NEW: Extract all unique topics from questions for a given subject
+    function getTopicsForSubject(subject) {
+      const topics = new Set();
+      state.allQuestions
+        .filter(q => q.materia === subject)
+        .forEach(q => { if (q.tema && q.tema !== "general") topics.add(q.tema); });
+      return [...topics].sort();
+    }
+
+    function getQuestionType(question) {
+      // Check if question has explicit type field
+      if (question.type) {
+        return question.type;
+      }
+      // Derive from tema
+      const tema = question.tema ? question.tema.toLowerCase() : "";
+      const typeInfo = QUESTION_TYPE_MAP[tema];
+      if (typeInfo) {
+        return typeInfo;
+      }
+      // Default fallback
+      return { type: "Concepto Teorico", class: "type-concepto" };
+    }
+
+    const ID_PREFIX_BY_SUBJECT = {
+      "Design Secure Architectures":         "sec",
+      "Design Resilient Architectures":       "res",
+      "Design High-Performing Architectures": "hp",
+      "Design Cost-Optimized Architectures":  "co",
+      "Design Operationally Excellent Architectures": "ops",
+      "general": "gen"
+    };
+
+    const MOTIVATIONAL_PHRASES = [
+      "Correct! AWS certification incoming.",
+      "Right! +{puntos} pts. Solutions Architect mode.",
+      "Exactly! That's the right architecture.",
+      "Locked in! Keep the streak going.",
+      "Nailed it! +{puntos} pts.",
+      "Correct! One step closer to SAA-C03 pass."
+    ];
+
+    const state = {
+      customQuestions: [],
+      allQuestions: [],
+      quizQuestions: [],
+      currentIndex: 0,
+      elapsed: 0,
+      timerId: null,
+      answeredCurrent: false,
+      lastSelectedSubject: "Design Secure Architectures",
+      lastSelectedTopic: null,  // NEW: topic filter
+      selectedMode: "subject",  // NEW: current study mode
+      blockStats: null,
+      appStats: loadStats(),
+      wrongQuestions: {},
+      mockHistory: [],
+      mockTimerId: null,        // NEW: mock exam global timer
+      mockElapsed: 0            // NEW: mock exam elapsed time
+    };
+
+    const els = {
+      topTotalPoints: document.getElementById("top-total-points"),
+      topStreakPill: document.getElementById("top-streak-pill"),
+      topBestPill: document.getElementById("top-best-pill"),
+      targetScore: document.getElementById("target-score"),
+      targetBarFill: document.getElementById("target-bar-fill"),
+      targetLabel: document.getElementById("target-label"),
+      statStreak: document.getElementById("stat-streak"),
+      statAnswered: document.getElementById("stat-answered"),
+      statAccuracy: document.getElementById("stat-accuracy"),
+      trendSection: document.getElementById("trend-section"),
+      trendBars: document.getElementById("trend-bars"),
+      trendValues: document.getElementById("trend-values"),
+      weaknessSection: document.getElementById("weakness-section"),
+      weaknessList: document.getElementById("weakness-list"),
+      gapSection: document.getElementById("gap-section"),
+      gapChart: document.getElementById("gap-chart"),
+      recommendationsSection: document.getElementById("recommendations-section"),
+      recommendationsList: document.getElementById("recommendations-list"),
+      mockSection: document.getElementById("mock-section"),
+      mockBars: document.getElementById("mock-bars"),
+      mockValues: document.getElementById("mock-values"),
+      startMateria: document.getElementById("start-materia"),
+      customMateria: document.getElementById("custom-materia"),
+      startStatus: document.getElementById("start-status"),
+      topicFilterArea: document.getElementById("topic-filter-area"),
+      learningObjective: document.getElementById("learning-objective"),
+      learningObjectiveText: document.getElementById("learning-objective-text"),
+      reviewCountBadge: document.getElementById("review-count-badge"),
+      customStatus: document.getElementById("custom-status"),
+      subjectStats: document.getElementById("subject-stats"),
+      historyList: document.getElementById("history-list"),
+      startForm: document.getElementById("start-form"),
+      customForm: document.getElementById("custom-question-form"),
+      quizProgress: document.getElementById("quiz-progress"),
+      quizMateria: document.getElementById("quiz-materia"),
+      quizCombo: document.getElementById("quiz-combo"),
+      quizTimer: document.getElementById("quiz-timer"),
+      timerRingFill: document.getElementById("timer-ring-fill"),
+      speedBadge: document.getElementById("speed-badge"),
+      quizProgressFill: document.getElementById("quiz-progress-fill"),
+      questionCard: document.getElementById("question-card"),
+      questionTypeBadge: document.getElementById("question-type-badge"),
+      quizQuestion: document.getElementById("quiz-question"),
+      quizOptions: document.getElementById("quiz-options"),
+      quizTip: document.getElementById("quiz-tip"),
+      quizFeedback: document.getElementById("quiz-feedback"),
+      feedbackTitle: document.getElementById("feedback-title"),
+      feedbackMessage: document.getElementById("feedback-message"),
+      feedbackExplanation: document.getElementById("feedback-explanation"),
+      feedbackMeta: document.getElementById("feedback-meta"),
+      explanationCorrectSection: document.getElementById("explanation-correct-section"),
+      explanationCorrectText: document.getElementById("explanation-correct-text"),
+      explanationDistractorsSection: document.getElementById("explanation-distractors-section"),
+      explanationDistractorsList: document.getElementById("explanation-distractors-list"),
+      reportAnswerSection: document.getElementById("report-answer-section"),
+      reportAnswerBtn: document.getElementById("report-answer-btn"),
+      reportAnswerStatus: document.getElementById("report-answer-status"),
+      resourceLinksSection: document.getElementById("resource-links-section"),
+      nextQuestionBtn: document.getElementById("next-question-btn"),
+      reportSummary: document.getElementById("report-summary"),
+      reportAccuracy: document.getElementById("report-accuracy"),
+      reportAvgTime: document.getElementById("report-avg-time"),
+      reportPoints: document.getElementById("report-points"),
+      reportSlowTopics: document.getElementById("report-slow-topics"),
+      reportWrongTopics: document.getElementById("report-wrong-topics"),
+      retryBtn: document.getElementById("retry-btn"),
+      backHomeBtn: document.getElementById("back-home-btn"),
+      toast: document.getElementById("toast"),
+      xpPop: document.getElementById("xp-pop"),
+      confettiLayer: document.getElementById("confetti-layer"),
+      reportBanner: document.getElementById("report-banner"),
+      quizProgressLabel: document.getElementById("quiz-progress-label"),
+      topbarAvatar: document.getElementById("topbar-avatar"),
+      avatarPicker: document.getElementById("avatar-picker")
+    };
+
+    function defaultStats() {
+      return {
+        totalAnswered: 0,
+        totalCorrect: 0,
+        streak: 0,
+        bestStreak: 0,
+        totalPoints: 0,
+        bySubject: {},
+        history: []
+      };
+    }
+
+    function loadJSON(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        if (!raw) {
+          return fallback;
+        }
+        return JSON.parse(raw);
+      } catch (error) {
+        return fallback;
+      }
+    }
+
+    function saveJSON(key, value) {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
+
+    function loadStats() {
+      const loaded = loadJSON(STORAGE_KEYS.stats, defaultStats());
+      return {
+        ...defaultStats(),
+        ...loaded,
+        bySubject: loaded.bySubject || {},
+        history: Array.isArray(loaded.history) ? loaded.history : []
+      };
+    }
+
+    function saveStats() {
+      saveJSON(STORAGE_KEYS.stats, state.appStats);
+    }
+
+    // --- Wrong questions tracking (spaced repetition) ---
+    function loadWrongQuestions() {
+      // Returns a map: { questionId: { id, materia, tema, correctCount, wrongCount } }
+      return loadJSON(STORAGE_KEYS.wrongQuestions, {});
+    }
+
+    function saveWrongQuestions() {
+      saveJSON(STORAGE_KEYS.wrongQuestions, state.wrongQuestions);
+    }
+
+    function markQuestionWrong(question) {
+      if (!state.wrongQuestions[question.id]) {
+        state.wrongQuestions[question.id] = {
+          id: question.id,
+          materia: question.materia,
+          tema: question.tema,
+          correctCount: 0,
+          wrongCount: 0,
+          lastWrongAt: Date.now()
+        };
+      }
+      state.wrongQuestions[question.id].wrongCount += 1;
+      state.wrongQuestions[question.id].correctCount = 0;
+      state.wrongQuestions[question.id].lastWrongAt = Date.now();
+      saveWrongQuestions();
+      updateReviewErrorsButton();
+      updateReviewCountBadge();
+    }
+
+    function markQuestionCorrect(question) {
+      if (!state.wrongQuestions[question.id]) return;
+      delete state.wrongQuestions[question.id];
+      saveWrongQuestions();
+      updateReviewErrorsButton();
+      updateReviewCountBadge();
+    }
+
+    function getWrongQuestionIds() {
+      return Object.keys(state.wrongQuestions);
+    }
+
+    function updateReviewErrorsButton() {
+      // Only updates the review count badge now
+      updateReviewCountBadge();
+    }
+
+    // --- Flagged wrong answers ---
+    function getFlaggedAnswers() {
+      return loadJSON(STORAGE_KEYS.flaggedAnswers, []);
+    }
+
+    function flagAnswer(questionId) {
+      const flagged = getFlaggedAnswers();
+      if (!flagged.includes(questionId)) {
+        flagged.push(questionId);
+        saveJSON(STORAGE_KEYS.flaggedAnswers, flagged);
+      }
+    }
+
+    function ensureSubjectStats(materia) {
+      if (!state.appStats.bySubject[materia]) {
+        state.appStats.bySubject[materia] = {
+          answered: 0,
+          correct: 0,
+          totalTime: 0,
+          failedTopics: {}
+        };
+      }
+      return state.appStats.bySubject[materia];
+    }
+
+    function isValidQuestion(question) {
+      if (!question || typeof question !== "object") {
+        return false;
+      }
+      if (!question.id || !question.materia || !question.tema || !question.pregunta) {
+        return false;
+      }
+      const opts = question.opciones;
+      if (!Array.isArray(opts) || opts.length !== 4) {
+        return false;
+      }
+      if (opts.some((o) => typeof o !== "string" || !String(o).trim())) {
+        return false;
+      }
+      if (
+        typeof question.correcta !== "number" ||
+        !Number.isInteger(question.correcta) ||
+        question.correcta < 0 ||
+        question.correcta > 3
+      ) {
+        return false;
+      }
+      // explicacion may be empty for PDF-imported items; UI shows fallback copy
+      return true;
+    }
+
+    function normalizeQuestion(question) {
+      return {
+        id: String(question.id).trim(),
+        materia: String(question.materia).trim(),
+        tema: String(question.tema).trim(),
+        dificultad: Number(question.dificultad) || 1,
+        pregunta: String(question.pregunta).trim(),
+        opciones: question.opciones.map((opt) => String(opt).trim()),
+        correcta: Number(question.correcta),
+        explicacion: question.explicacion ? String(question.explicacion).trim() : "",
+        tip: question.tip ? String(question.tip).trim() : "",
+        type: question.type || null,
+        explicacion_correcta: question.explicacion_correcta ? String(question.explicacion_correcta).trim() : "",
+        analisis_distractores: question.analisis_distractores ? String(question.analisis_distractores).trim() : ""
+      };
+    }
+
+    function loadCustomQuestions() {
+      const loaded = loadJSON(STORAGE_KEYS.customQuestions, []);
+      if (!Array.isArray(loaded)) {
+        return [];
+      }
+      return loaded.filter(isValidQuestion).map(normalizeQuestion);
+    }
+
+    function saveCustomQuestions() {
+      saveJSON(STORAGE_KEYS.customQuestions, state.customQuestions);
+    }
+
+    function reloadQuestions() {
+      const bundled = Array.isArray(window.QUESTIONS) ? window.QUESTIONS : [];
+      const merged = new Map();
+      [...bundled, ...state.customQuestions]
+        .filter(isValidQuestion)
+        .map(normalizeQuestion)
+        .forEach((question) => {
+          merged.set(question.id, question);
+        });
+      state.allQuestions = [...merged.values()];
+    }
+
+    function getAllSubjects() {
+      const subjects = new Set(state.allQuestions.map((question) => question.materia));
+      return [...subjects].sort();
+    }
+
+    function subjectLabel(subject) {
+      return SUBJECT_LABELS[subject] || subject;
+    }
+
+    function setupSubjectSelects() {
+      const subjects = getAllSubjects();
+      if (subjects.length === 0) {
+        console.warn("[SAA-C03] No subjects found! state.allQuestions has", state.allQuestions.length, "questions");
+        console.warn("[SAA-C03] window.QUESTIONS is", typeof window.QUESTIONS, Array.isArray(window.QUESTIONS) ? `with ${window.QUESTIONS.length} items` : "");
+      }
+      const optionsMarkup = subjects
+        .map((subject) => `<option value="${subject}">${subjectLabel(subject)}</option>`)
+        .join("");
+      els.startMateria.innerHTML = optionsMarkup;
+      els.customMateria.innerHTML = optionsMarkup;
+
+      if (subjects.includes(state.lastSelectedSubject)) {
+        els.startMateria.value = state.lastSelectedSubject;
+      }
+      if (subjects.length > 0) {
+        if (!els.startMateria.value) {
+          els.startMateria.value = subjects[0];
+        }
+        if (!els.customMateria.value) {
+          els.customMateria.value = subjects[0];
+        }
+      }
+
+      // NEW: Render topic chips for currently selected subject
+      renderTopicChips(els.startMateria.value);
+    }
+
+    // NEW: Render topic filter chips
+    function renderTopicChips(subject) {
+      const topics = getTopicsForSubject(subject);
+      if (topics.length === 0) {
+        els.topicFilterArea.innerHTML = "";
+        els.topicFilterArea.style.display = "none";
+        return;
+      }
+
+      els.topicFilterArea.style.display = "flex";
+      els.topicFilterArea.innerHTML = `<span style="font-size:0.72rem;color:var(--muted);margin-right:4px;">Service:</span>` +
+        `<span class="topic-chip ${!state.lastSelectedTopic ? "active" : ""}" data-topic="">Todos</span>` +
+        topics.map(t =>
+          `<span class="topic-chip ${state.lastSelectedTopic === t ? "active" : ""}" data-topic="${t}">${t}</span>`
+        ).join("");
+
+      // Bind click events
+      els.topicFilterArea.querySelectorAll(".topic-chip").forEach(chip => {
+        chip.addEventListener("click", () => {
+          state.lastSelectedTopic = chip.dataset.topic || null;
+          els.topicFilterArea.querySelectorAll(".topic-chip").forEach(c => c.classList.remove("active"));
+          chip.classList.add("active");
+        });
+      });
+    }
+
+    function formatPercent(value) {
+      if (!Number.isFinite(value)) {
+        return "0%";
+      }
+      return `${Math.round(value)}%`;
+    }
+
+    function renderHomeStats() {
+      const answered = state.appStats.totalAnswered;
+      const accuracy = answered === 0 ? 0 : (state.appStats.totalCorrect / answered) * 100;
+      els.statStreak.textContent = String(state.appStats.streak);
+      els.statAnswered.textContent = String(answered);
+      els.statAccuracy.textContent = formatPercent(accuracy);
+      els.topTotalPoints.textContent = String(state.appStats.totalPoints);
+      els.topStreakPill.textContent = `Streak ${state.appStats.streak}`;
+      els.topBestPill.textContent = `Best ${state.appStats.bestStreak}`;
+      els.topStreakPill.classList.toggle("hot", state.appStats.streak >= 3);
+
+      const nudge = document.getElementById("onboarding-nudge");
+      if (nudge) nudge.style.display = answered === 0 ? "" : "none";
+
+      const subjects = getAllSubjects();
+      if (subjects.length === 0) {
+        els.subjectStats.innerHTML = `
+          <div class='subject-item' style="border-color:rgba(255,93,115,0.4);background:rgba(255,93,115,0.08);">
+            <strong>⚠️ No questions loaded</strong>
+            <small>questions.js may not have loaded. Open browser console (F12) to check errors.</small><br>
+            <small style="color:var(--accent);margin-top:6px;display:inline-block;">
+              💡 Tip: Run <code style="background:rgba(0,0,0,0.3);padding:2px 6px;border-radius:4px;">python3 -m http.server 8080</code> instead of opening the file directly.
+            </small>
+          </div>`;
+        return;
+      }
+
+      els.subjectStats.innerHTML = subjects
+        .map((subject) => {
+          const subjectStats = ensureSubjectStats(subject);
+          const subjectAccuracy = subjectStats.answered === 0
+            ? 0
+            : (subjectStats.correct / subjectStats.answered) * 100;
+          const avgTime = subjectStats.answered === 0
+            ? 0
+            : Math.round(subjectStats.totalTime / subjectStats.answered);
+          const accClass = subjectStats.answered === 0
+            ? ""
+            : subjectAccuracy >= 75 ? "accuracy-good"
+            : subjectAccuracy >= 50 ? "accuracy-mid"
+            : "accuracy-bad";
+          const hint = subjectStats.answered > 0 ? `<small style="color:var(--accent);font-size:0.7rem;">▶ Practice</small>` : "";
+          return `
+            <article class="subject-item ${accClass}" data-subject="${subject}" title="Click to practice ${subjectLabel(subject)}">
+              <strong>${subjectLabel(subject)}</strong>
+              <small>${subjectStats.answered} answered</small><br>
+              <small>${formatPercent(subjectAccuracy)} accuracy</small><br>
+              <small>${avgTime}s avg</small>
+              ${hint}
+            </article>
+          `;
+        })
+        .join("");
+    }
+
+    function updateTargetTracker() {
+      const recent = state.appStats.history.slice(-5);
+      if (recent.length === 0) {
+        els.targetScore.textContent = "--";
+        els.targetLabel.textContent = "Completa un bloque";
+        els.targetBarFill.style.width = "0%";
+        return;
+      }
+
+      // Estimate score based on average accuracy of recent blocks (AWS 1000-point scale)
+      const totalCorrect = recent.reduce((sum, b) => sum + b.correct, 0);
+      const totalQuestions = recent.reduce((sum, b) => sum + b.total, 0);
+      const avgAccuracy = totalQuestions === 0 ? 0 : (totalCorrect / totalQuestions);
+
+      // Approximate AWS scaled score: 100-1000 range, passing = 720
+      const estimatedScore = Math.round(100 + avgAccuracy * 900);
+      const pct = Math.min(100, ((estimatedScore - 100) / (1000 - 100)) * 100);
+
+      els.targetScore.textContent = `~${estimatedScore}/1000`;
+      els.targetBarFill.style.width = `${pct}%`;
+
+      if (estimatedScore >= TARGET_SCORE) {
+        els.targetBarFill.className = "target-bar-fill high";
+        els.targetLabel.textContent = "Pass range!";
+      } else if (estimatedScore >= TARGET_SCORE - 80) {
+        els.targetBarFill.className = "target-bar-fill mid";
+        const diff = TARGET_SCORE - estimatedScore;
+        els.targetLabel.textContent = `~${diff} pts to pass`;
+      } else {
+        els.targetBarFill.className = "target-bar-fill low";
+        const diff = TARGET_SCORE - estimatedScore;
+        els.targetLabel.textContent = `~${diff} pts to pass`;
+      }
+    }
+
+    function renderTrends() {
+      const recent = state.appStats.history.slice(-5);
+      if (recent.length < 2) {
+        els.trendSection.style.display = "none";
+        return;
+      }
+
+      els.trendSection.style.display = "";
+      const accuracies = recent.map((b) => (b.total === 0 ? 0 : Math.round((b.correct / b.total) * 100)));
+
+      // Mini bar chart
+      els.trendBars.innerHTML = accuracies
+        .map((acc) => {
+          const height = Math.max(4, (acc / 100) * 32);
+          const color = acc >= 80 ? "var(--accent-3)" : acc >= 60 ? "#fbbf24" : "var(--danger)";
+          return `<div style="flex:1;height:${height}px;background:${color};border-radius:3px 3px 0 0;transition:height 200ms ease;"></div>`;
+        })
+        .join("");
+
+      els.trendValues.innerHTML = accuracies
+        .map((acc) => `<div style="flex:1;text-align:center;font-size:0.7rem;color:var(--muted);">${acc}%</div>`)
+        .join("");
+    }
+
+    function renderWeaknesses() {
+      // Find topics with lowest accuracy across all subjects
+      const topicStats = {};
+      state.appStats.history.forEach((block) => {
+        // Aggregate from bySubject
+        for (const [subj, data] of Object.entries(state.appStats.bySubject)) {
+          if (data.failedTopics) {
+            for (const [topic, fails] of Object.entries(data.failedTopics)) {
+              if (!topicStats[topic]) topicStats[topic] = { fails: 0, subject: subj };
+              topicStats[topic].fails += fails;
+            }
+          }
+        }
+      });
+
+      const weakTopics = Object.entries(topicStats)
+        .map(([topic, data]) => ({ topic, ...data, subjectLabel: subjectLabel(data.subject) }))
+        .sort((a, b) => b.fails - a.fails)
+        .slice(0, 5);
+
+      if (weakTopics.length === 0) {
+        els.weaknessSection.style.display = "none";
+        return;
+      }
+
+      els.weaknessSection.style.display = "";
+      els.weaknessList.innerHTML = weakTopics
+        .map(
+          (item) => `<li><strong>${item.topic}</strong> <small>(${item.subjectLabel}): ${item.fails} error(s)</small></li>`
+        )
+        .join("");
+    }
+
+    function renderGapChart() {
+      const subjects = getAllSubjects();
+      if (subjects.length === 0 || state.appStats.totalAnswered === 0) {
+        els.gapSection.style.display = "none";
+        return;
+      }
+
+      els.gapSection.style.display = "";
+
+      const subjectData = subjects.map((subj) => {
+        const data = state.appStats.bySubject[subj] || { answered: 0, correct: 0 };
+        const accuracy = data.answered === 0 ? 0 : (data.correct / data.answered) * 100;
+        return {
+          subject: subj,
+          label: subjectLabel(subj).substring(0, 8),
+          accuracy: Math.round(accuracy),
+          answered: data.answered
+        };
+      });
+
+      els.gapChart.innerHTML = subjectData
+        .map((item) => {
+          const colorClass = item.accuracy >= 70 ? "good" : item.accuracy >= 50 ? "medium" : "bad";
+          return `
+            <div class="gap-bar">
+              <div class="gap-bar-track">
+                <div class="gap-bar-fill ${colorClass}" style="height: ${Math.max(item.accuracy, 4)}%;"></div>
+              </div>
+              <div class="gap-bar-value">${item.accuracy}%</div>
+              <div class="gap-bar-label">${item.label}</div>
+            </div>
+          `;
+        })
+        .join("");
+    }
+
+    function renderRecommendations() {
+      if (state.appStats.totalAnswered < 10) {
+        els.recommendationsSection.style.display = "none";
+        return;
+      }
+
+      els.recommendationsSection.style.display = "";
+      const recommendations = [];
+
+      // Find weakest subject
+      const subjects = Object.entries(state.appStats.bySubject)
+        .filter(([_, data]) => data.answered >= 5)
+        .map(([subj, data]) => ({
+          subject: subj,
+          accuracy: data.answered === 0 ? 0 : (data.correct / data.answered) * 100,
+          answered: data.answered
+        }))
+        .sort((a, b) => a.accuracy - b.accuracy);
+
+      if (subjects.length > 0) {
+        const weakest = subjects[0];
+        if (weakest.accuracy < 60) {
+          recommendations.push({
+            title: `Practice more: ${subjectLabel(weakest.subject)}`,
+            text: `You have ${weakest.accuracy}% accuracy with ${weakest.answered} questions. Do another block of this domain to build confidence.`,
+            action: `Start ${subjectLabel(weakest.subject)}`,
+            actionType: "subject",
+            actionValue: weakest.subject
+          });
+        }
+      }
+
+      // Speed recommendation
+      const recentBlocks = state.appStats.history.slice(-3);
+      if (recentBlocks.length > 0) {
+        const avgTime = recentBlocks.reduce((sum, b) => sum + (b.avgTime || 0), 0) / recentBlocks.length;
+        if (avgTime > 120) {
+          recommendations.push({
+            title: "Try to answer faster",
+            text: `Your average time is ${Math.round(avgTime)}s per question. In the real SAA-C03 you have ~120s per question. Practice with 15-question blocks to improve speed.`,
+            action: "Quick practice block",
+            actionType: "mode",
+            actionValue: "quick"
+          });
+        }
+      }
+
+      // Streak recommendation
+      if (state.appStats.bestStreak >= 5 && state.appStats.streak < 3) {
+        recommendations.push({
+          title: "Recover your streak!",
+          text: `Your best streak was ${state.appStats.bestStreak} in a row. You're at ${state.appStats.streak} now. Let's go again!`,
+          action: "Practice block",
+          actionType: "focus",
+          actionValue: "streak"
+        });
+      }
+
+      // If no specific recommendations, give general encouragement
+      if (recommendations.length === 0) {
+        const accuracy = (state.appStats.totalCorrect / state.appStats.totalAnswered) * 100;
+        if (accuracy >= 70) {
+          recommendations.push({
+            title: "Looking good!",
+            text: `You have ${Math.round(accuracy)}% global accuracy. Keep going to maintain your pass-range level.`,
+            action: "AWS SAA-C03 Mock",
+            actionType: "mode",
+            actionValue: "area1"
+          });
+        } else {
+          recommendations.push({
+            title: "Keep practicing",
+            text: `Your accuracy is ${Math.round(accuracy)}%. Do domain blocks to reinforce the hardest areas.`,
+            action: "View domain breakdown",
+            actionType: "scroll",
+            actionValue: "subject-stats"
+          });
+        }
+      }
+
+      els.recommendationsList.innerHTML = recommendations
+        .map((rec) => `
+          <div class="recommendation-card">
+            <h4>${rec.title}</h4>
+            <p>${rec.text}</p>
+            <span class="action-btn" data-action="${rec.actionType}" data-value="${rec.actionValue}">${rec.action}</span>
+          </div>
+        `)
+        .join("");
+
+      // Bind action buttons
+      els.recommendationsList.querySelectorAll(".action-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const action = btn.dataset.action;
+          const value = btn.dataset.value;
+
+          if (action === "subject") {
+            state.selectedMode = "subject";
+            state.lastSelectedTopic = null;
+            els.startMateria.value = value;
+            renderTopicChips(value);
+            els.startForm.dispatchEvent(new Event("submit"));
+          } else if (action === "mode") {
+            state.selectedMode = value === "quick" ? "subject" : value;
+            els.startForm.dispatchEvent(new Event("submit"));
+          } else if (action === "scroll") {
+            document.getElementById("subject-stats").scrollIntoView({ behavior: "smooth" });
+          }
+        });
+      });
+    }
+
+    function loadMockHistory() {
+      return loadJSON(STORAGE_KEYS.mockHistory, []);
+    }
+
+    function saveMockHistory() {
+      saveJSON(STORAGE_KEYS.mockHistory, state.mockHistory);
+    }
+
+    function loadAvatar() {
+      const savedId = localStorage.getItem(STORAGE_KEYS.avatar);
+      const found = AVATARS.find(a => a.id === savedId);
+      return found || AVATARS[0];
+    }
+
+    function saveAvatar(avatarId) {
+      localStorage.setItem(STORAGE_KEYS.avatar, avatarId);
+    }
+
+    function renderAvatarPicker() {
+      if (!els.avatarPicker) return;
+      els.avatarPicker.innerHTML = AVATARS.map(av => `
+        <button class="avatar-btn${av.id === currentAvatar.id ? " selected" : ""}"
+          data-avatar-id="${av.id}" title="${av.tagline}" aria-label="Seleccionar avatar ${av.name}">
+          <span class="av-emoji">${av.emoji}</span>
+          <span class="av-name">${av.name}</span>
+        </button>
+      `).join("");
+      els.avatarPicker.querySelectorAll(".avatar-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const av = AVATARS.find(a => a.id === btn.dataset.avatarId);
+          if (!av) return;
+          currentAvatar = av;
+          saveAvatar(av.id);
+          renderAvatarPicker();
+          updateTopbarAvatar();
+        });
+      });
+    }
+
+    function updateTopbarAvatar() {
+      if (els.topbarAvatar) els.topbarAvatar.textContent = currentAvatar.emoji;
+    }
+
+    // === CUSTOM AVATAR SYSTEM ===
+    const EMOJI_OPTIONS = [
+      "🐱","🐶","🦊","🐻","🐼","🐨","🦁","🐯","🐸","🐵",
+      "🦄","🐲","🐉","🦅","🦉","🐺","🦈","🐙","🦋","🐢",
+      "🤖","👾","🎃","👻","💀","🤡","🧠","🔮","🌙","⚡",
+      "🔥","💎","🌊","🍀","🌈","⭐","🎯","🎮","🚀","🛸"
+    ];
+
+    const ADJECTIVES = ["Cosmic","Neon","Quantum","Cyber","Hyper","Mega","Ultra","Super","Turbo","Hyper"];
+    const NOUNS = ["Coder","Wizard","Ninja","Hacker","Pilot","Scout","Ranger","Knight","Mage","Rogue"];
+
+    function generateRandomName() {
+      return ADJECTIVES[Math.floor(Math.random() * ADJECTIVES.length)] +
+        " " + NOUNS[Math.floor(Math.random() * NOUNS.length)];
+    }
+
+    function saveCustomAvatar(emoji, name) {
+      const data = { emoji, name };
+      localStorage.setItem(STORAGE_KEYS.avatarCustom, JSON.stringify(data));
+      currentAvatar = { id: "custom", emoji, name, tagline: "your creation" };
+      saveAvatar("custom");
+    }
+
+    function loadCustomAvatar() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEYS.avatarCustom);
+        if (!raw) return null;
+        return JSON.parse(raw);
+      } catch {
+        return null;
+      }
+    }
+
+    function initCustomAvatarSystem() {
+      const toggleBtn = document.getElementById("toggle-custom-avatar-btn");
+      const customCreator = document.getElementById("custom-avatar-creator");
+      const emojiInput = document.getElementById("custom-avatar-emoji");
+      const nameInput = document.getElementById("custom-avatar-name");
+      const randomizeBtn = document.getElementById("randomize-name-btn");
+      const applyBtn = document.getElementById("apply-custom-avatar-btn");
+      const emojiGrid = document.getElementById("emoji-grid");
+
+      if (!toggleBtn || !customCreator) return;
+
+      // Load saved custom avatar into currentAvatar if it exists
+      const saved = loadCustomAvatar();
+      if (saved && saved.emoji) {
+        currentAvatar = { id: "custom", emoji: saved.emoji, name: saved.name, tagline: "your creation" };
+        saveAvatar("custom");
+        updateTopbarAvatar();
+      }
+
+      // Toggle custom avatar creator
+      toggleBtn.addEventListener("click", () => {
+        const isVisible = customCreator.style.display !== "none";
+        customCreator.style.display = isVisible ? "none" : "block";
+        toggleBtn.textContent = isVisible ? "+ Create custom" : "− Hide";
+        if (!isVisible && emojiGrid && !emojiGrid.hasChildNodes()) {
+          renderEmojiGrid();
+        }
+      });
+
+      // Randomize name
+      if (randomizeBtn) {
+        randomizeBtn.addEventListener("click", () => {
+          nameInput.value = generateRandomName();
+          nameInput.focus();
+        });
+      }
+
+      // Apply custom avatar
+      if (applyBtn) {
+        applyBtn.addEventListener("click", () => {
+          const emoji = emojiInput.value.trim() || "🐱";
+          const name = nameInput.value.trim() || generateRandomName();
+          saveCustomAvatar(emoji, name);
+          renderAvatarPicker();
+          updateTopbarAvatar();
+          showToast(`✨ Avatar "${name}" ${emoji} applied!`);
+        });
+      }
+
+      function renderEmojiGrid() {
+        if (!emojiGrid) return;
+        emojiGrid.innerHTML = EMOJI_OPTIONS.map(emoji => `
+          <button class="emoji-option" data-emoji="${emoji}" type="button" aria-label="Select emoji ${emoji}">
+            ${emoji}
+          </button>
+        `).join("");
+        emojiGrid.querySelectorAll(".emoji-option").forEach(btn => {
+          btn.addEventListener("click", () => {
+            emojiGrid.querySelectorAll(".emoji-option").forEach(b => b.classList.remove("selected"));
+            btn.classList.add("selected");
+            emojiInput.value = btn.dataset.emoji;
+          });
+        });
+      }
+    }
+
+    function reactAvatar(type) {
+      const el = els.topbarAvatar;
+      if (!el) return;
+      el.classList.remove("react-correct", "react-wrong");
+      void el.offsetWidth;
+      el.classList.add(type === "correct" ? "react-correct" : "react-wrong");
+      setTimeout(() => el.classList.remove("react-correct", "react-wrong"), 500);
+    }
+
+    function renderMockHistory() {
+      const mocks = state.mockHistory || [];
+      if (mocks.length === 0) {
+        els.mockSection.style.display = "none";
+        return;
+      }
+
+      els.mockSection.style.display = "";
+      // Show estimated AWS score (100-1000) for each mock
+      const estimated = mocks.map((m) => Math.round(100 + (m.accuracy / 100) * 900));
+
+      // Target line at 720/1000 → 68.9% of the 100-1000 range
+      const targetPct = ((TARGET_SCORE - 100) / 900) * 100;
+
+      els.mockBars.innerHTML = estimated
+        .map((val, i) => {
+          const height = Math.max(4, ((val - 100) / 900) * 48);
+          const color = val >= TARGET_SCORE ? "var(--accent-3)" : val >= TARGET_SCORE - 60 ? "#fbbf24" : "var(--danger)";
+          return `<div style="flex:1;height:${height}px;background:${color};border-radius:3px 3px 0 0;position:relative;">
+            ${i === estimated.length - 1 ? `<div style="position:absolute;left:-2px;right:-2px;bottom:${(targetPct / 100) * 48}px;height:1px;background:var(--accent-2);opacity:0.6;"></div>` : ""}
+          </div>`;
+        })
+        .join("");
+
+      els.mockValues.innerHTML = estimated
+        .map((val) => {
+          const diff = val - TARGET_SCORE;
+          const label = diff >= 0 ? `+${diff}` : `${diff}`;
+          return `<div style="flex:1;text-align:center;font-size:0.7rem;color:var(--muted);">${val}<br><span style="color:${diff >= 0 ? "var(--accent-3)" : "var(--danger)"};font-size:0.65rem;">${label}</span></div>`;
+        })
+        .join("");
+    }
+
+    function renderHistory() {
+      const recent = [...state.appStats.history].slice(-6).reverse();
+      if (recent.length === 0) {
+        els.historyList.innerHTML = `<div class="empty-state" style="grid-column:1/-1;"><span class="empty-icon">📋</span><strong>No blocks yet</strong><p>Complete your first study block to see your history here.</p></div>`;
+        return;
+      }
+
+      els.historyList.innerHTML = recent
+        .map((item) => {
+          const when = new Date(item.finishedAt).toLocaleString();
+          return `
+            <article class="history-item">
+              <strong>${subjectLabel(item.materia)}</strong>
+              <small>${item.correct}/${item.total} correct (${item.accuracy}%)</small><br>
+              <small>${item.avgTime}s per question | +${item.points} pts</small><br>
+              <small>${when}</small>
+            </article>
+          `;
+        })
+        .join("");
+    }
+
+    function renderHome() {
+      renderHomeStats();
+      renderHistory();
+      updateTargetTracker();
+      renderTrends();
+      renderWeaknesses();
+      renderGapChart();
+      renderRecommendations();
+      renderMockHistory();
+    }
+
+    function showScreen(screenId) {
+      document.querySelectorAll(".screen").forEach((screen) => {
+        screen.classList.toggle("active", screen.id === screenId);
+      });
+
+      // Keep nav tabs in sync
+      updateNavTabs(screenId);
+
+      if (screenId === "report-screen") {
+        const panel = document.querySelector("#report-screen > .panel");
+        if (panel) {
+          panel.style.animation = "none";
+          void panel.offsetWidth;
+          panel.style.animation = "slide-up-in 420ms var(--ease-out-quart) both";
+        }
+        setTimeout(() => {
+          animateCounter(els.reportAccuracy, _reportTargets.accuracy, "%", 900);
+          animateCounter(els.reportAvgTime, _reportTargets.avgTime, "s", 700);
+          const ptsEl = els.reportPoints;
+          const start = performance.now();
+          const target = _reportTargets.points;
+          function tickPts(now) {
+            const t = Math.min((now - start) / 1100, 1);
+            const eased = 1 - Math.pow(1 - t, 4);
+            ptsEl.textContent = `+${Math.round(target * eased)}`;
+            if (t < 1) requestAnimationFrame(tickPts);
+            else {
+              ptsEl.textContent = `+${target}`;
+              ptsEl.classList.add("counter-done");
+              setTimeout(() => ptsEl.classList.remove("counter-done"), 300);
+            }
+          }
+          ptsEl.textContent = "+0";
+          requestAnimationFrame(tickPts);
+        }, 180);
+      }
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function setStatus(element, text, type = "neutral") {
+      element.textContent = text;
+      element.classList.remove("success", "error");
+      if (type === "success") {
+        element.classList.add("success");
+      }
+      if (type === "error") {
+        element.classList.add("error");
+      }
+    }
+
+    function showToast(message) {
+      els.toast.textContent = message;
+      els.toast.className = "toast show";
+      setTimeout(() => {
+        els.toast.classList.remove("show");
+      }, 2000);
+    }
+
+    let _reportTargets = { accuracy: 0, avgTime: 0, points: 0 };
+
+    function animateCounter(el, target, suffix = "", duration = 900) {
+      const start = performance.now();
+      function tick(now) {
+        const t = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - t, 4); // ease-out-quart
+        el.textContent = `${Math.round(target * eased)}${suffix}`;
+        if (t < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          el.textContent = `${target}${suffix}`;
+          el.classList.add("counter-done");
+          setTimeout(() => el.classList.remove("counter-done"), 300);
+        }
+      }
+      el.textContent = `0${suffix}`;
+      requestAnimationFrame(tick);
+    }
+
+    function showXp(points) {
+      els.xpPop.textContent = `+${points} XP`;
+      els.xpPop.classList.remove("show");
+      void els.xpPop.offsetWidth;
+      els.xpPop.classList.add("show");
+      setTimeout(() => {
+        els.xpPop.classList.remove("show");
+      }, 760);
+    }
+
+    const STREAK_MILESTONES = {
+      5:  "🔥 5 in a row! Solutions Architect unlocked!",
+      10: "⚡ 10 straight! You're a cloud machine!",
+      15: "🚀 15 streak! SAA-C03 is yours!",
+      20: "💥 20 in a row! AWS LEGEND!"
+    };
+
+    function showStreakMilestone(streak) {
+      const msg = STREAK_MILESTONES[streak] || `🔥 ${streak} in a row!`;
+      els.toast.textContent = msg;
+      els.toast.className = "toast milestone show";
+      setTimeout(() => { els.toast.classList.remove("show", "milestone"); }, 2400);
+      createConfetti(45);
+      const fireEl = document.getElementById("quiz-streak-fire");
+      if (fireEl) {
+        fireEl.style.animation = "none";
+        void fireEl.offsetWidth;
+        fireEl.style.animation = "streak-burst 480ms var(--ease-out-expo)";
+        setTimeout(() => { fireEl.style.animation = ""; }, 500);
+      }
+    }
+
+    function updateComboUI() {
+      const streak = state.appStats.streak;
+      els.quizCombo.textContent = `Combo x${streak}`;
+      els.quizCombo.classList.toggle("hot", streak >= 3);
+
+      const fireEl = document.getElementById("quiz-streak-fire");
+      if (fireEl) {
+        if (streak === 0) {
+          fireEl.textContent = "🔥 0";
+          fireEl.className = "streak-fire";
+        } else if (streak >= 10) {
+          fireEl.textContent = `⚡ ${streak}`;
+          fireEl.className = "streak-fire blazing";
+        } else {
+          fireEl.textContent = `🔥 ${streak}`;
+          fireEl.className = `streak-fire${streak >= 3 ? " active" : ""}`;
+        }
+      }
+    }
+
+    function shuffle(array) {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function calculatePoints(difficulty, streak) {
+      const base = 8 + (Number(difficulty) || 1) * 4;
+      const steps = Math.floor(Math.max(streak - 1, 0) / 3);
+      const multiplier = Math.min(2.5, 1 + steps * 0.25);
+      return Math.round(base * multiplier);
+    }
+
+    const TIMER_RING_CIRCUMFERENCE = 81.68; // 2 * PI * 13
+    const TARGET_TIME_PER_QUESTION = 120; // seconds — 130 min / 65 questions
+
+    function startTimer() {
+      stopTimer();
+      state.elapsed = 0;
+      updateTimerUI(0);
+      state.timerId = setInterval(() => {
+        state.elapsed += 1;
+        updateTimerUI(state.elapsed);
+      }, 1000);
+    }
+
+    function stopTimer() {
+      if (state.timerId) {
+        clearInterval(state.timerId);
+        state.timerId = null;
+      }
+    }
+
+    function updateTimerUI(seconds) {
+      els.quizTimer.textContent = `${seconds}s`;
+
+      // Update ring progress (0-60s full circle)
+      const progress = Math.min(seconds / TARGET_TIME_PER_QUESTION, 1);
+      const offset = TIMER_RING_CIRCUMFERENCE * (1 - progress);
+      els.timerRingFill.style.strokeDashoffset = offset;
+
+      // Color states
+      els.quizTimer.classList.remove("warn", "critical");
+      els.timerRingFill.classList.remove("warn", "critical");
+
+      if (seconds > 180) {
+        els.quizTimer.classList.add("critical");
+        els.timerRingFill.classList.add("critical");
+      } else if (seconds > 150) {
+        els.quizTimer.classList.add("warn");
+        els.timerRingFill.classList.add("warn");
+      }
+    }
+
+    function getSpeedLabel(seconds) {
+      if (seconds < 45)  return { text: "Fast", class: "fast" };
+      if (seconds < 90)  return { text: "Good", class: "" };
+      if (seconds < 120) return { text: "Normal", class: "" };
+      return { text: "Slow", class: "slow" };
+    }
+
+    function startQuiz(subject) {
+      const mode = state.selectedMode;
+      let questions = [];
+      let label = "";
+
+      // NEW: Apply topic filter if set
+      let pool = state.allQuestions;
+      if (state.lastSelectedTopic) {
+        pool = pool.filter(q => q.materia === subject && q.tema === state.lastSelectedTopic);
+      } else if (mode === "subject") {
+        pool = pool.filter(q => q.materia === subject);
+      }
+
+      if (mode === "mock") {
+        // Mock exam: 65 questions, SAA-C03 official domain distribution
+        const subjectQuestions = {};
+        let totalAvailable = 0;
+        for (const [subj, count] of Object.entries(SAA_DISTRIBUTION)) {
+          const subjPool = state.allQuestions.filter(q => q.materia === subj);
+          const taken = shuffle(subjPool).slice(0, Math.min(count, subjPool.length));
+          subjectQuestions[subj] = taken;
+          totalAvailable += taken.length;
+        }
+
+        if (totalAvailable === 0) {
+          setStatus(els.startStatus, "Not enough questions for a mock exam.", "error");
+          return;
+        }
+
+        questions = shuffle(Object.values(subjectQuestions).flat());
+        label = `AWS SAA-C03 Mock (${questions.length} questions, 130 min)`;
+        state.lastSelectedSubject = "mock";
+      } else if (mode === "review") {
+        // Spaced repetition: prioritize questions with highest wrongCount
+        const wrongIds = getWrongQuestionIds();
+        if (wrongIds.length === 0) {
+          setStatus(els.startStatus, "No previous errors. Answer some questions first.", "error");
+          return;
+        }
+
+        // Score each wrong question: higher wrongCount = higher priority, decay after correct
+        const scoredWrong = wrongIds
+          .map(id => {
+            const q = state.allQuestions.find(q => q.id === id);
+            if (!q) return null;
+            const sr = state.wrongQuestions[id];
+            return { ...q, _wrongCount: sr.wrongCount, _lastWrongAt: sr.lastWrongAt || 0 };
+          })
+          .filter(Boolean)
+          .sort((a, b) => {
+            // Oldest failure first — true spaced repetition
+            if (a._lastWrongAt !== b._lastWrongAt) return a._lastWrongAt - b._lastWrongAt;
+            return b._wrongCount - a._wrongCount;
+          });
+
+        const blockSize = Math.min(20, scoredWrong.length);
+        questions = scoredWrong.slice(0, blockSize).map(({ _wrongCount, _lastWrongAt, ...q }) => q);
+        label = `Repaso espaciado (${blockSize} preguntas priorizadas)`;
+        state.lastSelectedSubject = "review";
+      } else if (mode === "topic") {
+        // Topic-specific mode
+        if (pool.length === 0) {
+          const topic = state.lastSelectedTopic || "general";
+          setStatus(els.startStatus, `No questions for "${topic}" in ${subjectLabel(subject)}.`, "error");
+          return;
+        }
+        const blockSize = Math.min(15, pool.length);
+        questions = shuffle(pool).slice(0, blockSize);
+        const topicLabel = state.lastSelectedTopic || "todos los temas";
+        label = `${topicLabel} — ${subjectLabel(subject)} (${blockSize} preguntas)`;
+        state.lastSelectedSubject = subject;
+      } else {
+        // Subject mode (existing behavior)
+        if (pool.length === 0) {
+          setStatus(els.startStatus, `No questions available for ${subjectLabel(subject)}.`, "error");
+          return;
+        }
+        const blockSize = Math.min(15, pool.length);
+        questions = shuffle(pool).slice(0, blockSize);
+        label = `Bloque ${subjectLabel(subject)} (${blockSize} preguntas)`;
+        state.lastSelectedSubject = subject;
+      }
+
+      state.quizQuestions = questions;
+      state.currentIndex = 0;
+      state.blockStats = {
+        materia: state.lastSelectedSubject,
+        total: questions.length,
+        correct: 0,
+        points: 0,
+        startedAt: new Date().toISOString(),
+        answers: [],
+        topicTimes: {},
+        wrongTopics: {},
+        subjectBreakdown: {},
+        topicBreakdown: {}
+      };
+
+      // Track per-subject stats for mixed exams
+      if (mode === "mock" || mode === "review") {
+        for (const q of questions) {
+          if (!state.blockStats.subjectBreakdown[q.materia]) {
+            state.blockStats.subjectBreakdown[q.materia] = { total: 0, correct: 0 };
+          }
+          state.blockStats.subjectBreakdown[q.materia].total += 1;
+        }
+      }
+
+      // Mock exam timer (130 minutes = 7800 seconds)
+      if (mode === "mock") {
+        state.mockElapsed = 0;
+        state.mockTimerId = setInterval(() => {
+          state.mockElapsed += 1;
+          if (state.mockElapsed >= 7800) {
+            clearInterval(state.mockTimerId);
+            state.mockTimerId = null;
+            finishQuiz();
+          }
+        }, 1000);
+      }
+
+      setStatus(els.startStatus, `${label} iniciado.`, "success");
+      showScreen("quiz-screen");
+      updateComboUI();
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const question = state.quizQuestions[state.currentIndex];
+      if (!question) {
+        finishQuiz();
+        return;
+      }
+
+      state.answeredCurrent = false;
+      els.nextQuestionBtn.disabled = true;
+      els.nextQuestionBtn.textContent = state.currentIndex === state.quizQuestions.length - 1 ? "Finish" : "Next";
+      els.quizProgress.textContent = `Question ${state.currentIndex + 1} / ${state.quizQuestions.length}`;
+      if (els.quizProgressLabel) {
+        els.quizProgressLabel.textContent = `${state.currentIndex + 1} / ${state.quizQuestions.length}`;
+      }
+      els.quizMateria.textContent = subjectLabel(question.materia);
+      updateComboUI();
+      const progress = ((state.currentIndex + 1) / state.quizQuestions.length) * 100;
+      els.quizProgressFill.style.width = `${progress}%`;
+      els.quizQuestion.textContent = cleanText(question.pregunta);
+
+      // Store current question reference for report button
+      window.STATE_QUESTION = question;
+
+      // NEW: Show learning objective
+      const learningObj = getLearningObjective(question);
+      if (learningObj) {
+        els.learningObjectiveText.textContent = learningObj;
+        els.learningObjective.style.display = "block";
+      } else {
+        els.learningObjective.style.display = "none";
+      }
+
+      // ADHD-friendly: Show question type badge
+      const questionTypeInfo = getQuestionType(question);
+      els.questionTypeBadge.textContent = questionTypeInfo.type;
+      els.questionTypeBadge.className = `question-type-badge ${questionTypeInfo.class}`;
+      els.questionTypeBadge.style.display = "inline-block";
+
+      els.quizOptions.innerHTML = "";
+      question.opciones.forEach((optionText, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "option";
+        button.textContent = `${String.fromCharCode(65 + index)}. ${cleanText(optionText)}`;
+        button.addEventListener("click", () => handleAnswer(index));
+        els.quizOptions.appendChild(button);
+      });
+
+      if (question.tip) {
+        els.quizTip.textContent = `Tip: ${cleanText(question.tip)}`;
+        els.quizTip.style.display = "block";
+      } else {
+        els.quizTip.style.display = "none";
+      }
+
+      // Reset feedback sections
+      els.quizFeedback.className = "feedback";
+      els.feedbackTitle.textContent = "";
+      els.feedbackMessage.textContent = "";
+      els.feedbackExplanation.textContent = "";
+      els.feedbackMeta.textContent = "";
+      els.explanationCorrectSection.style.display = "none";
+      els.explanationCorrectText.textContent = "";
+      els.explanationDistractorsSection.style.display = "none";
+      els.explanationDistractorsList.innerHTML = "";
+      els.resourceLinksSection.style.display = "none";
+      els.resourceLinksSection.innerHTML = "";
+      els.reportAnswerSection.style.display = "none";
+      els.reportAnswerBtn.disabled = false;
+      els.reportAnswerBtn.classList.remove("reported");
+      els.reportAnswerStatus.style.display = "none";
+      els.speedBadge.style.display = "none";
+      startTimer();
+    }
+
+    function randomMotivation(pointsEarned) {
+      const phrase = MOTIVATIONAL_PHRASES[Math.floor(Math.random() * MOTIVATIONAL_PHRASES.length)];
+      return phrase.replace("{puntos}", String(pointsEarned));
+    }
+
+    function createConfetti(count = 14) {
+      const colors = ["#6c63ff", "#ff6b9d", "#00d4aa"];
+      for (let i = 0; i < count; i += 1) {
+        const part = document.createElement("span");
+        part.className = "particle";
+        part.style.left = `${Math.random() * 100}%`;
+        part.style.animationDelay = `${Math.random() * 100}ms`;
+        part.style.background = colors[Math.floor(Math.random() * colors.length)];
+        part.style.transform = `translateY(-12px) rotate(${Math.random() * 180}deg)`;
+        els.confettiLayer.appendChild(part);
+        setTimeout(() => part.remove(), 900);
+      }
+    }
+
+    function addTopicTiming(topic, time) {
+      if (!state.blockStats.topicTimes[topic]) {
+        state.blockStats.topicTimes[topic] = { total: 0, count: 0 };
+      }
+      state.blockStats.topicTimes[topic].total += time;
+      state.blockStats.topicTimes[topic].count += 1;
+    }
+
+    function markWrongTopic(topic) {
+      state.blockStats.wrongTopics[topic] = (state.blockStats.wrongTopics[topic] || 0) + 1;
+    }
+
+    function handleAnswer(selectedIndex) {
+      if (state.answeredCurrent) {
+        return;
+      }
+
+      const question = state.quizQuestions[state.currentIndex];
+      stopTimer();
+      state.answeredCurrent = true;
+      const isCorrect = selectedIndex === question.correcta;
+      const answerTime = state.elapsed;
+
+      let pointsEarned = 0;
+      const prevStreak = state.appStats.streak;
+      if (isCorrect) {
+        state.appStats.streak += 1;
+        state.appStats.bestStreak = Math.max(state.appStats.bestStreak, state.appStats.streak);
+        state.appStats.totalCorrect += 1;
+        state.blockStats.correct += 1;
+        // Track per-subject correct for mixed exams
+        if (state.blockStats.subjectBreakdown[question.materia]) {
+          state.blockStats.subjectBreakdown[question.materia].correct += 1;
+        }
+        pointsEarned = calculatePoints(question.dificultad, state.appStats.streak);
+        state.appStats.totalPoints += pointsEarned;
+        state.blockStats.points += pointsEarned;
+        const confettiCount = Math.min(10 + Math.floor(state.appStats.streak / 3) * 4, 38);
+        createConfetti(confettiCount);
+        showXp(pointsEarned);
+        if (STREAK_MILESTONES[state.appStats.streak]) {
+          showStreakMilestone(state.appStats.streak);
+        }
+        markQuestionCorrect(question);
+        reactAvatar("correct");
+      } else {
+        state.appStats.streak = 0;
+        markWrongTopic(question.tema);
+        els.questionCard.classList.add("shake");
+        setTimeout(() => els.questionCard.classList.remove("shake"), 300);
+        // Streak break visual sting
+        if (prevStreak >= 3) {
+          els.questionCard.classList.add("streak-lost");
+          setTimeout(() => els.questionCard.classList.remove("streak-lost"), 650);
+          showToast(`💔 Streak x${prevStreak} lost`);
+        }
+        // Spaced repetition: track wrong answer
+        markQuestionWrong(question);
+        reactAvatar("wrong");
+      }
+
+      state.appStats.totalAnswered += 1;
+      const subjectStats = ensureSubjectStats(question.materia);
+      subjectStats.answered += 1;
+      subjectStats.totalTime += answerTime;
+      if (isCorrect) {
+        subjectStats.correct += 1;
+      } else {
+        subjectStats.failedTopics[question.tema] = (subjectStats.failedTopics[question.tema] || 0) + 1;
+      }
+
+      addTopicTiming(question.tema, answerTime);
+
+      if (!state.blockStats.topicBreakdown[question.tema]) {
+        state.blockStats.topicBreakdown[question.tema] = { total: 0, correct: 0 };
+      }
+      state.blockStats.topicBreakdown[question.tema].total += 1;
+      if (isCorrect) state.blockStats.topicBreakdown[question.tema].correct += 1;
+
+      state.blockStats.answers.push({
+        id: question.id,
+        tema: question.tema,
+        correcta: isCorrect,
+        tiempo: answerTime,
+        puntos: pointsEarned
+      });
+
+      const optionButtons = [...els.quizOptions.querySelectorAll(".option")];
+      optionButtons.forEach((button, index) => {
+        button.disabled = true;
+        if (index === question.correcta) {
+          button.classList.add("correct");
+        }
+        if (!isCorrect && index === selectedIndex) {
+          button.classList.add("wrong");
+        }
+      });
+
+      els.quizFeedback.className = `feedback visible ${isCorrect ? "success" : "error"}`;
+      els.feedbackTitle.textContent = isCorrect ? "Correct" : "Incorrect";
+      els.feedbackMessage.textContent = isCorrect
+        ? `${randomMotivation(pointsEarned)} (+${pointsEarned} pts)`
+        : "Not this time. This question shows exactly where your gap is.";
+
+      // ADHD-friendly: Extended pedagogical feedback
+      let correctExplanation = "";
+      let distractorAnalysis = [];
+
+      // Check if question has explicit fields
+      if (question.explicacion_correcta && question.explicacion_correcta.length > 0) {
+        correctExplanation = cleanText(question.explicacion_correcta);
+      } else if (question.explicacion && question.explicacion.length > 0) {
+        correctExplanation = cleanText(question.explicacion);
+      }
+
+      if (question.analisis_distractores && question.analisis_distractores.length > 0) {
+        // Parse JSON if it's a string
+        try {
+          distractorAnalysis = typeof question.analisis_distractores === "string"
+            ? JSON.parse(question.analisis_distractores)
+            : question.analisis_distractores;
+        } catch {
+          distractorAnalysis = [];
+        }
+      }
+
+      // Show "Why is this correct?" section
+      if (correctExplanation.length > 0) {
+        els.explanationCorrectText.textContent = correctExplanation;
+        els.explanationCorrectSection.style.display = "block";
+      } else {
+        const letter = String.fromCharCode(65 + question.correcta);
+        els.explanationCorrectText.innerHTML = `<span class="explanation-fallback">Explanation pending... The correct answer is option ${letter}: ${question.opciones[question.correcta]}</span>`;
+        els.explanationCorrectSection.style.display = "block";
+      }
+
+      // Show "Distractor Analysis" section
+      if (distractorAnalysis.length > 0) {
+        els.explanationDistractorsList.innerHTML = distractorAnalysis
+          .map((item) => `<li><strong>${item.opcion}:</strong> ${item.razon}</li>`)
+          .join("");
+        els.explanationDistractorsSection.style.display = "block";
+      } else {
+        // Generate basic distractor analysis from options
+        const otherOptions = question.opciones
+          .map((opt, idx) => ({ letter: String.fromCharCode(65 + idx), text: opt, index: idx }))
+          .filter((item) => item.index !== question.correcta);
+
+        if (otherOptions.length > 0) {
+          els.explanationDistractorsList.innerHTML = otherOptions
+            .map((item) => `<li><strong>${item.letter}. ${item.text}:</strong> <span class="explanation-fallback">Incorrect. Explanation pending.</span></li>`)
+            .join("");
+          els.explanationDistractorsSection.style.display = "block";
+        }
+      }
+
+      // Show resource links from enhanced_explanations.json if available
+      const resources = getResourceLinks(question);
+      if (resources && (resources.docUrl || resources.videos.length > 0)) {
+        const parts = ['<span class="resource-links-label">Learn more</span>'];
+        if (resources.docUrl) {
+          parts.push(`<a href="${resources.docUrl}" target="_blank" rel="noopener">📄 AWS Docs</a>`);
+        }
+        resources.videos.forEach(v => {
+          parts.push(`<a href="${v.url}" target="_blank" rel="noopener" class="video-link">▶ ${v.title}</a>`);
+        });
+        els.resourceLinksSection.innerHTML = parts.join("");
+        els.resourceLinksSection.style.display = "flex";
+      } else {
+        els.resourceLinksSection.style.display = "none";
+        els.resourceLinksSection.innerHTML = "";
+      }
+
+      els.feedbackMeta.textContent = `Correct answer: ${question.opciones[question.correcta]} | Time: ${answerTime}s`;
+
+      // Show speed badge
+      const speed = getSpeedLabel(answerTime);
+      if (speed.text) {
+        els.speedBadge.textContent = speed.text;
+        els.speedBadge.className = `speed-badge ${speed.class}`;
+        els.speedBadge.style.display = "inline-block";
+      }
+
+      // Show report wrong answer button
+      els.reportAnswerSection.style.display = "block";
+      const flagged = getFlaggedAnswers();
+      if (flagged.includes(question.id)) {
+        els.reportAnswerBtn.disabled = true;
+        els.reportAnswerBtn.classList.add("reported");
+        els.reportAnswerStatus.textContent = "Already reported — thanks for the feedback.";
+        els.reportAnswerStatus.style.display = "block";
+      } else {
+        els.reportAnswerBtn.disabled = false;
+        els.reportAnswerBtn.classList.remove("reported");
+        els.reportAnswerStatus.style.display = "none";
+      }
+
+      saveStats();
+      renderHomeStats();
+      updateComboUI();
+      els.nextQuestionBtn.disabled = false;
+    }
+
+    function nextQuestion() {
+      if (!state.answeredCurrent) {
+        showToast("Answer the current question first.");
+        return;
+      }
+
+      if (state.currentIndex >= state.quizQuestions.length - 1) {
+        finishQuiz();
+      } else {
+        state.currentIndex += 1;
+        renderQuestion();
+      }
+    }
+
+    function rankedTopicTimes(topicTimes) {
+      return Object.entries(topicTimes)
+        .map(([topic, value]) => ({
+          topic,
+          avg: value.count === 0 ? 0 : value.total / value.count
+        }))
+        .sort((a, b) => b.avg - a.avg)
+        .slice(0, 4)
+        .map((row) => ({ ...row, avg: Math.round(row.avg) }));
+    }
+
+    function rankedWrongTopics(wrongTopics) {
+      return Object.entries(wrongTopics)
+        .map(([topic, count]) => ({ topic, count }))
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 6);
+    }
+
+    function finalizeBlockReport() {
+      const answers = state.blockStats.answers;
+      const avgTime = answers.length === 0
+        ? 0
+        : Math.round(answers.reduce((sum, item) => sum + item.tiempo, 0) / answers.length);
+      const accuracy = answers.length === 0
+        ? 0
+        : Math.round((state.blockStats.correct / answers.length) * 100);
+      const slowTopics = rankedTopicTimes(state.blockStats.topicTimes);
+      const wrongTopics = rankedWrongTopics(state.blockStats.wrongTopics);
+
+      const topicBreakdown = Object.entries(state.blockStats.topicBreakdown)
+        .map(([topic, data]) => ({
+          topic,
+          total: data.total,
+          correct: data.correct,
+          accuracy: data.total === 0 ? 0 : Math.round((data.correct / data.total) * 100)
+        }))
+        .sort((a, b) => a.accuracy - b.accuracy);
+
+      return {
+        finishedAt: new Date().toISOString(),
+        materia: state.blockStats.materia,
+        total: answers.length,
+        correct: state.blockStats.correct,
+        points: state.blockStats.points,
+        accuracy,
+        avgTime,
+        slowTopics,
+        wrongTopics,
+        subjectBreakdown: state.blockStats.subjectBreakdown,
+        topicBreakdown
+      };
+    }
+
+    function renderTopicList(target, entries, mapper) {
+      if (!entries.length) {
+        target.innerHTML = `<li style="color:var(--muted);font-size:0.85rem;text-align:center;padding:12px;">✓ No weak points in this block</li>`;
+        return;
+      }
+      target.innerHTML = entries.map(mapper).join("");
+    }
+
+    function renderReport(report) {
+      const isMixed = report.materia === "mock" || report.materia === "area1" || report.materia === "quick" || report.materia === "review";
+      const label = isMixed
+        ? (report.materia === "mock" ? "AWS SAA-C03 Mock" : report.materia === "area1" ? "AWS Mock" : report.materia === "quick" ? "Quick Practice" : "Spaced Review")
+        : subjectLabel(report.materia);
+
+      els.reportSummary.textContent = `${label}: ${report.correct}/${report.total} correct (${report.accuracy}%). Check which topics took longest or had most errors.`;
+      _reportTargets = { accuracy: report.accuracy, avgTime: report.avgTime, points: report.points };
+      els.reportAccuracy.textContent = "0%";
+      els.reportAvgTime.textContent = "0s";
+      els.reportPoints.textContent = "+0";
+
+      // Motivational banner for good scores
+      if (els.reportBanner) {
+        const GOOD_MESSAGES = [
+          `${currentAvatar.emoji} That's it, ${currentAvatar.name}! ${report.accuracy}% — keep climbing. 🚀`,
+          `${currentAvatar.emoji} LOCKED IN. ${report.correct}/${report.total} — ${currentAvatar.name} mode unlocked 🔓`,
+          `${currentAvatar.emoji} Beast mode! ${report.accuracy}% accuracy. SAA-C03 is yours. ⚡`,
+          `${currentAvatar.emoji} ${report.accuracy}% — that block was yours. That's a streak. 🔥`
+        ];
+        if (report.accuracy >= 80) {
+          els.reportBanner.textContent = GOOD_MESSAGES[Math.floor(Math.random() * GOOD_MESSAGES.length)];
+          els.reportBanner.style.display = "";
+        } else {
+          els.reportBanner.style.display = "none";
+        }
+      }
+
+      // Update retry button label based on mode
+      const retryLabels = { mock: "New mock exam", area1: "Another exam", quick: "Quick practice", review: "Review again" };
+      els.retryBtn.textContent = retryLabels[report.materia] || `Retry ${label}`;
+
+      // For mixed exams, show per-subject breakdown instead of topic lists
+      if (isMixed && report.subjectBreakdown && Object.keys(report.subjectBreakdown).length > 0) {
+        const subjectRows = Object.entries(report.subjectBreakdown)
+          .map(([subj, data]) => {
+            const acc = data.total === 0 ? 0 : Math.round((data.correct / data.total) * 100);
+            const barColor = acc >= 80 ? "var(--accent-3)" : acc >= 60 ? "#fbbf24" : "var(--danger)";
+            return `
+              <li>
+                <strong>${subjectLabel(subj)}</strong>: ${data.correct}/${data.total} (${acc}%)
+                <div class="progress-track" style="margin-top:6px">
+                  <div class="progress-fill" style="width:${acc}%;background:${barColor}"></div>
+                </div>
+              </li>
+            `;
+          })
+          .join("");
+        els.reportSlowTopics.closest(".panel").querySelector("h3").textContent = "Domain breakdown";
+        els.reportSlowTopics.innerHTML = subjectRows;
+        els.reportWrongTopics.closest(".panel").querySelector("h3").textContent = "Most missed topics";
+        renderTopicList(
+          els.reportWrongTopics,
+          report.wrongTopics,
+          (item) => `<li>${item.topic}: ${item.count} error(s)</li>`
+        );
+      } else {
+        els.reportSlowTopics.closest(".panel").querySelector("h3").textContent = "Slowest topics";
+        renderTopicList(
+          els.reportSlowTopics,
+          report.slowTopics,
+          (item) => `<li>${item.topic}: ${item.avg}s avg</li>`
+        );
+        renderTopicList(
+          els.reportWrongTopics,
+          report.wrongTopics,
+          (item) => `<li>${item.topic}: ${item.count} error(s)</li>`
+        );
+      }
+
+      const breakdownSection = document.getElementById("topic-breakdown-section");
+      const breakdownList = document.getElementById("topic-breakdown-list");
+      if (report.topicBreakdown && report.topicBreakdown.length > 1) {
+        breakdownSection.style.display = "";
+        breakdownList.innerHTML = report.topicBreakdown
+          .map((item, i) => {
+            const cls = item.accuracy >= 75 ? "accuracy-good" : item.accuracy >= 50 ? "accuracy-mid" : "accuracy-bad";
+            const barColor = item.accuracy >= 75 ? "var(--accent-3)" : item.accuracy >= 50 ? "#fbbf24" : "var(--danger)";
+            const delay = `${220 + i * 55}ms`;
+            return `
+              <li class="topic-breakdown-item ${cls}" style="animation:stagger-in 320ms var(--ease-out-quart) ${delay} both;opacity:0;">
+                <div class="topic-breakdown-meta">
+                  <strong>${item.topic}</strong>
+                  <span>${item.correct}/${item.total} &mdash; ${item.accuracy}%</span>
+                </div>
+                <div class="progress-track" style="height:5px;">
+                  <div class="progress-fill" style="width:${item.accuracy}%;background:${barColor};transition:width 500ms var(--ease-out-quart) ${delay};"></div>
+                </div>
+              </li>`;
+          })
+          .join("");
+      } else {
+        breakdownSection.style.display = "none";
+      }
+    }
+
+    function finishQuiz() {
+      stopTimer();
+
+      // NEW: Stop mock exam timer if running
+      if (state.mockTimerId) {
+        clearInterval(state.mockTimerId);
+        state.mockTimerId = null;
+      }
+
+      const report = finalizeBlockReport();
+      state.appStats.history.push(report);
+      if (state.appStats.history.length > 80) {
+        state.appStats.history = state.appStats.history.slice(-80);
+      }
+
+      // Save mock exams to mock history
+      if (report.materia === "mock") {
+        state.mockHistory.push(report);
+        if (state.mockHistory.length > 20) {
+          state.mockHistory = state.mockHistory.slice(-20);
+        }
+        saveMockHistory();
+      }
+
+      saveStats();
+      renderReport(report);
+      renderHome();
+      showScreen("report-screen");
+    }
+
+    function generateQuestionId(subject) {
+      const prefix = ID_PREFIX_BY_SUBJECT[subject] || String(subject).slice(0, 3).toLowerCase();
+      const regex = new RegExp(`^${prefix}_(\\d+)$`);
+      const maxId = state.allQuestions.reduce((max, question) => {
+        const match = question.id.match(regex);
+        if (!match) {
+          return max;
+        }
+        return Math.max(max, Number(match[1]));
+      }, 0);
+      return `${prefix}_${String(maxId + 1).padStart(3, "0")}`;
+    }
+
+    function handleCustomQuestionSubmit(event) {
+      event.preventDefault();
+
+      const formData = {
+        materia: els.customMateria.value,
+        tema: document.getElementById("custom-tema").value.trim().toLowerCase(),
+        dificultad: Number(document.getElementById("custom-dificultad").value),
+        pregunta: document.getElementById("custom-pregunta").value.trim(),
+        opciones: [
+          document.getElementById("custom-op-a").value.trim(),
+          document.getElementById("custom-op-b").value.trim(),
+          document.getElementById("custom-op-c").value.trim(),
+          document.getElementById("custom-op-d").value.trim()
+        ],
+        correcta: Number(document.getElementById("custom-correcta").value),
+        explicacion: document.getElementById("custom-explicacion").value.trim(),
+        tip: document.getElementById("custom-tip").value.trim()
+      };
+
+      // Parse distractor analysis from text area (format: "B|reason" per line)
+      const distractoresText = document.getElementById("custom-distractores").value.trim();
+      const analisisDistractores = [];
+      if (distractoresText.length > 0) {
+        const lines = distractoresText.split("\n").filter((line) => line.trim().length > 0);
+        lines.forEach((line) => {
+          const parts = line.split("|");
+          if (parts.length >= 2) {
+            const letter = parts[0].trim().toUpperCase();
+            const reason = parts.slice(1).join("|").trim();
+            if (letter.length === 1 && reason.length > 0) {
+              const optionIndex = letter.charCodeAt(0) - 65;
+              if (optionIndex >= 0 && optionIndex < 4 && optionIndex !== formData.correcta) {
+                analisisDistractores.push({
+                  opcion: `${letter}. ${formData.opciones[optionIndex]}`,
+                  razon: reason
+                });
+              }
+            }
+          }
+        });
+      }
+
+      if (analisisDistractores.length > 0) {
+        formData.analisis_distractores = analisisDistractores;
+      }
+
+      if (!formData.tema || !formData.pregunta || !formData.explicacion) {
+        setStatus(els.customStatus, "Fill in domain, service, question, and explanation.", "error");
+        return;
+      }
+
+      if (formData.opciones.some((option) => option.length === 0)) {
+        setStatus(els.customStatus, "All 4 options are required.", "error");
+        return;
+      }
+
+      const id = generateQuestionId(formData.materia);
+      const newQuestion = {
+        ...formData,
+        id
+      };
+
+      if (!isValidQuestion(newQuestion)) {
+        setStatus(els.customStatus, "Could not save: check the question format.", "error");
+        return;
+      }
+
+      state.customQuestions.push(normalizeQuestion(newQuestion));
+      saveCustomQuestions();
+      reloadQuestions();
+      setupSubjectSelects();
+      renderHome();
+      els.customForm.reset();
+      document.getElementById("custom-dificultad").value = "2";
+      document.getElementById("custom-correcta").value = "0";
+      setStatus(els.customStatus, `Question saved as ${id}. Now available in new blocks.`, "success");
+      showToast("Question added to local bank.");
+    }
+
+    function handleStartSubmit(event) {
+      event.preventDefault();
+
+      if (state.selectedMode === "mock") {
+        // Mock exam doesn't need subject selection
+        startQuiz("mock");
+      } else if (state.selectedMode === "review") {
+        // Review mode doesn't need subject selection
+        startQuiz("review");
+      } else {
+        const subject = els.startMateria.value;
+        if (!subject) {
+          setStatus(els.startStatus, "Select a valid domain.", "error");
+          return;
+        }
+        startQuiz(subject);
+      }
+    }
+
+    // Update the active state on nav tabs when showScreen is called
+    function updateNavTabs(screenId) {
+      document.querySelectorAll(".nav-tab").forEach(btn => {
+        const active = btn.dataset.screen === screenId;
+        btn.classList.toggle("active", active);
+        btn.setAttribute("aria-selected", String(active));
+      });
+    }
+
+    function bindEvents() {
+      // Nav tab bar
+      document.querySelectorAll(".nav-tab").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const target = btn.dataset.screen;
+          if (target) {
+            showScreen(target);
+            if (target === "home-screen") renderHome();
+          }
+        });
+      });
+
+      els.startForm.addEventListener("submit", handleStartSubmit);
+      els.customForm.addEventListener("submit", handleCustomQuestionSubmit);
+      els.nextQuestionBtn.addEventListener("click", nextQuestion);
+
+      // Back-to-home buttons
+      const quizBackBtn = document.getElementById("quiz-back-home-btn");
+      if (quizBackBtn) quizBackBtn.addEventListener("click", () => { showScreen("home-screen"); renderHome(); });
+      if (els.backHomeBtn) els.backHomeBtn.addEventListener("click", () => { showScreen("home-screen"); renderHome(); });
+
+      // Report wrong answer button
+      els.reportAnswerBtn.addEventListener("click", () => {
+        const q = window.STATE_QUESTION;
+        if (q && q.id) {
+          flagAnswer(q.id);
+          els.reportAnswerBtn.disabled = true;
+          els.reportAnswerBtn.classList.add("reported");
+          els.reportAnswerStatus.textContent = "Reported — thanks for the feedback!";
+          els.reportAnswerStatus.style.display = "block";
+        }
+      });
+
+      // NEW: Mode card clicks
+      document.querySelectorAll(".mode-card").forEach(card => {
+        card.addEventListener("click", () => {
+          const mode = card.dataset.mode;
+          state.selectedMode = mode;
+
+          // Visual feedback
+          document.querySelectorAll(".mode-card").forEach(c => c.style.borderColor = "");
+          card.style.borderColor = "var(--accent)";
+
+          // Update submit button text
+          const btn = els.startForm.querySelector('button[type="submit"]');
+          const modeButtonLabels = {
+            subject: "Start block (15 questions)",
+            topic: "Practice specific service",
+            mock: "Start mock exam (65 questions, 130 min)",
+            review: "Review pending errors"
+          };
+          btn.textContent = modeButtonLabels[mode] || "Start";
+
+          // Show/hide subject selector
+          const subjectArea = document.getElementById("subject-select-area");
+          if (mode === "review") {
+            subjectArea.style.display = "none";
+          } else if (mode === "mock") {
+            subjectArea.style.display = "none";
+          } else {
+            subjectArea.style.display = "";
+          }
+        });
+      });
+
+      // Subject change -> re-render topic chips
+      els.startMateria.addEventListener("change", (event) => {
+        state.lastSelectedSubject = event.target.value;
+        state.lastSelectedTopic = null;  // Reset topic filter
+        renderTopicChips(event.target.value);
+      });
+
+      document.addEventListener("keydown", (event) => {
+        const tag = document.activeElement ? document.activeElement.tagName.toLowerCase() : "";
+        if (tag === "input" || tag === "textarea" || tag === "select") {
+          return;
+        }
+        if (!document.getElementById("quiz-screen").classList.contains("active")) {
+          return;
+        }
+
+        const key = event.key.toLowerCase();
+        const keyToIndex = { "1": 0, "2": 1, "3": 2, "4": 3, a: 0, b: 1, c: 2, d: 3 };
+        if (Object.prototype.hasOwnProperty.call(keyToIndex, key) && !state.answeredCurrent) {
+          const index = keyToIndex[key];
+          const optionButtons = els.quizOptions.querySelectorAll(".option");
+          if (optionButtons[index]) {
+            optionButtons[index].click();
+          }
+        }
+
+        // ADHD-friendly: Enter or Space to go to next question after answering
+        if ((event.key === "Enter" || event.key === " ") && state.answeredCurrent) {
+          event.preventDefault();
+          nextQuestion();
+        }
+      });
+
+      els.backHomeBtn.addEventListener("click", () => {
+        renderHome();
+        showScreen("home-screen");
+      });
+
+      els.retryBtn.addEventListener("click", () => {
+        const mode = state.selectedMode;
+        if (mode === "mock" || mode === "area1" || mode === "quick" || !state.lastSelectedSubject) {
+          // For mode-based sessions, go home and let user pick mode
+          renderHome();
+          showScreen("home-screen");
+        } else {
+          startQuiz(state.lastSelectedSubject);
+        }
+      });
+
+      // Custom form toggle (progressive disclosure)
+      const toggleBtn = document.getElementById("toggle-custom-form");
+      const formBody  = document.getElementById("custom-form-body");
+      if (toggleBtn && formBody) {
+        toggleBtn.addEventListener("click", () => {
+          const open = formBody.style.display === "none" || formBody.style.display === "";
+          formBody.style.display = open ? "" : "none";
+          formBody.style.animation = open ? "slide-up-in 320ms var(--ease-out-quart) both" : "none";
+          toggleBtn.textContent = open ? "✕ Cerrar" : "+ Agregar";
+          toggleBtn.setAttribute("aria-expanded", String(open));
+        });
+      }
+
+      // Subject card click → drill-down (start subject practice)
+      els.subjectStats.addEventListener("click", (e) => {
+        const card = e.target.closest("[data-subject]");
+        if (!card) return;
+        const subject = card.dataset.subject;
+        state.selectedMode = "subject";
+        state.lastSelectedSubject = subject;
+        state.lastSelectedTopic = null;
+        document.querySelectorAll(".mode-card").forEach(c => c.style.borderColor = "");
+        const subjectCard = document.querySelector('.mode-card[data-mode="subject"]');
+        if (subjectCard) subjectCard.style.borderColor = "var(--accent)";
+        els.startMateria.value = subject;
+        renderTopicChips(subject);
+        document.getElementById("subject-select-area").style.display = "";
+        const btn = els.startForm.querySelector('button[type="submit"]');
+        if (btn) btn.textContent = "Start block (15 questions)";
+        els.startForm.scrollIntoView({ behavior: "smooth", block: "center" });
+        showToast(`▶ ${subjectLabel(subject)} selected`);
+      });
+    }
+
+    function init() {
+      currentAvatar = loadAvatar();
+      state.customQuestions = loadCustomQuestions();
+      state.wrongQuestions = loadWrongQuestions();
+      state.mockHistory = loadMockHistory();
+      reloadQuestions();
+      setupSubjectSelects();
+      bindEvents();
+      renderHome();
+      renderAvatarPicker();
+      initCustomAvatarSystem();
+      updateTopbarAvatar();
+      updateReviewErrorsButton();
+      showScreen("home-screen");
+
+      // NEW: Set default mode card
+      const defaultCard = document.querySelector('.mode-card[data-mode="subject"]');
+      if (defaultCard) defaultCard.style.borderColor = "var(--accent)";
+
+      // NEW: Update review count badge
+      updateReviewCountBadge();
+    }
+
+    function updateReviewCountBadge() {
+      const count = getWrongQuestionIds().length;
+      if (els.reviewCountBadge) {
+        els.reviewCountBadge.textContent = count > 0
+          ? `${count} pendiente${count !== 1 ? "s" : ""}`
+          : "All caught up";
+        els.reviewCountBadge.className = `mode-badge ${count > 0 ? "yellow" : ""}`;
+      }
+      const reviewCard = document.querySelector('.mode-card[data-mode="review"]');
+      if (reviewCard) {
+        reviewCard.classList.toggle("review-empty", count === 0);
+        reviewCard.classList.toggle("review-has-items", count > 0);
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>

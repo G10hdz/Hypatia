@@ -1,0 +1,33 @@
+# Build/dependency files
+node_modules/
+__pycache__/
+*.pyc
+.venv*/
+
+# Dev/IDE files
+.vscode/
+.idea/
+.DS_Store
+
+# Backup files
+*.bak
+*.backup_*
+backup_*/
+
+# AI explanation files (generated, not committed)
+enhanced_explanations.json
+*_explanations.log
+.explanation_checkpoint_*.json
+
+# Failed questions and OCR output
+failed_questions.json
+ocr_output/
+
+# Archive
+archive-local/
+chroma_theory/
+stitch-reference/
+
+# AI agent configs
+.claude/
+.qwen/
