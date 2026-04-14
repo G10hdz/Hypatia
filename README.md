@@ -2,7 +2,10 @@
 
 **Adaptive learning platform for neurodivergent minds.**
 
-Bite-sized study sessions, visual feedback, and gamified progress. Built for UNAM Area 1 & AWS SAA-C03 certifications — more learning modules coming soon!
+Bite-sized study sessions, visual feedback, and gamified progress. Built for UNAM Area 1 & AWS SAA-C03 certifications.
+
+> **Repo:** This is the private repo at `https://github.com/G10hdz/Hypatia-internt`.
+> The public repo `G10hdz/Hypatia` is a stripped mirror — never push credentials or personal files there.
 
 ## Modules
 
@@ -13,13 +16,20 @@ Bite-sized study sessions, visual feedback, and gamified progress. Built for UNA
 
 ## How to Use
 
-Each module is a self-contained HTML app. Open `index.html` in any browser — no build steps, no npm.
+Each module is a self-contained HTML app. **Always serve via HTTP**, never open `file://` directly.
 
 ```bash
 # From repo root:
-python3 -m http.server 8080
+python3 -m http.server 8080 --bind 0.0.0.0
 # Then visit http://localhost:8080
 ```
+
+Or on Windows: double-click `iniciar.bat`
+
+## Local Network Sharing
+
+If you're on the same network as the host machine, use: `http://<host-ip>:8080/`
+See [NETWORK_ACCESS.md](./NETWORK_ACCESS.md) for details.
 
 ## Philosophy
 
