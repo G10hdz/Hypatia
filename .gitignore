@@ -37,3 +37,8 @@ stitch-reference/
 
 # Strategic documents (git ignored)
 SAA_ARCHITECTURE.md
+PHASE_TWO_PLAN.md
+SUPABASE_SETUP.md
+AUTH_INTEGRATION.md
+PHASE2_AUTH_SUMMARY.md
+.env
