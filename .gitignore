@@ -9,6 +9,13 @@ __pycache__/
 .idea/
 .DS_Store
 
+# AI agent configs
+.claude/
+.qwen/
+
+# Local Netlify folder
+.netlify/
+
 # Backup files
 *.bak
 *.backup_*
@@ -28,6 +35,5 @@ archive-local/
 chroma_theory/
 stitch-reference/
 
-# AI agent configs
-.claude/
-.qwen/
+# Strategic documents (git ignored)
+SAA_ARCHITECTURE.md
