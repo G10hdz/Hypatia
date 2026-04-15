@@ -175,6 +175,252 @@ window.ENHANCED_EXPLANATIONS = {
         "Consulta múltiples bibliografías si un tema es confuso en una fuente",
         "Practica inteligentemente identificando herramientas matemáticas exactas y revisando conceptos no comprendidos"
       ]
+    },
+    "cinematica": {
+      "title": "Cinemática",
+      "introduction": "La cinemática estudia el movimiento de los cuerpos sin considerar las fuerzas que lo causan. Es fundamental para entender velocidad, aceleración y trayectorias en el examen UNAM.",
+      "key_concepts": [
+        "Movimiento rectilíneo uniforme (MRU): velocidad constante",
+        "Movimiento rectilíneo uniformemente acelerado (MRUA): aceleración constante",
+        "Tiro parabólico y movimiento en dos dimensiones",
+        "Velocidad promedio vs. velocidad instantánea"
+      ],
+      "formulas": [
+        "MRU: d = vt",
+        "MRUA: v = v₀ + at, d = v₀t + ½at²",
+        "Tiro parabólico: x = v₀cos(θ)t, y = v₀sen(θ)t - ½gt²"
+      ],
+      "problem_types": [
+        "Calcular distancia recorrida en MRU",
+        "Encontrar aceleración y velocidad final en MRUA",
+        "Analizar trayectorias parabólicas"
+      ],
+      "study_tips": [
+        "Siempre define sistemas de referencia claramente (positivo/negativo)",
+        "Distingue entre velocidad y rapidez",
+        "En tiro parabólico, descompón en movimientos horizontal y vertical"
+      ]
+    },
+    "energia": {
+      "title": "Energía y Trabajo",
+      "introduction": "La energía y el trabajo son conceptos clave en física que explican cómo se transforma y transmite la energía en sistemas mecánicos.",
+      "key_concepts": [
+        "Trabajo mecánico: W = Fd cos(θ)",
+        "Energía cinética: Ek = ½mv²",
+        "Energía potencial gravitacional: Ep = mgh",
+        "Teorema del trabajo-energía y conservación de energía"
+      ],
+      "formulas": [
+        "Trabajo: W = Fd cos(θ)",
+        "Energía cinética: Ek = ½mv²",
+        "Energía potencial: Ep = mgh",
+        "Potencia: P = W/t"
+      ],
+      "problem_types": [
+        "Calcular trabajo realizado por fuerzas",
+        "Aplicar conservación de energía en sistemas",
+        "Resolver problemas con planos inclinados y fricción"
+      ],
+      "study_tips": [
+        "La energía se conserva: Em = Ek + Ep = constante",
+        "Recuerda que el trabajo puede ser positivo, negativo o cero",
+        "Usa gráficos para visualizar cambios de energía"
+      ]
+    },
+    "leyes_newton": {
+      "title": "Leyes de Newton",
+      "introduction": "Las tres leyes de Newton son la base de la dinámica y explican cómo el movimiento cambia debido a las fuerzas.",
+      "key_concepts": [
+        "Primera ley: Un objeto en reposo permanece en reposo, y uno en movimiento permanece en movimiento a menos que una fuerza actúe sobre él",
+        "Segunda ley: F = ma",
+        "Tercera ley: Acción y reacción",
+        "Fuerzas: peso, normal, fricción, tensión"
+      ],
+      "formulas": [
+        "Segunda ley de Newton: F = ma",
+        "Peso: W = mg",
+        "Fricción: f = μN",
+        "Fuerza restauradora (Hooke): F = -kx"
+      ],
+      "problem_types": [
+        "Diagramas de cuerpo libre y análisis de fuerzas",
+        "Sistemas en equilibrio",
+        "Movimiento con fricción"
+      ],
+      "study_tips": [
+        "Siempre dibuja diagramas de cuerpo libre",
+        "Identifica todas las fuerzas actuando sobre el objeto",
+        "Recuerda que acción y reacción no se anulan porque actúan sobre objetos diferentes"
+      ]
+    },
+    "fisica_general": {
+      "title": "Física General",
+      "introduction": "Tópicos generales de física que combinan cinemática, dinámica, gravitación y otras áreas fundamentales.",
+      "key_concepts": [
+        "Gravitación universal: F = GMm/r²",
+        "Impulso y cantidad de movimiento (momentum)",
+        "Colisiones elásticas e inelásticas",
+        "Movimiento circular y rotación"
+      ],
+      "formulas": [
+        "Gravitación: F = GMm/r²",
+        "Impulso: J = FΔt = Δp",
+        "Momentum: p = mv",
+        "Velocidad angular: ω = v/r"
+      ],
+      "problem_types": [
+        "Orbitas satelitales y satélites geoestacionarios",
+        "Choques y conservación de momentum",
+        "Rotación y momento angular"
+      ],
+      "study_tips": [
+        "El momentum se conserva en sistemas aislados",
+        "Aprende a distinguir entre colisiones elásticas e inelásticas",
+        "En órbitas, la fuerza gravitacional proporciona la fuerza centrípeta"
+      ]
+    },
+    "estructura_atomica": {
+      "title": "Estructura Atómica",
+      "introduction": "La estructura atómica describe cómo están organizados los protones, neutrones y electrones dentro del átomo, fundamental para entender la química.",
+      "key_concepts": [
+        "Partículas subatómicas: protones (+), neutrones (0), electrones (-)",
+        "Número atómico (Z) = número de protones",
+        "Número de masa (A) = protones + neutrones",
+        "Configuración electrónica y orbitales"
+      ],
+      "formulas": [
+        "Número de neutrones = A - Z",
+        "Carga neta = (# protones) - (# electrones)"
+      ],
+      "problem_types": [
+        "Identificar protones, neutrones y electrones",
+        "Escribir configuración electrónica",
+        "Calcular carga formal de iones"
+      ],
+      "study_tips": [
+        "Memoriza el orden de llenado de orbitales (1s, 2s, 2p, 3s, etc.)",
+        "Entiende que los electrones de valencia determinan el comportamiento químico",
+        "Aprende a usar la tabla periódica para deducir configuraciones electrónicas"
+      ]
+    },
+    "tabla_periodica": {
+      "title": "Tabla Periódica",
+      "introduction": "La tabla periódica organiza los elementos químicos por propiedades. Entenderla es crucial para predecir reactividad y propiedades químicas.",
+      "key_concepts": [
+        "Períodos (filas) y grupos (columnas)",
+        "Clasificación: metales, no metales, metaloides",
+        "Tendencias periódicas: electronegatividad, radio atómico, energía de ionización",
+        "Bloques s, p, d, f"
+      ],
+      "formulas": [
+        "Electrones de valencia = # del grupo (para elementos representativos)"
+      ],
+      "problem_types": [
+        "Predecir reactividad de elementos",
+        "Usar tendencias periódicas para comparar propiedades",
+        "Identificar familias químicas"
+      ],
+      "study_tips": [
+        "Memoriza los grupos principales: alcalinos, alcalinotérreos, halógenos, gases nobles",
+        "Entiende que la electronegatividad y el radio atómico tienen patrones predecibles",
+        "Usa la posición en la tabla periódica para deducir configuración electrónica"
+      ]
+    },
+    "enlaces": {
+      "title": "Enlaces Químicos",
+      "introduction": "Los enlaces químicos son las fuerzas que mantienen unidos los átomos en moléculas. Comprender tipos de enlaces es esencial para química.",
+      "key_concepts": [
+        "Enlace iónico: transferencia de electrones",
+        "Enlace covalente: compartir electrones (polar y no polar)",
+        "Enlace metálico: mar de electrones",
+        "Fuerzas intermoleculares: Van der Waals, puentes de hidrógeno"
+      ],
+      "formulas": [
+        "Diferencia de electronegatividad > 1.7 → iónico, 0.4-1.7 → covalente polar, < 0.4 → covalente no polar"
+      ],
+      "problem_types": [
+        "Clasificar enlaces según propiedades",
+        "Predecir geometría molecular con VSEPR",
+        "Explicar propiedades de compuestos basándose en tipos de enlaces"
+      ],
+      "study_tips": [
+        "Memoriza valores de electronegatividad comunes",
+        "VSEPR predice geometría: pares electrónicos se repelen",
+        "Los puentes de hidrógeno son más fuertes que Van der Waals pero más débiles que enlaces covalentes"
+      ]
+    },
+    "reacciones": {
+      "title": "Reacciones Químicas",
+      "introduction": "Las reacciones químicas transforman sustancias. Entender tipos de reacciones y cómo balancearlas es fundamental.",
+      "key_concepts": [
+        "Reacciones de síntesis, descomposición, sustitución simple, doble sustitución",
+        "Reacciones redox: oxidación y reducción",
+        "Reacciones ácido-base",
+        "Balanceo de ecuaciones químicas"
+      ],
+      "formulas": [
+        "Número de oxidación (NOX) para identificar oxidación/reducción"
+      ],
+      "problem_types": [
+        "Balancear ecuaciones químicas",
+        "Identificar agentes oxidantes y reductores",
+        "Calcular pH en reacciones ácido-base"
+      ],
+      "study_tips": [
+        "El oxígeno suele tener NOX = -2 (excepto en peróxidos)",
+        "En reacciones redox, el NOX de átomos aumenta (oxidación) o disminuye (reducción)",
+        "Práctica: memoriza reacciones comunes y aprende patrones"
+      ]
+    },
+    "estequiometria": {
+      "title": "Estequiometría",
+      "introduction": "La estequiometría cuantifica las relaciones entre reactivos y productos en reacciones químicas usando moles.",
+      "key_concepts": [
+        "Mol: unidad de cantidad de sustancia (6.02 × 10²³)",
+        "Masa molar: masa de 1 mol de sustancia",
+        "Relaciones molares de la ecuación equilibrada",
+        "Reactivo limitante y rendimiento teórico"
+      ],
+      "formulas": [
+        "n = m/M (moles = masa / masa molar)",
+        "Relaciones de moles del coeficiente estequiométrico"
+      ],
+      "problem_types": [
+        "Convertir entre gramos y moles",
+        "Calcular cantidades de productos y reactivos",
+        "Identificar reactivo limitante",
+        "Calcular rendimiento porcentual"
+      ],
+      "study_tips": [
+        "Siempre balancea la ecuación primero",
+        "Usa la masa molar para convertir entre moles y gramos",
+        "El reactivo limitante determina cuánto producto se forma"
+      ]
+    },
+    "quimica_general": {
+      "title": "Química General",
+      "introduction": "Conceptos generales de química que abarca estados de la materia, soluciones, pH y leyes de gases.",
+      "key_concepts": [
+        "Estados de la materia: sólido, líquido, gas y plasma",
+        "Soluciones y concentraciones (molares, molales, porcentuales)",
+        "Escala de pH y pOH",
+        "Ley de gases ideales: PV = nRT"
+      ],
+      "formulas": [
+        "Molalidad: m = n/kg de disolvente",
+        "pH = -log[H⁺], pOH = -log[OH⁻], pH + pOH = 14",
+        "Ley de gases ideales: PV = nRT"
+      ],
+      "problem_types": [
+        "Calcular concentraciones de soluciones",
+        "Resolver problemas de pH y buffer",
+        "Aplicar ley de gases ideales"
+      ],
+      "study_tips": [
+        "Entiende que pH = 7 es neutro, < 7 es ácido, > 7 es básico",
+        "Memoriza R = 0.0821 L·atm/(mol·K) para gases ideales",
+        "Las soluciones diluidas siguen la ley de Raoult"
+      ]
     }
   }
 };
