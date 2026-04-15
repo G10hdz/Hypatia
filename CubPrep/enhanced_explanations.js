@@ -1,13 +1,15 @@
 window.ENHANCED_EXPLANATIONS = {
   "_meta": {
-    "version": "2.0",
+    "version": "3.0",
     "source": "NotebookLM + YouTube Skills Integration",
     "generated": "2026-04-14",
     "notebook_url": "https://notebooklm.google.com/notebook/bd80433d-f3bd-47f5-a680-d9ffae921650",
-    "description": "Enhanced explanations from NotebookLM with comprehensive UNAM Area 1 math coverage"
+    "description": "Enhanced explanations using official UNAM Area 1 classification (25 topics)",
+    "migration_note": "Phase 2 complete - restructured to use official tags (mat_*, fis_*, qui_*). Legacy mapping preserved below."
   },
   "topics": {
-    "algebra": {
+    // MATEMÁTICAS (8 official topics)
+    "mat_algebra": {
       "title": "Álgebra",
       "introduction": "El álgebra es una rama fundamental de las matemáticas que se enfoca en expresiones algebraicas, ecuaciones, desigualdades y sistemas de ecuaciones. Es esencial para resolver problemas del examen UNAM.",
       "key_concepts": [
@@ -30,7 +32,7 @@ window.ENHANCED_EXPLANATIONS = {
         "En exámenes de opción múltiple, analiza los términos para eliminar opciones incorrectas antes de hacer expansiones algebraicas completas"
       ]
     },
-    "aritmetica": {
+    "mat_aritmetica": {
       "title": "Aritmética",
       "introduction": "La aritmética se enfoca en operaciones fundamentales con números reales y complejos. Incluye propiedades de potencias y raíces que son esenciales en la prueba UNAM.",
       "key_concepts": [
@@ -49,7 +51,7 @@ window.ENHANCED_EXPLANATIONS = {
         "Domina las leyes básicas de exponentes y propiedades de igualdad antes de pasar a fracciones algebraicas complejas"
       ]
     },
-    "geometria_analitica": {
+    "mat_geometria_analitica": {
       "title": "Geometría Analítica",
       "introduction": "La geometría analítica estudia figuras geométricas como líneas rectas y cónicas utilizando sistemas de coordenadas y ecuaciones algebraicas. Es fundamental para el área 1 de la UNAM.",
       "key_concepts": [
@@ -69,7 +71,7 @@ window.ENHANCED_EXPLANATIONS = {
         "Enfócate en entender las relaciones directas entre elementos geométricos de cónicas y cómo definen sus ecuaciones"
       ]
     },
-    "trigonometria": {
+    "mat_trigonometria": {
       "title": "Trigonometría",
       "introduction": "La trigonometría estudia las relaciones entre ángulos y lados de triángulos. Es vital para ingeniería, física y es muy importante en el examen UNAM.",
       "key_concepts": [
@@ -96,87 +98,112 @@ window.ENHANCED_EXPLANATIONS = {
         "Memoriza identidades trigonométricas para simplificar expresiones complejas"
       ]
     },
-    "probabilidad": {
-      "title": "Probabilidad y Estadística",
-      "introduction": "Este tema incluye análisis estadístico y métodos combinatorios para evaluar eventos y calcular probabilidades. Es importante para el examen UNAM.",
+    "mat_precalculo": {
+      "title": "Precálculo",
+      "introduction": "El precálculo estudia funciones exponenciales, logarítmicas, números complejos y secuencias que preparan para cálculo.",
       "key_concepts": [
-        "Análisis combinatorio aplicado a conjuntos de datos",
-        "Combinaciones, permutaciones y ordenamientos",
-        "Espacio muestral, axiomas de probabilidad y distribución binomial",
-        "Medidas de tendencia central y medidas de dispersión"
+        "Funciones exponenciales y logarítmicas: gráficas, propiedades, ecuaciones",
+        "Números complejos: forma rectangular y polar",
+        "Secuencias y series: aritmética y geométrica",
+        "Análisis de dominio y rango de funciones especiales"
       ],
       "formulas": [
-        "Fórmulas generales de permutaciones, combinaciones y ordenamientos para problemas estadísticos"
+        "Exponentes: aˣ · aʸ = aˣ⁺ʸ, log_a(xy) = log_a(x) + log_a(y)",
+        "Números complejos: z = a + bi, |z| = √(a² + b²)"
       ],
       "problem_types": [
-        "Resolver problemas estadísticos aplicando fórmulas de combinaciones y permutaciones"
+        "Resolver ecuaciones exponenciales y logarítmicas",
+        "Trabajar con números complejos en forma rectangular y polar",
+        "Analizar convergencia de series"
       ],
       "study_tips": [
-        "Entiende los escenarios específicos donde se aplican permutaciones versus combinaciones en análisis de datos"
+        "Recuerda que log_a(x) es el inverso de aˣ",
+        "Los números complejos i² = -1 es la relación fundamental",
+        "Las series geométricas convergen si |r| < 1"
       ]
     },
-    "funciones": {
-      "title": "Funciones",
-      "introduction": "Las funciones definen relaciones matemáticas entre conjuntos mediante una regla de correspondencia. Incluyen funciones algebraicas, exponenciales y logarítmicas.",
+    "mat_funciones_calculo": {
+      "title": "Funciones y Cálculo",
+      "introduction": "Estudio de funciones, límites, continuidad, derivadas e integrales - herramientas fundamentales del cálculo.",
       "key_concepts": [
-        "Dominio, codominio, rango (imagen) y representación gráfica de una función",
-        "Clasificación: implícitas/explícitas, continuas/discontinuas, crecientes/decrecientes",
-        "Dominio, rango y asíntotas de funciones exponenciales y logarítmicas"
+        "Concepto de función, dominio, rango, composición",
+        "Límites y continuidad",
+        "Derivadas: definición, reglas, aplicaciones",
+        "Integrales: definidas e indefinidas, técnicas de integración"
       ],
       "formulas": [
-        "Representación general: f(x) = x² + 1 (ejemplo de función polinomial)"
+        "Límite: lim(x→a) f(x) = L si para todo ε > 0 existe δ > 0 tal que |f(x) - L| < ε",
+        "Derivada: f'(x) = lim(h→0) [f(x+h) - f(x)]/h",
+        "Regla de la cadena: (f ∘ g)'(x) = f'(g(x)) · g'(x)",
+        "Integral fundamental: ∫ xⁿ dx = xⁿ⁺¹/(n+1) + C"
       ],
       "problem_types": [
-        "Encontrar valores del dominio cuando el rango está restringido",
-        "Determinar si una función es inyectiva, sobreyectiva o biyectiva"
+        "Calcular límites, incluyendo formas indeterminadas",
+        "Encontrar derivadas usando reglas de diferenciación",
+        "Resolver problemas de optimización con derivadas",
+        "Evaluar integrales definidas e indefinidas"
       ],
       "study_tips": [
-        "Grafica la función para entender visualmente los límites de su dominio y rango"
+        "Entiende la derivada como la tasa de cambio instantánea",
+        "La regla de la cadena es crucial para funciones compuestas",
+        "La integración es el proceso inverso de la derivación"
       ]
     },
-    "limites_derivadas": {
-      "title": "Límites y Derivadas",
-      "introduction": "Los límites y derivadas evalúan el comportamiento de funciones al acercarse a puntos específicos y miden su tasa de cambio instantánea. Fundamental en cálculo.",
+    "mat_geometria": {
+      "title": "Geometría Euclidiana",
+      "introduction": "Estudio clásico de axiomas, postulados, teoremas y construcciones geométricas en el plano.",
       "key_concepts": [
-        "Concepto intuitivo y definición formal de límite",
-        "Teoremas de límites, formas indeterminadas y continuidad de funciones",
-        "Definición de derivada, derivadas sucesivas y derivadas implícitas",
-        "Máximos, mínimos, puntos de inflexión, velocidad y aceleración"
+        "Puntos, líneas, planos y ángulos",
+        "Triángulos: congruencia, semejanza, propiedades",
+        "Polígonos: propiedades, perímetros, áreas",
+        "Circunferencias: arcos, ángulos inscritos, tangentes"
       ],
       "formulas": [
-        "Regla de la cadena: Si y = f(u) y u = g(x), entonces dy/dx = (df/du)·(du/dx)"
+        "Teorema de Pitágoras: a² + b² = c²",
+        "Área de triángulo: A = (b · h)/2",
+        "Área de círculo: A = πr²",
+        "Suma de ángulos en triángulo: 180°"
       ],
       "problem_types": [
-        "Resolver límites y superar formas indeterminadas",
-        "Usar la regla de la cadena para encontrar derivadas de funciones compuestas e implícitas",
-        "Problemas de aplicación: velocidad y aceleración"
+        "Demostrar congruencia o semejanza de triángulos",
+        "Calcular áreas y perímetros de polígonos",
+        "Resolver problemas sobre circunferencias y ángulos inscritos"
       ],
       "study_tips": [
-        "Entiende profundamente la regla de la cadena, es el método estándar para diferenciar funciones compuestas"
+        "Memoriza los teoremas de congruencia: LLL, LAL, ALA",
+        "Los ángulos inscritos son la mitad del ángulo central que subtiene el mismo arco",
+        "La tangente a un círculo es perpendicular al radio en el punto de tangencia"
       ]
     },
-    "general": {
-      "title": "Estrategia General de Examen",
-      "introduction": "El examen de admisión UNAM es una prueba de 3 horas con 120 preguntas de opción múltiple, donde los candidatos del Área 1 enfrentan una tasa de rechazo del 90%.",
+    "mat_estadistica_probabilidad": {
+      "title": "Estadística y Probabilidad",
+      "introduction": "Análisis de datos, distribuciones de probabilidad, medidas estadísticas y métodos de conteo.",
       "key_concepts": [
-        "El examen del Área 1 contiene 26 preguntas de matemáticas de las 120 totales",
-        "Prioriza habilidades analíticas en resolución de problemas sobre ejercicios repetitivos",
-        "El éxito depende de un plan sistemático para abordar cada problema matemático"
+        "Combinaciones y permutaciones",
+        "Probabilidad: clásica, condicional, total",
+        "Variables aleatorias y distribuciones",
+        "Medidas de tendencia central y dispersión"
       ],
       "formulas": [
-        "Distribución fija: 26 de 120 preguntas son de matemáticas en Área 1"
+        "Combinaciones: C(n,k) = n!/(k!(n-k)!)",
+        "Permutaciones: P(n,k) = n!/(n-k)!",
+        "Probabilidad: P(A) = casos_favorables/casos_totales",
+        "Media: μ = Σx/n, Varianza: σ² = Σ(x-μ)²/n"
       ],
       "problem_types": [
-        "Preguntas de opción múltiple",
-        "Problemas que requieren síntesis rápida de conceptos"
+        "Contar combinaciones y permutaciones",
+        "Calcular probabilidades usando reglas básicas",
+        "Analizar distribuciones y calcular estadísticas descriptivas"
       ],
       "study_tips": [
-        "Lee teoría y orígenes de propiedades y teoremas",
-        "Consulta múltiples bibliografías si un tema es confuso en una fuente",
-        "Practica inteligentemente identificando herramientas matemáticas exactas y revisando conceptos no comprendidos"
+        "En combinaciones el orden NO importa, en permutaciones SÍ",
+        "P(A|B) = P(A∩B)/P(B) para probabilidad condicional",
+        "La distribución normal es simétrica alrededor de la media"
       ]
     },
-    "cinematica": {
+
+    // FÍSICA (9 official topics)
+    "fis_cinematica": {
       "title": "Cinemática",
       "introduction": "La cinemática estudia el movimiento de los cuerpos sin considerar las fuerzas que lo causan. Es fundamental para entender velocidad, aceleración y trayectorias en el examen UNAM.",
       "key_concepts": [
@@ -201,34 +228,8 @@ window.ENHANCED_EXPLANATIONS = {
         "En tiro parabólico, descompón en movimientos horizontal y vertical"
       ]
     },
-    "energia": {
-      "title": "Energía y Trabajo",
-      "introduction": "La energía y el trabajo son conceptos clave en física que explican cómo se transforma y transmite la energía en sistemas mecánicos.",
-      "key_concepts": [
-        "Trabajo mecánico: W = Fd cos(θ)",
-        "Energía cinética: Ek = ½mv²",
-        "Energía potencial gravitacional: Ep = mgh",
-        "Teorema del trabajo-energía y conservación de energía"
-      ],
-      "formulas": [
-        "Trabajo: W = Fd cos(θ)",
-        "Energía cinética: Ek = ½mv²",
-        "Energía potencial: Ep = mgh",
-        "Potencia: P = W/t"
-      ],
-      "problem_types": [
-        "Calcular trabajo realizado por fuerzas",
-        "Aplicar conservación de energía en sistemas",
-        "Resolver problemas con planos inclinados y fricción"
-      ],
-      "study_tips": [
-        "La energía se conserva: Em = Ek + Ep = constante",
-        "Recuerda que el trabajo puede ser positivo, negativo o cero",
-        "Usa gráficos para visualizar cambios de energía"
-      ]
-    },
-    "leyes_newton": {
-      "title": "Leyes de Newton",
+    "fis_dinamica": {
+      "title": "Dinámica",
       "introduction": "Las tres leyes de Newton son la base de la dinámica y explican cómo el movimiento cambia debido a las fuerzas.",
       "key_concepts": [
         "Primera ley: Un objeto en reposo permanece en reposo, y uno en movimiento permanece en movimiento a menos que una fuerza actúe sobre él",
@@ -253,33 +254,220 @@ window.ENHANCED_EXPLANATIONS = {
         "Recuerda que acción y reacción no se anulan porque actúan sobre objetos diferentes"
       ]
     },
-    "fisica_general": {
-      "title": "Física General",
-      "introduction": "Tópicos generales de física que combinan cinemática, dinámica, gravitación y otras áreas fundamentales.",
+    "fis_energia": {
+      "title": "Energía",
+      "introduction": "La energía y el trabajo son conceptos clave en física que explican cómo se transforma y transmite la energía en sistemas mecánicos.",
       "key_concepts": [
-        "Gravitación universal: F = GMm/r²",
-        "Impulso y cantidad de movimiento (momentum)",
-        "Colisiones elásticas e inelásticas",
-        "Movimiento circular y rotación"
+        "Trabajo mecánico: W = Fd cos(θ)",
+        "Energía cinética: Ek = ½mv²",
+        "Energía potencial gravitacional: Ep = mgh",
+        "Teorema del trabajo-energía y conservación de energía"
       ],
       "formulas": [
-        "Gravitación: F = GMm/r²",
-        "Impulso: J = FΔt = Δp",
-        "Momentum: p = mv",
-        "Velocidad angular: ω = v/r"
+        "Trabajo: W = Fd cos(θ)",
+        "Energía cinética: Ek = ½mv²",
+        "Energía potencial: Ep = mgh",
+        "Potencia: P = W/t"
       ],
       "problem_types": [
-        "Orbitas satelitales y satélites geoestacionarios",
-        "Choques y conservación de momentum",
-        "Rotación y momento angular"
+        "Calcular trabajo realizado por fuerzas",
+        "Aplicar conservación de energía en sistemas",
+        "Resolver problemas con planos inclinados y fricción"
       ],
       "study_tips": [
-        "El momentum se conserva en sistemas aislados",
-        "Aprende a distinguir entre colisiones elásticas e inelásticas",
-        "En órbitas, la fuerza gravitacional proporciona la fuerza centrípeta"
+        "La energía se conserva: Em = Ek + Ep = constante",
+        "Recuerda que el trabajo puede ser positivo, negativo o cero",
+        "Usa gráficos para visualizar cambios de energía"
       ]
     },
-    "estructura_atomica": {
+    "fis_termo": {
+      "title": "Termodinámica",
+      "introduction": "La termodinámica estudia calor, temperatura, procesos y leyes fundamentales que rigen la transformación de la energía térmica.",
+      "key_concepts": [
+        "Temperatura, escalas (Celsius, Fahrenheit, Kelvin)",
+        "Calor específico y cambios de estado",
+        "Primera ley de la termodinámica: ΔU = Q - W",
+        "Segunda ley: entropía siempre aumenta en sistemas aislados"
+      ],
+      "formulas": [
+        "Conversión de temperatura: K = °C + 273.15",
+        "Calor: Q = mc·ΔT",
+        "Trabajo en expansión: W = P·ΔV",
+        "Eficiencia de motor: η = W/Q_in"
+      ],
+      "problem_types": [
+        "Calcular transferencias de calor",
+        "Aplicar la primera ley en procesos termodinámicos",
+        "Determinar cambios de estado (fusión, evaporación, sublimación)"
+      ],
+      "study_tips": [
+        "Recuerda que 0 K es el cero absoluto",
+        "En procesos adiabáticos no hay transferencia de calor (Q = 0)",
+        "Los motores reales siempre tienen eficiencia < 100%"
+      ]
+    },
+    "fis_fluidos": {
+      "title": "Mecánica de Fluidos",
+      "introduction": "Estudio del comportamiento de líquidos y gases en reposo y en movimiento.",
+      "key_concepts": [
+        "Presión: fuerza por unidad de área",
+        "Hidrostática: principio de Arquímedes, flotabilidad",
+        "Hidrodinámica: ecuación de continuidad, principio de Bernoulli",
+        "Viscosidad y flujo laminar"
+      ],
+      "formulas": [
+        "Presión: P = F/A",
+        "Presión hidrostática: P = ρgh",
+        "Principio de Arquímedes: Fb = ρ_fluido·V_desplazado·g",
+        "Ecuación de Bernoulli: P + ½ρv² + ρgh = constante"
+      ],
+      "problem_types": [
+        "Calcular presiones en fluidos en reposo",
+        "Determinar fuerzas de flotación",
+        "Aplicar ecuación de continuidad en tuberías"
+      ],
+      "study_tips": [
+        "La presión actúa perpendicular a cualquier superficie",
+        "Un objeto flota si su densidad < densidad del fluido",
+        "La ecuación de Bernoulli conserva energía en fluidos"
+      ]
+    },
+    "fis_ondas": {
+      "title": "Ondas",
+      "introduction": "Estudio de fenómenos ondulatorios: propiedades de ondas, sonido, interferencia y resonancia.",
+      "key_concepts": [
+        "Características: amplitud, longitud de onda, frecuencia, período",
+        "Tipos: ondas transversales y longitudinales",
+        "Velocidad de onda: v = λf",
+        "Interferencia, difracción y efecto Doppler"
+      ],
+      "formulas": [
+        "Velocidad: v = λf, donde λ es longitud de onda, f es frecuencia",
+        "Período: T = 1/f",
+        "Ondas en cuerda: v = √(T/μ), donde T es tensión, μ es densidad lineal",
+        "Efecto Doppler: f' = f(v ± v_obs)/(v ∓ v_fuente)"
+      ],
+      "problem_types": [
+        "Calcular longitud de onda, frecuencia y velocidad",
+        "Analizar interferencia constructiva y destructiva",
+        "Aplicar efecto Doppler en problemas prácticos"
+      ],
+      "study_tips": [
+        "Las ondas en fase interfieren constructivamente (amplitud máxima)",
+        "Las ondas desfasadas 180° interfieren destructivamente (cancelación)",
+        "La resonancia ocurre cuando frecuencia natural coincide con fuerza impulsora"
+      ]
+    },
+    "fis_electro": {
+      "title": "Electromagnetismo",
+      "introduction": "Estudio de cargas eléctricas, campos, corriente, magnetismo e inducción electromagnética.",
+      "key_concepts": [
+        "Carga eléctrica y Ley de Coulomb",
+        "Campo eléctrico y potencial",
+        "Capacitores y dieléctricos",
+        "Corriente eléctrica, resistencia y Ley de Ohm",
+        "Magnetismo, campo magnético e inducción electromagnética"
+      ],
+      "formulas": [
+        "Ley de Coulomb: F = k·q₁·q₂/r²",
+        "Campo eléctrico: E = F/q",
+        "Ley de Ohm: V = IR",
+        "Potencia eléctrica: P = VI = I²R = V²/R",
+        "Fuerza magnética: F = qvB·sin(θ)"
+      ],
+      "problem_types": [
+        "Calcular fuerzas entre cargas",
+        "Analizar circuitos de resistencias",
+        "Determinar fuerzas en campos magnéticos",
+        "Aplicar inducción de Faraday"
+      ],
+      "study_tips": [
+        "Cargas iguales se repelen, cargas opuestas se atraen",
+        "En circuitos en serie la corriente es igual; en paralelo el voltaje es igual",
+        "La inducción electromagnética genera voltaje cuando hay cambio de flujo magnético"
+      ]
+    },
+    "fis_optica": {
+      "title": "Óptica",
+      "introduction": "Estudio de luz: reflexión, refracción, lentes, prismas y fenómenos ópticos.",
+      "key_concepts": [
+        "Naturaleza de la luz: onda y partícula",
+        "Leyes de reflexión y refracción",
+        "Lentes convergentes y divergentes",
+        "Espejos: planos, cóncavos, convexos",
+        "Dispersión y espectro visible"
+      ],
+      "formulas": [
+        "Ley de reflexión: θ_incidencia = θ_reflexión",
+        "Ley de Snell: n₁·sin(θ₁) = n₂·sin(θ₂)",
+        "Ecuación de lentes: 1/f = 1/s₀ + 1/s_i",
+        "Aumento: M = -s_i/s₀"
+      ],
+      "problem_types": [
+        "Localizar imágenes en espejos y lentes",
+        "Calcular refracción en interfaces",
+        "Determinar aumento y propiedades de imágenes"
+      ],
+      "study_tips": [
+        "Ángulos se miden desde la normal (perpendicular a la superficie)",
+        "Lentes convergentes tienen f > 0, divergentes f < 0",
+        "La dispersión separa luz blanca en espectro (arco iris)"
+      ]
+    },
+    "fis_contemporanea": {
+      "title": "Física Contemporánea",
+      "introduction": "Introducción a física moderna: relatividad, cuántica y estructura atómica.",
+      "key_concepts": [
+        "Relatividad especial de Einstein: E = mc²",
+        "Fotones y efecto fotoeléctrico",
+        "Modelo atómico de Bohr",
+        "Radiactividad y desintegración nuclear",
+        "Dualidad onda-partícula"
+      ],
+      "formulas": [
+        "Equivalencia masa-energía: E = mc²",
+        "Energía fotón: E = hf",
+        "Efecto fotoeléctrico: hf = Φ + KE",
+        "Energía nivel Bohr: E_n = -13.6/n² eV"
+      ],
+      "problem_types": [
+        "Aplicar equivalencia masa-energía",
+        "Calcular energía de fotones",
+        "Analizar desintegraciones radioactivas"
+      ],
+      "study_tips": [
+        "La luz tiene propiedades tanto de onda como de partícula",
+        "El efecto fotoeléctrico no se explica con teoría clásica de ondas",
+        "La radiactividad es proceso natural de átomos inestables"
+      ]
+    },
+
+    // QUÍMICA (8 official topics)
+    "qui_basicos": {
+      "title": "Conceptos Básicos",
+      "introduction": "Fundamentos de la química: definición de materia, cambios físicos vs químicos, elementos y compuestos.",
+      "key_concepts": [
+        "Materia: sólido, líquido, gas, plasma",
+        "Elemento: sustancia pura con un solo tipo de átomo",
+        "Compuesto: sustancia pura con dos o más elementos",
+        "Mezclas: homogéneas y heterogéneas",
+        "Cambios físicos vs químicos"
+      ],
+      "formulas": [
+        "Fórmula química: símbolo de elemento + subíndice (número de átomos)"
+      ],
+      "problem_types": [
+        "Distinguir cambios físicos de químicos",
+        "Clasificar materia como elemento, compuesto o mezcla",
+        "Escribir fórmulas químicas básicas"
+      ],
+      "study_tips": [
+        "Un cambio físico no crea nueva sustancia; un cambio químico sí",
+        "Los 11 elementos más comunes: H, C, N, O, F, P, S, Cl, Na, Ca, Fe",
+        "Las mezclas pueden separarse por métodos físicos"
+      ]
+    },
+    "qui_atomo": {
       "title": "Estructura Atómica",
       "introduction": "La estructura atómica describe cómo están organizados los protones, neutrones y electrones dentro del átomo, fundamental para entender la química.",
       "key_concepts": [
@@ -303,7 +491,7 @@ window.ENHANCED_EXPLANATIONS = {
         "Aprende a usar la tabla periódica para deducir configuraciones electrónicas"
       ]
     },
-    "tabla_periodica": {
+    "qui_tabla": {
       "title": "Tabla Periódica",
       "introduction": "La tabla periódica organiza los elementos químicos por propiedades. Entenderla es crucial para predecir reactividad y propiedades químicas.",
       "key_concepts": [
@@ -326,7 +514,7 @@ window.ENHANCED_EXPLANATIONS = {
         "Usa la posición en la tabla periódica para deducir configuración electrónica"
       ]
     },
-    "enlaces": {
+    "qui_enlaces": {
       "title": "Enlaces Químicos",
       "introduction": "Los enlaces químicos son las fuerzas que mantienen unidos los átomos en moléculas. Comprender tipos de enlaces es esencial para química.",
       "key_concepts": [
@@ -349,7 +537,31 @@ window.ENHANCED_EXPLANATIONS = {
         "Los puentes de hidrógeno son más fuertes que Van der Waals pero más débiles que enlaces covalentes"
       ]
     },
-    "reacciones": {
+    "qui_nomenclatura": {
+      "title": "Nomenclatura Química",
+      "introduction": "Reglas para nombrar compuestos químicos según normas IUPAC y nomenclatura clásica.",
+      "key_concepts": [
+        "Compuestos iónicos: catión + anión",
+        "Compuestos covalentes: prefijos numéricos",
+        "Ácidos: H + no metal o H + oxianión",
+        "Bases: metal + OH",
+        "Nomenclatura clásica vs IUPAC"
+      ],
+      "formulas": [
+        "Monóxido de carbono = CO, Dióxido de nitrógeno = NO₂"
+      ],
+      "problem_types": [
+        "Nombre químico dado la fórmula",
+        "Fórmula dado el nombre",
+        "Determinar carga de iones"
+      ],
+      "study_tips": [
+        "Los prefijos numéricos indican número de átomos: mono, di, tri, tetra...",
+        "Los ácidos oxácidos terminan en -oso o -ico según número de O",
+        "Aprende radicales comunes: sulfato, nitrato, fosfato, carbonato"
+      ]
+    },
+    "qui_reacciones": {
       "title": "Reacciones Químicas",
       "introduction": "Las reacciones químicas transforman sustancias. Entender tipos de reacciones y cómo balancearlas es fundamental.",
       "key_concepts": [
@@ -372,55 +584,151 @@ window.ENHANCED_EXPLANATIONS = {
         "Práctica: memoriza reacciones comunes y aprende patrones"
       ]
     },
-    "estequiometria": {
-      "title": "Estequiometría",
-      "introduction": "La estequiometría cuantifica las relaciones entre reactivos y productos en reacciones químicas usando moles.",
+    "qui_soluciones": {
+      "title": "Soluciones",
+      "introduction": "Mezclas homogéneas de soluto y solvente. Estudio de concentración, dilución y propiedades coligativas.",
       "key_concepts": [
-        "Mol: unidad de cantidad de sustancia (6.02 × 10²³)",
-        "Masa molar: masa de 1 mol de sustancia",
-        "Relaciones molares de la ecuación equilibrada",
-        "Reactivo limitante y rendimiento teórico"
+        "Soluto y solvente",
+        "Concentración: molar, molal, porcentual, ppm",
+        "Dilución: M₁V₁ = M₂V₂",
+        "Propiedades coligativas: presión osmótica, punto de ebullición, punto de congelación"
       ],
       "formulas": [
-        "n = m/M (moles = masa / masa molar)",
-        "Relaciones de moles del coeficiente estequiométrico"
+        "Molaridad: M = moles/litros",
+        "Molalidad: m = moles/kg disolvente",
+        "Porcentaje masa: (masa soluto/masa solución)×100%",
+        "Presión osmótica: π = MRT"
       ],
       "problem_types": [
-        "Convertir entre gramos y moles",
-        "Calcular cantidades de productos y reactivos",
-        "Identificar reactivo limitante",
-        "Calcular rendimiento porcentual"
+        "Calcular molalidad y molaridad",
+        "Resolver problemas de dilución",
+        "Aplicar propiedades coligativas"
       ],
       "study_tips": [
-        "Siempre balancea la ecuación primero",
-        "Usa la masa molar para convertir entre moles y gramos",
-        "El reactivo limitante determina cuánto producto se forma"
+        "Molaridad depende de volumen (cambia con temperatura), molalidad no",
+        "Soluciones saturadas contienen máxima cantidad de soluto disuelto",
+        "La presión osmótica es importante en células biológicas"
       ]
     },
-    "quimica_general": {
-      "title": "Química General",
-      "introduction": "Conceptos generales de química que abarca estados de la materia, soluciones, pH y leyes de gases.",
+    "qui_organica": {
+      "title": "Química Orgánica",
+      "introduction": "Estudio de compuestos de carbono: hidrocarburos, grupos funcionales, isómeros y reacciones.",
       "key_concepts": [
-        "Estados de la materia: sólido, líquido, gas y plasma",
-        "Soluciones y concentraciones (molares, molales, porcentuales)",
-        "Escala de pH y pOH",
-        "Ley de gases ideales: PV = nRT"
+        "Hidrocarburos: alcanos (C-C saturados), alquenos (C=C), alquinos (C≡C)",
+        "Grupos funcionales: -OH (alcohol), -COOH (ácido carboxílico), -CHO (aldehído)",
+        "Isómeros: estructural y estereoisómeros",
+        "Reacciones: adición, sustitución, condensación, oxidación"
       ],
       "formulas": [
-        "Molalidad: m = n/kg de disolvente",
-        "pH = -log[H⁺], pOH = -log[OH⁻], pH + pOH = 14",
-        "Ley de gases ideales: PV = nRT"
+        "Fórmula general alcanos: CₙH₂ₙ₊₂",
+        "Alquenos: CₙH₂ₙ",
+        "Alquinos: CₙH₂ₙ₋₂"
       ],
       "problem_types": [
-        "Calcular concentraciones de soluciones",
-        "Resolver problemas de pH y buffer",
-        "Aplicar ley de gases ideales"
+        "Nombrar compuestos orgánicos",
+        "Identificar grupos funcionales",
+        "Determinar isómeros",
+        "Predecir productos de reacciones"
       ],
       "study_tips": [
-        "Entiende que pH = 7 es neutro, < 7 es ácido, > 7 es básico",
-        "Memoriza R = 0.0821 L·atm/(mol·K) para gases ideales",
-        "Las soluciones diluidas siguen la ley de Raoult"
+        "El carbono forma 4 enlaces; hidrógeno 1; oxígeno 2; nitrógeno 3",
+        "Los alquenos son más reactivos que alcanos (doble enlace)",
+        "El benceno (C₆H₆) es aromático y especialmente estable"
       ]
     }
+  },
+
+  // LEGACY FALLBACK MAPPING - for backward compatibility
+  "_legacy_mapping": {
+    "description": "Maps old custom topic keys to new official UNAM tags. Used when legacy code tries to access old keys.",
+    "mapping": {
+      // Math
+      "algebra": "mat_algebra",
+      "aritmetica": "mat_aritmetica",
+      "geometria_analitica": "mat_geometria_analitica",
+      "trigonometria": "mat_trigonometria",
+      "probabilidad": "mat_estadistica_probabilidad",
+      "funciones": "mat_funciones_calculo",
+      "limites_derivadas": "mat_funciones_calculo",
+      "precalculo": "mat_precalculo",
+      "exponenciales_logaritmos": "mat_precalculo",
+      "calculo": "mat_funciones_calculo",
+      "derivadas": "mat_funciones_calculo",
+      "integrales": "mat_funciones_calculo",
+      "geometria": "mat_geometria",
+      "geometria_euclidiana": "mat_geometria",
+      "estadistica": "mat_estadistica_probabilidad",
+      
+      // Physics
+      "cinematica": "fis_cinematica",
+      "energia": "fis_energia",
+      "leyes_newton": "fis_dinamica",
+      "dinamica": "fis_dinamica",
+      "fisica_general": "fis_dinamica",
+      "termodinamica": "fis_termo",
+      "termo": "fis_termo",
+      "fluidos": "fis_fluidos",
+      "ondas": "fis_ondas",
+      "electromagnetismo": "fis_electro",
+      "electro": "fis_electro",
+      "optica": "fis_optica",
+      "fisica_moderna": "fis_contemporanea",
+      "cuantica": "fis_contemporanea",
+      "relatividad": "fis_contemporanea",
+      
+      // Chemistry
+      "conceptos_basicos": "qui_basicos",
+      "estructura_atomica": "qui_atomo",
+      "tabla_periodica": "qui_tabla",
+      "enlaces": "qui_enlaces",
+      "nomenclatura": "qui_nomenclatura",
+      "reacciones": "qui_reacciones",
+      "estequiometria": "qui_reacciones",
+      "quimica_general": "qui_soluciones",
+      "soluciones": "qui_soluciones",
+      "concentraciones": "qui_soluciones",
+      "quimica_organica": "qui_organica",
+      
+      // General
+      "general": null
+    }
+  },
+
+  // HELPER FUNCTIONS
+  "getExplanation": function(topicKey) {
+    // Try official tag first
+    if (this.topics[topicKey]) {
+      return this.topics[topicKey];
+    }
+    
+    // Try legacy mapping
+    const officialKey = this._legacy_mapping.mapping[topicKey];
+    if (officialKey && this.topics[officialKey]) {
+      console.warn(`[Legacy] Topic '${topicKey}' mapped to '${officialKey}' - consider updating code`);
+      return this.topics[officialKey];
+    }
+    
+    console.warn(`[ENHANCED_EXPLANATIONS] Topic not found: '${topicKey}'`);
+    return null;
+  },
+
+  "getTopicsBySubject": function(subject) {
+    // Returns array of official topic keys for a subject
+    // subject: 'math', 'physics', 'chemistry'
+    const prefixes = {
+      "math": "mat_",
+      "physics": "fis_",
+      "chemistry": "qui_"
+    };
+    
+    const prefix = prefixes[subject.toLowerCase()];
+    if (!prefix) return [];
+    
+    return Object.keys(this.topics).filter(key => key.startsWith(prefix));
+  },
+
+  "getAllTopics": function() {
+    // Returns array of all official topic keys
+    return Object.keys(this.topics).filter(key => !key.startsWith("_"));
   }
 };
