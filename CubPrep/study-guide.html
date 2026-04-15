@@ -302,7 +302,7 @@
 <body>
   <div class="header">
     <h1>📚 PumaPrep - Guía de Estudio</h1>
-    <p>Explicaciones mejoradas con NotebookLM + Videos de YouTube + Referencias CONAMAT</p>
+    <p>Explicaciones mejoradas con NotebookLM + Videos de YouTube (MatematicasprofeAlex, DanielCarreon, MatematicaConJuan) + Referencias CONAMAT</p>
     <a href="index.html" class="back-link">← Volver a Practicar</a>
   </div>
 
@@ -324,6 +324,7 @@
 
   <!-- Load explanations as JS to work with file:// protocol -->
   <script src="./enhanced_explanations.js"></script>
+  <script src="./video_refs.js"></script>
   <script>
     const SUBJECT_NAMES = {
       matematicas: 'Matemáticas',
@@ -373,11 +374,34 @@
 
     function renderVideos() {
       const grid = document.getElementById('videoGrid');
-      grid.innerHTML = enhancedData.videos.map(video => `
+      // Show videos from enhanced_explanations.js + video_refs.js (brother's preferred channels)
+      let allVideos = [];
+      
+      // Add videos from enhanced_explanations.js
+      if (enhancedData.videos) {
+        allVideos = allVideos.concat(enhancedData.videos);
+      }
+      
+      // Add videos from video_refs.js (MatematicasprofeAlex, DanielCarreon, MatematicaConJuan)
+      if (typeof window.VIDEO_REFS !== 'undefined') {
+        for (const [topic, videos] of Object.entries(window.VIDEO_REFS)) {
+          allVideos = allVideos.concat(videos.map(v => ({...v, topics: [topic]})));
+        }
+      }
+      
+      // Deduplicate by URL
+      const seen = new Set();
+      allVideos = allVideos.filter(v => {
+        if (seen.has(v.url)) return false;
+        seen.add(v.url);
+        return true;
+      });
+      
+      grid.innerHTML = allVideos.map(video => `
         <div class="video-card">
           <a href="${video.url}" target="_blank" rel="noopener">${video.title}</a>
           <div class="channel">${video.channel}</div>
-          <div class="topics">${video.topics.map(t => t.replace('.', ' → ')).join(', ')}</div>
+          <div class="topics">${video.topics ? video.topics.map(t => typeof t === 'string' ? t.replace('.', ' → ') : t).join(', ') : ''}</div>
         </div>
       `).join('');
     }
@@ -416,6 +440,17 @@
                 }
               });
               html += `</div>`;
+            }
+            
+            if (typeof window.VIDEO_REFS !== 'undefined') {
+              var topicVideos = window.VIDEO_REFS[tema] || window.VIDEO_REFS['general'] || [];
+              if (topicVideos && topicVideos.length > 0) {
+                html += '<div class="video-ref"><div class="video-ref-title">📹 Canales preferidos:</div>';
+                topicVideos.slice(0, 3).forEach(function(v) {
+                  html += '<a href="' + v.url + '" target="_blank" rel="noopener">▶ ' + v.title + ' - ' + v.channel + '</a>';
+                });
+                html += '</div>';
+              }
             }
 
             if (exp.conamat_pages) {
