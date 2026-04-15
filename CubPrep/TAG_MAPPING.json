@@ -1,0 +1,245 @@
+{
+  "version": "1.0",
+  "generated": "2026-04-14",
+  "description": "Mapping between custom topic names (legacy) and official UNAM classification tags",
+  "math": {
+    "mat_algebra": {
+      "official_name": "Álgebra",
+      "legacy_tags": ["algebra"],
+      "videos_needed": 5,
+      "videos_collected": 5,
+      "status": "ready",
+      "explanation": "Linear equations, polynomials, factorization, systems of equations"
+    },
+    "mat_aritmetica": {
+      "official_name": "Aritmética",
+      "legacy_tags": ["aritmetica"],
+      "videos_needed": 5,
+      "videos_collected": 5,
+      "status": "ready",
+      "explanation": "Number theory, divisibility, GCD, LCM, operations"
+    },
+    "mat_geometria_analitica": {
+      "official_name": "Geometría Analítica",
+      "legacy_tags": ["geometria_analitica"],
+      "videos_needed": 5,
+      "videos_collected": 5,
+      "status": "ready",
+      "explanation": "Lines, circles, parabolas, conic sections in coordinate plane"
+    },
+    "mat_trigonometria": {
+      "official_name": "Trigonometría",
+      "legacy_tags": ["trigonometria"],
+      "videos_needed": 5,
+      "videos_collected": 5,
+      "status": "ready",
+      "explanation": "Trigonometric functions, identities, equations, applications"
+    },
+    "mat_precalculo": {
+      "official_name": "Precálculo",
+      "legacy_tags": ["precalculo", "exponenciales_logaritmos"],
+      "videos_needed": 5,
+      "videos_collected": 0,
+      "status": "need_videos",
+      "explanation": "Exponential functions, logarithms, complex numbers, sequences"
+    },
+    "mat_funciones_calculo": {
+      "official_name": "Funciones y Cálculo",
+      "legacy_tags": ["funciones", "calculo", "derivadas", "integrales"],
+      "videos_needed": 5,
+      "videos_collected": 0,
+      "status": "need_videos",
+      "explanation": "Functions, limits, continuity, derivatives, integrals"
+    },
+    "mat_geometria": {
+      "official_name": "Geometría Euclidiana",
+      "legacy_tags": ["geometria", "geometria_euclidiana"],
+      "videos_needed": 5,
+      "videos_collected": 0,
+      "status": "need_videos",
+      "explanation": "Axioms, theorems, proofs, constructions, area, volume"
+    },
+    "mat_estadistica_probabilidad": {
+      "official_name": "Estadística y Probabilidad",
+      "legacy_tags": ["estadistica", "probabilidad"],
+      "videos_needed": 5,
+      "videos_collected": 0,
+      "status": "need_videos",
+      "explanation": "Probability distributions, statistical measures, hypothesis testing"
+    }
+  },
+  "fisica": {
+    "fis_cinematica": {
+      "official_name": "Cinemática",
+      "legacy_tags": ["cinematica"],
+      "videos_needed": 5,
+      "videos_collected": 5,
+      "status": "ready",
+      "explanation": "Motion, velocity, acceleration, projectile motion, reference frames",
+      "exam_weight": "high"
+    },
+    "fis_dinamica": {
+      "official_name": "Dinámica",
+      "legacy_tags": ["leyes_newton", "dinamica"],
+      "videos_needed": 5,
+      "videos_collected": 0,
+      "status": "need_videos",
+      "explanation": "Newton's laws, forces, friction, equilibrium, circular motion",
+      "exam_weight": "high"
+    },
+    "fis_energia": {
+      "official_name": "Energía",
+      "legacy_tags": ["energia"],
+      "videos_needed": 5,
+      "videos_collected": 5,
+      "status": "ready",
+      "explanation": "Kinetic and potential energy, work, power, conservation of energy",
+      "exam_weight": "high"
+    },
+    "fis_termo": {
+      "official_name": "Termodinámica",
+      "legacy_tags": ["termodinamica", "termo"],
+      "videos_needed": 5,
+      "videos_collected": 0,
+      "status": "need_videos",
+      "explanation": "Heat, temperature, internal energy, laws of thermodynamics, entropy",
+      "exam_weight": "high"
+    },
+    "fis_fluidos": {
+      "official_name": "Mecánica de Fluidos",
+      "legacy_tags": ["fluidos"],
+      "videos_needed": 5,
+      "videos_collected": 0,
+      "status": "need_videos",
+      "explanation": "Pressure, buoyancy, fluid dynamics, continuity equation, Bernoulli's principle",
+      "exam_weight": "medium"
+    },
+    "fis_ondas": {
+      "official_name": "Ondas",
+      "legacy_tags": ["ondas"],
+      "videos_needed": 5,
+      "videos_collected": 0,
+      "status": "need_videos",
+      "explanation": "Wave properties, sound, resonance, interference, standing waves",
+      "exam_weight": "medium"
+    },
+    "fis_electro": {
+      "official_name": "Electromagnetismo",
+      "legacy_tags": ["electromagnetismo", "electro"],
+      "videos_needed": 5,
+      "videos_collected": 0,
+      "status": "need_videos",
+      "explanation": "Electric field, potential, capacitors, current, magnetism, electromagnetic induction",
+      "exam_weight": "high"
+    },
+    "fis_optica": {
+      "official_name": "Óptica",
+      "legacy_tags": ["optica"],
+      "videos_needed": 5,
+      "videos_collected": 0,
+      "status": "need_videos",
+      "explanation": "Light properties, reflection, refraction, lenses, diffraction, color",
+      "exam_weight": "medium"
+    },
+    "fis_contemporanea": {
+      "official_name": "Física Contemporánea",
+      "legacy_tags": ["fisica_moderna", "cuantica", "relatividad"],
+      "videos_needed": 3,
+      "videos_collected": 0,
+      "status": "need_videos",
+      "explanation": "Quantum mechanics basics, photoelectric effect, atomic structure, relativity",
+      "exam_weight": "low"
+    }
+  },
+  "quimica": {
+    "qui_basicos": {
+      "official_name": "Conceptos Básicos",
+      "legacy_tags": ["conceptos_basicos"],
+      "videos_needed": 5,
+      "videos_collected": 0,
+      "status": "need_videos",
+      "explanation": "Matter, elements, compounds, mixtures, physical vs chemical changes",
+      "exam_weight": "high"
+    },
+    "qui_atomo": {
+      "official_name": "Estructura Atómica",
+      "legacy_tags": ["estructura_atomica"],
+      "videos_needed": 5,
+      "videos_collected": 5,
+      "status": "ready",
+      "explanation": "Atomic models, electrons, protons, neutrons, quantum numbers, electron configuration",
+      "exam_weight": "high"
+    },
+    "qui_tabla": {
+      "official_name": "Tabla Periódica",
+      "legacy_tags": ["tabla_periodica"],
+      "videos_needed": 5,
+      "videos_collected": 5,
+      "status": "ready",
+      "explanation": "Periodic trends, groups, periods, properties, reactivity patterns",
+      "exam_weight": "high"
+    },
+    "qui_enlaces": {
+      "official_name": "Enlaces Químicos",
+      "legacy_tags": ["enlaces"],
+      "videos_needed": 5,
+      "videos_collected": 5,
+      "status": "ready",
+      "explanation": "Ionic bonds, covalent bonds, metallic bonds, Lewis structures, VSEPR theory",
+      "exam_weight": "high"
+    },
+    "qui_nomenclatura": {
+      "official_name": "Nomenclatura Química",
+      "legacy_tags": ["nomenclatura"],
+      "videos_needed": 5,
+      "videos_collected": 0,
+      "status": "need_videos",
+      "explanation": "Naming compounds, IUPAC rules, prefixes, binary compounds, acids, bases",
+      "exam_weight": "medium"
+    },
+    "qui_reacciones": {
+      "official_name": "Reacciones Químicas",
+      "legacy_tags": ["reacciones"],
+      "videos_needed": 5,
+      "videos_collected": 5,
+      "status": "ready",
+      "explanation": "Types of reactions, balancing equations, redox reactions, combustion",
+      "exam_weight": "high"
+    },
+    "qui_soluciones": {
+      "official_name": "Soluciones",
+      "legacy_tags": ["soluciones", "concentraciones"],
+      "videos_needed": 5,
+      "videos_collected": 0,
+      "status": "need_videos",
+      "explanation": "Solutions, solvents, concentration units, dilution, colligative properties",
+      "exam_weight": "medium"
+    },
+    "qui_organica": {
+      "official_name": "Química Orgánica",
+      "legacy_tags": ["quimica_organica"],
+      "videos_needed": 3,
+      "videos_collected": 0,
+      "status": "need_videos",
+      "explanation": "Hydrocarbons, functional groups, isomers, reactions, polymers",
+      "exam_weight": "low"
+    }
+  },
+  "summary": {
+    "total_topics": 25,
+    "ready_topics": 8,
+    "need_videos": 17,
+    "videos_needed": 81,
+    "videos_collected": 30,
+    "coverage_percent": 37
+  },
+  "fallback_strategy": {
+    "description": "Legacy tags are preserved for backward compatibility. When loading videos, the system should:",
+    "steps": [
+      "1. Try to load from official tag (e.g., 'fis_cinematica')",
+      "2. If not found, check _legacy_ mapping for custom tag (e.g., 'cinematica' → 'fis_cinematica')",
+      "3. Return empty array if neither found",
+      "4. Log warning if legacy tag is used (for deprecation notices)"
+    ]
+  }
+}

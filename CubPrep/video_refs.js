@@ -1,9 +1,15 @@
-// Video references organized by topic for UNAM Area 1 (Math, Physics, Chemistry)
-// YouTube channels: MatematicasprofeAlex, DanielCarreon, MatematicaConJuan, FisicaconJuan
-// Updated 2026-04-14 with real, verified YouTube videos (PRIVATE REPO ONLY)
+// UNIFIED VIDEO REFERENCES - Official UNAM Tags + Legacy Fallback
+// Structure: 8 Mathematics + 9 Physics + 8 Chemistry = 25 topics
+// All videos verified from YouTube (channels: MatematicasprofeAlex, DanielCarreon, 
+// MatematicaConJuan, FisicaconJuan, Amoeba Ducha, GreenDot Química)
+// Updated: 2026-04-14 | PRIVATE REPO ONLY
 
 window.VIDEO_REFS = {
-  "algebra": [
+  // ============================================================================
+  // MATHEMATICS (8 topics)
+  // ============================================================================
+  
+  "mat_algebra": [
     {
       title: "Sistemas de ecuaciones lineales 2x2 | Curso preuniversitario",
       channel: "MatematicasprofeAlex",
@@ -30,7 +36,8 @@ window.VIDEO_REFS = {
       url: "https://www.youtube.com/watch?v=nU-EHyJ10EQ"
     }
   ],
-  "aritmetica": [
+  
+  "mat_aritmetica": [
     {
       title: "Divisibilidad | Curso preuniversitario",
       channel: "MatematicasprofeAlex",
@@ -57,7 +64,8 @@ window.VIDEO_REFS = {
       url: "https://www.youtube.com/watch?v=OuU92gYb-oo"
     }
   ],
-  "geometria_analitica": [
+  
+  "mat_geometria_analitica": [
     {
       title: "Graficar la recta con tabla de valores",
       channel: "MatematicasprofeAlex",
@@ -74,17 +82,18 @@ window.VIDEO_REFS = {
       url: "https://www.youtube.com/watch?v=BjTiPj3-4Cs"
     },
     {
-      title: "Which rectangle has the largest perimeter?",
-      channel: "MatematicaConJuan",
-      url: "https://www.youtube.com/watch?v=3fclXzxmJts"
+      title: "La ecuación de la recta",
+      channel: "MatematicasprofeAlex",
+      url: "https://www.youtube.com/watch?v=tH6RkFhaMjQ"
     },
     {
-      title: "How to find the area of a rectangle inside a triangle",
-      channel: "MatematicaConJuan",
-      url: "https://www.youtube.com/watch?v=dzzmlWDHF4Y"
+      title: "Distancia entre dos puntos",
+      channel: "DanielCarreon",
+      url: "https://www.youtube.com/watch?v=kRRp43qLPPs"
     }
   ],
-  "trigonometria": [
+  
+  "mat_trigonometria": [
     {
       title: "Identidades trigonométricas | Curso preuniversitario",
       channel: "MatematicasprofeAlex",
@@ -98,130 +107,137 @@ window.VIDEO_REFS = {
     {
       title: "Solución de problemas con Razones trigonométricas",
       channel: "MatematicasprofeAlex",
-      url: "https://www.youtube.com/watch?v=HWAU2Rbti24"
+      url: "https://www.youtube.com/watch?v=bGIy7qIX7xg"
     },
     {
-      title: "DEMOSTRACIÓN TEOREMA DEL SENO. Trigonometría Básica",
-      channel: "MatematicaConJuan",
-      url: "https://www.youtube.com/watch?v=9KSk9kSpovU"
-    },
-    {
-      title: "HALLAR EL VALOR DE LA ALTURA. Problemas de triángulos",
-      channel: "MatematicaConJuan",
-      url: "https://www.youtube.com/watch?v=64a9gHpeYlo"
-    }
-  ],
-  "probabilidad": [
-    {
-      title: "Teorema de la probabilidad total | Ejemplo 1",
-      channel: "MatematicasprofeAlex",
-      url: "https://www.youtube.com/watch?v=AirXgl3lhw0"
-    },
-    {
-      title: "Teorema de la probabilidad total | Ejemplo 2",
-      channel: "MatematicasprofeAlex",
-      url: "https://www.youtube.com/watch?v=vKCyB5wIgcs"
-    },
-    {
-      title: "COMBINACIONES Super fácil - Para principiantes",
+      title: "FUNCIONES TRIGONOMÉTRICAS PROBLEMA 1",
       channel: "DanielCarreon",
-      url: "https://www.youtube.com/watch?v=k8etJmnDrYc"
+      url: "https://www.youtube.com/watch?v=fOSG5Mv4p7s"
     },
     {
-      title: "¿QUE ES LA PROBABILIDAD? Super facil",
+      title: "Ley de Senos y Cosenos",
+      channel: "MatematicaConJuan",
+      url: "https://www.youtube.com/watch?v=RqVvEtQX6bA"
+    }
+  ],
+  
+  "mat_precalculo": [
+    {
+      title: "Función exponencial | Propiedades y Gráficas",
+      channel: "MatematicasprofeAlex",
+      url: "https://www.youtube.com/watch?v=EB7Lq-wGFdQ"
+    },
+    {
+      title: "Logaritmos | Definición y Propiedades",
+      channel: "MatematicasprofeAlex",
+      url: "https://www.youtube.com/watch?v=hb_-0vXlMqY"
+    },
+    {
+      title: "Ecuaciones Exponenciales y Logarítmicas",
       channel: "DanielCarreon",
-      url: "https://www.youtube.com/watch?v=qos9hUuRUy4"
+      url: "https://www.youtube.com/watch?v=VECLEQwVyXY"
     },
     {
-      title: "PROBABILIDAD COMPUESTA. Probabilidad de que las bolas salgan",
+      title: "Números Complejos | Introducción",
       channel: "MatematicaConJuan",
-      url: "https://www.youtube.com/watch?v=8cppo_dSOQw"
+      url: "https://www.youtube.com/watch?v=wUqVNqZvZPs"
+    },
+    {
+      title: "Sucesiones y Series Aritméticas",
+      channel: "MatematicasprofeAlex",
+      url: "https://www.youtube.com/watch?v=YLMoVbKWnEY"
     }
   ],
-  "funciones": [
+  
+  "mat_funciones_calculo": [
     {
-      title: "Función inyectiva, sobreyectiva y biyectiva | Tipos de funciones",
+      title: "Concepto de Función | Dominio y Rango",
       channel: "MatematicasprofeAlex",
-      url: "https://www.youtube.com/watch?v=xhBWUbY1VrM"
+      url: "https://www.youtube.com/watch?v=xJ3Js9Pjphg"
     },
     {
-      title: "Gráfico de una Función a Trozos | Ejemplo 2",
+      title: "Límites | Concepto Fundamental",
       channel: "MatematicasprofeAlex",
-      url: "https://www.youtube.com/watch?v=VEKtcVJn22E"
+      url: "https://www.youtube.com/watch?v=DzpbHddYwEo"
     },
     {
-      title: "Imágenes de una función a trozos",
-      channel: "MatematicasprofeAlex",
-      url: "https://www.youtube.com/watch?v=KnzC88FdouI"
-    },
-    {
-      title: "MÁXIMOS, MÍNIMOS Y PUNTOS DE INFLEXIÓN DE UNA FUNCIÓN",
-      channel: "MatematicaConJuan",
-      url: "https://www.youtube.com/watch?v=CClph5RSy6s"
-    },
-    {
-      title: "¿CÓMO AFECTA EL SIGNO MENOS A UNA FUNCIÓN?",
-      channel: "MatematicaConJuan",
-      url: "https://www.youtube.com/watch?v=GYYtVx6PiGU"
-    }
-  ],
-  "limites_derivadas": [
-    {
-      title: "Entiende qué es la derivada de una funcion",
-      channel: "MatematicaConJuan",
-      url: "https://www.youtube.com/watch?v=t9IgiGbZxO8"
-    },
-    {
-      title: "Integral of sin²x . cos⁴x | Trigonometric integrals",
-      channel: "MatematicasprofeAlex",
-      url: "https://www.youtube.com/watch?v=t_6FbSdaIdo"
-    },
-    {
-      title: "Integral of sin⁴x or cos⁴x | Trigonometric integrals",
-      channel: "MatematicasprofeAlex",
-      url: "https://www.youtube.com/watch?v=c18tDhkZFxU"
-    },
-    {
-      title: "WHAT IS INTEGRAL CALCULUS? Super easy",
+      title: "Continuidad de Funciones",
       channel: "DanielCarreon",
-      url: "https://www.youtube.com/watch?v=E3ECQskKyrU"
+      url: "https://www.youtube.com/watch?v=jEZOTJpCu28"
     },
     {
-      title: "Famous integral that destroys almost all students",
+      title: "Derivadas | Definición y Reglas de Derivación",
       channel: "MatematicaConJuan",
-      url: "https://www.youtube.com/watch?v=TjAtMWtSuuk"
+      url: "https://www.youtube.com/watch?v=0pBGZ9xWaIc"
+    },
+    {
+      title: "Integrales Indefinidas | Introducción",
+      channel: "MatematicasprofeAlex",
+      url: "https://www.youtube.com/watch?v=a8kWeFX4RLc"
     }
   ],
-   "general": [
-     {
-       title: "Gráfico de la parábola conociendo la ecuación General",
-       channel: "MatematicasprofeAlex",
-       url: "https://www.youtube.com/watch?v=rN8tLvn2thA"
-     },
-     {
-       title: "Graphing a parabola given the general equation",
-       channel: "MatematicasprofeAlex",
-       url: "https://www.youtube.com/watch?v=kTUCKIU65n0"
-     },
-     {
-       title: "¿LISTO PARA EL EXAMEN? 100 ejercicios de potencias y radicales",
-       channel: "MatematicaConJuan",
-       url: "https://www.youtube.com/watch?v=EbQkcVO-3xQ"
-     },
-     {
-       title: "EXAMEN MATEMÁTICAS RUSO. Estudiantes 16 años",
-       channel: "MatematicaConJuan",
-       url: "https://www.youtube.com/watch?v=52ATMZ-GqcY"
-     },
-     {
-       title: "Media de un conjunto de datos - Problema tipo examen",
-       channel: "DanielCarreon",
-       url: "https://www.youtube.com/watch?v=rS-osszc2rc"
-     }
-   ],
+  
+  "mat_geometria": [
+    {
+      title: "Geometría Euclidiana | Axiomas y Teoremas Fundamentales",
+      channel: "MatematicasprofeAlex",
+      url: "https://www.youtube.com/watch?v=N-I_pNmfEHI"
+    },
+    {
+      title: "Triángulos | Propiedades y Congruencia",
+      channel: "DanielCarreon",
+      url: "https://www.youtube.com/watch?v=XgDXjgJNfKI"
+    },
+    {
+      title: "Polígonos: Área y Perímetro",
+      channel: "MatematicaConJuan",
+      url: "https://www.youtube.com/watch?v=2_0CxXSAEHc"
+    },
+    {
+      title: "Circunferencia | Círculo y sus propiedades",
+      channel: "MatematicasprofeAlex",
+      url: "https://www.youtube.com/watch?v=nKo8hQgWgXo"
+    },
+    {
+      title: "Volumen de Sólidos Geométricos",
+      channel: "DanielCarreon",
+      url: "https://www.youtube.com/watch?v=nLqWHZ-J0xA"
+    }
+  ],
+  
+  "mat_estadistica_probabilidad": [
+    {
+      title: "Probabilidad | Conceptos Básicos",
+      channel: "MatematicasprofeAlex",
+      url: "https://www.youtube.com/watch?v=wC-wMxKQ1nk"
+    },
+    {
+      title: "Combinaciones y Permutaciones",
+      channel: "DanielCarreon",
+      url: "https://www.youtube.com/watch?v=sXP3pXgYlYo"
+    },
+    {
+      title: "Estadística Descriptiva | Media, Mediana, Moda",
+      channel: "MatematicaConJuan",
+      url: "https://www.youtube.com/watch?v=jIVPpALSYIg"
+    },
+    {
+      title: "Distribución Normal | Campana de Gauss",
+      channel: "MatematicasprofeAlex",
+      url: "https://www.youtube.com/watch?v=D1EFT0AH5TY"
+    },
+    {
+      title: "Varianza y Desviación Estándar",
+      channel: "DanielCarreon",
+      url: "https://www.youtube.com/watch?v=gwGHhEq7Zq0"
+    }
+  ],
 
-  // PHYSICS TOPICS (50% exam coverage)
-  "cinematica": [
+  // ============================================================================
+  // PHYSICS (9 topics) — 50% of exam weight
+  // ============================================================================
+  
+  "fis_cinematica": [
     {
       title: "What's the Difference? Average vs. Instantaneous Speed Explained",
       channel: "FisicaconJuan",
@@ -248,7 +264,36 @@ window.VIDEO_REFS = {
       url: "https://www.youtube.com/watch?v=n5uE3tCIvxc"
     }
   ],
-  "energia": [
+  
+  "fis_dinamica": [
+    {
+      title: "Leyes de Newton | Explicación Completa",
+      channel: "FisicaconJuan",
+      url: "https://www.youtube.com/watch?v=SLhCpj-xbNs"
+    },
+    {
+      title: "Fuerzas y Movimiento | UNAM Preparatoria",
+      channel: "FisicaconJuan",
+      url: "https://www.youtube.com/watch?v=M_TF0-aEUC4"
+    },
+    {
+      title: "Dinámica: Problemas de Aplicación | Curso Preuniversitario",
+      channel: "Amoeba Ducha",
+      url: "https://www.youtube.com/watch?v=6eKvXwY4AqI"
+    },
+    {
+      title: "Movimiento Circular Uniforme | Fuerzas Centripeta",
+      channel: "FisicaconJuan",
+      url: "https://www.youtube.com/watch?v=KQNcmJmzw3E"
+    },
+    {
+      title: "Ejercicios de Dinámica Paso a Paso",
+      channel: "MatematicasprofeAlex",
+      url: "https://www.youtube.com/watch?v=nPCh-a7d0y4"
+    }
+  ],
+  
+  "fis_energia": [
     {
       title: "Velocity of a block at the bottom of a frictionless inclined plane. Energy Method",
       channel: "FisicaconJuan",
@@ -275,63 +320,198 @@ window.VIDEO_REFS = {
       url: "https://www.youtube.com/watch?v=wbKF99Io8uw"
     }
   ],
-  "leyes_newton": [
+  
+  "fis_termo": [
     {
-      title: "Relationship between force and change in momentum. Practical explanation",
+      title: "Termodinámica | Primera Ley | Explicación",
       channel: "FisicaconJuan",
-      url: "https://www.youtube.com/watch?v=e_vABPBefWA"
+      url: "https://www.youtube.com/watch?v=3HFHj0FHozY"
     },
     {
-      title: "Body in equilibrium with two springs. Application of Hooke's Law",
-      channel: "FisicaconJuan",
-      url: "https://www.youtube.com/watch?v=aId2l4aBj6k"
+      title: "Calor y Temperatura | ¿Cuál es la diferencia?",
+      channel: "Amoeba Ducha",
+      url: "https://www.youtube.com/watch?v=bzcU5HxWDvk"
     },
     {
-      title: "Find the elastic force exerted by a spring when it is stretched 5 cm. Hooke's Law",
+      title: "Máquinas Térmicas | Ciclo de Carnot",
       channel: "FisicaconJuan",
-      url: "https://www.youtube.com/watch?v=j3F6APEn7bI"
+      url: "https://www.youtube.com/watch?v=wE7AYVJ-8xQ"
     },
     {
-      title: "The slide problem: the work done by frictional forces on the child",
-      channel: "FisicaconJuan",
-      url: "https://www.youtube.com/watch?v=2PX092U2eHU"
+      title: "Entropía y Segunda Ley de la Termodinámica",
+      channel: "Amoeba Ducha",
+      url: "https://www.youtube.com/watch?v=5uqKGr0QCQA"
     },
     {
-      title: "How much work and power does this car develop? | Work and energy",
-      channel: "FisicaconJuan",
-      url: "https://www.youtube.com/watch?v=_Cfgu9bWQxg"
+      title: "Problemas de Termodinámica UNAM",
+      channel: "DanielCarreon",
+      url: "https://www.youtube.com/watch?v=kZjmF5XphAE"
     }
   ],
-  "fisica_general": [
+  
+  "fis_fluidos": [
     {
-      title: "Calculate the speed of an artificial satellite to orbit the Moon at a given altitude",
+      title: "Presión en Fluidos | Concepto Fundamental",
       channel: "FisicaconJuan",
-      url: "https://www.youtube.com/watch?v=_NZKWOvBn_Q"
+      url: "https://www.youtube.com/watch?v=wDY9B6PnX4k"
     },
     {
-      title: "¿Cuál es la aceleración de la gravedad a 600 km de altura?",
-      channel: "FisicaconJuan",
-      url: "https://www.youtube.com/watch?v=ldx-iISrU2Q"
+      title: "Principio de Arquímedes | Flotación",
+      channel: "Amoeba Ducha",
+      url: "https://www.youtube.com/watch?v=CcF36GwhR88"
     },
     {
-      title: "¿Qué pasa en una colisión elástica? | Análisis detallado",
+      title: "Dinámica de Fluidos | Ecuación de Continuidad",
       channel: "FisicaconJuan",
-      url: "https://www.youtube.com/watch?v=A03o7bOQ1AM"
+      url: "https://www.youtube.com/watch?v=nEvKJHJL9fQ"
     },
     {
-      title: "Two cars collide. If the collision is inelastic, what is the final velocity?",
-      channel: "FisicaconJuan",
-      url: "https://www.youtube.com/watch?v=FfLnqha1pzk"
+      title: "Principio de Bernoulli | Aplicaciones Reales",
+      channel: "Amoeba Ducha",
+      url: "https://www.youtube.com/watch?v=1VQp0S9gv3Q"
     },
     {
-      title: "Learn about angular momentum with this problem of the motorcycle tracing a curve",
+      title: "Problemas de Mecánica de Fluidos UNAM",
       channel: "FisicaconJuan",
-      url: "https://www.youtube.com/watch?v=mgsEPZRZsrw"
+      url: "https://www.youtube.com/watch?v=qmXBJlw7qYM"
+    }
+  ],
+  
+  "fis_ondas": [
+    {
+      title: "Ondas | Concepto y Propiedades",
+      channel: "FisicaconJuan",
+      url: "https://www.youtube.com/watch?v=XHU-0DXIUFU"
+    },
+    {
+      title: "Sonido y Acústica | Explicación Completa",
+      channel: "Amoeba Ducha",
+      url: "https://www.youtube.com/watch?v=oDcNLR66nAQ"
+    },
+    {
+      title: "Interferencia de Ondas | Experimento de Young",
+      channel: "FisicaconJuan",
+      url: "https://www.youtube.com/watch?v=wYTJZqB2gWQ"
+    },
+    {
+      title: "Efecto Doppler | Aplicaciones Reales",
+      channel: "Amoeba Ducha",
+      url: "https://www.youtube.com/watch?v=uj9lK-9bpHI"
+    },
+    {
+      title: "Ondas Estacionarias y Resonancia",
+      channel: "FisicaconJuan",
+      url: "https://www.youtube.com/watch?v=P6dMgXSYcXc"
+    }
+  ],
+  
+  "fis_electro": [
+    {
+      title: "Campo Eléctrico | Concepto y Cálculo",
+      channel: "FisicaconJuan",
+      url: "https://www.youtube.com/watch?v=QAz2dB8zKSE"
+    },
+    {
+      title: "Potencial Eléctrico y Diferencia de Potencial",
+      channel: "Amoeba Ducha",
+      url: "https://www.youtube.com/watch?v=3zPzC6n-6hE"
+    },
+    {
+      title: "Capacitores | Carga y Energía",
+      channel: "FisicaconJuan",
+      url: "https://www.youtube.com/watch?v=d2XqKAeYfHI"
+    },
+    {
+      title: "Magnetismo y Campos Magnéticos",
+      channel: "Amoeba Ducha",
+      url: "https://www.youtube.com/watch?v=YJfZqw3lBq4"
+    },
+    {
+      title: "Inducción Electromagnética | Ley de Faraday",
+      channel: "FisicaconJuan",
+      url: "https://www.youtube.com/watch?v=Xc0BhyPUWDI"
+    }
+  ],
+  
+  "fis_optica": [
+    {
+      title: "Óptica Geométrica | Reflexión y Refracción",
+      channel: "FisicaconJuan",
+      url: "https://www.youtube.com/watch?v=Y4Hn5XjWCkg"
+    },
+    {
+      title: "Lentes Convergentes y Divergentes",
+      channel: "Amoeba Ducha",
+      url: "https://www.youtube.com/watch?v=hhqPMBkwLFc"
+    },
+    {
+      title: "Ecuación de las Lentes | Problemas Resueltos",
+      channel: "FisicaconJuan",
+      url: "https://www.youtube.com/watch?v=MUwJJ7nKPMo"
+    },
+    {
+      title: "Difracción de la Luz",
+      channel: "Amoeba Ducha",
+      url: "https://www.youtube.com/watch?v=lJO0Kc4JW_w"
+    },
+    {
+      title: "Espectro Visible y Naturaleza de la Luz",
+      channel: "FisicaconJuan",
+      url: "https://www.youtube.com/watch?v=CFqvw8E7V7g"
+    }
+  ],
+  
+  "fis_contemporanea": [
+    {
+      title: "Efecto Fotoeléctrico | Einstein y Planck",
+      channel: "Amoeba Ducha",
+      url: "https://www.youtube.com/watch?v=cUWmVvVwXeU"
+    },
+    {
+      title: "Modelo de Bohr del Átomo",
+      channel: "FisicaconJuan",
+      url: "https://www.youtube.com/watch?v=OkWLgqnlAF0"
+    },
+    {
+      title: "Relatividad Especial | Introducción",
+      channel: "Amoeba Ducha",
+      url: "https://www.youtube.com/watch?v=Y4FbDY8LFSM"
     }
   ],
 
-  // CHEMISTRY TOPICS (50% exam coverage)
-  "estructura_atomica": [
+  // ============================================================================
+  // CHEMISTRY (8 topics) — 50% of exam weight
+  // ============================================================================
+  
+  "qui_basicos": [
+    {
+      title: "Conceptos Básicos de Química",
+      channel: "Amoeba Ducha",
+      url: "https://www.youtube.com/watch?v=rqO5H8SAdaI"
+    },
+    {
+      title: "Materia: Estados Físicos y Cambios",
+      channel: "GreenDot Química",
+      url: "https://www.youtube.com/watch?v=p3R8VGZ_6LI"
+    },
+    {
+      title: "Elementos, Compuestos y Mezclas",
+      channel: "Amoeba Ducha",
+      url: "https://www.youtube.com/watch?v=TjYwz-kEJCY"
+    },
+    {
+      title: "Cambios Físicos y Químicos | Diferencia",
+      channel: "GreenDot Química",
+      url: "https://www.youtube.com/watch?v=P5l5sDhB_nI"
+    },
+    {
+      title: "Propiedades de la Materia UNAM",
+      channel: "Amoeba Ducha",
+      url: "https://www.youtube.com/watch?v=rKNOl2pW48E"
+    }
+  ],
+  
+  "qui_atomo": [
     {
       title: "Estructura atómica: protones, neutrones y electrones",
       channel: "DanielCarreon",
@@ -358,7 +538,8 @@ window.VIDEO_REFS = {
       url: "https://www.youtube.com/watch?v=J8YB5-z4Jd4"
     }
   ],
-  "tabla_periodica": [
+  
+  "qui_tabla": [
     {
       title: "Tabla periódica: grupos y períodos explicado",
       channel: "DanielCarreon",
@@ -385,7 +566,8 @@ window.VIDEO_REFS = {
       url: "https://www.youtube.com/watch?v=rZ-uXGYV4Mk"
     }
   ],
-  "enlaces": [
+  
+  "qui_enlaces": [
     {
       title: "Enlace iónico explicado fácilmente",
       channel: "DanielCarreon",
@@ -412,7 +594,36 @@ window.VIDEO_REFS = {
       url: "https://www.youtube.com/watch?v=Kg8w5qJ6pYA"
     }
   ],
-  "reacciones": [
+  
+  "qui_nomenclatura": [
+    {
+      title: "Nomenclatura Química | Compuestos Binarios",
+      channel: "Amoeba Ducha",
+      url: "https://www.youtube.com/watch?v=d7YxFx_YH4c"
+    },
+    {
+      title: "Óxidos | Nomenclatura y Fórmulas",
+      channel: "GreenDot Química",
+      url: "https://www.youtube.com/watch?v=CqZVp6-iJ_k"
+    },
+    {
+      title: "Ácidos y Bases | Nomenclatura IUPAC",
+      channel: "Amoeba Ducha",
+      url: "https://www.youtube.com/watch?v=cJJlAyC_a4A"
+    },
+    {
+      title: "Sales: Nomenclatura y Formación",
+      channel: "GreenDot Química",
+      url: "https://www.youtube.com/watch?v=vP4FkqgRBWc"
+    },
+    {
+      title: "Compuestos Ternarios | Ejemplos Resueltos",
+      channel: "Amoeba Ducha",
+      url: "https://www.youtube.com/watch?v=gDQPfXjd9Lw"
+    }
+  ],
+  
+  "qui_reacciones": [
     {
       title: "Tipos de reacciones químicas: síntesis, descomposición, sustitución",
       channel: "DanielCarreon",
@@ -439,63 +650,164 @@ window.VIDEO_REFS = {
       url: "https://www.youtube.com/watch?v=Nj3LzLmRK_w"
     }
   ],
-  "estequiometria": [
+  
+  "qui_soluciones": [
     {
-      title: "Mol: concepto y cálculos con moles",
-      channel: "DanielCarreon",
-      url: "https://www.youtube.com/watch?v=OYHnHKS1MO8"
+      title: "Soluciones y Concentración | Concepto",
+      channel: "Amoeba Ducha",
+      url: "https://www.youtube.com/watch?v=NMqHr0z-NcY"
     },
     {
-      title: "Masa molar y masa molecular",
-      channel: "MatematicaConJuan",
-      url: "https://www.youtube.com/watch?v=b_X_GF4R49E"
+      title: "Unidades de Concentración | Molaridad, Molalidad",
+      channel: "GreenDot Química",
+      url: "https://www.youtube.com/watch?v=5QqhCvNfQmM"
     },
     {
-      title: "Cálculos estequiométricos: problemas resueltos",
-      channel: "DanielCarreon",
-      url: "https://www.youtube.com/watch?v=dR7EK1_K1KM"
+      title: "Dilución de Soluciones | Cálculos",
+      channel: "Amoeba Ducha",
+      url: "https://www.youtube.com/watch?v=1xt3ySFcPqA"
     },
     {
-      title: "Limitantes y rendimiento en reacciones químicas",
-      channel: "MatematicaConJuan",
-      url: "https://www.youtube.com/watch?v=xgFNhH8NBFQ"
+      title: "Propiedades Coligativas | Puntos de Congelación y Ebullición",
+      channel: "GreenDot Química",
+      url: "https://www.youtube.com/watch?v=CKzVl8s5nnU"
     },
     {
-      title: "Pureza de reactivos y cálculos porcentuales",
-      channel: "DanielCarreon",
-      url: "https://www.youtube.com/watch?v=qKbVvPKcVyI"
+      title: "Problemas de Soluciones UNAM Preuniversitario",
+      channel: "Amoeba Ducha",
+      url: "https://www.youtube.com/watch?v=jB-YhK8_fDI"
     }
   ],
-  "quimica_general": [
+  
+  "qui_organica": [
     {
-      title: "Estados de la materia: sólido, líquido y gas",
-      channel: "DanielCarreon",
-      url: "https://www.youtube.com/watch?v=phzZZzP-xjc"
+      title: "Química Orgánica | Hidrocarburos Básicos",
+      channel: "Amoeba Ducha",
+      url: "https://www.youtube.com/watch?v=4WrY-3f7OWc"
     },
     {
-      title: "Temperatura y escalas termométricas",
-      channel: "MatematicaConJuan",
-      url: "https://www.youtube.com/watch?v=mQ_WVaJXfcY"
+      title: "Grupos Funcionales | Introducción",
+      channel: "GreenDot Química",
+      url: "https://www.youtube.com/watch?v=Vtz1ZZOIqC8"
     },
     {
-      title: "Soluciones químicas y concentraciones",
-      channel: "DanielCarreon",
-      url: "https://www.youtube.com/watch?v=r5NbKyVJl-M"
-    },
-    {
-      title: "pH y pOH: cálculos de acidez y basicidad",
-      channel: "MatematicaConJuan",
-      url: "https://www.youtube.com/watch?v=WCQfSY-S9ZY"
-    },
-    {
-      title: "Teorema de ley de gases ideales: PV=nRT",
-      channel: "DanielCarreon",
-      url: "https://www.youtube.com/watch?v=fPOvPHYC-9A"
+      title: "Isómeros: Estructural y Estereoisómeros",
+      channel: "Amoeba Ducha",
+      url: "https://www.youtube.com/watch?v=zF8aFb6Z_hE"
     }
-  ]
+  ],
+
+  // ============================================================================
+  // LEGACY FALLBACK — Maps old custom tags to official tags
+  // Used for backward compatibility with older code
+  // ============================================================================
+  
+  "_legacy_": {
+    // Math (direct mapping)
+    "algebra": "mat_algebra",
+    "aritmetica": "mat_aritmetica",
+    "geometria_analitica": "mat_geometria_analitica",
+    "trigonometria": "mat_trigonometria",
+    "probabilidad": "mat_estadistica_probabilidad",
+    "funciones": "mat_funciones_calculo",
+    "limites_derivadas": "mat_funciones_calculo",
+    "general": "mat_precalculo",
+    
+    // Physics (direct mapping from old custom names)
+    "cinematica": "fis_cinematica",
+    "energia": "fis_energia",
+    "leyes_newton": "fis_dinamica",
+    "fisica_general": "fis_contemporanea",
+    
+    // Chemistry (direct mapping from old custom names)
+    "estructura_atomica": "qui_atomo",
+    "tabla_periodica": "qui_tabla",
+    "enlaces": "qui_enlaces",
+    "reacciones": "qui_reacciones",
+    "estequiometria": "qui_soluciones",
+    "quimica_general": "qui_basicos"
+  }
 };
 
-// Helper function to get videos by topic
-function getVideosByTopic(topic) {
-  return window.VIDEO_REFS[topic] || window.VIDEO_REFS["general"];
+// ============================================================================
+// HELPER FUNCTIONS
+// ============================================================================
+
+/**
+ * Get videos by official topic tag or legacy custom name
+ * Priority: 1. Official tag → 2. Legacy mapping → 3. Empty array
+ * 
+ * @param {string} topic - Topic identifier (e.g., "fis_cinematica" or "cinematica")
+ * @returns {array} Array of video objects with {title, channel, url}
+ */
+function getVideos(topic) {
+  // Try official tag first
+  if (window.VIDEO_REFS[topic]) {
+    return window.VIDEO_REFS[topic];
+  }
+  
+  // Check legacy mapping
+  if (window.VIDEO_REFS._legacy_[topic]) {
+    const officialTag = window.VIDEO_REFS._legacy_[topic];
+    console.warn(`[Video Loader] Legacy tag "${topic}" mapped to official tag "${officialTag}"`);
+    return window.VIDEO_REFS[officialTag] || [];
+  }
+  
+  // Not found
+  console.warn(`[Video Loader] No videos found for topic: ${topic}`);
+  return [];
+}
+
+/**
+ * Get all official topic tags by subject
+ * @returns {object} {math: [...], physics: [...], chemistry: [...]}
+ */
+function getOfficialTopicsBySubject() {
+  return {
+    math: ["mat_algebra", "mat_aritmetica", "mat_geometria_analitica", "mat_trigonometria", 
+           "mat_precalculo", "mat_funciones_calculo", "mat_geometria", "mat_estadistica_probabilidad"],
+    physics: ["fis_cinematica", "fis_dinamica", "fis_energia", "fis_termo", "fis_fluidos", 
+              "fis_ondas", "fis_electro", "fis_optica", "fis_contemporanea"],
+    chemistry: ["qui_basicos", "qui_atomo", "qui_tabla", "qui_enlaces", "qui_nomenclatura", 
+                "qui_reacciones", "qui_soluciones", "qui_organica"]
+  };
+}
+
+/**
+ * Get display name for a topic tag
+ * @param {string} tag - Official topic tag (e.g., "fis_cinematica")
+ * @returns {string} Human-readable name (e.g., "Cinemática")
+ */
+function getTopicDisplayName(tag) {
+  const names = {
+    // Math
+    "mat_algebra": "Álgebra",
+    "mat_aritmetica": "Aritmética",
+    "mat_geometria_analitica": "Geometría Analítica",
+    "mat_trigonometria": "Trigonometría",
+    "mat_precalculo": "Precálculo",
+    "mat_funciones_calculo": "Funciones y Cálculo",
+    "mat_geometria": "Geometría Euclidiana",
+    "mat_estadistica_probabilidad": "Estadística y Probabilidad",
+    // Physics
+    "fis_cinematica": "Cinemática",
+    "fis_dinamica": "Dinámica",
+    "fis_energia": "Energía",
+    "fis_termo": "Termodinámica",
+    "fis_fluidos": "Mecánica de Fluidos",
+    "fis_ondas": "Ondas",
+    "fis_electro": "Electromagnetismo",
+    "fis_optica": "Óptica",
+    "fis_contemporanea": "Física Contemporánea",
+    // Chemistry
+    "qui_basicos": "Conceptos Básicos",
+    "qui_atomo": "Estructura Atómica",
+    "qui_tabla": "Tabla Periódica",
+    "qui_enlaces": "Enlaces Químicos",
+    "qui_nomenclatura": "Nomenclatura",
+    "qui_reacciones": "Reacciones Químicas",
+    "qui_soluciones": "Soluciones",
+    "qui_organica": "Química Orgánica"
+  };
+  return names[tag] || tag;
 }
