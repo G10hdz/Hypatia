@@ -1,161 +1,222 @@
 // Video references organized by topic for UNAM Area 1 Math
 // YouTube channels: MatematicasprofeAlex, DanielCarreon, MatematicaConJuan
+// Updated 2025-04-14 with real, verified YouTube videos
 
 window.VIDEO_REFS = {
   "algebra": [
     {
-      title: "Ecuaciones lineales paso a paso",
+      title: "Sistemas de ecuaciones lineales 2x2 | Curso preuniversitario",
       channel: "MatematicasprofeAlex",
-      url: "https://www.youtube.com/watch?v=8QJ0K6F3XyA"
+      url: "https://www.youtube.com/watch?v=6E2-92YYzIM"
     },
     {
-      title: "Ecuaciones cuadráticas - Fórmula general",
+      title: "Factorización | Curso Preuniversitario",
+      channel: "MatematicasprofeAlex",
+      url: "https://www.youtube.com/watch?v=cMj8Gtdg0ZM"
+    },
+    {
+      title: "Solución de la ecuación cuadrática por FACTORIZACIÓN | Ejemplo 7",
+      channel: "MatematicasprofeAlex",
+      url: "https://www.youtube.com/watch?v=yrPncR9tgV8"
+    },
+    {
+      title: "ECUACIONES LINEALES con calculadora",
       channel: "DanielCarreon",
-      url: "https://www.youtube.com/watch?v=Y9bZd4uJm2Q"
+      url: "https://www.youtube.com/watch?v=KPqqaqmVnTo"
     },
     {
-      title: "Sistemas de ecuaciones",
+      title: "ECUACIONES LINEALES PASO A PASO",
       channel: "MatematicaConJuan",
-      url: "https://www.youtube.com/watch?v=0nK8J8zZgLg"
-    },
-    {
-      title: "Factorización de polinomios",
-      channel: "MatematicasprofeAlex",
-      url: "https://www.youtube.com/watch?v=K3VZgT9X9Wk"
-    },
-    {
-      title: "División sintética y residuo",
-      channel: "DanielCarreon",
-      url: "https://www.youtube.com/watch?v=7A9Xl5e5w3c"
+      url: "https://www.youtube.com/watch?v=nU-EHyJ10EQ"
     }
   ],
   "aritmetica": [
     {
-      title: "Operaciones básicas y propiedades",
+      title: "Divisibilidad | Curso preuniversitario",
       channel: "MatematicasprofeAlex",
-      url: "https://www.youtube.com/watch?v=J2g8hV5cQrT"
+      url: "https://www.youtube.com/watch?v=6lncaIv3_6c"
     },
     {
-      title: "Reglas de divisibilidad",
-      channel: "MatematicaConJuan",
-      url: "https://www.youtube.com/watch?v=3G9tZs6BwR2"
+      title: "Operaciones básicas con números decimales",
+      channel: "MatematicasprofeAlex",
+      url: "https://www.youtube.com/watch?v=6tDw1CEVX4M"
     },
     {
-      title: "MCM y MCD",
+      title: "MÍNIMO COMÚN MÚLTIPLO (MCM) Super facil",
       channel: "DanielCarreon",
-      url: "https://www.youtube.com/watch?v=U1kT9Jf2QzL"
+      url: "https://www.youtube.com/watch?v=KDcIFLiiIXU"
+    },
+    {
+      title: "MÁXIMO COMÚN DIVISOR (MCD) super facil",
+      channel: "DanielCarreon",
+      url: "https://www.youtube.com/watch?v=h68q6gcTSrA"
+    },
+    {
+      title: "LOS CRITERIOS DE DIVISIBILIDAD. NÚMEROS ENTEROS",
+      channel: "MatematicaConJuan",
+      url: "https://www.youtube.com/watch?v=OuU92gYb-oo"
     }
   ],
   "geometria_analitica": [
     {
-      title: "Áreas de figuras planas",
-      channel: "MatematicaConJuan",
-      url: "https://www.youtube.com/watch?v=nV2kZ4R9cV8"
-    },
-    {
-      title: "Distancia entre dos puntos",
-      channel: "DanielCarreon",
-      url: "https://www.youtube.com/watch?v=F9o6wR4YVfM"
-    },
-    {
-      title: "Ecuación de la recta",
+      title: "Graficar la recta con tabla de valores",
       channel: "MatematicasprofeAlex",
-      url: "https://www.youtube.com/watch?v=Jc9ZV1hmrBw"
+      url: "https://www.youtube.com/watch?v=xkTQ0En-BxU"
     },
     {
-      title: "Circunferencia y elipse",
+      title: "Gráfico de la parábola conociendo la ecuación General",
+      channel: "MatematicasprofeAlex",
+      url: "https://www.youtube.com/watch?v=rN8tLvn2thA"
+    },
+    {
+      title: "CÓMO HALLAR EL ÁNGULO ENTRE DOS RECTAS. Geometría Analítica Plana",
       channel: "MatematicaConJuan",
-      url: "https://www.youtube.com/watch?v=5Hk6t2UeMZs"
+      url: "https://www.youtube.com/watch?v=BjTiPj3-4Cs"
+    },
+    {
+      title: "Which rectangle has the largest perimeter?",
+      channel: "MatematicaConJuan",
+      url: "https://www.youtube.com/watch?v=3fclXzxmJts"
+    },
+    {
+      title: "How to find the area of a rectangle inside a triangle",
+      channel: "MatematicaConJuan",
+      url: "https://www.youtube.com/watch?v=dzzmlWDHF4Y"
     }
   ],
   "trigonometria": [
     {
-      title: "Identidades trigonométricas",
+      title: "Identidades trigonométricas | Curso preuniversitario",
       channel: "MatematicasprofeAlex",
-      url: "https://www.youtube.com/watch?v=Jc9ZV1hmrBw"
+      url: "https://www.youtube.com/watch?v=d4Hw7MiCxQk"
     },
     {
-      title: "Ley de senos y cosenos",
+      title: "Razones trigonométricas | Curso preuniversitario",
+      channel: "MatematicasprofeAlex",
+      url: "https://www.youtube.com/watch?v=4h4pPuMiqq4"
+    },
+    {
+      title: "Solución de problemas con Razones trigonométricas",
+      channel: "MatematicasprofeAlex",
+      url: "https://www.youtube.com/watch?v=HWAU2Rbti24"
+    },
+    {
+      title: "DEMOSTRACIÓN TEOREMA DEL SENO. Trigonometría Básica",
       channel: "MatematicaConJuan",
-      url: "https://www.youtube.com/watch?v=5Hk6t2UeMZs"
+      url: "https://www.youtube.com/watch?v=9KSk9kSpovU"
     },
     {
-      title: "Funciones trigonométricas",
-      channel: "DanielCarreon",
-      url: "https://www.youtube.com/watch?v=H0T9G5gYzKc"
+      title: "HALLAR EL VALOR DE LA ALTURA. Problemas de triángulos",
+      channel: "MatematicaConJuan",
+      url: "https://www.youtube.com/watch?v=64a9gHpeYlo"
     }
   ],
   "probabilidad": [
     {
-      title: "Probabilidad básica",
-      channel: "DanielCarreon",
-      url: "https://www.youtube.com/watch?v=Z3r5kM9XvUo"
-    },
-    {
-      title: "Combinaciones y permutaciones",
+      title: "Teorema de la probabilidad total | Ejemplo 1",
       channel: "MatematicasprofeAlex",
-      url: "https://www.youtube.com/watch?v=K7LQpV6zDfA"
+      url: "https://www.youtube.com/watch?v=AirXgl3lhw0"
     },
     {
-      title: "Probabilidad condicional",
+      title: "Teorema de la probabilidad total | Ejemplo 2",
+      channel: "MatematicasprofeAlex",
+      url: "https://www.youtube.com/watch?v=vKCyB5wIgcs"
+    },
+    {
+      title: "COMBINACIONES Super fácil - Para principiantes",
+      channel: "DanielCarreon",
+      url: "https://www.youtube.com/watch?v=k8etJmnDrYc"
+    },
+    {
+      title: "¿QUE ES LA PROBABILIDAD? Super facil",
+      channel: "DanielCarreon",
+      url: "https://www.youtube.com/watch?v=qos9hUuRUy4"
+    },
+    {
+      title: "PROBABILIDAD COMPUESTA. Probabilidad de que las bolas salgan",
       channel: "MatematicaConJuan",
-      url: "https://www.youtube.com/watch?v=3G9tZs6BwR2"
+      url: "https://www.youtube.com/watch?v=8cppo_dSOQw"
     }
   ],
   "funciones": [
     {
-      title: "Introducción a funciones",
+      title: "Función inyectiva, sobreyectiva y biyectiva | Tipos de funciones",
       channel: "MatematicasprofeAlex",
-      url: "https://www.youtube.com/watch?v=R2Xh9v3tVJY"
+      url: "https://www.youtube.com/watch?v=xhBWUbY1VrM"
     },
     {
-      title: "Gráficas de funciones",
+      title: "Gráfico de una Función a Trozos | Ejemplo 2",
+      channel: "MatematicasprofeAlex",
+      url: "https://www.youtube.com/watch?v=VEKtcVJn22E"
+    },
+    {
+      title: "Imágenes de una función a trozos",
+      channel: "MatematicasprofeAlex",
+      url: "https://www.youtube.com/watch?v=KnzC88FdouI"
+    },
+    {
+      title: "MÁXIMOS, MÍNIMOS Y PUNTOS DE INFLEXIÓN DE UNA FUNCIÓN",
       channel: "MatematicaConJuan",
-      url: "https://www.youtube.com/watch?v=9Y3rT1uWbLk"
+      url: "https://www.youtube.com/watch?v=CClph5RSy6s"
     },
     {
-      title: "Función inversa",
-      channel: "DanielCarreon",
-      url: "https://www.youtube.com/watch?v=6uF0eH7ZKsU"
+      title: "¿CÓMO AFECTA EL SIGNO MENOS A UNA FUNCIÓN?",
+      channel: "MatematicaConJuan",
+      url: "https://www.youtube.com/watch?v=GYYtVx6PiGU"
     }
   ],
   "limites_derivadas": [
     {
-      title: "Límites de funciones",
-      channel: "DanielCarreon",
-      url: "https://www.youtube.com/watch?v=H0T9G5gYzKc"
-    },
-    {
-      title: "Límites infinitos",
-      channel: "MatematicasprofeAlex",
-      url: "https://www.youtube.com/watch?v=Qx9m3RjS9Vg"
-    },
-    {
-      title: "Derivadas básicas",
+      title: "Entiende qué es la derivada de una funcion",
       channel: "MatematicaConJuan",
-      url: "https://www.youtube.com/watch?v=R2Xh9v3tVJY"
+      url: "https://www.youtube.com/watch?v=t9IgiGbZxO8"
     },
     {
-      title: "Regla de la cadena",
-      channel: "DanielCarreon",
-      url: "https://www.youtube.com/watch?v=6uF0eH7ZKsU"
-    },
-    {
-      title: "Integrales indefinidas",
+      title: "Integral of sin²x . cos⁴x | Trigonometric integrals",
       channel: "MatematicasprofeAlex",
-      url: "https://www.youtube.com/watch?v=V3N5bZcU8lM"
+      url: "https://www.youtube.com/watch?v=t_6FbSdaIdo"
+    },
+    {
+      title: "Integral of sin⁴x or cos⁴x | Trigonometric integrals",
+      channel: "MatematicasprofeAlex",
+      url: "https://www.youtube.com/watch?v=c18tDhkZFxU"
+    },
+    {
+      title: "WHAT IS INTEGRAL CALCULUS? Super easy",
+      channel: "DanielCarreon",
+      url: "https://www.youtube.com/watch?v=E3ECQskKyrU"
+    },
+    {
+      title: "Famous integral that destroys almost all students",
+      channel: "MatematicaConJuan",
+      url: "https://www.youtube.com/watch?v=TjAtMWtSuuk"
     }
   ],
   "general": [
     {
-      title: "Repaso general de matemáticas",
-      channel: "MatematicaConJuan",
-      url: "https://www.youtube.com/watch?v=0nK8J8zZgLg"
+      title: "Gráfico de la parábola conociendo la ecuación General",
+      channel: "MatematicasprofeAlex",
+      url: "https://www.youtube.com/watch?v=rN8tLvn2thA"
     },
     {
-      title: "Tips para exámenes",
+      title: "Graphing a parabola given the general equation",
       channel: "MatematicasprofeAlex",
-      url: "https://www.youtube.com/watch?v=K3VZgT9X9Wk"
+      url: "https://www.youtube.com/watch?v=kTUCKIU65n0"
+    },
+    {
+      title: "¿LISTO PARA EL EXAMEN? 100 ejercicios de potencias y radicales",
+      channel: "MatematicaConJuan",
+      url: "https://www.youtube.com/watch?v=EbQkcVO-3xQ"
+    },
+    {
+      title: "EXAMEN MATEMÁTICAS RUSO. Estudiantes 16 años",
+      channel: "MatematicaConJuan",
+      url: "https://www.youtube.com/watch?v=52ATMZ-GqcY"
+    },
+    {
+      title: "Media de un conjunto de datos - Problema tipo examen",
+      channel: "DanielCarreon",
+      url: "https://www.youtube.com/watch?v=rS-osszc2rc"
     }
   ]
 };
