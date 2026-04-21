@@ -2199,6 +2199,8 @@
   <script src="./questions_by_materia/filosofia.js"></script>
   <script src="./questions_by_materia/general.js"></script>
   <script src="./questions_by_materia/loader.js"></script>
+  <script src="./enhanced_explanations.js"></script>
+  <script src="./video_refs.js"></script>
   <script>
     // Pre-flight check: verify questions loaded
     if (typeof window.QUESTIONS === "undefined" || !Array.isArray(window.QUESTIONS) || window.QUESTIONS.length === 0) {
@@ -4515,6 +4517,10 @@
 
     async function loadEnhancedExplanations() {
       try {
+        if (typeof window.ENHANCED_EXPLANATIONS !== "undefined" && window.ENHANCED_EXPLANATIONS) {
+          enhancedExplanations = window.ENHANCED_EXPLANATIONS;
+          return;
+        }
         const response = await fetch("enhanced_explanations.json");
         if (!response.ok) throw new Error("Not found");
         enhancedExplanations = await response.json();
