@@ -21,8 +21,7 @@ __pycache__/
 *.backup_*
 backup_*/
 
-# AI explanation files (generated, not committed)
-enhanced_explanations.json
+# AI explanation files (logs / checkpoints — not for git)
 *_explanations.log
 .explanation_checkpoint_*.json
 

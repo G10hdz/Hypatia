@@ -302,7 +302,7 @@
 <body>
   <div class="header">
     <h1>📚 PumaPrep - Guía de Estudio</h1>
-    <p>Explicaciones mejoradas con NotebookLM + Videos de YouTube + Referencias CONAMAT</p>
+    <p>Explicaciones mejoradas con NotebookLM + Videos de YouTube (MatematicasprofeAlex, DanielCarreon, MatematicaConJuan) + Referencias CONAMAT</p>
     <a href="index.html" class="back-link">← Volver a Practicar</a>
   </div>
 
@@ -324,6 +324,7 @@
 
   <!-- Load explanations as JS to work with file:// protocol -->
   <script src="./enhanced_explanations.js"></script>
+  <script src="./video_refs.js"></script>
   <script>
     const SUBJECT_NAMES = {
       matematicas: 'Matemáticas',
@@ -371,16 +372,66 @@
       });
     }
 
-    function renderVideos() {
-      const grid = document.getElementById('videoGrid');
-      grid.innerHTML = enhancedData.videos.map(video => `
-        <div class="video-card">
-          <a href="${video.url}" target="_blank" rel="noopener">${video.title}</a>
-          <div class="channel">${video.channel}</div>
-          <div class="topics">${video.topics.map(t => t.replace('.', ' → ')).join(', ')}</div>
-        </div>
-      `).join('');
-    }
+     function renderVideos() {
+       const grid = document.getElementById('videoGrid');
+       let allVideos = [];
+       
+       // Add videos from enhanced_explanations.js if available
+       if (enhancedData.videos) {
+         allVideos = allVideos.concat(enhancedData.videos);
+       }
+       
+       // Add videos from video_refs.js (all official tags + legacy)
+       if (typeof window.VIDEO_REFS !== 'undefined') {
+         // Get official topics grouped by subject
+         const subjects = getOfficialTopicsBySubject ? getOfficialTopicsBySubject() : null;
+         
+         if (subjects) {
+           // Use official tags only (skip legacy fallback)
+           const allOfficialTags = [...subjects.math, ...subjects.physics, ...subjects.chemistry];
+           for (const tag of allOfficialTags) {
+             const videos = window.VIDEO_REFS[tag];
+             if (videos && Array.isArray(videos)) {
+               allVideos = allVideos.concat(videos.map(v => ({
+                 ...v, 
+                 topic: tag,
+                 displayTopic: getTopicDisplayName ? getTopicDisplayName(tag) : tag
+               })));
+             }
+           }
+         } else {
+           // Fallback: iterate all keys except legacy
+           for (const [topic, videos] of Object.entries(window.VIDEO_REFS)) {
+             if (topic !== '_legacy_' && Array.isArray(videos)) {
+               allVideos = allVideos.concat(videos.map(v => ({
+                 ...v, 
+                 topic: topic,
+                 displayTopic: topic.replace(/_/g, ' ')
+               })));
+             }
+           }
+         }
+       }
+       
+       // Deduplicate by URL
+       const seen = new Set();
+       allVideos = allVideos.filter(v => {
+         if (seen.has(v.url)) return false;
+         seen.add(v.url);
+         return true;
+       });
+       
+       // Sort by channel for better organization
+       allVideos.sort((a, b) => (a.channel || '').localeCompare(b.channel || ''));
+       
+       grid.innerHTML = allVideos.map(video => `
+         <div class="video-card">
+           <a href="${video.url}" target="_blank" rel="noopener">${video.title}</a>
+           <div class="channel">${video.channel || 'Canal desconocido'}</div>
+           <div class="topics">${video.displayTopic || video.topic || ''}</div>
+         </div>
+       `).join('');
+     }
 
     function renderTopics() {
       const content = document.getElementById('topicsContent');
@@ -416,6 +467,17 @@
                 }
               });
               html += `</div>`;
+            }
+            
+            if (typeof window.getVideos !== 'undefined') {
+              var topicVideos = window.getVideos(tema);
+              if (topicVideos && topicVideos.length > 0) {
+                html += '<div class="video-ref"><div class="video-ref-title">📹 Canales preferidos (hasta 3):</div>';
+                topicVideos.slice(0, 3).forEach(function(v) {
+                  html += '<a href="' + v.url + '" target="_blank" rel="noopener">▶ ' + v.title + ' - ' + v.channel + '</a>';
+                });
+                html += '</div>';
+              }
             }
 
             if (exp.conamat_pages) {
