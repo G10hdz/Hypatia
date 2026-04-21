@@ -30,6 +30,9 @@ enhanced_explanations.json
 failed_questions.json
 ocr_output/
 
+# Local exam banks, scans, and Word sources (not committed)
+study-materials/
+
 # Archive
 archive-local/
 chroma_theory/
