@@ -41,3 +41,16 @@ SUPABASE_SETUP.md
 AUTH_INTEGRATION.md
 PHASE2_AUTH_SUMMARY.md
 .env
+
+# AI Agent caches
+graphify-out/
+.claude/
+.qwen/
+.cursor/
+.aider/
+.cocoindex_code/
+*.pyc
+__pycache__/
+.env
+.env.local
+*.log
