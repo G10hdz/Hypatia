@@ -74,106 +74,143 @@
 
     <div class="card-nav">
       <button id="btn-prev" class="btn-secondary" type="button">← Ant</button>
-      <button id="btn-review" class="btn-secondary" type="button">Repasar</button>
-      <button id="btn-know" class="btn-secondary btn-know" type="button">La sé ✓</button>
-      <button id="btn-shuffle" class="btn-secondary" type="button">Mezclar</button>
+      <button id="btn-again" class="btn-secondary" type="button">Otra vez</button>
+      <button id="btn-hard" class="btn-secondary" type="button">Difícil</button>
+      <button id="btn-good" class="btn-secondary btn-know" type="button">Bien</button>
+      <button id="btn-easy" class="btn-secondary" type="button">Fácil</button>
       <button id="btn-next" class="btn-primary" type="button">Sig →</button>
     </div>
 
-    <p class="hint"><kbd>espacio</kbd> voltear · <kbd>→</kbd> siguiente · <kbd>←</kbd> anterior · <kbd>1</kbd> la sé · <kbd>2</kbd> repasar · <kbd>S</kbd> mezclar</p>
+    <p class="hint"><kbd>espacio</kbd> voltear · <kbd>→</kbd> siguiente · <kbd>←</kbd> anterior · <kbd>1</kbd> otra vez · <kbd>2</kbd> difícil · <kbd>3</kbd> bien · <kbd>4</kbd> fácil</p>
   </main>
 
   <script src="./decks/mlops.js"></script>
   <script src="./decks/fde.js"></script>
   <script>
-    const STORE_KEY = 'hypatia-flashcards.v1';
+    // SM-2 lite: cada carta tiene ef (ease), ivl (días), due (timestamp), reps.
+    // La sesión ordena: vencidas primero (por due), luego nuevas, luego futuras.
+    const STORE_KEY = 'hypatia-flashcards.srs.v1';
+    const DAY = 864e5;
     const decks = window.FLASHCARD_DECKS || {};
 
     const load = () => { try { return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; } catch { return {}; } };
     const save = (s) => localStorage.setItem(STORE_KEY, JSON.stringify(s));
-    let state = load();               // { deckId: { known:[idx], review:[idx] } }
-    let order = [];                   // current order of card indexes
+    let state = load();               // { deckId: { cardIdx: {ef, ivl, due, reps} } }
+    let order = [];
     let pos = 0;
     let deckId = localStorage.getItem(STORE_KEY + '.last') || Object.keys(decks)[0];
 
-    const deckState = () => state[deckId] || (state[deckId] = { known: [], review: [] });
+    const deckState = () => state[deckId] || (state[deckId] = {});
+    const cardState = (i) => deckState()[i] || null;
+
+    const fmtIvl = (d) => d < 1 ? '<1d' : d < 30 ? `${Math.round(d)}d` : `${(d / 30).toFixed(1)}m`;
+
+    function buildOrder() {
+      const now = Date.now();
+      const due = [], fresh = [], future = [];
+      decks[deckId].cards.forEach((_, i) => {
+        const s = cardState(i);
+        if (!s) fresh.push(i);
+        else if (s.due <= now) due.push(i);
+        else future.push(i);
+      });
+      due.sort((a, b) => cardState(a).due - cardState(b).due);
+      future.sort((a, b) => cardState(a).due - cardState(b).due);
+      order = [...due, ...fresh, ...future];
+    }
+
+    function grade(q) { // 0 otra vez, 1 difícil, 2 bien, 3 fácil
+      const i = order[pos];
+      const s = cardState(i) || { ef: 2.5, ivl: 0, reps: 0 };
+      s.reps++;
+      if (q === 0) {
+        s.ef = Math.max(1.3, s.ef - 0.2);
+        s.ivl = 0;
+        s.due = Date.now() + 60e3;           // vuelve en 1 min
+      } else {
+        if (q === 1) { s.ef = Math.max(1.3, s.ef - 0.15); s.ivl = Math.max(1, s.ivl * 1.2); }
+        if (q === 2) { s.ivl = s.ivl <= 0 ? 1 : s.ivl * s.ef; }
+        if (q === 3) { s.ef += 0.15; s.ivl = (s.ivl <= 0 ? 1 : s.ivl * s.ef) * 1.3; }
+        s.ivl = Math.min(s.ivl, 365);
+        s.due = Date.now() + s.ivl * DAY;
+      }
+      deckState()[i] = s;
+      save(state);
+      next();
+    }
 
     function buildDeckBar() {
       const bar = document.getElementById('deck-bar');
       bar.innerHTML = '';
+      const now = Date.now();
       Object.entries(decks).forEach(([id, d]) => {
+        const dueCount = d.cards.filter((_, i) => {
+          const s = (state[id] || {})[i];
+          return !s || s.due <= now;
+        }).length;
         const b = document.createElement('button');
         b.className = 'deck-btn' + (id === deckId ? ' active' : '');
-        b.textContent = `${d.title || id} (${d.cards.length})`;
+        b.textContent = `${d.title || id} (${dueCount} por hoy)`;
         b.onclick = () => { deckId = id; localStorage.setItem(STORE_KEY + '.last', id); start(); };
         bar.appendChild(b);
       });
     }
 
     function start() {
-      const d = decks[deckId];
-      order = d.cards.map((_, i) => i);
+      buildOrder();
       pos = 0;
       buildDeckBar();
+      const d = decks[deckId];
       document.getElementById('deck-meta').textContent =
-        `${d.cards.length} tarjetas · progreso guardado en este dispositivo`;
+        `${d.cards.length} tarjetas · repetición espaciada guardada en este dispositivo`;
       render();
     }
 
     function render() {
       const d = decks[deckId];
-      const card = d.cards[order[pos]];
-      const el = document.getElementById('card');
-      el.classList.remove('flipped');
+      const i = order[pos];
+      const card = d.cards[i];
+      document.getElementById('card').classList.remove('flipped');
       document.getElementById('front-text').textContent = card.front;
       document.getElementById('back-text').textContent = card.back;
-      const ds = deckState();
-      const idx = order[pos];
-      document.getElementById('pos-label').textContent = `${pos + 1} / ${order.length}`;
-      document.getElementById('known-label').textContent =
-        `${ds.known.length} sabidas · ${ds.review.length} por repasar`;
-      document.getElementById('progress-fill').style.width =
-        `${(ds.known.length / d.cards.length) * 100}%`;
-      document.getElementById('btn-know').style.opacity = ds.known.includes(idx) ? '.45' : '1';
-      document.getElementById('btn-review').style.opacity = ds.review.includes(idx) ? '.45' : '1';
-    }
 
-    const mark = (list, other) => {
-      const ds = deckState();
-      const idx = order[pos];
-      const i = ds[list].indexOf(idx);
-      i >= 0 ? ds[list].splice(i, 1) : ds[list].push(idx);
-      const j = ds[other].indexOf(idx);
-      if (j >= 0) ds[other].splice(j, 1);
-      save(state); render();
-    };
+      const s = cardState(i);
+      const dueIn = s ? Math.max(0, s.due - Date.now()) : 0;
+      const status = !s ? 'nueva' : dueIn === 0 ? `vencida (ivl ${fmtIvl(s.ivl)})` : `vuelve en ${fmtIvl(dueIn / DAY)}`;
+      document.getElementById('pos-label').textContent = `${pos + 1} / ${order.length} · ${status}`;
+
+      const stats = Object.values(deckState());
+      const mastered = stats.filter(x => x.ivl >= 7).length;
+      const seen = stats.length;
+      document.getElementById('known-label').textContent =
+        `${mastered} dominadas · ${seen - mastered} aprendiendo · ${d.cards.length - seen} nuevas`;
+      document.getElementById('progress-fill').style.width = `${(mastered / d.cards.length) * 100}%`;
+
+      // Intervalos previstos en los botones (estilo Anki)
+      const ef = s ? s.ef : 2.5, ivl = s ? s.ivl : 0;
+      document.getElementById('btn-hard').innerHTML = `Difícil<br><small>${fmtIvl(Math.max(1, ivl * 1.2))}</small>`;
+      document.getElementById('btn-good').innerHTML = `Bien<br><small>${fmtIvl(ivl <= 0 ? 1 : ivl * ef)}</small>`;
+      document.getElementById('btn-easy').innerHTML = `Fácil<br><small>${fmtIvl((ivl <= 0 ? 1 : ivl * ef) * 1.3)}</small>`;
+    }
 
     const next = () => { pos = (pos + 1) % order.length; render(); };
     const prev = () => { pos = (pos - 1 + order.length) % order.length; render(); };
     const flip = () => document.getElementById('card').classList.toggle('flipped');
-    const shuffle = () => {
-      for (let i = order.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [order[i], order[j]] = [order[j], order[i]];
-      }
-      pos = 0; render();
-    };
 
     document.getElementById('card').addEventListener('click', flip);
     document.getElementById('btn-next').onclick = next;
     document.getElementById('btn-prev').onclick = prev;
-    document.getElementById('btn-know').onclick = () => mark('known', 'review');
-    document.getElementById('btn-review').onclick = () => mark('review', 'known');
-    document.getElementById('btn-shuffle').onclick = shuffle;
+    document.getElementById('btn-again').onclick = () => grade(0);
+    document.getElementById('btn-hard').onclick = () => grade(1);
+    document.getElementById('btn-good').onclick = () => grade(2);
+    document.getElementById('btn-easy').onclick = () => grade(3);
 
     document.addEventListener('keydown', (e) => {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
       if (e.key === ' ') { e.preventDefault(); flip(); }
       else if (e.key === 'ArrowRight') next();
       else if (e.key === 'ArrowLeft') prev();
-      else if (e.key === '1') mark('known', 'review');
-      else if (e.key === '2') mark('review', 'known');
-      else if (e.key.toLowerCase() === 's') shuffle();
+      else if (e.key >= '1' && e.key <= '4') grade(+e.key - 1);
     });
 
     if (!decks[deckId]) deckId = Object.keys(decks)[0];
