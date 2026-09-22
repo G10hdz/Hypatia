@@ -34,13 +34,30 @@
     .card-face .face-text { font-size: 1.05rem; line-height: 1.55; }
     .card-nav { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
     .card-nav .btn-secondary, .card-nav .btn-primary { width: auto; padding: 10px 20px; }
+    .card-nav small { font-size: .68rem; color: var(--text-dim, #9a9ca0); font-weight: 400; }
     .btn-know { border-color: var(--accent-mint, #98FF98) !important; color: var(--accent-mint, #98FF98) !important; }
-    .progress-line { display: flex; justify-content: space-between; font-size: .8rem;
+    .progress-line { display: flex; justify-content: space-between; gap: 12px; font-size: .8rem;
       color: var(--text-dim, #9a9ca0); margin-bottom: 8px; }
     .progress-track { height: 6px; border-radius: 3px; background: var(--border, #2a2d2d); overflow: hidden; }
     .progress-fill { height: 100%; background: var(--accent-mint, #98FF98); transition: width .3s; }
     .hint { text-align: center; font-size: .75rem; color: var(--text-dim, #9a9ca0); margin-top: 16px; }
     kbd { background: var(--border,#2a2d2d); border-radius: 4px; padding: 1px 6px; font-size: .7rem; }
+    .xp-toast {
+      position: fixed; left: 50%; bottom: 88px; transform: translateX(-50%) translateY(8px);
+      padding: 8px 18px; border-radius: 999px; font-size: .85rem; z-index: 20;
+      background: var(--panel-2, #1f2222); border: 1px solid var(--accent-mint, #98FF98);
+      color: var(--accent-mint, #98FF98); opacity: 0; pointer-events: none;
+      transition: opacity .25s, transform .25s;
+    }
+    .xp-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .summary-panel {
+      margin: 24px 0; padding: 32px; border-radius: 16px; text-align: center;
+      border: 1px solid var(--border, #2a2d2d); background: var(--surface, #1a1d1d);
+    }
+    .summary-panel h2 { font-size: 1.05rem; margin-bottom: 14px; }
+    .summary-panel .sum-row { font-size: .88rem; color: var(--text-dim, #9a9ca0); margin: 6px 0; }
+    .summary-panel .sum-row b { color: var(--text, #e1e3e2); }
+    .summary-panel .btn-primary { width: auto; padding: 10px 22px; margin-top: 14px; }
   </style>
 </head>
 <body>
@@ -55,6 +72,7 @@
 
     <div class="progress-line">
       <span id="pos-label">—</span>
+      <span id="game-label"></span>
       <span id="known-label"></span>
     </div>
     <div class="progress-track"><div id="progress-fill" class="progress-fill" style="width:0%"></div></div>
@@ -72,6 +90,8 @@
       </div>
     </div>
 
+    <div id="summary" class="summary-panel" hidden></div>
+
     <div class="card-nav">
       <button id="btn-prev" class="btn-secondary" type="button">← Ant</button>
       <button id="btn-again" class="btn-secondary" type="button">Otra vez</button>
@@ -82,61 +102,182 @@
     </div>
 
     <p class="hint"><kbd>espacio</kbd> voltear · <kbd>→</kbd> siguiente · <kbd>←</kbd> anterior · <kbd>1</kbd> otra vez · <kbd>2</kbd> difícil · <kbd>3</kbd> bien · <kbd>4</kbd> fácil</p>
+    <div id="xp-toast" class="xp-toast" role="status"></div>
   </main>
 
+  <script src="./fsrs.js"></script>
   <script src="./decks/mlops.js"></script>
   <script src="./decks/fde.js"></script>
   <script>
-    // SM-2 lite: cada carta tiene ef (ease), ivl (días), due (timestamp), reps.
-    // La sesión ordena: vencidas primero (por due), luego nuevas, luego futuras.
-    const STORE_KEY = 'hypatia-flashcards.srs.v1';
-    const DAY = 864e5;
+    // FSRS-6: cada carta guarda s (estabilidad, días), d (dificultad 1-10),
+    // due (timestamp ms), state new|learning|review|relearning y step.
+    // Cola de sesión (spec §5): vencidas por due → learning vencido → nuevas →
+    // futuras. La sesión no termina mientras queden items con due <= ahora.
+    const V1_KEY = 'hypatia-flashcards.srs.v1';
+    const STORE_KEY = 'hypatia-flashcards.srs.v2';
+    const GAME_KEY = 'hypatia-flashcards.game.v1';
+    const DAY = FSRS.DAY_MS;
     const decks = window.FLASHCARD_DECKS || {};
 
-    const load = () => { try { return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; } catch { return {}; } };
-    const save = (s) => localStorage.setItem(STORE_KEY, JSON.stringify(s));
-    let state = load();               // { deckId: { cardIdx: {ef, ivl, due, reps} } }
-    let order = [];
-    let pos = 0;
-    let deckId = localStorage.getItem(STORE_KEY + '.last') || Object.keys(decks)[0];
+    const loadJSON = (k, fb) => { try { return JSON.parse(localStorage.getItem(k)) ?? fb; } catch { return fb; } };
+    const save = (k, v) => localStorage.setItem(k, JSON.stringify(v));
 
-    const deckState = () => state[deckId] || (state[deckId] = {});
+    const v1 = loadJSON(V1_KEY, {});
+    let store = loadJSON(STORE_KEY, null);
+    if (!store || typeof store !== 'object' || !store.decks || typeof store.decks !== 'object') {
+      store = { version: 2, params: {}, decks: {} };
+    }
+    const params = FSRS.sanitizeParams(store.params);
+
+    let game = loadJSON(GAME_KEY, {});
+    game = {
+      xp: Number.isFinite(game.xp) ? game.xp : 0,
+      combo: Number.isFinite(game.combo) ? game.combo : 0,
+      streak: game.streak && Number.isFinite(game.streak.count) ? game.streak : { count: 0, lastActiveDay: null },
+      params: FSRS.sanitizeGameParams(game.params),
+    };
+
+    let order = [], pos = 0;
+    let deckId = localStorage.getItem(V1_KEY + '.last') || Object.keys(decks)[0];
+    let initialWork = new Set();   // índices con trabajo pendiente al abrir la sesión
+    let doneSet = new Set();       // cartas de initialWork ya resueltas
+    let learnBack = {};            // idx -> due: en learning/relearning esperando paso
+    let learnCount = {};           // idx -> re-encolados esta sesión (cap §10)
+    let session = null;
+    let summaryVisible = false;
+
+    const deckState = () => store.decks[deckId] || (store.decks[deckId] = {});
     const cardState = (i) => deckState()[i] || null;
+    // Estado efectivo para los contadores del deck-bar: si el deck aún no se
+    // migró a v2, deriva de v1 al vuelo sin escribir nada.
+    const effectiveState = (id, i) => {
+      const vd = store.decks[id];
+      if (vd) return vd[i] || null;
+      return FSRS.migrateV1((v1[id] || {})[i], params);
+    };
 
-    const fmtIvl = (d) => d < 1 ? '<1d' : d < 30 ? `${Math.round(d)}d` : `${(d / 30).toFixed(1)}m`;
+    const fmtDelay = (ms) => {
+      const min = ms / 6e4;
+      if (min < 60) return `${Math.max(1, Math.round(min))}min`;
+      const h = ms / 36e5;
+      if (h < 24) return `${Math.round(h)}h`;
+      const d = ms / DAY;
+      if (d < 30) return `${Math.max(1, Math.round(d))}d`;
+      return `${(d / 30).toFixed(1)}m`;
+    };
 
-    function buildOrder() {
-      const now = Date.now();
-      const due = [], fresh = [], future = [];
-      decks[deckId].cards.forEach((_, i) => {
-        const s = cardState(i);
-        if (!s) fresh.push(i);
-        else if (s.due <= now) due.push(i);
-        else future.push(i);
+    // Migración lazy v1→v2 (§6.2): escribe v2 y deja v1 intacto; si el deck ya
+    // tiene datos en v2, v1 se ignora.
+    function migrateDeck(id) {
+      if (store.decks[id]) return;
+      const deck = {};
+      Object.entries(v1[id] || {}).forEach(([idx, r]) => {
+        const c = FSRS.migrateV1(r, params);
+        if (c) deck[idx] = c;
       });
-      due.sort((a, b) => cardState(a).due - cardState(b).due);
-      future.sort((a, b) => cardState(a).due - cardState(b).due);
-      order = [...due, ...fresh, ...future];
+      store.decks[id] = deck;
+      save(STORE_KEY, store);
     }
 
-    function grade(q) { // 0 otra vez, 1 difícil, 2 bien, 3 fácil
-      const i = order[pos];
-      const s = cardState(i) || { ef: 2.5, ivl: 0, reps: 0 };
-      s.reps++;
-      if (q === 0) {
-        s.ef = Math.max(1.3, s.ef - 0.2);
-        s.ivl = 0;
-        s.due = Date.now() + 60e3;           // vuelve en 1 min
-      } else {
-        if (q === 1) { s.ef = Math.max(1.3, s.ef - 0.15); s.ivl = Math.max(1, s.ivl * 1.2); }
-        if (q === 2) { s.ivl = s.ivl <= 0 ? 1 : s.ivl * s.ef; }
-        if (q === 3) { s.ef += 0.15; s.ivl = (s.ivl <= 0 ? 1 : s.ivl * s.ef) * 1.3; }
-        s.ivl = Math.min(s.ivl, 365);
-        s.due = Date.now() + s.ivl * DAY;
+    // Un item está pendiente si su paso de aprendizaje ya maduró, o si entró
+    // a la sesión con trabajo y aún no se resuelve.
+    const isPending = (i) => {
+      if (learnBack[i] != null) return learnBack[i] <= Date.now();
+      return initialWork.has(i) && !doneSet.has(i);
+    };
+    const pendingCount = () => order.reduce((n, i) => n + (isPending(i) ? 1 : 0), 0);
+    const nextPending = (from) => {
+      for (let k = 1; k <= order.length; k++) {
+        const j = (from + k) % order.length;
+        if (isPending(order[j])) return j;
       }
-      deckState()[i] = s;
-      save(state);
-      next();
+      return from;
+    };
+
+    function buildSession() {
+      const now = Date.now();
+      const cards = decks[deckId].cards;
+      order = FSRS.buildQueue(cards.map((_, i) => cardState(i)), now);
+      initialWork = new Set(); doneSet = new Set(); learnBack = {}; learnCount = {};
+      cards.forEach((_, i) => {
+        const s = cardState(i);
+        if (!s || s.state === 'new' || s.due <= now) initialWork.add(i);
+        else if (s.state === 'learning' || s.state === 'relearning') learnBack[i] = s.due;
+      });
+      session = { grades: { 1: 0, 2: 0, 3: 0, 4: 0 }, total: 0, xp: 0, graduated: 0, lapses: 0 };
+      summaryVisible = false;
+      pos = 0;
+    }
+
+    function grade(g) { // 0 otra vez, 1 difícil, 2 bien, 3 fácil → grado FSRS g+1
+      if (!order.length) return;
+      if (summaryVisible) { dismissSummary(); return; }
+      const i = order[pos];
+      const now = Date.now();
+      const res = FSRS.grade(cardState(i), g + 1, now, params);
+      const c = res.card;
+
+      const inSteps = c.state === 'learning' || c.state === 'relearning';
+      if (inSteps) {
+        learnCount[i] = (learnCount[i] || 0) + 1;
+        if (learnCount[i] > params.learnCap) c.due = now + DAY; // cap anti-sesión infinita (§10)
+      }
+      deckState()[i] = c;
+      if (inSteps) { learnBack[i] = c.due; doneSet.delete(i); }
+      else { delete learnBack[i]; doneSet.add(i); }
+
+      session.grades[g + 1]++;
+      session.total++;
+      if (res.lapsed) session.lapses++;
+      if (res.graduated) session.graduated++;
+
+      const ev = FSRS.applyGame(game, g + 1, now);
+      session.xp += ev.xp;
+      toast(`+${ev.xp} XP`);
+
+      save(STORE_KEY, store);
+      save(GAME_KEY, game);
+      advance();
+    }
+
+    function advance() {
+      // La sesión termina solo cuando no queda nada con due <= ahora (REQ-1).
+      if (pendingCount() === 0) { summaryVisible = true; render(); return; }
+      pos = nextPending(pos);
+      render();
+    }
+
+    function next() {
+      if (!order.length) return;
+      if (summaryVisible) { dismissSummary(); return; }
+      pos = pendingCount() > 0 ? nextPending(pos) : (pos + 1) % order.length;
+      render();
+    }
+
+    function prev() {
+      if (!order.length) return;
+      if (summaryVisible) { dismissSummary(); return; }
+      pos = (pos - 1 + order.length) % order.length;
+      render();
+    }
+
+    function dismissSummary() {
+      summaryVisible = false;
+      if (pendingCount() > 0) pos = nextPending(pos);
+      render();
+    }
+
+    const flip = () => {
+      if (!summaryVisible) document.getElementById('card').classList.toggle('flipped');
+    };
+
+    let toastTimer = null;
+    function toast(msg) {
+      const el = document.getElementById('xp-toast');
+      el.textContent = msg;
+      el.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => el.classList.remove('show'), 2000);
     }
 
     function buildDeckBar() {
@@ -145,20 +286,26 @@
       const now = Date.now();
       Object.entries(decks).forEach(([id, d]) => {
         const dueCount = d.cards.filter((_, i) => {
-          const s = (state[id] || {})[i];
-          return !s || s.due <= now;
+          const s = effectiveState(id, i);
+          return !s || s.state === 'new' || s.due <= now
+            || s.state === 'learning' || s.state === 'relearning';
         }).length;
         const b = document.createElement('button');
         b.className = 'deck-btn' + (id === deckId ? ' active' : '');
         b.textContent = `${d.title || id} (${dueCount} por hoy)`;
-        b.onclick = () => { deckId = id; localStorage.setItem(STORE_KEY + '.last', id); start(); };
+        b.onclick = () => { deckId = id; localStorage.setItem(V1_KEY + '.last', id); start(); };
         bar.appendChild(b);
       });
     }
 
     function start() {
-      buildOrder();
-      pos = 0;
+      migrateDeck(deckId);
+      const ds = deckState();
+      Object.keys(ds).forEach((k) => {
+        const c = FSRS.sanitizeCard(ds[k]);
+        if (c) ds[k] = c; else delete ds[k];
+      });
+      buildSession();
       buildDeckBar();
       const d = decks[deckId];
       document.getElementById('deck-meta').textContent =
@@ -167,6 +314,13 @@
     }
 
     function render() {
+      document.getElementById('summary').hidden = !summaryVisible;
+      document.querySelector('.card-stage').style.display = summaryVisible ? 'none' : '';
+      document.querySelector('.card-nav').style.display = summaryVisible ? 'none' : '';
+      document.querySelector('.hint').style.display = summaryVisible ? 'none' : '';
+      if (summaryVisible) { renderSummary(); return; }
+      if (!order.length) { document.getElementById('pos-label').textContent = '—'; return; }
+
       const d = decks[deckId];
       const i = order[pos];
       const card = d.cards[i];
@@ -175,27 +329,45 @@
       document.getElementById('back-text').textContent = card.back;
 
       const s = cardState(i);
-      const dueIn = s ? Math.max(0, s.due - Date.now()) : 0;
-      const status = !s ? 'nueva' : dueIn === 0 ? `vencida (ivl ${fmtIvl(s.ivl)})` : `vuelve en ${fmtIvl(dueIn / DAY)}`;
-      document.getElementById('pos-label').textContent = `${pos + 1} / ${order.length} · ${status}`;
+      const now = Date.now();
+      const stateName = { learning: 'aprendizaje', relearning: 'reaprendizaje', review: 'repaso' };
+      const status = (!s || s.state === 'new') ? 'nueva'
+        : `${stateName[s.state]} · ${s.due <= now ? 'vencida' : 'vuelve en ' + fmtDelay(s.due - now)}`;
+      document.getElementById('pos-label').textContent =
+        `${pos + 1} / ${order.length} · ${status} · ${pendingCount()} pendientes`;
 
       const stats = Object.values(deckState());
-      const mastered = stats.filter(x => x.ivl >= 7).length;
-      const seen = stats.length;
+      const mastered = stats.filter((x) => x.s >= 21).length; // "dominada" = S ≥ 21d
       document.getElementById('known-label').textContent =
-        `${mastered} dominadas · ${seen - mastered} aprendiendo · ${d.cards.length - seen} nuevas`;
+        `${mastered} dominadas · ${stats.length - mastered} aprendiendo · ${d.cards.length - stats.length} nuevas`;
       document.getElementById('progress-fill').style.width = `${(mastered / d.cards.length) * 100}%`;
+      document.getElementById('game-label').textContent =
+        `${game.xp} XP · racha ${game.streak.count}d`;
 
-      // Intervalos previstos en los botones (estilo Anki)
-      const ef = s ? s.ef : 2.5, ivl = s ? s.ivl : 0;
-      document.getElementById('btn-hard').innerHTML = `Difícil<br><small>${fmtIvl(Math.max(1, ivl * 1.2))}</small>`;
-      document.getElementById('btn-good').innerHTML = `Bien<br><small>${fmtIvl(ivl <= 0 ? 1 : ivl * ef)}</small>`;
-      document.getElementById('btn-easy').innerHTML = `Fácil<br><small>${fmtIvl((ivl <= 0 ? 1 : ivl * ef) * 1.3)}</small>`;
+      const pv = FSRS.preview(s, now, params);
+      document.getElementById('btn-again').innerHTML = `Otra vez<br><small>${fmtDelay(pv.again)}</small>`;
+      document.getElementById('btn-hard').innerHTML = `Difícil<br><small>${fmtDelay(pv.hard)}</small>`;
+      document.getElementById('btn-good').innerHTML = `Bien<br><small>${fmtDelay(pv.good)}</small>`;
+      document.getElementById('btn-easy').innerHTML = `Fácil<br><small>${fmtDelay(pv.easy)}</small>`;
     }
 
-    const next = () => { pos = (pos + 1) % order.length; render(); };
-    const prev = () => { pos = (pos - 1 + order.length) % order.length; render(); };
-    const flip = () => document.getElementById('card').classList.toggle('flipped');
+    function renderSummary() {
+      const g = session.grades;
+      const learnPend = Object.keys(learnBack).filter((i) => learnBack[i] > Date.now()).length;
+      document.getElementById('pos-label').textContent = 'sesión completa';
+      const el = document.getElementById('summary');
+      el.innerHTML =
+        `<h2>Sesión completada</h2>` +
+        `<p class="sum-row"><b>${session.total}</b> repasos · <b>+${session.xp} XP</b></p>` +
+        `<p class="sum-row">Otra vez ${g[1]} · Difícil ${g[2]} · Bien ${g[3]} · Fácil ${g[4]}</p>` +
+        `<p class="sum-row">${session.graduated} graduadas a repaso · ${session.lapses} lapses</p>` +
+        (learnPend
+          ? `<p class="sum-row">${learnPend} tarjetas siguen en aprendizaje; vuelven al madurar su paso.</p>`
+          : '') +
+        `<p class="sum-row">Racha: <b>${game.streak.count} día${game.streak.count === 1 ? '' : 's'}</b> · XP total <b>${game.xp}</b></p>` +
+        `<button id="summary-continue" class="btn-primary" type="button">Continuar</button>`;
+      document.getElementById('summary-continue').onclick = dismissSummary;
+    }
 
     document.getElementById('card').addEventListener('click', flip);
     document.getElementById('btn-next').onclick = next;
@@ -207,11 +379,16 @@
 
     document.addEventListener('keydown', (e) => {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-      if (e.key === ' ') { e.preventDefault(); flip(); }
+      if (e.key === ' ') { e.preventDefault(); summaryVisible ? dismissSummary() : flip(); }
       else if (e.key === 'ArrowRight') next();
       else if (e.key === 'ArrowLeft') prev();
       else if (e.key >= '1' && e.key <= '4') grade(+e.key - 1);
     });
+
+    // Revisa pasos de aprendizaje que maduran con el resumen visible (REQ-1).
+    setInterval(() => {
+      if (summaryVisible && pendingCount() > 0) dismissSummary();
+    }, 10000);
 
     if (!decks[deckId]) deckId = Object.keys(decks)[0];
     if (deckId) start(); else document.getElementById('deck-meta').textContent = 'Sin decks cargados.';
