@@ -1,7 +1,7 @@
 # SPEC: Migración de SM-2 lite a FSRS en Flashcards
 
 Fecha: 2026-09-22
-Estado: borrador para aprobación
+Estado: aprobado 2026-09-22 — implementación en curso
 Módulo afectado: `Flashcards/index.html` (standalone, vanilla JS, localStorage)
 
 ## 1. Resultado para el usuario
@@ -288,27 +288,21 @@ Eventos: cada llamada a `grade()` emite un `GradeEvent {cardId, grado, estadoPre
 | REQ-12 | Atajos de teclado 1-4 y flip UI sin cambios funcionales | EV-0 | Regresión manual de teclado/espacio/click |
 | REQ-13 | Sin v1, v2 arranca vacío; sin decks, mensaje "Sin decks cargados" | EV-0 | localStorage limpio → comportamiento idéntico al actual |
 
-## 9. Supuestos que requieren aprobación
+## 9. Decisiones (aprobadas 2026-09-22)
 
-1. **Variante FSRS**: la evidencia HEAD usa 21 pesos (FSRS-6: decay aprendible
-   `w[20]` y término `w[19]` en estabilidad de corto plazo). El brief menciona
-   `w0..w18` (FSRS-5: 19 pesos, decay fijo −0.5). No son intercambiables: las
-   fórmulas de §4.1 y §4.4 difieren entre variantes. **Decidir: FSRS-5 o FSRS-6.**
-   Recomendación: FSRS-6 con los defaults listados, `w` editable en config.
-2. **Los pesos `w` NO son sagrados**: deben vivir en `params` del store (o
-   constante de módulo sobreescribible). Sin optimizer on-device; los defaults
-   genéricos se usan hasta que exista historial suficiente para tunear.
-3. **Pasos de (re)learning propios**: FSRS no los define (en Anki vienen de deck
-   options). Defaults propuestos `[1min, 10min]` / `[10min]` necesitan visto bueno.
-4. **Combo de sesión**: carden no lo tiene; es extensión propuesta (×1.1/5
-   aciertos, cap ×2). Aprobar o dejar fuera del MVP.
-5. **Niveles**: ladder de XP queda como fase 2 opcional; MVP = XP + racha + resumen.
-6. **Granularidad de `due`**: se conserva timestamp ms (como hoy), no
-   day-boundary de Anki. Fuzz solo en ivl ≥ 2.5 días.
-7. **"Dominada" (`ivl ≥ 7`)**: redefinir como `S ≥ umbral` (p.ej. S ≥ 21 días) o
-   mantener lectura equivalente; la barra de progreso depende de esto.
-8. **Viejas tarjetas "en 1 min" de v1**: al migrar, `ivl=0` → `state=new` (se
-   re-aprenden); aceptable o preferir `learning` con S mínima.
+1. **Variante FSRS:** DECIDIDO **FSRS-6** (21 pesos, decay aprendible `w[20]`),
+   con los defaults de §4.7. La evidencia HEAD es FSRS-6; FSRS-5 queda descartado.
+2. **Pesos `w` editables:** DECIDIDO. Viven en `params` del store v2 con
+   fallback a defaults si el valor guardado no parsea o tiene longitud ≠ 21.
+3. **Pasos de (re)learning:** DECIDIDO `[1min, 10min]` learning / `[10min]`
+   relearning (estilo Anki, configurables en `params`).
+4. **Combo de sesión:** DECIDIDO incluir — el usuario pidió máxima dopamina.
+   ×1.1 por cada 5 aciertos consecutivos sin AGAIN, cap ×2. Tunable en params.
+5. **Niveles:** DECIDIDO fase 2 opcional; MVP = XP + racha + resumen.
+6. **Granularidad de `due`:** DECIDIDO timestamp ms (como hoy); fuzz ±5% solo
+   en ivl ≥ 2.5 días y nunca por debajo del intervalo previo en review.
+7. **"Dominada":** DECIDIDO `S ≥ 21` días (sustituye `ivl ≥ 7` de v1).
+8. **Migración `ivl=0`:** DECIDIDO `state=new` (la tarjeta se re-aprende limpio).
 
 ## 10. Riesgos
 
@@ -319,4 +313,4 @@ Eventos: cada llamada a `grade()` emite un `GradeEvent {cardId, grado, estadoPre
 - Preview engañosa en `learning` (muestra paso, no días): formatear `<1d` ya
   cubre el caso.
 
-GATE: awaiting approval — no implementation yet.
+GATE: approved 2026-09-22 — FSRS-6 + combo de sesión implementables.
