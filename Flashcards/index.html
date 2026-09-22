@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flashcards | Hypatia</title>
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="stylesheet" href="../shared/engine.css">
+  <style>
+    .deck-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+    .deck-btn {
+      padding: 10px 18px; border-radius: 10px; border: 1px solid var(--border, #2a2d2d);
+      background: var(--surface, #1a1d1d); color: var(--text, #e1e3e2); cursor: pointer;
+      font-size: 0.9rem; transition: border-color .15s;
+    }
+    .deck-btn.active { border-color: var(--accent-mint, #98FF98); color: var(--accent-mint, #98FF98); }
+    .card-stage { perspective: 1200px; margin: 24px 0; }
+    .flashcard {
+      position: relative; width: 100%; min-height: 260px; cursor: pointer;
+      transform-style: preserve-3d; transition: transform .45s cubic-bezier(.2,.7,.3,1);
+    }
+    .flashcard.flipped { transform: rotateY(180deg); }
+    .card-face {
+      position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 32px; border-radius: 16px; border: 1px solid var(--border, #2a2d2d);
+      background: var(--surface, #1a1d1d); text-align: center;
+    }
+    .card-face.back { transform: rotateY(180deg); border-color: var(--accent-mint, #98FF98); }
+    .card-face .face-label { font-size: .7rem; text-transform: uppercase; letter-spacing: .12em;
+      color: var(--text-dim, #9a9ca0); margin-bottom: 14px; }
+    .card-face .face-text { font-size: 1.05rem; line-height: 1.55; }
+    .card-nav { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .card-nav .btn-secondary, .card-nav .btn-primary { width: auto; padding: 10px 20px; }
+    .btn-know { border-color: var(--accent-mint, #98FF98) !important; color: var(--accent-mint, #98FF98) !important; }
+    .progress-line { display: flex; justify-content: space-between; font-size: .8rem;
+      color: var(--text-dim, #9a9ca0); margin-bottom: 8px; }
+    .progress-track { height: 6px; border-radius: 3px; background: var(--border, #2a2d2d); overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--accent-mint, #98FF98); transition: width .3s; }
+    .hint { text-align: center; font-size: .75rem; color: var(--text-dim, #9a9ca0); margin-top: 16px; }
+    kbd { background: var(--border,#2a2d2d); border-radius: 4px; padding: 1px 6px; font-size: .7rem; }
+  </style>
+</head>
+<body>
+  <main class="container" style="max-width: 720px;">
+    <header style="margin-bottom: 8px;">
+      <a href="../" style="font-size:.8rem;color:var(--text-dim,#9a9ca0);text-decoration:none;">← Hypatia</a>
+      <h1 style="margin:6px 0 2px;">Flashcards</h1>
+      <p id="deck-meta" style="color:var(--text-dim,#9a9ca0);font-size:.85rem;margin:0;"></p>
+    </header>
+
+    <div id="deck-bar" class="deck-bar"></div>
+
+    <div class="progress-line">
+      <span id="pos-label">—</span>
+      <span id="known-label"></span>
+    </div>
+    <div class="progress-track"><div id="progress-fill" class="progress-fill" style="width:0%"></div></div>
+
+    <div class="card-stage">
+      <div id="card" class="flashcard" role="button" tabindex="0" aria-label="Voltear tarjeta">
+        <div class="card-face front">
+          <span class="face-label">Pregunta</span>
+          <p id="front-text" class="face-text"></p>
+        </div>
+        <div class="card-face back">
+          <span class="face-label">Respuesta</span>
+          <p id="back-text" class="face-text"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-nav">
+      <button id="btn-prev" class="btn-secondary" type="button">← Ant</button>
+      <button id="btn-review" class="btn-secondary" type="button">Repasar</button>
+      <button id="btn-know" class="btn-secondary btn-know" type="button">La sé ✓</button>
+      <button id="btn-shuffle" class="btn-secondary" type="button">Mezclar</button>
+      <button id="btn-next" class="btn-primary" type="button">Sig →</button>
+    </div>
+
+    <p class="hint"><kbd>espacio</kbd> voltear · <kbd>→</kbd> siguiente · <kbd>←</kbd> anterior · <kbd>1</kbd> la sé · <kbd>2</kbd> repasar · <kbd>S</kbd> mezclar</p>
+  </main>
+
+  <script src="./decks/mlops.js"></script>
+  <script src="./decks/fde.js"></script>
+  <script>
+    const STORE_KEY = 'hypatia-flashcards.v1';
+    const decks = window.FLASHCARD_DECKS || {};
+
+    const load = () => { try { return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; } catch { return {}; } };
+    const save = (s) => localStorage.setItem(STORE_KEY, JSON.stringify(s));
+    let state = load();               // { deckId: { known:[idx], review:[idx] } }
+    let order = [];                   // current order of card indexes
+    let pos = 0;
+    let deckId = localStorage.getItem(STORE_KEY + '.last') || Object.keys(decks)[0];
+
+    const deckState = () => state[deckId] || (state[deckId] = { known: [], review: [] });
+
+    function buildDeckBar() {
+      const bar = document.getElementById('deck-bar');
+      bar.innerHTML = '';
+      Object.entries(decks).forEach(([id, d]) => {
+        const b = document.createElement('button');
+        b.className = 'deck-btn' + (id === deckId ? ' active' : '');
+        b.textContent = `${d.title || id} (${d.cards.length})`;
+        b.onclick = () => { deckId = id; localStorage.setItem(STORE_KEY + '.last', id); start(); };
+        bar.appendChild(b);
+      });
+    }
+
+    function start() {
+      const d = decks[deckId];
+      order = d.cards.map((_, i) => i);
+      pos = 0;
+      buildDeckBar();
+      document.getElementById('deck-meta').textContent =
+        `${d.cards.length} tarjetas · progreso guardado en este dispositivo`;
+      render();
+    }
+
+    function render() {
+      const d = decks[deckId];
+      const card = d.cards[order[pos]];
+      const el = document.getElementById('card');
+      el.classList.remove('flipped');
+      document.getElementById('front-text').textContent = card.front;
+      document.getElementById('back-text').textContent = card.back;
+      const ds = deckState();
+      const idx = order[pos];
+      document.getElementById('pos-label').textContent = `${pos + 1} / ${order.length}`;
+      document.getElementById('known-label').textContent =
+        `${ds.known.length} sabidas · ${ds.review.length} por repasar`;
+      document.getElementById('progress-fill').style.width =
+        `${(ds.known.length / d.cards.length) * 100}%`;
+      document.getElementById('btn-know').style.opacity = ds.known.includes(idx) ? '.45' : '1';
+      document.getElementById('btn-review').style.opacity = ds.review.includes(idx) ? '.45' : '1';
+    }
+
+    const mark = (list, other) => {
+      const ds = deckState();
+      const idx = order[pos];
+      const i = ds[list].indexOf(idx);
+      i >= 0 ? ds[list].splice(i, 1) : ds[list].push(idx);
+      const j = ds[other].indexOf(idx);
+      if (j >= 0) ds[other].splice(j, 1);
+      save(state); render();
+    };
+
+    const next = () => { pos = (pos + 1) % order.length; render(); };
+    const prev = () => { pos = (pos - 1 + order.length) % order.length; render(); };
+    const flip = () => document.getElementById('card').classList.toggle('flipped');
+    const shuffle = () => {
+      for (let i = order.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [order[i], order[j]] = [order[j], order[i]];
+      }
+      pos = 0; render();
+    };
+
+    document.getElementById('card').addEventListener('click', flip);
+    document.getElementById('btn-next').onclick = next;
+    document.getElementById('btn-prev').onclick = prev;
+    document.getElementById('btn-know').onclick = () => mark('known', 'review');
+    document.getElementById('btn-review').onclick = () => mark('review', 'known');
+    document.getElementById('btn-shuffle').onclick = shuffle;
+
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === ' ') { e.preventDefault(); flip(); }
+      else if (e.key === 'ArrowRight') next();
+      else if (e.key === 'ArrowLeft') prev();
+      else if (e.key === '1') mark('known', 'review');
+      else if (e.key === '2') mark('review', 'known');
+      else if (e.key.toLowerCase() === 's') shuffle();
+    });
+
+    if (!decks[deckId]) deckId = Object.keys(decks)[0];
+    if (deckId) start(); else document.getElementById('deck-meta').textContent = 'Sin decks cargados.';
+  </script>
+</body>
+</html>
