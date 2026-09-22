@@ -1,0 +1,5 @@
+.git
+specs/
+scripts/
+*.md
+__pycache__
