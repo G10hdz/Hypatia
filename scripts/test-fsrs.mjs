@@ -2,12 +2,12 @@
 // test-fsrs.mjs — tabla de verdad del motor FSRS-6 (specs/fsrs-scheduling.md
 // §4-§7) más un smoke del script de index.html contra un DOM stub.
 // Uso: node scripts/test-fsrs.mjs   (sin dependencias)
-import { createRequire } from 'module';
 import { readFileSync } from 'fs';
 import vm from 'vm';
 
-const require = createRequire(import.meta.url);
-const FSRS = require('../Flashcards/fsrs.js');
+const fsrsModule = { exports: {} };
+vm.runInNewContext(readFileSync(new URL('../Flashcards/fsrs.js', import.meta.url), 'utf8'), { module: fsrsModule, console });
+const FSRS = fsrsModule.exports;
 
 let pass = 0, fail = 0;
 const ok = (cond, name) => {
