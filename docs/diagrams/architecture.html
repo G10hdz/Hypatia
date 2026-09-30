@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hypatia — arquitectura</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:   #f5f5f5;
+      --color-ink:     #2d3142;
+      --color-muted:   #4f5d75;
+      --color-accent:  #eb6c36;
+      --font-sans:     'Geist', system-ui, sans-serif;
+      --font-serif:    'Instrument Serif', serif;
+      --font-mono:     'Geist Mono', ui-monospace, monospace;
+    }
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 3rem 2rem;
+    }
+    .frame { max-width: 1100px; width: 100%; }
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.66rem; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--color-muted); margin-bottom: 0.5rem;
+    }
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem);
+      font-weight: 400; letter-spacing: -0.02em; line-height: 1.15;
+      margin-bottom: 0.4rem;
+    }
+    .sub { color: var(--color-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+    svg { width: 100%; display: block; }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">Architecture · Diagram Design</p>
+    <h1>Hypatia — adaptive learning</h1>
+    <p class="sub">Apps HTML estaticas sin build step: un hub, modulos de practica, y bancos de preguntas como data JS.</p>
+
+    <svg viewBox="0 0 1100 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="hyp-title hyp-desc">
+      <title id="hyp-title">Hypatia: hub y modulos estaticos</title>
+      <desc id="hyp-desc">index.html es el hub; CubPrep practica para el examen UNAM Area 1 y PrepAWS para AWS SAA-C03; cada modulo carga questions.js y guia de estudio, con progreso en storage local; despliegue estatico via netlify.toml.</desc>
+      <defs>
+        <marker id="hyp-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/></marker>
+        <marker id="hyp-arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#eb6c36"/></marker>
+      </defs>
+
+      <rect width="1100" height="440" fill="#f5f5f5"/>
+
+      <!-- server -->
+      <rect x="40" y="150" width="200" height="76" rx="6" fill="rgba(79,93,117,0.06)" stroke="#7a8399" stroke-width="1"/>
+      <text x="140" y="178" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">python http.server</text>
+      <text x="140" y="196" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">o netlify.toml deploy</text>
+      <text x="140" y="212" fill="#7a8399" font-size="8.5" font-family="'Geist Mono', monospace" text-anchor="middle">sin build · solo static</text>
+
+      <!-- hub -->
+      <rect x="300" y="150" width="160" height="76" rx="6" fill="rgba(235,108,54,0.08)" stroke="#eb6c36" stroke-width="1.2"/>
+      <rect x="308" y="156" width="32" height="12" rx="2" fill="transparent" stroke="rgba(235,108,54,0.50)" stroke-width="0.8"/>
+      <text x="324" y="165" fill="rgba(235,108,54,0.9)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">HUB</text>
+      <text x="380" y="190" fill="#2d3142" font-size="12.5" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">index.html</text>
+      <text x="380" y="208" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">elige modulo</text>
+
+      <!-- modules -->
+      <rect x="530" y="60" width="270" height="130" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <text x="665" y="86" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">CubPrep/ — UNAM Area 1</text>
+      <text x="665" y="106" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">questions.js · questions_by_materia/</text>
+      <text x="665" y="124" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">enhanced_explanations.js</text>
+      <text x="665" y="142" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">video_refs.js · study-guide.html</text>
+      <text x="665" y="168" fill="#7a8399" font-size="8.5" font-family="'Geist Mono', monospace" text-anchor="middle">sesiones cortas · retries de baja friccion</text>
+
+      <rect x="530" y="210" width="270" height="110" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <text x="665" y="236" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">SAA-C03/ — PrepAWS</text>
+      <text x="665" y="256" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">AWS Solutions Architect</text>
+      <text x="665" y="274" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">questions.js · index.html</text>
+      <text x="665" y="300" fill="#7a8399" font-size="8.5" font-family="'Geist Mono', monospace" text-anchor="middle">mismo patron: quiz + feedback claro</text>
+
+      <!-- shared -->
+      <rect x="860" y="120" width="200" height="130" rx="8" fill="rgba(45,49,66,0.02)" stroke="rgba(45,49,66,0.20)" stroke-width="1" stroke-dasharray="4,4"/>
+      <text x="960" y="144" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.14em">SHARED CONTRACT</text>
+      <g font-family="'Geist Mono', monospace" font-size="9.5" fill="#2d3142">
+        <text x="880" y="174">· progreso en localStorage</text>
+        <text x="880" y="198">· module scripts (HTTP req)</text>
+        <text x="880" y="222">· neurodivergent-friendly:</text>
+        <text x="880" y="240">   drills cortos + feedback</text>
+      </g>
+
+      <!-- edges -->
+      <path d="M 240 188 L 300 188" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#hyp-arrow)"/>
+      <path d="M 460 172 L 500 172 Q 510 172 510 162 L 510 135 Q 510 125 520 125 L 530 125" fill="none" stroke="#eb6c36" stroke-width="1.4" marker-end="url(#hyp-arrow-accent)"/>
+      <path d="M 460 204 L 500 204 Q 510 204 510 214 L 510 255 Q 510 265 520 265 L 530 265" fill="none" stroke="#eb6c36" stroke-width="1.4" marker-end="url(#hyp-arrow-accent)"/>
+      <path d="M 800 125 L 860 170" fill="none" stroke="#4f5d75" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#hyp-arrow)"/>
+      <path d="M 800 265 L 860 230" fill="none" stroke="#4f5d75" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#hyp-arrow)"/>
+
+      <!-- note -->
+      <rect x="40" y="350" width="1030" height="52" rx="6" fill="rgba(45,49,66,0.05)" stroke="rgba(45,49,66,0.32)" stroke-width="0.8"/>
+      <text x="555" y="372" fill="#2d3142" font-size="11.5" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Parte de learning-stack (Practice floor) — drills reutilizados por ai-coach</text>
+      <text x="555" y="390" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">MIT · Hypatia-internt es el clon para practica interna</text>
+    </svg>
+  </div>
+</body>
+</html>
