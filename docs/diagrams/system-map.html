@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hypatia: system map</title>
+<style>
+:root{color-scheme:light dark;--paper:#f7f7f9;--panel:#fff;--ink:#26233d;--muted:#5d6478;--rule:#c5c4d4;--accent:#7c5cf0;--tint:rgba(124,92,240,.08);--link:#4f46e5}
+@media(prefers-color-scheme:dark){:root{--paper:#14121f;--panel:#211f30;--ink:#efedfb;--muted:#a49ece;--rule:#676279;--accent:#bb86ff;--tint:rgba(187,134,255,.14);--link:#8f9bff}}
+*{box-sizing:border-box}html{scroll-padding-top:24px}body{margin:0;background:var(--paper);color:var(--ink);font-family:Geist,system-ui,sans-serif;line-height:1.65}main{max-width:1120px;margin:auto;padding:40px 28px}header{max-width:800px}h1{font:400 clamp(32px,5vw,52px)/1.12 'Instrument Serif',Georgia,serif;margin:12px 0 20px}h2{font-size:22px}h3{font-size:18px;margin:0 0 8px}.eyebrow,footer{font:12px/1.6 'Geist Mono',ui-monospace,monospace;letter-spacing:.08em}p{max-width:80ch}a{color:var(--link);text-underline-offset:4px}a:focus-visible{outline:3px solid var(--accent);outline-offset:5px}figure{margin:28px 0;overflow-x:auto}svg{display:block;width:100%;min-width:720px;height:auto}svg .box{fill:var(--panel);stroke:var(--rule);stroke-width:1.2}svg .focal{fill:var(--tint);stroke:var(--accent)}svg text{fill:var(--ink);font-family:Geist,system-ui,sans-serif}svg .label{font-size:15px;font-weight:600}svg .small{font-size:12px;fill:var(--muted)}svg .row{font-size:12px;fill:var(--muted)}svg .arrow{stroke:var(--muted);stroke-width:1.2;fill:none}svg .mask{fill:var(--paper)}svg .verb{font-size:9px;fill:var(--muted)}svg a:hover .box,svg a:focus .box{stroke:var(--accent);stroke-width:2}figcaption{font-size:14px;color:var(--muted)}.passport{padding:24px 0;border-top:1px solid var(--rule);scroll-margin-top:24px}.passport:target{border-top:3px solid var(--accent)}dl{display:grid;grid-template-columns:100px 1fr;gap:8px 20px;max-width:88ch}dt{font-weight:600}dd{margin:0;overflow-wrap:anywhere}.note{color:var(--muted)}footer{border-top:1px solid var(--rule);padding-top:20px;margin-top:32px}@media(max-width:600px){main{padding:24px 16px}dl{grid-template-columns:1fr;gap:4px}dd{margin-bottom:12px}}@media print{main{max-width:none}svg{min-width:0}.passport{break-inside:avoid}}
+</style>
+</head>
+<body><main>
+<header><p class="eyebrow">LEARNING STACK / MORADA</p><h1>Hypatia: system map</h1><p>Runs static practice modules in the browser. CubPrep and MLOps share an exam engine, SAA-C03 keeps its own implementation, and Flashcards uses its own FSRS scheduler.</p><p><a href="../stack.md">Read the architecture guide</a></p></header>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" role="img" aria-labelledby="system-map-title system-map-desc">
+<title id="system-map-title">Hypatia: system map</title><desc id="system-map-desc">Component responsibilities and selected data paths; follow a node for inputs, outputs and source references.</desc>
+<defs><marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L8 4L0 8Z" fill="var(--muted)"/></marker></defs>
+<text class="row" x="64" y="52">Shared exam modules</text>
+<text class="row" x="64" y="212">Independent exam module</text>
+<text class="row" x="64" y="372">Spaced repetition</text>
+<path class="arrow" d="M304 120H352" marker-end="url(#arrow)"/>
+<rect class="mask" x="306" y="96" width="44" height="14" rx="2"/><text class="verb" style="font-size:8px" x="328" y="106" text-anchor="middle">reads</text>
+<path class="arrow" d="M592 120H640" marker-end="url(#arrow)"/>
+<rect class="mask" x="594" y="96" width="44" height="14" rx="2"/><text class="verb" style="font-size:8px" x="616" y="106" text-anchor="middle">runs</text>
+<path class="arrow" d="M304 280H352" marker-end="url(#arrow)"/>
+<rect class="mask" x="306" y="256" width="44" height="14" rx="2"/><text class="verb" style="font-size:8px" x="328" y="266" text-anchor="middle">saves</text>
+<path class="arrow" d="M304 440H352" marker-end="url(#arrow)"/>
+<rect class="mask" x="306" y="416" width="44" height="14" rx="2"/><text class="verb" style="font-size:8px" x="328" y="426" text-anchor="middle">reviews</text>
+<path class="arrow" d="M592 440H640" marker-end="url(#arrow)"/>
+<rect class="mask" x="594" y="416" width="44" height="14" rx="2"/><text class="verb" style="font-size:8px" x="616" y="426" text-anchor="middle">updates</text>
+<a href="#node-1" aria-label="Question banks: read responsibilities"><rect class="box" x="64" y="72" width="240" height="96" rx="8"/><text class="small" x="80" y="94">01</text><text class="label" x="80" y="118">Question banks</text><text class="small" x="80" y="144">CubPrep/questions_by_materia</text></a>
+<a href="#node-2" aria-label="Shared engine: read responsibilities"><rect class="box focal" x="352" y="72" width="240" height="96" rx="8"/><text class="small" x="368" y="94">02</text><text class="label" x="368" y="118">Shared engine</text><text class="small" x="368" y="144">shared/engine.js</text></a>
+<a href="#node-3" aria-label="CubPrep and MLOps: read responsibilities"><rect class="box" x="640" y="72" width="240" height="96" rx="8"/><text class="small" x="656" y="94">03</text><text class="label" x="656" y="118">CubPrep and MLOps</text><text class="small" x="656" y="144">MLOps/index.html</text></a>
+<a href="#node-4" aria-label="SAA-C03: read responsibilities"><rect class="box" x="64" y="232" width="240" height="96" rx="8"/><text class="small" x="80" y="254">04</text><text class="label" x="80" y="278">SAA-C03</text><text class="small" x="80" y="304">SAA-C03/index.html</text></a>
+<a href="#node-5" aria-label="Browser storage: read responsibilities"><rect class="box" x="352" y="232" width="240" height="96" rx="8"/><text class="small" x="368" y="254">05</text><text class="label" x="368" y="278">Browser storage</text><text class="small" x="368" y="304">shared/engine.js</text></a>
+<a href="#node-6" aria-label="Static delivery: read responsibilities"><rect class="box" x="640" y="232" width="240" height="96" rx="8"/><text class="small" x="656" y="254">06</text><text class="label" x="656" y="278">Static delivery</text><text class="small" x="656" y="304">index.html</text></a>
+<a href="#node-7" aria-label="Flashcard decks: read responsibilities"><rect class="box" x="64" y="392" width="240" height="96" rx="8"/><text class="small" x="80" y="414">07</text><text class="label" x="80" y="438">Flashcard decks</text><text class="small" x="80" y="464">Flashcards/decks</text></a>
+<a href="#node-8" aria-label="FSRS scheduler: read responsibilities"><rect class="box" x="352" y="392" width="240" height="96" rx="8"/><text class="small" x="368" y="414">08</text><text class="label" x="368" y="438">FSRS scheduler</text><text class="small" x="368" y="464">Flashcards/fsrs.js</text></a>
+<a href="#node-9" aria-label="Flashcards app: read responsibilities"><rect class="box" x="640" y="392" width="240" height="96" rx="8"/><text class="small" x="656" y="414">09</text><text class="label" x="656" y="438">Flashcards app</text><text class="small" x="656" y="464">Flashcards/index.html</text></a>
+<text class="small" x="64" y="576">Select a node to read its responsibilities below.</text></svg>
+<figcaption>Arrows show the named operation. Rows are separate paths; not every integration is drawn.</figcaption></figure>
+<h2>Inside each node</h2>
+<section class="passport" id="node-1"><h3>01 / Question banks</h3><p>Provide questions grouped by subject.</p><dl><dt>Input</dt><dd>Module-specific JavaScript question files.</dd><dt>Output</dt><dd>Questions for CubPrep and MLOps.</dd><dt>Source</dt><dd><a href="../../CubPrep/questions_by_materia">CubPrep/questions_by_materia</a></dd></dl></section>
+<section class="passport" id="node-2"><h3>02 / Shared engine</h3><p>Implements reusable exam interaction and persistence.</p><dl><dt>Input</dt><dd>Question banks and answers.</dd><dt>Output</dt><dd>Feedback and browser progress.</dd><dt>Source</dt><dd><a href="../../shared/engine.js#L1">shared/engine.js:1</a></dd></dl></section>
+<section class="passport" id="node-3"><h3>03 / CubPrep and MLOps</h3><p>Present exam practice through the shared engine.</p><dl><dt>Input</dt><dd>User choices and module questions.</dd><dt>Output</dt><dd>Practice sessions in the browser.</dd><dt>Source</dt><dd><a href="../../MLOps/index.html#L399">MLOps/index.html:399</a></dd></dl></section>
+<section class="passport" id="node-4"><h3>04 / SAA-C03</h3><p>Provides the AWS exam module with its own implementation.</p><dl><dt>Input</dt><dd>AWS questions and user answers.</dd><dt>Output</dt><dd>Exam feedback and local progress.</dd><dt>Source</dt><dd><a href="../../SAA-C03/index.html#L1">SAA-C03/index.html:1</a></dd></dl></section>
+<section class="passport" id="node-5"><h3>05 / Browser storage</h3><p>Keeps module progress in this browser.</p><dl><dt>Input</dt><dd>Saved module statistics.</dd><dt>Output</dt><dd>Progress for later sessions on the same origin.</dd><dt>Source</dt><dd><a href="../../shared/engine.js#L247">shared/engine.js:247</a></dd></dl></section>
+<section class="passport" id="node-6"><h3>06 / Static delivery</h3><p>Serves files directly, or through learning-surface.</p><dl><dt>Input</dt><dd>HTML, CSS and JavaScript.</dd><dt>Output</dt><dd>A browser-accessible practice app.</dd><dt>Source</dt><dd><a href="../../index.html#L1">index.html:1</a></dd></dl></section>
+<section class="passport" id="node-7"><h3>07 / Flashcard decks</h3><p>Provide the cards for spaced repetition.</p><dl><dt>Input</dt><dd>Deck JSON files.</dd><dt>Output</dt><dd>Cards ready for review.</dd><dt>Source</dt><dd><a href="../../Flashcards/decks">Flashcards/decks</a></dd></dl></section>
+<section class="passport" id="node-8"><h3>08 / FSRS scheduler</h3><p>Calculates review scheduling from ratings.</p><dl><dt>Input</dt><dd>A card state and the review rating.</dd><dt>Output</dt><dd>Updated scheduling values.</dd><dt>Source</dt><dd><a href="../../Flashcards/fsrs.js#L1">Flashcards/fsrs.js:1</a></dd></dl></section>
+<section class="passport" id="node-9"><h3>09 / Flashcards app</h3><p>Combines decks, ratings and the scheduler.</p><dl><dt>Input</dt><dd>Review activity.</dd><dt>Output</dt><dd>Saved review state in localStorage.</dd><dt>Source</dt><dd><a href="../../Flashcards/index.html#L109">Flashcards/index.html:109</a></dd></dl></section>
+<h2>Boundaries</h2>
+<p class="note">No compilation step or backend is required. Serve the files over HTTP so module scripts and browser storage use a stable origin.</p>
+<p class="note">Progress in localStorage is specific to a browser and origin. Opening a different host or port does not automatically recover the same progress.</p>
+<p class="note">The shared engine is not universal: SAA-C03 is standalone and Flashcards uses FSRS. Question-bank maintenance and validation are separate from runtime practice.</p>
+<p class="note">learning-surface copies these modules into its bundle. This repo does not download books or send localStorage directly to ai-memory.</p>
+<footer>Morada · HTML + SVG · doc-inline 960 × 600 · Source references describe implementation, not live deployment status.</footer>
+</main></body></html>

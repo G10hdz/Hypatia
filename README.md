@@ -2,6 +2,14 @@
 
 Adaptive learning for neurodivergent minds: short sessions, clear feedback, and low-friction retries. Static HTML apps, no build step.
 
+## Architecture and related repositories
+
+Runs static practice modules in the browser. CubPrep and MLOps share an exam engine, SAA-C03 keeps its own implementation, and Flashcards uses its own FSRS scheduler.
+
+- [Component guide and repository map](docs/stack.md): responsibilities, inputs, outputs and source references.
+- [Explanatory diagram](docs/diagrams/system-map.html): select a node to inspect it. Download the HTML and open it in a browser.
+- [Shared learning-stack architecture](https://github.com/G10hdz/learning-stack/blob/main/docs/architecture.md): where this repo fits in the whole system.
+
 ## Modules
 
 | Module | What |
