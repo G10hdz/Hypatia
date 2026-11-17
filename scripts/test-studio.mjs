@@ -183,6 +183,42 @@ t("storage bloqueado cae a memoria efimera y lo declara", () => {
   assert.equal(rec.completed, true);
 });
 
+t("racha cuenta dias consecutivos y sobrevive sin actividad hoy", () => {
+  const FIXED = Date.parse("2026-11-17T12:00:00");
+  class FD extends Date {
+    constructor(...a) { super(...(a.length ? a : [FIXED])); }
+    static now() { return FIXED; }
+  }
+  const key = off => {
+    const d = new Date(FIXED + off * 86400000);
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  };
+  const store = makeStorage({
+    "hypatia.learning.v1": JSON.stringify({
+      lessons: {}, resources: [], activityDays: [key(-2), key(-1)],
+    }),
+  });
+  const { sandbox } = ctx([FILES.state], store, { Date: FD });
+  const LS = sandbox.LearningState;
+  let st = LS.streak();
+  assert.equal(st.days, 2); assert.equal(st.activeToday, false);
+  LS.visit("t", "s");
+  st = LS.streak();
+  assert.equal(st.days, 3); assert.equal(st.activeToday, true);
+  LS.visit("t", "s");
+  assert.equal(JSON.parse(store.getItem("hypatia.learning.v1")).activityDays.length, 3);
+});
+
+t("racha en cero sin dias y activityDays corrupto se sanea", () => {
+  const { sandbox } = ctx([FILES.state], makeStorage({
+    "hypatia.learning.v1": JSON.stringify({ lessons: {}, resources: [], activityDays: ["ayer", 5] }),
+  }));
+  const LS = sandbox.LearningState;
+  assert.equal(LS.persistent, false);
+  const st = LS.streak();
+  assert.equal(st.days, 0); assert.equal(st.activeToday, false);
+});
+
 /* ---------- StudioQuiz: intentos, mejor score, reintento ---------- */
 const buildQuiz = () => {
   const section = new El("section");

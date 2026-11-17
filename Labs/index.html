@@ -30,6 +30,7 @@
   <main id="contenido">
   <h1>Labs</h1>
   <p class="sub" style="color:var(--muted)">Lecciones interactivas: idea, figura que se mueve, modelo declarado, codigo y un check-yourself. Dos publicadas por ahora.</p>
+  <p class="sub" id="streak" hidden></p>
 
   <div class="section-head">
     <p class="eyebrow">Lecciones disponibles</p>
@@ -72,6 +73,17 @@
 "use strict";
 StudioTheme.init();
 LearningState.mountWarning(document.querySelector("[data-store-warning]"));
+
+const streakInfo = LearningState.streak();
+if (streakInfo.days > 0) {
+  const el = document.getElementById("streak");
+  const dias = streakInfo.days === 1 ? "dia seguido" : "dias seguidos";
+  el.textContent = streakInfo.activeToday
+    ? `${streakInfo.days} ${dias} · hoy ya cuenta.`
+    : `${streakInfo.days} ${dias} · un minuto hoy la mantiene.`;
+  el.style.color = "var(--accent)";
+  el.hidden = false;
+}
 
 const grid = document.getElementById("lessons");
 const statusChip = rec => {

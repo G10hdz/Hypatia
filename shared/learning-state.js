@@ -66,7 +66,45 @@ const LearningState = (() => {
       for (const k in ls) if (!validLessonRec(ls[k])) return false;
     }
     if ("resources" in parsed && !Array.isArray(parsed.resources)) return false;
+    if ("activityDays" in parsed &&
+        (!Array.isArray(parsed.activityDays) ||
+         parsed.activityDays.some(d => typeof d !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(d)))) return false;
     return true;
+  }
+
+  /* Dias con actividad (visita o intento) para la racha del hub. */
+  const ACTIVITY_MAX = 400;
+  const dayKey = (d = new Date()) =>
+    `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  const prevDay = k => {
+    const d = new Date(k + "T12:00:00");
+    d.setDate(d.getDate() - 1);
+    return dayKey(d);
+  };
+  const activityDays = () => {
+    if (!Array.isArray(state.activityDays)) state.activityDays = [];
+    return state.activityDays;
+  };
+  function markActivity() {
+    const days = activityDays();
+    const t = dayKey();
+    if (!days.includes(t)) {
+      days.push(t);
+      days.sort();
+      if (days.length > ACTIVITY_MAX) days.splice(0, days.length - ACTIVITY_MAX);
+    }
+  }
+  /* Racha: dias consecutivos terminando hoy o ayer (sigue viva hasta que
+   * termine el dia sin actividad). */
+  function streak() {
+    const days = activityDays();
+    const today = dayKey();
+    const activeToday = days.includes(today);
+    let cursor = activeToday ? today : (days.includes(prevDay(today)) ? prevDay(today) : null);
+    if (!cursor) return { days: 0, activeToday };
+    let n = 0;
+    while (days.includes(cursor)) { n++; cursor = prevDay(cursor); }
+    return { days: n, activeToday };
   }
 
   function load() {
@@ -159,6 +197,7 @@ const LearningState = (() => {
     const rec = state.lessons[k] || {};
     rec.lastVisited = new Date().toISOString();
     state.lessons[k] = rec;
+    markActivity();
     save();
     return getLesson(track, slug);
   }
@@ -178,6 +217,7 @@ const LearningState = (() => {
     rec.completed = true;
     rec.lastVisited = new Date().toISOString();
     state.lessons[k] = rec;
+    markActivity();
     save();
     return getLesson(track, slug);
   }
@@ -265,7 +305,7 @@ const LearningState = (() => {
     KEY, RESOURCE_TYPES, LABEL_MAX, URL_MAX,
     get persistent() { return persistent; },
     key, canonical, getLesson, visit, recordAttempt,
-    validateResource, listResources, addResource, mountWarning,
+    validateResource, listResources, addResource, mountWarning, streak,
   };
 })();
 
