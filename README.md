@@ -18,6 +18,7 @@ Runs static practice modules in the browser. CubPrep and MLOps share an exam eng
 | [PrepAWS](./SAA-C03/) | AWS Solutions Architect Associate (SAA-C03) practice |
 | [MLOps](./MLOps/) | MLOps practice, questions grouped by materia |
 | [Flashcards](./Flashcards/) | FSRS-6 spaced-repetition decks (`Flashcards/decks/`) |
+| [Labs](./Labs/) | Interactive lessons (idea → figure → maths → code → real work → check-yourself). Tracks mirror the study-buddy notebooks; figures run on `shared/figures.js` |
 
 `shared/` holds the engine (`engine.js`, `engine.css`) the exam modules reuse; `Flashcards/fsrs.js` is the scheduling engine covered by the test suite.
 
