@@ -5,223 +5,257 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bayes, con 1000 personas · Labs · Hypatia</title>
 <link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#0a0a0f; --panel:#111116; --panel2:#16161d; --line:rgba(255,255,255,.08);
-    --text:#e1e3e2; --muted:#9a9ca0;
-    --accent:#C4B5E3; --mint:#98FF98; --pink:#ffcfec; --warn:#ffd166;
-    --blue:#3a87d8; --green:#5aa93f;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:"Space Grotesk",sans-serif;background:radial-gradient(circle at 20% 0%,rgba(196,181,227,.07),transparent 45%),var(--bg);color:var(--text);line-height:1.6;padding:28px 18px 80px}
-  .wrap{max-width:760px;margin:0 auto}
-  a.back{color:var(--muted);text-decoration:none;font-size:.82rem}
-  a.back:hover{color:var(--mint)}
-  .kicker{display:flex;gap:8px;align-items:center;margin:18px 0 8px;flex-wrap:wrap}
-  .chip{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;padding:4px 11px;border-radius:99px;border:1px solid var(--line);color:var(--muted)}
-  .chip.track{color:var(--mint);border-color:rgba(152,255,152,.35)}
-  h1{font-family:"Outfit",sans-serif;font-size:clamp(1.9rem,5vw,2.7rem);letter-spacing:-.02em;line-height:1.05}
-  .sub{color:var(--muted);margin-top:8px;max-width:56ch}
-  section{margin-top:34px}
-  .beat{display:flex;gap:12px;align-items:baseline;margin-bottom:10px}
-  .beat .n{font-family:"Outfit",sans-serif;color:var(--accent);font-size:.85rem;flex:none}
-  .beat h2{font-family:"Outfit",sans-serif;font-size:1.15rem;letter-spacing:.02em}
-  .card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:18px;padding:20px}
-  p{color:#c9ccd4;font-size:.95rem}
-  p+p{margin-top:10px}
-  .controls{display:grid;grid-template-columns:1fr 1fr;gap:14px 22px;margin:16px 0}
-  @media(max-width:560px){.controls{grid-template-columns:1fr}}
-  .big-read{display:flex;align-items:baseline;gap:10px;margin-top:14px}
-  .big-read .num{font-family:"Outfit",sans-serif;font-size:2.6rem;font-weight:900;color:var(--mint);font-variant-numeric:tabular-nums}
-  .big-read .lab{color:var(--muted);font-size:.85rem;max-width:34ch}
-  .presets{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-  .presets button{background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--muted);font-size:.78rem;padding:6px 12px;border-radius:99px;cursor:pointer}
-  .presets button:hover{color:var(--text);border-color:var(--accent)}
-  .legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:.78rem;color:var(--muted)}
-  .sw{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:-1px}
-  .formula{background:#0d1013;border:1px solid var(--line);border-radius:14px;padding:18px;text-align:center;font-size:1.05rem;letter-spacing:.02em}
-  .formula .frac{display:inline-block;vertical-align:middle;text-align:center;margin:0 6px}
-  .formula .frac i{display:block;font-style:normal;padding:0 10px}
-  .formula .frac i:first-child{border-bottom:1px solid var(--muted);padding-bottom:4px;margin-bottom:4px}
-  .nums{margin-top:14px;font-size:.92rem;color:var(--muted)}
-  .nums b{color:var(--text)}
-  pre{background:#0d1013;border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto;font:12.5px/1.55 ui-monospace,Menlo,monospace;color:#c9e8d4}
-  .q{border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:12px}
-  .q p{color:var(--text);font-weight:600;margin-bottom:10px}
-  .q .opts{display:grid;gap:8px}
-  .q button{text-align:left;background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:10px 14px;cursor:pointer;font:inherit}
-  .q button:hover{border-color:var(--accent)}
-  .q button.ok{border-color:var(--mint);background:rgba(152,255,152,.1)}
-  .q button.no{border-color:#ff5d73;background:rgba(255,93,115,.1)}
-  .q .why{display:none;margin-top:10px;color:var(--muted);font-size:.88rem;border-left:3px solid var(--mint);padding-left:10px}
-  .q .why.on{display:block}
-  .streak{margin-top:14px;font-size:.82rem;color:var(--muted)}
-  .streak b{color:var(--warn)}
-  footer{margin-top:48px;color:var(--muted);font-size:.78rem;text-align:center}
-</style>
+<link rel="stylesheet" href="../../../shared/studio.css">
+<script>
+  (function(){try{var v=localStorage.getItem("hypatia.theme.v1");
+  document.documentElement.dataset.theme=(v==="dark"||v==="light")?v:
+  (matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");}catch(e){}})();
+</script>
 </head>
 <body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
 <div class="wrap">
-  <a class="back" href="../../index.html">← Labs</a>
+  <header class="topbar">
+    <a class="brand" href="../../../index.html">Hypatia</a>
+    <nav>
+      <a href="../../../index.html#mapa">Mapa</a>
+      <a href="../../index.html">Labs</a>
+      <a href="../../../index.html#biblioteca">Biblioteca</a>
+    </nav>
+    <button class="theme-toggle" type="button" data-theme-toggle>Tema</button>
+  </header>
+
+  <div class="store-warning" data-store-warning hidden></div>
+
+  <main id="contenido">
   <div class="kicker">
-    <span class="chip track">ai-math</span>
-    <span class="chip">lección 01</span>
+    <span class="chip todo">ai-math</span>
+    <span class="chip">leccion 01</span>
     <span class="chip">figura interactiva</span>
     <span class="chip">~12 min</span>
   </div>
   <h1>Bayes, con 1000 personas</h1>
-  <p class="sub">El teorema más malintuicionado de la probabilidad — y la pregunta de entrevista favorita de medio mundo cuantitativo.</p>
+  <p class="sub" style="color:var(--muted)">El teorema mas malintuicionado de la probabilidad: la evidencia pesa, pero el punto de partida tambien cuenta.</p>
 
   <section>
-    <div class="beat"><span class="n">01</span><h2>La idea</h2></div>
-    <div class="card">
-      <p>Un testigo ve un accidente de noche y dice que el taxi era <b style="color:var(--blue)">azul</b>. En la ciudad el 85% de los taxis son <b style="color:var(--green)">verdes</b> y solo 15% azules. El testigo acierta el color el 80% de las veces.</p>
-      <p>¿Qué tan probable es que el taxi fuera realmente azul? Casi todos dicen “como 80%”. La respuesta real es <b>41%</b> — porque la evidencia pelea contra lo raro que ya era el azul. Bayes es eso: <b>actualizar lo que creías con lo que viste, sin olvidar qué tan común era cada cosa.</b></p>
+    <div class="kicker"><span class="chip">01 · la idea</span></div>
+    <div class="panel">
+      <p>Un testigo ve un accidente de noche y dice que el taxi era <b>azul</b>. En la ciudad el 85% de los taxis son verdes y solo 15% azules. El testigo acierta el color el 80% de las veces, igual para los taxis azules que para los verdes.</p>
+      <p>¿Que tan probable es que el taxi fuera realmente azul? Puede parecer que la respuesta es 80%. Con estos supuestos es aproximadamente 41.4%: el testimonio se combina con la frecuencia de cada color. Bayes es eso: actualizar lo que creias con lo que viste, sin olvidar que tan comun era cada cosa.</p>
     </div>
   </section>
 
   <section>
-    <div class="beat"><span class="n">02</span><h2>La figura — muévelo y sácalo</h2></div>
-    <div class="card">
+    <div class="kicker"><span class="chip">02 · la figura</span></div>
+    <div class="panel">
       <div id="fig"></div>
+      <p class="nums">Los 1000 bloques son una <b>aproximacion visual</b>: los valores exactos, calculados para 10 000 personas, estan en la tabla de abajo.</p>
       <div class="controls" id="sliders"></div>
       <div class="big-read">
-        <span class="num" id="post">0%</span>
-        <span class="lab">P(realmente azul | el testigo dijo azul)</span>
+        <span class="num" id="post">41.4%</span>
+        <span class="lab">P(realmente azul | el testigo dijo azul), calculo exacto</span>
       </div>
-      <div class="presets">
-        <button data-p="15" data-a="80">El clásico (15%, 80%)</button>
-        <button data-p="1" data-a="95">Test médico (1%, 95%)</button>
-        <button data-p="30" data-a="90">Ciudad azulada (30%, 90%)</button>
-        <button data-p="15" data-a="99">Testigo casi perfecto</button>
-      </div>
+      <div class="tgl" id="presets" style="margin-top:12px"></div>
       <div class="legend">
-        <span><i class="sw" style="background:var(--blue)"></i>realmente azul</span>
-        <span><i class="sw" style="background:var(--green)"></i>realmente verde</span>
-        <span><i class="sw" style="background:transparent;border:2px solid var(--warn);border-radius:50%"></i>el testigo dijo “azul”</span>
+        <span><i class="sw" style="background:var(--data-blue)"></i>realmente azul</span>
+        <span><i class="sw" style="background:var(--data-green)"></i>realmente verde</span>
+        <span><i class="sw" style="background:transparent;border:2px solid var(--data-amber);border-radius:50%"></i>el testigo dijo "azul"</span>
       </div>
+      <table class="data-table" aria-label="Frecuencias esperadas por cada 10 000 personas">
+        <thead>
+          <tr><th>Grupo</th><th>Personas (de 10 000)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Realmente azul y el testigo dijo "azul" (verdaderos positivos)</td><td><b id="t-tp">1,200</b></td></tr>
+          <tr><td>Realmente azul y el testigo dijo "verde" (falsos negativos)</td><td><b id="t-fn">300</b></td></tr>
+          <tr><td>Realmente verde y el testigo dijo "azul" (falsos positivos)</td><td><b id="t-fp">1,700</b></td></tr>
+          <tr><td>Realmente verde y el testigo dijo "verde" (verdaderos negativos)</td><td><b id="t-tn">6,800</b></td></tr>
+          <tr><td>Total "dijo azul" y posterior exacto</td><td><b id="t-pos">2,900</b> · <b id="t-post">41.4%</b></td></tr>
+        </tbody>
+      </table>
       <div style="margin-top:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap" id="simrow"></div>
-      <p class="nums" id="simout"></p>
+      <p class="nums" id="simout" role="status"></p>
+      <p class="sr-only" role="status" id="fig-status"></p>
     </div>
   </section>
 
   <section>
-    <div class="beat"><span class="n">03</span><h2>La matemática</h2></div>
-    <div class="card">
-      <div class="formula">
-        P(azul | dijo azul) =
-        <span class="frac"><i>P(dijo azul | azul) · P(azul)</i><i>P(dijo azul)</i></span>
-        =
-        <span class="frac"><i>0.80 × 0.15</i><i>0.80×0.15 + 0.20×0.85</i></span>
-        = 0.41
-      </div>
-      <p class="nums">El numerador suma solo los casos “dijo azul y era azul”: <b>120</b> de 1000. El denominador suma <b>todos</b> los “dijo azul”: 120 + 170 = <b>290</b>. De cada 100 veces que el testigo grita azul, se equivoca 59.</p>
+    <div class="kicker"><span class="chip">03 · la matematica</span></div>
+    <div class="panel">
+      <div class="formula" id="formula">P(azul | dijo azul) = 0.8 × 0.15 / (0.8 × 0.15 + 0.2 × 0.85) = 0.414</div>
+      <p class="nums" id="formula-note">El numerador suma solo los casos "dijo azul y era azul": 1,200 de 10,000. El denominador suma todos los "dijo azul": 1,200 + 1,700 = 2,900.</p>
     </div>
   </section>
 
   <section>
-    <div class="beat"><span class="n">04</span><h2>El código</h2></div>
-    <div class="card">
+    <div class="kicker"><span class="chip">04 · el codigo</span></div>
+    <div class="panel">
 <pre>import numpy as np
 
 rng = np.random.default_rng(7)
 N = 200_000
 truth = rng.random(N) &lt; 0.15                    # 15% de los taxis son azules
-said  = rng.random(N) &lt; np.where(truth, .8, .2) # testigo al 80%
+said  = rng.random(N) &lt; np.where(truth, .8, .2) # testigo al 80% en ambos colores
 posterior = truth[said].mean()
 print(f"{posterior:.2%}")   # ≈ 41%</pre>
-      <p class="nums">Doscientas mil noches simuladas. La intuición dice 80%; el conteo dice 41%. Así se ve una creencia actualizada.</p>
+      <p class="nums">La simulacion aproxima el 41.4% del modelo. El resultado exacto sale de las probabilidades, no de esta muestra.</p>
     </div>
   </section>
 
   <section>
-    <div class="beat"><span class="n">05</span><h2>En el trabajo real</h2></div>
-    <div class="card">
-      <p>La versión de entrevista (Jane Street, Citadel) cambia taxis por dados o monedas trucadas; la mecánica es idéntica. La versión seria: tests médicos (prevalencia baja → “positivo” casi siempre es falsa alarma), detección de fraude, y <b>evals de LLMs</b> — un benchmark con 1% de casos difíciles infla la precisión aparente igual que el testigo.</p>
-      <p>En tu track: es la base de conformal prediction y de por qué “el modelo acierta 99%” no significa nada sin el prior.</p>
+    <div class="kicker"><span class="chip">05 · en el trabajo real</span></div>
+    <div class="panel">
+      <p>En tests medicos y deteccion de fraude, la frecuencia base, la sensibilidad y la especificidad ayudan a interpretar un positivo. En evaluacion de clasificadores, la exactitud global por si sola no indica la probabilidad de que una prediccion positiva sea correcta.</p>
     </div>
   </section>
 
   <section>
-    <div class="beat"><span class="n">06</span><h2>Check yourself</h2></div>
+    <div class="kicker"><span class="chip">06 · check yourself</span></div>
     <div class="q" data-ok="1">
-      <p>Una enfermedad afecta al 1% de la población. Un test con 95% de precisión da positivo. ¿Probabilidad real de estar enfermo?</p>
+      <p>Una enfermedad afecta al 1% de la poblacion. El test tiene sensibilidad del 95% y especificidad del 95%. Si da positivo, cual es la probabilidad de enfermedad?</p>
       <div class="opts">
         <button>≈ 95%</button>
         <button>≈ 16%</button>
         <button>≈ 50%</button>
         <button>≈ 1%</button>
       </div>
-      <div class="why">Con prior 1%: 95 de cada 100 enfermos salen positivos, pero 4,950 de cada 100 sanos también. 95/(95+4950) ≈ 16%. El prior manda.</div>
+      <div class="why">De 10 000 personas, 100 tienen la enfermedad y 9900 no. Hay 95 verdaderos positivos y 495 falsos positivos. 95 / (95 + 495) = 16.1%.</div>
     </div>
     <div class="q" data-ok="2">
-      <p>Sin tocar la precisión del testigo, ¿qué sube más el posterior?</p>
+      <p>Con el testigo acertando 80% en ambos colores, el prior de taxis azules sube de 15% a 30%. Si el testigo dijo "azul", ¿que pasa con la probabilidad real?</p>
       <div class="opts">
-        <button>Que el testigo repita su respuesta</button>
-        <button>Subir la precisión del 80% al 81%</button>
-        <button>Que el azul sea más común (subir el prior)</button>
-        <button>Nada, el posterior es fijo</button>
+        <button>Baja de ~41% a ~20%</button>
+        <button>Se mantiene en ~41%</button>
+        <button>Sube de ~41% a ~63%</button>
+        <button>Siempre es 80%, la precision del testigo</button>
       </div>
-      <div class="why">El posterior es mucho más sensible al prior que a pequeñas mejoras de precisión. Muévelo en la figura: de 1% a 30% de prior el salto es enorme.</div>
+      <div class="why">Con precision simetrica del 80%, duplicar el prior casi duplica los casos favorables: el posterior pasa de ~41% a ~63%. El prior pesa mucho aqui, pero no es una ley universal; verificalo en la figura con otras precisiones.</div>
     </div>
-    <p class="streak" id="streak"></p>
-    <p class="done" id="done" style="display:none;margin-top:16px;text-align:center;color:var(--mint);font-weight:700">Lección completada ✓ quedó registrada en tu hub de Labs</p>
+    <p class="quiz-status"></p>
+    <p class="quiz-live sr-only" role="status"></p>
+    <div class="quiz-done">
+      <p class="msg"></p>
+      <div class="row">
+        <button class="btn ghost" type="button" data-quiz-retry>Reintentar</button>
+        <a class="btn primary" href="../../index.html">Volver a Labs</a>
+      </div>
+    </div>
   </section>
 
-  <footer>Hypatia Labs · formato hft.md sobre canvas vanilla · sin deps · tu progreso queda en este dispositivo</footer>
+  <section>
+    <div class="kicker"><span class="chip">conecta con</span></div>
+    <div id="connect"></div>
+  </section>
+
+  <section class="panel" id="biblioteca-leccion"></section>
+
+  </main>
+  <footer class="site">Hypatia Labs · HTML estatico, sin build · tu progreso queda en este navegador</footer>
 </div>
 
+<noscript><p style="max-width:880px;margin:0 auto;color:#b23842">La figura interactiva y el registro de progreso necesitan JavaScript. Las explicaciones y las preguntas se pueden leer igual.</p></noscript>
+
+<script src="../../../shared/lab-models.js"></script>
 <script src="../../../shared/figures.js"></script>
+<script src="../../../shared/theme.js"></script>
+<script src="../../../shared/learning-state.js"></script>
+<script src="../../../shared/quiz.js"></script>
+<script src="../../../shared/resources.js"></script>
+<script src="../../tracks.js"></script>
+<script src="../../knowledge-map.js"></script>
+<script src="../../../shared/map.js"></script>
 <script>
 "use strict";
-const N = 1000, COLS = 40;
-const order = Figure.shuffled(N, 7);          // orden fijo: el slider solo cambia cuántos
+const TRACK = "ai-math", SLUG = "01-bayes", TOPIC = "matematicas";
+StudioTheme.init();
+LearningState.mountWarning(document.querySelector("[data-store-warning]"));
+LearningState.visit(TRACK, SLUG);
+
+const POP_BLOCKS = 1000, COLS = 40;
+const order = Figure.shuffled(POP_BLOCKS, 7);
 let prior = .15, acc = .80;
-let saidBlue = new Set(), isBlue = new Set();
+let isBlue = new Set(), saidBlue = new Set();
 let simK = 0, simHit = 0;
 
-const fig = Figure.canvas(document.getElementById("fig"), { height: 300 });
+const fig = Figure.canvas(document.getElementById("fig"), {
+  height: 300,
+  label: "Cuadricula de 1000 personas: color real del taxi y que dijo el testigo",
+  describedBy: "fig-status",
+});
 const post = document.getElementById("post");
+const fmtPct = v => (v * 100).toFixed(1) + "%";
+
+function model(pop) {
+  return LabModels.bayes({ prior, sensitivity: acc, specificity: acc, population: pop });
+}
 
 function recompute() {
-  const nBlue = Math.round(prior * N);
+  /* Bloques: aproximacion sobre 1000. */
+  const m = model(POP_BLOCKS);
+  const nBlue = Math.round(prior * POP_BLOCKS);
   isBlue = new Set(order.slice(0, nBlue));
-  const tp = Math.round(acc * nBlue);
-  const fp = Math.round((1 - acc) * (N - nBlue));
+  const tp = Math.round(m.truePositive);
+  const fp = Math.round(m.falsePositive);
   saidBlue = new Set([...order.slice(0, tp), ...order.slice(nBlue, nBlue + fp)]);
-  const denom = saidBlue.size || 1;
-  Figure.count(post, tp / denom, { fmt: v => (v * 100).toFixed(0) + "%" });
+
+  /* Valores exactos: modelo con poblacion 10 000. */
+  const exact = model(10000);
+  const f = n => Math.round(n).toLocaleString("es-MX");
+  document.getElementById("t-tp").textContent = f(exact.truePositive);
+  document.getElementById("t-fn").textContent = f(exact.falseNegative);
+  document.getElementById("t-fp").textContent = f(exact.falsePositive);
+  document.getElementById("t-tn").textContent = f(exact.trueNegative);
+  document.getElementById("t-pos").textContent = f(exact.positive);
+  document.getElementById("t-post").textContent =
+    exact.posterior === null ? "sin definir" : fmtPct(exact.posterior);
+  Figure.count(post, exact.posterior === null ? 0 : exact.posterior, { fmt: fmtPct });
+
+  /* Formula con los valores actuales de los controles. */
+  const p = prior.toFixed(2), a = acc.toFixed(2);
+  document.getElementById("formula").textContent = "";
+  const frac = (num, den) =>
+    `<span class="frac"><i>${num}</i><i>${den}</i></span>`;
+  document.getElementById("formula").innerHTML =
+    `P(azul | dijo azul) = ${frac("P(dijo azul | azul) · P(azul)", "P(dijo azul)")} = ` +
+    `${frac(`${a} × ${p}`, `${a}×${p} + ${(1 - acc).toFixed(2)}×${(1 - prior).toFixed(2)}`)} = ` +
+    (exact.posterior === null ? "indefinido" : exact.posterior.toFixed(3));
+  document.getElementById("formula-note").innerHTML =
+    `El numerador suma solo los casos "dijo azul y era azul": <b>${f(exact.truePositive)}</b> de 10 000. ` +
+    `El denominador suma <b>todos</b> los "dijo azul": ${f(exact.truePositive)} + ${f(exact.falsePositive)} = ` +
+    `<b>${f(exact.positive)}</b>.`;
+
+  const st = document.getElementById("fig-status");
+  if (st) st.textContent =
+    `Posterior exacto ${exact.posterior === null ? "indefinido" : fmtPct(exact.posterior)} ` +
+    `con prior ${Math.round(prior * 100)}% y precision ${Math.round(acc * 100)}%.`;
 }
 
 function draw() {
   const { ctx, w, h } = fig;
+  if (!ctx) return;
+  const C = Figure.colors();
   ctx.clearRect(0, 0, w, h);
-  const rows = Math.ceil(N / COLS);
-  const gap = 2, cw = (w - gap * (COLS + 1)) / COLS, ch = Math.min(cw, (h - gap * (rows + 1)) / rows);
+  const rows = Math.ceil(POP_BLOCKS / COLS);
+  const gap = 2, cw = (w - gap * (COLS + 1)) / COLS;
+  const ch = Math.min(cw, (h - gap * (rows + 1)) / rows);
   const ox = (w - COLS * (cw + gap)) / 2, oy = (h - rows * (ch + gap)) / 2;
-  for (let i = 0; i < N; i++) {
+  for (let i = 0; i < POP_BLOCKS; i++) {
     const x = ox + (i % COLS) * (cw + gap), y = oy + Math.floor(i / COLS) * (ch + gap);
-    ctx.fillStyle = isBlue.has(i) ? "#3a87d8" : "#5aa93f";
+    ctx.fillStyle = isBlue.has(i) ? C.blue : C.green;
     ctx.globalAlpha = .8;
     ctx.fillRect(x, y, cw, ch);
     if (saidBlue.has(i)) {
       ctx.globalAlpha = 1;
-      ctx.strokeStyle = "#ffd166";
+      ctx.strokeStyle = C.amber;
       ctx.lineWidth = 1.8;
       ctx.beginPath();
-      ctx.arc(x + cw / 2, y + ch / 2, cw / 2 + 1.4, 0, 7);
+      ctx.arc(x + cw / 2, y + ch / 2, Math.min(cw, ch) / 2 - 0.7, 0, 7);
       ctx.stroke();
     }
   }
   ctx.globalAlpha = 1;
 }
-
-fig.resize(); draw();
-const origResize = fig.resize;
-fig.resize = () => { origResize(); draw(); };
+fig.onRedraw = draw;
 
 const sliders = document.getElementById("sliders");
 const sp = Figure.slider(sliders, {
@@ -229,56 +263,46 @@ const sp = Figure.slider(sliders, {
   fmt: v => v + "%", oninput: v => { prior = v / 100; recompute(); draw(); }
 });
 const sa = Figure.slider(sliders, {
-  label: "Precisión del testigo", min: 50, max: 99, value: 80,
+  label: "Precision del testigo (en ambos colores)", min: 50, max: 99, value: 80,
   fmt: v => v + "%", oninput: v => { acc = v / 100; recompute(); draw(); }
 });
 
-document.querySelectorAll(".presets button").forEach(b => {
-  b.onclick = () => {
-    sp.value = b.dataset.p; sa.value = b.dataset.a;
-    sp.dispatchEvent(new Event("input")); sa.dispatchEvent(new Event("input"));
-  };
-});
+const presets = [
+  { label: "El clasico (15%, 80%)", p: 15, a: 80 },
+  { label: "Test medico (1%, 95%)", p: 1, a: 95 },
+  { label: "Ciudad azulada (30%, 80%)", p: 30, a: 80 },
+  { label: "Testigo casi perfecto (15%, 99%)", p: 15, a: 99 },
+];
+for (const pr of presets) {
+  Figure.press(document.getElementById("presets"), pr.label, () => {
+    sp.value = pr.p; sa.value = pr.a;
+    sp.dispatchEvent(new Event("input"));
+    sa.dispatchEvent(new Event("input"));
+  }, { primary: false });
+}
 
 const simout = document.getElementById("simout");
 Figure.press(document.getElementById("simrow"), "Sacar un taxi al azar", () => {
-  const i = Math.floor(Math.random() * N);
+  const i = Math.floor(Math.random() * POP_BLOCKS);
   const real = isBlue.has(i);
   const call = Math.random() < acc ? real : !real;
   simK++;
   if (call === real) simHit++;
-  simout.innerHTML =
-    `El testigo dijo <b style="color:${call ? "var(--blue)" : "var(--green)"}">${call ? "azul" : "verde"}</b>` +
-    ` y era <b style="color:${real ? "var(--blue)" : "var(--green)"}">${real ? "azul" : "verde"}</b>` +
-    ` — ${call === real ? "acertó" : "falló"}. Llevas ${simHit}/${simK} aciertos del testigo.`;
+  simout.textContent =
+    `El testigo dijo ${call ? "azul" : "verde"} y era ${real ? "azul" : "verde"}: ` +
+    `${call === real ? "acerto" : "fallo"}. Llevas ${simHit}/${simK} aciertos del testigo.`;
+}, { primary: false });
+
+StudioQuiz.mount(document.querySelectorAll("section")[5], { track: TRACK, slug: SLUG });
+StudioMap.connect(document.getElementById("connect"), TOPIC, {
+  data: KNOWLEDGE_MAP, homeHref: "../../../index.html",
+});
+StudioResources.mount(document.getElementById("biblioteca-leccion"), {
+  trackId: TOPIC, title: "Tus materiales de esta area", fixedTopic: true, heading: "h2",
 });
 
-/* check yourself */
-let best = +(localStorage.getItem("hypatia.labs.bayes") || 0), run = 0, answered = 0;
-const streakEl = document.getElementById("streak"), doneEl = document.getElementById("done");
-const paint = () => streakEl.innerHTML = `aciertos seguidos: <b>${run}</b> · mejor marca: <b>${best}</b>`;
-document.querySelectorAll(".q").forEach(q => {
-  const ok = +q.dataset.ok;
-  q.querySelectorAll(".opts button").forEach((b, i) => {
-    b.onclick = () => {
-      if (q.dataset.done) return;
-      q.dataset.done = 1; answered++;
-      const good = i === ok;
-      b.classList.add(good ? "ok" : "no");
-      if (!good) q.querySelectorAll(".opts button")[ok].classList.add("ok");
-      q.querySelector(".why").classList.add("on");
-      run = good ? run + 1 : 0;
-      if (run > best) { best = run; localStorage.setItem("hypatia.labs.bayes", best); }
-      if (answered === document.querySelectorAll(".q").length) {
-        localStorage.setItem("hypatia.labs.01-bayes.done", "1");
-        doneEl.style.display = "block";
-      }
-      paint();
-    };
-  });
-});
-paint();
 recompute();
+draw();
 </script>
 </body>
 </html>

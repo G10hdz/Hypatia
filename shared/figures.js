@@ -2,62 +2,107 @@
  * Sin dependencias, sin build. Cada lección importa este archivo y solo
  * escribe su lógica de dibujo.
  *
- *   Figure.canvas(el, opts) -> {ctx, w, h, resize}
+ *   Figure.canvas(el, opts) -> {el, ctx, w, h, supported, resize, onRedraw}
  *   Figure.slider(wrap, opts) -> HTMLInputElement
- *   Figure.press(wrap, label, onclick) -> button
- *   Figure.animate(fn) -> loop con dt en segundos
+ *   Figure.press(wrap, label, onclick, opts) -> button
+ *   Figure.animate(fn, opts) -> {play, pause, playing, enabled, stop}
  *   Figure.count(el, to, opts) -> número que anima al valor
  *   Figure.shuffled(n, seed) -> permutación determinista
+ *   Figure.colors() -> tokens semánticos del tema activo
  */
 
 const Figure = (() => {
-  const T = {
-    bg: "#14171a",
-    ink: "#e1e3e2",
-    muted: "#9a9ca0",
-    accent: "#C4B5E3",
-    mint: "#98FF98",
-    pink: "#ffcfec",
-    warn: "#ffd166",
-    line: "rgba(255,255,255,.08)",
+  const VAR_MAP = {
+    bg: "--fig-bg",
+    panel: "--panel",
+    ink: "--ink",
+    muted: "--muted",
+    accent: "--accent",
+    line: "--line",
+    blue: "--data-blue",
+    green: "--data-green",
+    amber: "--data-amber",
+    red: "--data-red",
+    orange: "--data-orange",
+    ok: "--ok",
+    warn: "--warn",
+    bad: "--bad",
   };
 
-  function canvas(el, { height = 320 } = {}) {
+  function colors() {
+    const cs = getComputedStyle(document.documentElement);
+    const out = {};
+    for (const k in VAR_MAP) out[k] = cs.getPropertyValue(VAR_MAP[k]).trim();
+    return out;
+  }
+
+  const reducedMotion = () =>
+    typeof matchMedia === "function" &&
+    matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* Lienzo con repintado explícito. El callback onRedraw se invoca tras cada
+   * resize real y tras cada cambio de tema; no hace falta reasignar resize. */
+  /* {label} nombra la figura para lectores de pantalla; {describedBy} apunta
+   * al id del resumen/tabla visible que la describe. */
+  function canvas(el, { height = 320, fallbackText, label, describedBy } = {}) {
+    const box = document.createElement("div");
+    box.className = "fig-canvas";
     const c = document.createElement("canvas");
-    c.style.cssText = `width:100%;height:${height}px;display:block;border-radius:14px;background:${T.bg};border:1px solid ${T.line}`;
-    el.appendChild(c);
-    const ctx = c.getContext("2d");
-    const api = { el: c, ctx, w: 0, h: height };
-    api.resize = () => {
+    c.style.height = height + "px";
+    c.setAttribute("role", "img");
+    if (label) c.setAttribute("aria-label", label);
+    if (describedBy) c.setAttribute("aria-describedby", describedBy);
+    box.appendChild(c);
+    el.appendChild(box);
+
+    let ctx = null;
+    try { ctx = c.getContext && c.getContext("2d"); } catch (e) { ctx = null; }
+    const api = { el: c, ctx, w: 0, h: height, supported: !!ctx, onRedraw: null };
+
+    const redraw = () => {
+      if (!ctx) return;
       const dpr = Math.min(2, window.devicePixelRatio || 1);
       api.w = c.clientWidth;
       api.h = c.clientHeight;
-      c.width = api.w * dpr;
-      c.height = api.h * dpr;
+      c.width = Math.max(1, Math.round(api.w * dpr));
+      c.height = Math.max(1, Math.round(api.h * dpr));
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if (typeof api.onRedraw === "function") api.onRedraw();
     };
-    api.resize();
-    window.addEventListener("resize", api.resize);
+    api.resize = redraw;
+
+    if (!ctx) {
+      const p = document.createElement("p");
+      p.className = "fig-fallback";
+      p.textContent = fallbackText ||
+        "Tu navegador no pudo dibujar la figura. Los datos están en el texto y la tabla.";
+      box.appendChild(p);
+      return api;
+    }
+
+    redraw();
+    window.addEventListener("resize", redraw);
+    document.addEventListener("hypatia:theme", redraw);
     return api;
   }
 
   function slider(wrap, { label, min, max, step = 1, value, fmt = v => v, oninput }) {
     const box = document.createElement("label");
-    box.style.cssText = "display:grid;gap:6px;font-size:.82rem;color:" + T.muted;
+    box.className = "f-slider";
     const top = document.createElement("span");
-    top.style.cssText = "display:flex;justify-content:space-between;gap:8px";
+    top.className = "top";
     const name = document.createElement("span");
     name.textContent = label;
     const val = document.createElement("b");
-    val.style.color = T.ink;
     val.textContent = fmt(value);
     top.append(name, val);
     const input = document.createElement("input");
     input.type = "range";
     input.min = min; input.max = max; input.step = step; input.value = value;
-    input.style.cssText = "width:100%;accent-color:" + T.accent;
+    input.setAttribute("aria-valuetext", fmt(value));
     input.addEventListener("input", () => {
       val.textContent = fmt(+input.value);
+      input.setAttribute("aria-valuetext", fmt(+input.value));
       oninput(+input.value);
     });
     box.append(top, input);
@@ -65,39 +110,99 @@ const Figure = (() => {
     return input;
   }
 
-  function press(wrap, label, onclick, { primary = true } = {}) {
+  function press(wrap, label, onclick, { primary = true, pressed = null, danger = false } = {}) {
     const b = document.createElement("button");
+    b.type = "button";
     b.textContent = label;
-    b.style.cssText = primary
-      ? "padding:10px 18px;border-radius:10px;border:0;font-weight:700;cursor:pointer;background:linear-gradient(135deg,#C4B5E3,#d7c7f6);color:#0c0f0f"
-      : "padding:10px 18px;border-radius:10px;font-weight:700;cursor:pointer;background:rgba(255,255,255,.05);border:1px solid " + T.line + ";color:" + T.ink;
+    b.className = "f-press" + (primary ? " primary" : "") + (danger ? " danger" : "");
+    if (pressed !== null) b.setAttribute("aria-pressed", pressed ? "true" : "false");
     b.addEventListener("click", onclick);
     wrap.appendChild(b);
     return b;
   }
 
-  function animate(fn) {
-    let last = performance.now(), raf;
+  /* Loop de animación pausable. No corre oculto, fuera de pantalla ni con
+   * movimiento reducido. Devuelve un controlador con play/pause. */
+  function animate(fn, { el = null, autoplay = true } = {}) {
+    let enabled = !reducedMotion();
+    let raf = null, last = 0;
+    let playing = autoplay && enabled;
+    let inView = true, pageVisible = !document.hidden;
+
     const tick = t => {
-      const dt = Math.min(0.05, (t - last) / 1000);
+      raf = null;
+      if (!playing || !inView || !pageVisible) return;
+      const dt = Math.min(0.05, (t - last) / 1000 || 0);
       last = t;
       fn(dt, t / 1000);
       raf = requestAnimationFrame(tick);
     };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+    const maybeStart = () => {
+      if (playing && inView && pageVisible && raf === null) {
+        last = performance.now();
+        raf = requestAnimationFrame(tick);
+      }
+    };
+
+    let io = null;
+    if (el && typeof IntersectionObserver !== "undefined") {
+      io = new IntersectionObserver(entries => {
+        inView = entries[0].isIntersecting;
+        if (inView) maybeStart();
+      });
+      io.observe(el);
+    }
+    const onVis = () => { pageVisible = !document.hidden; if (pageVisible) maybeStart(); };
+    document.addEventListener("visibilitychange", onVis);
+
+    /* Si el sistema activa movimiento reducido con la animacion en marcha,
+     * se detiene de inmediato y se avisa para actualizar el boton. */
+    const api = {
+      onChange: null,
+    };
+    const mq = typeof matchMedia === "function"
+      ? matchMedia("(prefers-reduced-motion: reduce)") : null;
+    const onMq = () => {
+      enabled = !mq.matches;
+      if (!enabled && raf !== null) { cancelAnimationFrame(raf); raf = null; }
+      if (!enabled) playing = false;
+      if (typeof api.onChange === "function") api.onChange(enabled);
+    };
+    if (mq && mq.addEventListener) mq.addEventListener("change", onMq);
+    maybeStart();
+
+    /* Las propiedades de estado se definen con defineProperty: Object.assign
+     * evaluaria los getters una vez y congelaria el valor inicial. */
+    api.play = () => { if (enabled) { playing = true; maybeStart(); } };
+    api.pause = () => { playing = false; };
+    Object.defineProperty(api, "playing", { get: () => playing });
+    Object.defineProperty(api, "enabled", { get: () => enabled });
+    api.stop = () => {
+      playing = false;
+      if (raf !== null) cancelAnimationFrame(raf);
+      raf = null;
+      if (io) io.disconnect();
+      document.removeEventListener("visibilitychange", onVis);
+      if (mq && mq.removeEventListener) mq.removeEventListener("change", onMq);
+    };
+    return api;
   }
 
   function count(el, to, { ms = 600, fmt = v => Math.round(v) } = {}) {
-    const t0 = performance.now();
+    if (el.__countRaf) cancelAnimationFrame(el.__countRaf);
     const from = parseFloat(el.dataset.v || "0") || 0;
     el.dataset.v = to;
+    if (reducedMotion() || ms <= 0) {
+      el.textContent = fmt(to);
+      return;
+    }
+    const t0 = performance.now();
     const step = t => {
       const p = Math.min(1, (t - t0) / ms);
       el.textContent = fmt(from + (to - from) * (1 - Math.pow(1 - p, 3)));
-      if (p < 1) requestAnimationFrame(step);
+      if (p < 1) el.__countRaf = requestAnimationFrame(step);
     };
-    requestAnimationFrame(step);
+    el.__countRaf = requestAnimationFrame(step);
   }
 
   function shuffled(n, seed = 42) {
@@ -111,5 +216,8 @@ const Figure = (() => {
     return a;
   }
 
-  return { canvas, slider, press, animate, count, shuffled, T };
+  return {
+    canvas, slider, press, animate, count, shuffled, colors, reducedMotion,
+    get T() { return colors(); },
+  };
 })();
