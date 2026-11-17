@@ -410,6 +410,19 @@ t("tema sin leccion no la inventa", () => {
     detail.querySelectorAll("a").filter(a => (a.href || "").includes("Labs/")).length, 0);
 });
 
+t("detalle del mapa muestra progreso por area con estado real", () => {
+  const { sandbox } = ctx([FILES.state, FILES.map], makeStorage(), { LABS_TRACKS: TRACKS });
+  sandbox.LearningState.recordAttempt("ai-math", "01-bayes", { correct: 1, total: 1 });
+  const root = new El("div");
+  const map = sandbox.StudioMap.mount(root, {
+    data: MAP, tracks: TRACKS, homeHref: "index.html", updateUrl: false,
+  });
+  map.select("matematicas");
+  const prog = root.querySelector(".map-progress");
+  assert.ok(prog, "linea de progreso presente");
+  assert.ok(prog.textContent.includes("1/1"), prog.textContent);
+});
+
 t("query param fuera de la lista cae al default", () => {
   const { sandbox } = ctx([FILES.map], makeStorage(), { LABS_TRACKS: TRACKS });
   const SM = sandbox.StudioMap;

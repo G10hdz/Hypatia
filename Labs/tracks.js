@@ -4,6 +4,8 @@
  *
  * sourceSystem nombra la coleccion de origen. recommendedSources son lecturas
  * publicas recomendadas, no afirmaciones de extraccion desde una libreta.
+ * level por leccion: "base" | "intermedio" | "avanzado" (opcional, chip en
+ * tarjeta y kicker).
  */
 const LABS_TRACKS = [
   {
@@ -20,6 +22,7 @@ const LABS_TRACKS = [
         title: "Bayes, con 1000 personas",
         beats: ["figura interactiva"],
         mins: 12,
+        level: "base",
         topic: "matematicas",
       },
     ],
@@ -38,6 +41,7 @@ const LABS_TRACKS = [
         title: "El viaje de un request",
         beats: ["diagrama interactivo"],
         mins: 12,
+        level: "base",
         topic: "sistemas",
       },
     ],
