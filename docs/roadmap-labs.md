@@ -22,7 +22,7 @@ Todo se apoya en piezas que ya existen: `LearningState` (progreso local),
 
 | # | Entregable | Donde | Depende de |
 |---|---|---|---|
-| 1.1 | Chip de racha en hub de Labs (dias consecutivos con visita, local) | `Labs/index.html` + `shared/learning-state.js` (agregar racha) | nada |
+| 1.1 | Chip de racha en hub de Labs (dias consecutivos con visita, local) — **hecho** e9b9136 | `Labs/index.html` + `shared/learning-state.js` (`activityDays` + `streak()`) | nada |
 | 1.2 | `level` en lessons (base/intermedio/avanzado) + chip en kicker | `tracks.js`, template, CSS | nada |
 | 1.3 | Progreso por area: "2/6" en nodos del mapa y en tarjetas del hub | `knowledge-map.js` render + `LearningState` | 1.1 opcional |
 | 1.4 | Desafio del dia: rotacion determinista de 1 pregunta en hub | mini question bank en `shared/` o `Labs/` | banco minimo (ver 2.2) |
@@ -40,6 +40,7 @@ desafio diario sin escribir una sola leccion nueva.
 | 2.3 | "Material de la leccion": fuentes → links a notebook NotebookLM + audio + briefs | `shared/resources.js`, tracks `recommendedSources` | nada tecnico; contenido por brief |
 | 2.4 | Glosario por area: termino → leccion que lo ensena | `Labs/glossary.js` o seccion en mapa | 2.1 preferible |
 | 2.5 | Pagina "- Ejercicios" por area (set del banco, estilo AlgoMaster) | nueva ruta estatica por area | 2.2 |
+| 2.6 | "Nota al margen" por leccion: fuente recomendada (web o NotebookLM compartido) + prompt copiable para ensayar el tema con un agente | template + `tracks.js` (`sources`, `practicePrompt`), CSS de margen; `<details>` colapsable en movil, card a la derecha en desktop (estilo libro de texto) | contenido curado por brief; NotebookLM privado sigue en `StudioResources` local, nunca en catalogo |
 
 Criterio de salida: un dia de estudio real = desafio del dia + repaso FSRS +
 una leccion de un path, todo visible en el hub.
