@@ -59,9 +59,11 @@ for (const t of LABS_TRACKS) {
     const a = document.createElement("a");
     a.className = "lesson";
     a.href = `${t.id}/${l.slug}/index.html`;
+    const done = localStorage.getItem(`hypatia.labs.${l.slug}.done`);
     a.innerHTML =
       `<span class="num">${l.slug.slice(0,2)}</span><h3>${l.title}</h3>` +
-      `<div class="meta">${l.beats.map(b=>`<span>${b}</span>`).join("")}<span>~${l.mins} min</span></div>`;
+      `<div class="meta">${done ? `<span style="color:var(--mint);border-color:rgba(152,255,152,.4)">✓ completada</span>` : ``}` +
+      `${l.beats.map(b=>`<span>${b}</span>`).join("")}<span>~${l.mins} min</span></div>`;
     grid.appendChild(a);
   }
   box.appendChild(sec);

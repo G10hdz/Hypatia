@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cuellos de botella · Labs · Hypatia</title>
+<link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0f; --panel:#111116; --panel2:#16161d; --line:rgba(255,255,255,.08);
+    --text:#e1e3e2; --muted:#9a9ca0;
+    --accent:#C4B5E3; --mint:#98FF98; --pink:#ffcfec; --warn:#ffd166; --red:#ff5d73;
+    --blue:#3a87d8; --teal:#0e9f8a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Space Grotesk",sans-serif;background:radial-gradient(circle at 20% 0%,rgba(196,181,227,.07),transparent 45%),var(--bg);color:var(--text);line-height:1.6;padding:28px 18px 80px}
+  .wrap{max-width:760px;margin:0 auto}
+  a.back{color:var(--muted);text-decoration:none;font-size:.82rem}
+  a.back:hover{color:var(--mint)}
+  .kicker{display:flex;gap:8px;align-items:center;margin:18px 0 8px;flex-wrap:wrap}
+  .chip{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;padding:4px 11px;border-radius:99px;border:1px solid var(--line);color:var(--muted)}
+  .chip.track{color:var(--teal);border-color:rgba(14,159,138,.4)}
+  h1{font-family:"Outfit",sans-serif;font-size:clamp(1.9rem,5vw,2.7rem);letter-spacing:-.02em;line-height:1.05}
+  .sub{color:var(--muted);margin-top:8px;max-width:56ch}
+  section{margin-top:34px}
+  .beat{display:flex;gap:12px;align-items:baseline;margin-bottom:10px}
+  .beat .n{font-family:"Outfit",sans-serif;color:var(--accent);font-size:.85rem;flex:none}
+  .beat h2{font-family:"Outfit",sans-serif;font-size:1.15rem;letter-spacing:.02em}
+  .card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:18px;padding:20px}
+  p{color:#c9ccd4;font-size:.95rem}
+  p+p{margin-top:10px}
+  .controls{display:flex;gap:18px;flex-wrap:wrap;align-items:end;margin:16px 0}
+  .controls .sl{flex:1;min-width:200px}
+  .tgl{display:flex;gap:8px;flex-wrap:wrap}
+  .tgl button{background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--muted);font-size:.78rem;padding:8px 13px;border-radius:99px;cursor:pointer}
+  .tgl button.on{color:var(--mint);border-color:rgba(152,255,152,.45)}
+  .tgl button.dead{color:var(--red);border-color:rgba(255,93,115,.45)}
+  .reads{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:14px}
+  .reads .r{background:#0d1013;border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+  .reads .r b{display:block;font-family:"Outfit",sans-serif;font-size:1.35rem;font-variant-numeric:tabular-nums}
+  .reads .r span{color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.07em}
+  .r.ok b{color:var(--mint)} .r.warn b{color:var(--warn)} .r.bad b{color:var(--red)}
+  .formula{background:#0d1013;border:1px solid var(--line);border-radius:14px;padding:18px;text-align:center;font-size:1.05rem}
+  .nums{margin-top:14px;font-size:.92rem;color:var(--muted)}
+  .nums b{color:var(--text)}
+  pre{background:#0d1013;border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto;font:12.5px/1.55 ui-monospace,Menlo,monospace;color:#c9e8d4}
+  .q{border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:12px}
+  .q p{color:var(--text);font-weight:600;margin-bottom:10px}
+  .q .opts{display:grid;gap:8px}
+  .q button{text-align:left;background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:10px 14px;cursor:pointer;font:inherit}
+  .q button:hover{border-color:var(--accent)}
+  .q button.ok{border-color:var(--mint);background:rgba(152,255,152,.1)}
+  .q button.no{border-color:var(--red);background:rgba(255,93,115,.1)}
+  .q .why{display:none;margin-top:10px;color:var(--muted);font-size:.88rem;border-left:3px solid var(--mint);padding-left:10px}
+  .q .why.on{display:block}
+  .streak{margin-top:14px;font-size:.82rem;color:var(--muted)}
+  .streak b{color:var(--warn)}
+  .done{margin-top:16px;text-align:center;color:var(--mint);font-weight:700;display:none}
+  footer{margin-top:48px;color:var(--muted);font-size:.78rem;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../../index.html">← Labs</a>
+  <div class="kicker">
+    <span class="chip track">system-design</span>
+    <span class="chip">lección 01</span>
+    <span class="chip">diagrama interactivo</span>
+    <span class="chip">~12 min</span>
+  </div>
+  <h1>El viaje de un request</h1>
+  <p class="sub">Todos los sistemas tienen un cuello de botella. La entrevista de system design es saber encontrarlo antes de que te lo encuentren.</p>
+
+  <section>
+    <div class="beat"><span class="n">01</span><h2>La idea</h2></div>
+    <div class="card">
+      <p>Un request viaja: <b>cliente → load balancer → app servers → base de datos</b>. Cada pieza tiene una capacidad máxima. Mientras el tráfico quepa, todo va fino; en cuanto una pieza se satura, los requests se encolan, la latencia explota y algunos mueren.</p>
+      <p>La regla de oro: <b>el sistema va tan rápido como su pieza más lenta.</b> Escalar cualquier otra es decorar.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="beat"><span class="n">02</span><h2>La figura — rompe el sistema</h2></div>
+    <div class="card">
+      <div id="fig"></div>
+      <div class="controls">
+        <div class="sl" id="sl"></div>
+        <div class="tgl">
+          <button id="t-web">+ app server</button>
+          <button id="t-kill">matar web1</button>
+          <button id="t-cache">cache</button>
+        </div>
+      </div>
+      <div class="reads">
+        <div class="r" id="r-lat"><b>0</b><span>latencia</span></div>
+        <div class="r" id="r-drop"><b>0%</b><span>requests muertos</span></div>
+        <div class="r" id="r-cap"><b>—</b><span>cuello de botella</span></div>
+      </div>
+      <p class="nums">Los puntos <b style="color:var(--blue)">azules</b> son requests vivos; los <b style="color:var(--red)">rojos</b> mueren en el cuello. Sube el RPS y mira quién se rinde primero. Mata web1 con 2 servidores y siente el drama. El cache descarga la DB: mismos requests, mitad de trabajo.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="beat"><span class="n">03</span><h2>La matemática</h2></div>
+    <div class="card">
+      <div class="formula">L = λ · W&nbsp;&nbsp;(Ley de Little)</div>
+      <p class="nums">Requests en el sistema = tasa de llegada × tiempo de respuesta. Con λ=800 rps y W=120 ms: <b>96 requests en vuelo</b>. Si la pieza que menos aguanta tiene capacidad para 60 concurrentes, el resto se encola o cae. Utilización &gt; 70% y la cola crece sin cota — por eso el tráfico “que cabe en promedio” aún tumba sistemas en los picos.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="beat"><span class="n">04</span><h2>El código</h2></div>
+    <div class="card">
+<pre>import heapq, random
+
+def simulate(rps, capacity, seconds=60):
+    """Cola M/M/c minimal: servidor que atiende 'capacity' req/s."""
+    departures = []          # heap de tiempos de salida
+    dropped = 0
+    for t in [i / rps for i in range(int(rps * seconds))]:
+        while departures and departures[0] <= t:
+            heapq.heappop(departures)
+        if len(departures) < capacity:
+            heapq.heappush(departures, t + random.expovariate(1))
+        else:
+            dropped += 1
+    return dropped</pre>
+      <p class="nums">Una cola en 15 líneas: todo el drama de system design es una llegada contra una capacidad.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="beat"><span class="n">05</span><h2>En el trabajo real</h2></div>
+    <div class="card">
+      <p>En la entrevista de system design te piden “diseña Twitter”: lo que evalúan no son las cajas que dibujas sino si calculas <b>dónde se satura primero</b> — QPS de lectura vs escritura, fan-out, y qué rompe cuando una pieza cae.</p>
+      <p>En producción: esto es SRE básico. Capacity planning = estimar λ, medir W, y poner el cuello donde sea barato y visible (cola explícita) en vez de implícito (timeouts en cadena).</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="beat"><span class="n">06</span><h2>Check yourself</h2></div>
+    <div class="q" data-ok="1">
+      <p>Tu app server aguanta 400 rps y llegan 600 rps sostenidos. ¿Qué pasa con la latencia?</p>
+      <div class="opts">
+        <button>Sube un 50% y se estabiliza</button>
+        <button>Crece sin cota: la cola nunca se vacía</button>
+        <button>Se mantiene, el sistema solo rechaza 200 rps</button>
+        <button>Baja, el sistema prioriza requests rápidos</button>
+      </div>
+      <div class="why">Con llegadas sostenidas &gt; capacidad, la cola crece cada segundo: utilización &gt; 1 no se estabiliza nunca. En la vida real algo cede primero (timeouts, memoria, el cliente que se rinde).</div>
+    </div>
+    <div class="q" data-ok="0">
+      <p>Tu DB es el cuello y el 80% de lecturas se repiten. ¿Qué cambio baja más la carga?</p>
+      <div class="opts">
+        <button>Cache delante de la DB para lecturas repetidas</button>
+        <button>Más app servers</button>
+        <button>Un load balancer más rápido</button>
+        <button>Requests más chicos</button>
+      </div>
+      <div class="why">Más app servers escala la pieza equivocada: la DB sigue saturada. El cache ataca directo el cuello — si 80% de lecturas se repiten, la DB ve una fracción del trabajo.</div>
+    </div>
+    <p class="streak" id="streak"></p>
+    <p class="done" id="done">Lección completada ✓ quedó registrada en tu hub de Labs</p>
+  </section>
+
+  <footer>Hypatia Labs · diagrama interactivo sobre canvas vanilla · sin deps</footer>
+</div>
+
+<script src="../../../shared/figures.js"></script>
+<script>
+"use strict";
+/* Topología: client -> LB -> [web servers] -> DB.
+   Cada server: capacidad 400 rps. DB: 700 rps (350 con cache off? no: cache filtra 70% lecturas).
+   Modelo visual: puntos viajan por los edges; el bottleneck determina latencia y % muertos. */
+const fig = Figure.canvas(document.getElementById("fig"), { height: 320 });
+const T = Figure.T;
+
+let rps = 300, extraWeb = false, web1dead = false, cache = false;
+const dots = [];
+
+const NODES = () => {
+  const w = fig.w, mid = fig.h * 0.42;
+  const webs = [{ id: "web1", x: w * .52, y: mid - 46, dead: web1dead },
+                { id: "web2", x: w * .52, y: mid + 46, dead: !extraWeb }];
+  return {
+    client: { x: w * .08, y: mid },
+    lb:     { x: w * .26, y: mid },
+    webs,
+    db:     { x: w * .84, y: mid },
+  };
+};
+
+const CAP_WEB = 400, CAP_DB = 700;
+const stats = { served: 0, dropped: 0, latency: 0 };
+
+function tick(dt, t) {
+  const { ctx, w, h } = fig;
+  ctx.clearRect(0, 0, w, h);
+  const N = NODES();
+  const websAlive = N.webs.filter(s => !s.dead);
+
+  // llegada de dots segun rps
+  if (Math.random() < rps * dt / 8 && dots.length < 400)
+    dots.push({ x: N.client.x, y: N.client.y, leg: 0, prog: 0, dead: false,
+                web: websAlive[Math.floor(Math.random() * websAlive.length)] || null });
+
+  // modelo de capacidad (deterministico, para los numeros)
+  const capWeb = websAlive.length * CAP_WEB;
+  const dbLoad = rps * (cache ? 0.35 : 1);
+  const capEff = Math.min(capWeb, CAP_DB);
+  const util = rps / Math.max(1, capEff);
+  const dropRate = Math.max(0, (rps - capEff) / Math.max(1, rps));
+  const lat = 60 + (util > .7 ? Math.pow(util - .7, 2) * 2200 : util * 30);
+  const neck = capWeb <= CAP_DB * (cache ? 0.35 : 1) / 1 ? (util > 1 ? "app" : "app") : "db";
+
+  // mover dots
+  for (const d of dots) {
+    d.prog += dt * 1.4;
+    const segs = [[N.client, N.lb], [N.lb, d.web || N.lb], [d.web || N.lb, N.db]];
+    const seg = segs[Math.min(d.leg, 2)];
+    d.x = seg[0].x + (seg[1].x - seg[0].x) * d.prog;
+    d.y = seg[0].y + (seg[1].y - seg[0].y) * d.prog;
+    if (d.prog >= 1) {
+      d.prog = 0; d.leg++;
+      if (d.leg === 1 && websAlive.length && d.web && d.web.dead) d.dead = true;
+      if (d.leg === 2 && Math.random() < dropRate) d.dead = true;
+      if (d.dead || d.leg > 2) d.gone = true;
+    }
+  }
+  for (let i = dots.length - 1; i >= 0; i--) if (dots[i].gone) dots.splice(i, 1);
+
+  // edges
+  ctx.strokeStyle = T.line; ctx.lineWidth = 1.5;
+  const edge = (a, b) => { ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); };
+  edge(N.client, N.lb);
+  for (const s of N.webs) if (!s.dead) { edge(N.lb, s); edge(s, N.db); }
+
+  // dots
+  for (const d of dots) {
+    ctx.fillStyle = d.dead ? T.red : "#3a87d8";
+    ctx.beginPath(); ctx.arc(d.x, d.y, 3, 0, 7); ctx.fill();
+  }
+
+  // nodos
+  const node = (p, label, col, dead) => {
+    ctx.globalAlpha = dead ? .25 : 1;
+    ctx.fillStyle = "#16161d";
+    ctx.strokeStyle = col; ctx.lineWidth = 2;
+    const r = 22;
+    ctx.beginPath(); ctx.roundRect(p.x - r * 1.4, p.y - r, r * 2.8, r * 2, 9); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = dead ? T.red : T.ink;
+    ctx.font = "600 11px Space Grotesk"; ctx.textAlign = "center";
+    ctx.fillText(label, p.x, p.y + 4);
+    ctx.globalAlpha = 1;
+  };
+  node(N.client, "client", T.muted);
+  node(N.lb, "LB", T.accent);
+  for (const s of N.webs) node(s, s.dead ? s.id + " ✕" : s.id, "#5aa93f", s.dead);
+  node(N.db, cache ? "DB+cache" : "DB", "#e2603f");
+
+  // lecturas
+  const set = (id, txt, cls) => {
+    const el = document.getElementById(id);
+    el.className = "r " + cls;
+    el.querySelector("b").textContent = txt;
+  };
+  set("r-lat", Math.round(lat) + " ms", lat > 200 ? "bad" : lat > 110 ? "warn" : "ok");
+  set("r-drop", (dropRate * 100).toFixed(0) + "%", dropRate > .05 ? "bad" : "ok");
+  set("r-cap", util > 1 ? (neck === "app" ? "app servers" : "DB") : "holgado",
+      util > 1 ? "bad" : util > .7 ? "warn" : "ok");
+}
+
+/* controles */
+Figure.slider(document.getElementById("sl"), {
+  label: "Tráfico entrante (RPS)", min: 50, max: 1200, step: 25, value: rps,
+  fmt: v => v + " rps", oninput: v => { rps = v; }
+});
+const tWeb = document.getElementById("t-web"),
+      tKill = document.getElementById("t-kill"),
+      tCache = document.getElementById("t-cache");
+const paintT = () => {
+  tWeb.classList.toggle("on", extraWeb);
+  tKill.classList.toggle("dead", web1dead);
+  tCache.classList.toggle("on", cache);
+};
+tWeb.onclick = () => { extraWeb = !extraWeb; paintT(); };
+tKill.onclick = () => { web1dead = !web1dead; paintT(); };
+tCache.onclick = () => { cache = !cache; paintT(); };
+paintT();
+Figure.animate(tick);
+
+/* check yourself */
+let best = +(localStorage.getItem("hypatia.labs.bottleneck") || 0), run = 0, answered = 0;
+const streakEl = document.getElementById("streak"), doneEl = document.getElementById("done");
+const paint = () => streakEl.innerHTML = `aciertos seguidos: <b>${run}</b> · mejor marca: <b>${best}</b>`;
+document.querySelectorAll(".q").forEach(q => {
+  const ok = +q.dataset.ok;
+  q.querySelectorAll(".opts button").forEach((b, i) => {
+    b.onclick = () => {
+      if (q.dataset.done) return;
+      q.dataset.done = 1; answered++;
+      const good = i === ok;
+      b.classList.add(good ? "ok" : "no");
+      if (!good) q.querySelectorAll(".opts button")[ok].classList.add("ok");
+      q.querySelector(".why").classList.add("on");
+      run = good ? run + 1 : 0;
+      if (run > best) { best = run; localStorage.setItem("hypatia.labs.bottleneck", best); }
+      if (answered === document.querySelectorAll(".q").length) {
+        localStorage.setItem("hypatia.labs.01-bottleneck.done", "1");
+        doneEl.style.display = "block";
+      }
+      paint();
+    };
+  });
+});
+paint();
+</script>
+</body>
+</html>
