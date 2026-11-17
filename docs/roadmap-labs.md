@@ -1,8 +1,18 @@
 # Roadmap — Hypatia Labs
 
-Estado al 2026-11-17. Inspiracion: Vibe Engines (builds que se rompen, racha
-diaria, paths por rol), AlgoMaster (ejercicios por tema, progreso por area),
-TrenTorch (codigo ejecutable con tests, papers anotados, problema del dia).
+Estado al 2026-11-17.
+
+Referencias de diseno (enviadas por Gio):
+
+- Vibe Engines — https://vibeengines.com/ — builds interactivos que se pueden
+  romper, reto diario con racha, paths por rol, handbooks, todo en
+  localStorage sin cuenta. Aporto: beat "rompe esto", desafio diario, paths.
+- AlgoMaster — https://algomaster.io/learn/system-design/course-introduction —
+  curso estructurado con secciones, prerrequisitos, % de progreso y
+  ejercicios por tema. Aporto: nivel, progreso por area, pagina de ejercicios.
+- TrenTorch — https://trentorch.com/ — "learn by building": problemas con
+  tests ocultos en browser, case studies de empresas, papers anotados.
+  Aporto: code runner, lector de fuentes con notas, caso aplicado.
 
 Todo se apoya en piezas que ya existen: `LearningState` (progreso local),
 `StudioQuiz`/`StudioMap`/`StudioResources`, `tracks.js` + `knowledge-map.js`,
