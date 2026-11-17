@@ -1,0 +1,14 @@
+{
+  "comment": "Evaluacion fija del pipeline de lecciones. La escribe y aprueba el equipo; los agentes no la editan. Cambiarla obliga a repetir todas las corridas.",
+  "preflight_required": true,
+  "hard_checks_required": "all",
+  "spec_gap_detectors": [
+    "sub-goal-language",
+    "toggle-initial-aria-pressed",
+    "stable-quadrant-note",
+    "noscript-quadrant-table",
+    "canvas-label-collision"
+  ],
+  "success_rule": "preflight PASS + todos los hard checks + cero spec-gap findings",
+  "human_rubric_pending": true
+}

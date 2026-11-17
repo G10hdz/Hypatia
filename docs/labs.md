@@ -193,3 +193,13 @@ El progreso de Labs es local al navegador. No se envia automaticamente a
 Un registro manual debe describir una sesion que ocurrio realmente y seguir
 las reglas del store de memoria; publicar una leccion no demuestra aprendizaje
 de quien la usa.
+
+## Evaluacion del pipeline
+
+`eval/` mide cada corrida de implementacion con el mismo rigor que el resto
+del stack (patron de `deus-ex-machina-eval`): preflight + sonda de navegador
+por tarea + detectores de brechas de spec, con corridas en `eval/runs/*.jsonl`.
+La automatizacion propone hallazgos; la revision humana los confirma con
+`--confirmed`. El exito exige preflight, checks completos y cero brechas
+confirmadas — la aprobacion editorial del catalogo sigue siendo aparte.
+Ver `eval/README.md`.
