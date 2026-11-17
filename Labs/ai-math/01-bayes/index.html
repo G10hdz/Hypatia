@@ -168,6 +168,7 @@ print(f"{posterior:.2%}")   # ≈ 41%</pre>
       <div class="why">El posterior es mucho más sensible al prior que a pequeñas mejoras de precisión. Muévelo en la figura: de 1% a 30% de prior el salto es enorme.</div>
     </div>
     <p class="streak" id="streak"></p>
+    <p class="done" id="done" style="display:none;margin-top:16px;text-align:center;color:var(--mint);font-weight:700">Lección completada ✓ quedó registrada en tu hub de Labs</p>
   </section>
 
   <footer>Hypatia Labs · formato hft.md sobre canvas vanilla · sin deps · tu progreso queda en este dispositivo</footer>
@@ -253,21 +254,25 @@ Figure.press(document.getElementById("simrow"), "Sacar un taxi al azar", () => {
 });
 
 /* check yourself */
-let best = +(localStorage.getItem("hypatia.labs.bayes") || 0), run = 0;
-const streakEl = document.getElementById("streak");
+let best = +(localStorage.getItem("hypatia.labs.bayes") || 0), run = 0, answered = 0;
+const streakEl = document.getElementById("streak"), doneEl = document.getElementById("done");
 const paint = () => streakEl.innerHTML = `aciertos seguidos: <b>${run}</b> · mejor marca: <b>${best}</b>`;
 document.querySelectorAll(".q").forEach(q => {
   const ok = +q.dataset.ok;
   q.querySelectorAll(".opts button").forEach((b, i) => {
     b.onclick = () => {
       if (q.dataset.done) return;
-      q.dataset.done = 1;
+      q.dataset.done = 1; answered++;
       const good = i === ok;
       b.classList.add(good ? "ok" : "no");
       if (!good) q.querySelectorAll(".opts button")[ok].classList.add("ok");
       q.querySelector(".why").classList.add("on");
       run = good ? run + 1 : 0;
       if (run > best) { best = run; localStorage.setItem("hypatia.labs.bayes", best); }
+      if (answered === document.querySelectorAll(".q").length) {
+        localStorage.setItem("hypatia.labs.01-bayes.done", "1");
+        doneEl.style.display = "block";
+      }
       paint();
     };
   });

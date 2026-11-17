@@ -48,17 +48,40 @@ Toda lección sigue el mismo ritmo, numerado en la página:
 
 ## Catálogo de patrones de figura
 
-| Patrón | Conceptos que enseña | Ejemplo |
-|---|---|---|
-| Población de N bloques | prior/posterior, prevalencia, CLT | `ai-math/01-bayes` |
-| Sliders + canvas | cualquier función de 1-2 parámetros | — |
-| Monte Carlo en vivo | esperanza, varianza, error de estimación | — |
-| Drag-the-points | regresión, fronteras de decisión, overfitting | — |
-| Animación temporal | procesos, colas, convergencia | — |
-| Grafo/mapa interactivo | system-design, routing (operaciones-or) | — |
+El patrón depende de lo que se enseña, no de la tecnología. Regla:
+pocos elementos en pantalla, un solo mensaje por figura, feedback
+inmediato al interactuar. Bonito pero no saturado.
+
+| Patrón | Conceptos que enseña | Tracks | Ejemplo |
+|---|---|---|---|
+| Población de N bloques | prior/posterior, prevalencia, CLT | ai-math | `ai-math/01-bayes` |
+| Topología con flujo vivo | cuellos de botella, latencia, cache, colas | system-design, mlops | `system-design/01-bottleneck` |
+| Sliders + curva/área | funciones de 1-2 parámetros, regresión, convergencia | ai-math, operaciones-or | — |
+| Monte Carlo en vivo | esperanza, varianza, estimación, simulación | ai-math, operaciones-or | — |
+| Drag-the-points | fronteras de decisión, overfitting, clustering | ai-math | — |
+| Arco/armado de estructura | storytelling (hook-shape-flesh-judge-land), outlines | storytelling, capital-cultural | — |
+| Grafo interactivo | routing, redes, dependencias, planificación | operaciones-or, system-design | — |
+| Timeline/map | cronologías, actores, escenarios | geopolitica, filosofia-arte | — |
+| Árbol de decisión | decisión bajo incertidumbre, árboles de juego | operaciones-or, ai-math | — |
 
 Reglas: canvas vanilla o `shared/figures.js`; Three.js solo si el
 concepto de verdad lo pide (vendorado, nunca CDN en runtime).
+
+## Loop de progreso (Pavlov-friendly)
+
+El diseño busca motivar sin saturar: señales pequeñas y honestas, nada
+de dark patterns ni contadores artificiales.
+
+- Completar los check-yourself de una lección escribe
+  `hypatia.labs.<slug>.done` en localStorage; el hub muestra la lección
+  con check verde.
+- La mejor racha de aciertos por lección queda en
+  `hypatia.labs.<slug>` y se muestra dentro de la lección.
+- El agente emite `mem.py emit hypatia quiz|milestone` al cerrar
+  lecciones o hitos; el dashboard de learning-memory suma XP, racha y
+  logros sobre esos datos reales.
+- Sesiones cortas: cada lección apunta a ~12 min y siempre ofrece
+  retry sin costo (misma regla de Hypatia).
 
 ## Convenciones
 
