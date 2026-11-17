@@ -57,9 +57,19 @@ Open `http://127.0.0.1:8080/` for the hub, or go straight to a module's `index.h
 node scripts/test-fsrs.mjs         # FSRS-6 scheduling engine
 node scripts/test-lab-models.mjs   # frozen lesson models (Bayes, capacity)
 node scripts/test-studio.mjs       # studio state, resources, quiz, map
+node scripts/test-lesson-check.mjs # lesson preflight regressions
+node scripts/check-lesson.mjs      # structural checks for published lessons
 ```
 
-Zero dependencies: a truth table for the FSRS-6 scheduling engine, the frozen lab-model facts, and the studio behavior suite. CI runs all three on every PR.
+Zero dependencies. CI runs these checks on every PR. The lesson preflight is
+structural; it does not approve teaching content.
+
+## Author A Lesson
+
+Follow [the lesson workflow](docs/labs.md): approved source brief, shared HTML
+template, a bounded implementation task, then an independent review before
+catalog registration. The kit includes fillable briefs and review reports.
+It does not call model APIs or publish lessons automatically.
 
 ## License
 
