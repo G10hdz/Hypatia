@@ -3,320 +3,394 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cuellos de botella · Labs · Hypatia</title>
+<title>El viaje de un request · Labs · Hypatia</title>
 <link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#0a0a0f; --panel:#111116; --panel2:#16161d; --line:rgba(255,255,255,.08);
-    --text:#e1e3e2; --muted:#9a9ca0;
-    --accent:#C4B5E3; --mint:#98FF98; --pink:#ffcfec; --warn:#ffd166; --red:#ff5d73;
-    --blue:#3a87d8; --teal:#0e9f8a;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:"Space Grotesk",sans-serif;background:radial-gradient(circle at 20% 0%,rgba(196,181,227,.07),transparent 45%),var(--bg);color:var(--text);line-height:1.6;padding:28px 18px 80px}
-  .wrap{max-width:760px;margin:0 auto}
-  a.back{color:var(--muted);text-decoration:none;font-size:.82rem}
-  a.back:hover{color:var(--mint)}
-  .kicker{display:flex;gap:8px;align-items:center;margin:18px 0 8px;flex-wrap:wrap}
-  .chip{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;padding:4px 11px;border-radius:99px;border:1px solid var(--line);color:var(--muted)}
-  .chip.track{color:var(--teal);border-color:rgba(14,159,138,.4)}
-  h1{font-family:"Outfit",sans-serif;font-size:clamp(1.9rem,5vw,2.7rem);letter-spacing:-.02em;line-height:1.05}
-  .sub{color:var(--muted);margin-top:8px;max-width:56ch}
-  section{margin-top:34px}
-  .beat{display:flex;gap:12px;align-items:baseline;margin-bottom:10px}
-  .beat .n{font-family:"Outfit",sans-serif;color:var(--accent);font-size:.85rem;flex:none}
-  .beat h2{font-family:"Outfit",sans-serif;font-size:1.15rem;letter-spacing:.02em}
-  .card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:18px;padding:20px}
-  p{color:#c9ccd4;font-size:.95rem}
-  p+p{margin-top:10px}
-  .controls{display:flex;gap:18px;flex-wrap:wrap;align-items:end;margin:16px 0}
-  .controls .sl{flex:1;min-width:200px}
-  .tgl{display:flex;gap:8px;flex-wrap:wrap}
-  .tgl button{background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--muted);font-size:.78rem;padding:8px 13px;border-radius:99px;cursor:pointer}
-  .tgl button.on{color:var(--mint);border-color:rgba(152,255,152,.45)}
-  .tgl button.dead{color:var(--red);border-color:rgba(255,93,115,.45)}
-  .reads{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:14px}
-  .reads .r{background:#0d1013;border:1px solid var(--line);border-radius:12px;padding:10px 14px}
-  .reads .r b{display:block;font-family:"Outfit",sans-serif;font-size:1.35rem;font-variant-numeric:tabular-nums}
-  .reads .r span{color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.07em}
-  .r.ok b{color:var(--mint)} .r.warn b{color:var(--warn)} .r.bad b{color:var(--red)}
-  .formula{background:#0d1013;border:1px solid var(--line);border-radius:14px;padding:18px;text-align:center;font-size:1.05rem}
-  .nums{margin-top:14px;font-size:.92rem;color:var(--muted)}
-  .nums b{color:var(--text)}
-  pre{background:#0d1013;border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto;font:12.5px/1.55 ui-monospace,Menlo,monospace;color:#c9e8d4}
-  .q{border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:12px}
-  .q p{color:var(--text);font-weight:600;margin-bottom:10px}
-  .q .opts{display:grid;gap:8px}
-  .q button{text-align:left;background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:10px 14px;cursor:pointer;font:inherit}
-  .q button:hover{border-color:var(--accent)}
-  .q button.ok{border-color:var(--mint);background:rgba(152,255,152,.1)}
-  .q button.no{border-color:var(--red);background:rgba(255,93,115,.1)}
-  .q .why{display:none;margin-top:10px;color:var(--muted);font-size:.88rem;border-left:3px solid var(--mint);padding-left:10px}
-  .q .why.on{display:block}
-  .streak{margin-top:14px;font-size:.82rem;color:var(--muted)}
-  .streak b{color:var(--warn)}
-  .done{margin-top:16px;text-align:center;color:var(--mint);font-weight:700;display:none}
-  footer{margin-top:48px;color:var(--muted);font-size:.78rem;text-align:center}
-</style>
+<link rel="stylesheet" href="../../../shared/studio.css">
+<script>
+  (function(){try{var v=localStorage.getItem("hypatia.theme.v1");
+  document.documentElement.dataset.theme=(v==="dark"||v==="light")?v:
+  (matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");}catch(e){}})();
+</script>
 </head>
 <body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
 <div class="wrap">
-  <a class="back" href="../../index.html">← Labs</a>
+  <header class="topbar">
+    <a class="brand" href="../../../index.html">Hypatia</a>
+    <nav>
+      <a href="../../../index.html#mapa">Mapa</a>
+      <a href="../../index.html">Labs</a>
+      <a href="../../../index.html#biblioteca">Biblioteca</a>
+    </nav>
+    <button class="theme-toggle" type="button" data-theme-toggle>Tema</button>
+  </header>
+
+  <div class="store-warning" data-store-warning hidden></div>
+
+  <main id="contenido">
   <div class="kicker">
-    <span class="chip track">system-design</span>
-    <span class="chip">lección 01</span>
+    <span class="chip todo">system-design</span>
+    <span class="chip">leccion 01</span>
     <span class="chip">diagrama interactivo</span>
     <span class="chip">~12 min</span>
   </div>
   <h1>El viaje de un request</h1>
-  <p class="sub">Todos los sistemas tienen un cuello de botella. La entrevista de system design es saber encontrarlo antes de que te lo encuentren.</p>
+  <p class="sub" style="color:var(--muted)">Todos los sistemas tienen un cuello de botella. La habilidad es encontrarlo antes de que te encuentre.</p>
 
   <section>
-    <div class="beat"><span class="n">01</span><h2>La idea</h2></div>
-    <div class="card">
-      <p>Un request viaja: <b>cliente → load balancer → app servers → base de datos</b>. Cada pieza tiene una capacidad máxima. Mientras el tráfico quepa, todo va fino; en cuanto una pieza se satura, los requests se encolan, la latencia explota y algunos mueren.</p>
-      <p>La regla de oro: <b>el sistema va tan rápido como su pieza más lenta.</b> Escalar cualquier otra es decorar.</p>
+    <div class="kicker"><span class="chip">01 · la idea</span></div>
+    <div class="panel">
+      <p>Un request viaja: <b>cliente → load balancer → app servers → base de datos</b>. Cada pieza tiene una capacidad maxima. Mientras el trafico quepa, todo va fino; en cuanto una pieza se satura, el exceso no se atiende.</p>
+      <p>La regla de oro: <b>el sistema va tan rapido como su pieza mas lenta.</b> Escalar cualquier otra es decorar.</p>
     </div>
   </section>
 
   <section>
-    <div class="beat"><span class="n">02</span><h2>La figura — rompe el sistema</h2></div>
-    <div class="card">
+    <div class="kicker"><span class="chip">02 · la figura</span></div>
+    <div class="panel">
       <div id="fig"></div>
       <div class="controls">
-        <div class="sl" id="sl"></div>
-        <div class="tgl">
-          <button id="t-web">+ app server</button>
-          <button id="t-kill">matar web1</button>
-          <button id="t-cache">cache</button>
+        <div id="sl"></div>
+        <div class="tgl" style="align-self:end">
+          <button class="f-press danger" type="button" id="t-kill" aria-pressed="false">Apagar web1</button>
+          <button class="f-press" type="button" id="t-web" aria-pressed="false">Agregar web2</button>
+          <button class="f-press" type="button" id="t-cache" aria-pressed="false">Cache (65% hits)</button>
+          <button class="f-press primary" type="button" id="t-play" aria-pressed="false">Reproducir flujo</button>
         </div>
       </div>
       <div class="reads">
-        <div class="r" id="r-lat"><b>0</b><span>latencia</span></div>
-        <div class="r" id="r-drop"><b>0%</b><span>requests muertos</span></div>
-        <div class="r" id="r-cap"><b>—</b><span>cuello de botella</span></div>
+        <div class="r bad" id="r-cap"><b>700 rps</b><span>capacidad efectiva</span></div>
+        <div class="r bad" id="r-uns"><b>12.5%</b><span>trafico sin atender</span></div>
+        <div class="r bad" id="r-neck"><b>DB</b><span>pieza limitante</span></div>
       </div>
-      <p class="nums">Los puntos <b style="color:var(--blue)">azules</b> son requests vivos; los <b style="color:var(--red)">rojos</b> mueren en el cuello. Sube el RPS y mira quién se rinde primero. Mata web1 con 2 servidores y siente el drama. El cache descarga la DB: mismos requests, mitad de trabajo.</p>
+      <p class="nums" id="fig-summary" role="status">Con 800 rps de entrada, 700 se atienden y 100 se rechazan (12.5%). La DB ve 700 rps. Limite: DB.</p>
+      <p class="nums">Los puntos azules son requests atendidos; los rojos se detienen en la pieza que no da abasto. Con cache activo, los aciertos regresan desde el cache sin tocar la DB. La animacion es una ilustracion: los numeros salen del modelo, no de los puntos.</p>
     </div>
   </section>
 
   <section>
-    <div class="beat"><span class="n">03</span><h2>La matemática</h2></div>
-    <div class="card">
-      <div class="formula">L = λ · W&nbsp;&nbsp;(Ley de Little)</div>
-      <p class="nums">Requests en el sistema = tasa de llegada × tiempo de respuesta. Con λ=800 rps y W=120 ms: <b>96 requests en vuelo</b>. Si la pieza que menos aguanta tiene capacidad para 60 concurrentes, el resto se encola o cae. Utilización &gt; 70% y la cola crece sin cota — por eso el tráfico “que cabe en promedio” aún tumba sistemas en los picos.</p>
+    <div class="kicker"><span class="chip">03 · la matematica</span></div>
+    <div class="panel">
+      <div class="formula">Capacidad efectiva = min(400 x servidores activos, 700 / (1 - hit rate))</div>
+      <p class="nums" id="cap-note">Ahora: min(400 x 2, 700 / 1) = <b>700 rps</b>.</p>
+      <p class="nums">Es un modelo simplificado: cada request consume una unidad en la app y cada miss una unidad en la DB. No modela colas, escrituras ni latencias reales.</p>
+      <div class="formula" style="margin-top:14px">L = λ · W&nbsp;&nbsp;(Ley de Little)</div>
+      <p class="nums">En un sistema estable, L = λ W. Con 800 rps y un tiempo medio medido de 120 ms, hay 96 requests en vuelo en promedio. El comportamiento de la cola depende de las llegadas, el servicio y sus limites; 70% no es un umbral universal de inestabilidad.</p>
     </div>
   </section>
 
   <section>
-    <div class="beat"><span class="n">04</span><h2>El código</h2></div>
-    <div class="card">
-<pre>import heapq, random
-
-def simulate(rps, capacity, seconds=60):
-    """Cola M/M/c minimal: servidor que atiende 'capacity' req/s."""
-    departures = []          # heap de tiempos de salida
-    dropped = 0
-    for t in [i / rps for i in range(int(rps * seconds))]:
-        while departures and departures[0] <= t:
-            heapq.heappop(departures)
-        if len(departures) < capacity:
-            heapq.heappush(departures, t + random.expovariate(1))
-        else:
-            dropped += 1
-    return dropped</pre>
-      <p class="nums">Una cola en 15 líneas: todo el drama de system design es una llegada contra una capacidad.</p>
+    <div class="kicker"><span class="chip">04 · el codigo</span></div>
+    <div class="panel">
+<pre>web_capacity = 400 * active_servers
+miss_rate = 1 - cache_hit_rate
+db_capacity = 700 / miss_rate if miss_rate else float('inf')
+capacity = min(web_capacity, db_capacity)
+served = min(arrival_rps, capacity)
+unserved = arrival_rps - served</pre>
+      <p class="nums">Seis lineas de stdlib: la capacidad efectiva es el minimo de las piezas, y lo que no cabe se rechaza.</p>
     </div>
   </section>
 
   <section>
-    <div class="beat"><span class="n">05</span><h2>En el trabajo real</h2></div>
-    <div class="card">
-      <p>En la entrevista de system design te piden “diseña Twitter”: lo que evalúan no son las cajas que dibujas sino si calculas <b>dónde se satura primero</b> — QPS de lectura vs escritura, fan-out, y qué rompe cuando una pieza cae.</p>
-      <p>En producción: esto es SRE básico. Capacity planning = estimar λ, medir W, y poner el cuello donde sea barato y visible (cola explícita) en vez de implícito (timeouts en cadena).</p>
+    <div class="kicker"><span class="chip">05 · en el trabajo real</span></div>
+    <div class="panel">
+      <p>En una entrevista de diseno te piden "diseña Twitter": lo que evaluan no son las cajas que dibujas sino si calculas <b>donde se satura primero</b>: lecturas contra escrituras, fan-out y que rompe cuando una pieza cae.</p>
+      <p>En produccion: capacity planning es estimar llegadas, medir tiempos y poner el limite donde sea barato y visible (una cola explicita) en vez de implicito (timeouts en cadena).</p>
     </div>
   </section>
 
   <section>
-    <div class="beat"><span class="n">06</span><h2>Check yourself</h2></div>
+    <div class="kicker"><span class="chip">06 · check yourself</span></div>
     <div class="q" data-ok="1">
-      <p>Tu app server aguanta 400 rps y llegan 600 rps sostenidos. ¿Qué pasa con la latencia?</p>
+      <p>Llegan 600 rps sostenidos a un servidor de 400 rps, con una cola sin limite. ¿Que pasa con la espera?</p>
       <div class="opts">
         <button>Sube un 50% y se estabiliza</button>
-        <button>Crece sin cota: la cola nunca se vacía</button>
+        <button>Crece sin cota: la cola nunca se vacia</button>
         <button>Se mantiene, el sistema solo rechaza 200 rps</button>
-        <button>Baja, el sistema prioriza requests rápidos</button>
+        <button>Baja, el sistema prioriza requests rapidos</button>
       </div>
-      <div class="why">Con llegadas sostenidas &gt; capacidad, la cola crece cada segundo: utilización &gt; 1 no se estabiliza nunca. En la vida real algo cede primero (timeouts, memoria, el cliente que se rinde).</div>
+      <div class="why">Con llegadas sostenidas mayores que la capacidad, la cola crece cada segundo y la espera no tiene cota. En produccion las colas son finitas y hay timeouts: algo cede antes (memoria, el cliente que se rinde, el balanceador).</div>
     </div>
     <div class="q" data-ok="0">
-      <p>Tu DB es el cuello y el 80% de lecturas se repiten. ¿Qué cambio baja más la carga?</p>
+      <p>Tu DB es el cuello y el 80% de las lecturas se repiten (si son cacheables). ¿Que cambio baja mas la carga?</p>
       <div class="opts">
         <button>Cache delante de la DB para lecturas repetidas</button>
-        <button>Más app servers</button>
-        <button>Un load balancer más rápido</button>
-        <button>Requests más chicos</button>
+        <button>Mas app servers</button>
+        <button>Un load balancer mas rapido</button>
+        <button>Requests mas chicos</button>
       </div>
-      <div class="why">Más app servers escala la pieza equivocada: la DB sigue saturada. El cache ataca directo el cuello — si 80% de lecturas se repiten, la DB ve una fracción del trabajo.</div>
+      <div class="why">Mas app servers escala la pieza equivocada: la DB sigue saturada. Si las lecturas repetidas son cacheables, el cache ataca directo el cuello y la DB ve una fraccion del trabajo.</div>
     </div>
-    <p class="streak" id="streak"></p>
-    <p class="done" id="done">Lección completada ✓ quedó registrada en tu hub de Labs</p>
+    <p class="quiz-status"></p>
+    <p class="quiz-live sr-only" role="status"></p>
+    <div class="quiz-done">
+      <p class="msg"></p>
+      <div class="row">
+        <button class="btn ghost" type="button" data-quiz-retry>Reintentar</button>
+        <a class="btn primary" href="../../index.html">Volver a Labs</a>
+      </div>
+    </div>
   </section>
 
-  <footer>Hypatia Labs · diagrama interactivo sobre canvas vanilla · sin deps</footer>
+  <section>
+    <div class="kicker"><span class="chip">conecta con</span></div>
+    <div id="connect"></div>
+  </section>
+
+  <section class="panel" id="biblioteca-leccion"></section>
+
+  </main>
+  <footer class="site">Hypatia Labs · HTML estatico, sin build · tu progreso queda en este navegador</footer>
 </div>
 
+<noscript><p style="max-width:880px;margin:0 auto;color:#b23842">La figura interactiva y el registro de progreso necesitan JavaScript. Las explicaciones y las preguntas se pueden leer igual.</p></noscript>
+
+<script src="../../../shared/lab-models.js"></script>
 <script src="../../../shared/figures.js"></script>
+<script src="../../../shared/theme.js"></script>
+<script src="../../../shared/learning-state.js"></script>
+<script src="../../../shared/quiz.js"></script>
+<script src="../../../shared/resources.js"></script>
+<script src="../../tracks.js"></script>
+<script src="../../knowledge-map.js"></script>
+<script src="../../../shared/map.js"></script>
 <script>
 "use strict";
-/* Topología: client -> LB -> [web servers] -> DB.
-   Cada server: capacidad 400 rps. DB: 700 rps (350 con cache off? no: cache filtra 70% lecturas).
-   Modelo visual: puntos viajan por los edges; el bottleneck determina latencia y % muertos. */
-const fig = Figure.canvas(document.getElementById("fig"), { height: 320 });
-const T = Figure.T;
+const TRACK = "system-design", SLUG = "01-bottleneck", TOPIC = "sistemas";
+StudioTheme.init();
+LearningState.mountWarning(document.querySelector("[data-store-warning]"));
+LearningState.visit(TRACK, SLUG);
 
-let rps = 300, extraWeb = false, web1dead = false, cache = false;
+const fig = Figure.canvas(document.getElementById("fig"), {
+  height: 320,
+  label: "Recorrido de un request: cliente, balanceador, servidores web, cache y base de datos",
+  describedBy: "fig-summary",
+});
+
+let rps = 800, extraWeb = true, web1dead = false, cache = false;
 const dots = [];
+const CACHE_HIT = 0.65;
 
-const NODES = () => {
-  const w = fig.w, mid = fig.h * 0.42;
-  const webs = [{ id: "web1", x: w * .52, y: mid - 46, dead: web1dead },
-                { id: "web2", x: w * .52, y: mid + 46, dead: !extraWeb }];
+const webServers = () => (web1dead ? 0 : 1) + (extraWeb ? 1 : 0);
+
+function NODES() {
+  const w = fig.w;
+  /* En lienzo angosto la topologia baja en vertical: todo queda dentro. */
+  if (w < 600) {
+    const midX = w / 2;
+    return {
+      client: { x: midX, y: 30 },
+      lb:     { x: midX, y: 90 },
+      webs: [
+        { id: "web1", x: midX - 60, y: 150, dead: web1dead },
+        { id: "web2", x: midX + 60, y: 150, dead: !extraWeb },
+      ],
+      cache:  { x: midX - 60, y: 225 },
+      db:     { x: midX + 60, y: 225 },
+      sink:   { x: midX, y: 290 },
+    };
+  }
+  const mid = fig.h * 0.46;
   return {
-    client: { x: w * .08, y: mid },
-    lb:     { x: w * .26, y: mid },
-    webs,
-    db:     { x: w * .84, y: mid },
+    client: { x: w * .07, y: mid },
+    lb:     { x: w * .22, y: mid },
+    webs: [
+      { id: "web1", x: w * .42, y: mid - 52, dead: web1dead },
+      { id: "web2", x: w * .42, y: mid + 52, dead: !extraWeb },
+    ],
+    cache:  { x: w * .63, y: mid - 52 },
+    db:     { x: w * .63, y: mid + 40 },
+    sink:   { x: w * .88, y: mid },
   };
-};
+}
 
-const CAP_WEB = 400, CAP_DB = 700;
-const stats = { served: 0, dropped: 0, latency: 0 };
+function result() {
+  return LabModels.capacity({ rps, webServers: webServers(), cacheHitRate: cache ? CACHE_HIT : 0 });
+}
 
-function tick(dt, t) {
-  const { ctx, w, h } = fig;
-  ctx.clearRect(0, 0, w, h);
-  const N = NODES();
-  const websAlive = N.webs.filter(s => !s.dead);
-
-  // llegada de dots segun rps
-  if (Math.random() < rps * dt / 8 && dots.length < 400)
-    dots.push({ x: N.client.x, y: N.client.y, leg: 0, prog: 0, dead: false,
-                web: websAlive[Math.floor(Math.random() * websAlive.length)] || null });
-
-  // modelo de capacidad (deterministico, para los numeros)
-  const capWeb = websAlive.length * CAP_WEB;
-  const dbLoad = rps * (cache ? 0.35 : 1);
-  const capEff = Math.min(capWeb, CAP_DB);
-  const util = rps / Math.max(1, capEff);
-  const dropRate = Math.max(0, (rps - capEff) / Math.max(1, rps));
-  const lat = 60 + (util > .7 ? Math.pow(util - .7, 2) * 2200 : util * 30);
-  const neck = capWeb <= CAP_DB * (cache ? 0.35 : 1) / 1 ? (util > 1 ? "app" : "app") : "db";
-
-  // mover dots
-  for (const d of dots) {
-    d.prog += dt * 1.4;
-    const segs = [[N.client, N.lb], [N.lb, d.web || N.lb], [d.web || N.lb, N.db]];
-    const seg = segs[Math.min(d.leg, 2)];
-    d.x = seg[0].x + (seg[1].x - seg[0].x) * d.prog;
-    d.y = seg[0].y + (seg[1].y - seg[0].y) * d.prog;
-    if (d.prog >= 1) {
-      d.prog = 0; d.leg++;
-      if (d.leg === 1 && websAlive.length && d.web && d.web.dead) d.dead = true;
-      if (d.leg === 2 && Math.random() < dropRate) d.dead = true;
-      if (d.dead || d.leg > 2) d.gone = true;
-    }
-  }
-  for (let i = dots.length - 1; i >= 0; i--) if (dots[i].gone) dots.splice(i, 1);
-
-  // edges
-  ctx.strokeStyle = T.line; ctx.lineWidth = 1.5;
-  const edge = (a, b) => { ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); };
-  edge(N.client, N.lb);
-  for (const s of N.webs) if (!s.dead) { edge(N.lb, s); edge(s, N.db); }
-
-  // dots
-  for (const d of dots) {
-    ctx.fillStyle = d.dead ? T.red : "#3a87d8";
-    ctx.beginPath(); ctx.arc(d.x, d.y, 3, 0, 7); ctx.fill();
-  }
-
-  // nodos
-  const node = (p, label, col, dead) => {
-    ctx.globalAlpha = dead ? .25 : 1;
-    ctx.fillStyle = "#16161d";
-    ctx.strokeStyle = col; ctx.lineWidth = 2;
-    const r = 22;
-    ctx.beginPath(); ctx.roundRect(p.x - r * 1.4, p.y - r, r * 2.8, r * 2, 9); ctx.fill(); ctx.stroke();
-    ctx.fillStyle = dead ? T.red : T.ink;
-    ctx.font = "600 11px Space Grotesk"; ctx.textAlign = "center";
-    ctx.fillText(label, p.x, p.y + 4);
-    ctx.globalAlpha = 1;
-  };
-  node(N.client, "client", T.muted);
-  node(N.lb, "LB", T.accent);
-  for (const s of N.webs) node(s, s.dead ? s.id + " ✕" : s.id, "#5aa93f", s.dead);
-  node(N.db, cache ? "DB+cache" : "DB", "#e2603f");
-
-  // lecturas
+function paintReads() {
+  const r = result();
+  const pct = (r.rejectedRate * 100).toFixed(1) + "%";
+  const capTxt = Number.isFinite(r.effectiveCapacity) ? Math.round(r.effectiveCapacity) + " rps" : "sin limite";
+  const neckTxt = r.rejectedRate > 0 || r.served >= r.effectiveCapacity
+    ? (r.bottleneck === "app" ? "app servers" : "DB")
+    : "holgado";
   const set = (id, txt, cls) => {
     const el = document.getElementById(id);
     el.className = "r " + cls;
     el.querySelector("b").textContent = txt;
   };
-  set("r-lat", Math.round(lat) + " ms", lat > 200 ? "bad" : lat > 110 ? "warn" : "ok");
-  set("r-drop", (dropRate * 100).toFixed(0) + "%", dropRate > .05 ? "bad" : "ok");
-  set("r-cap", util > 1 ? (neck === "app" ? "app servers" : "DB") : "holgado",
-      util > 1 ? "bad" : util > .7 ? "warn" : "ok");
+  set("r-cap", capTxt, r.rejectedRate > 0 ? "bad" : "ok");
+  set("r-uns", pct, r.rejectedRate > .001 ? "bad" : "ok");
+  set("r-neck", neckTxt, r.rejectedRate > .001 ? "bad" : r.rejected > 0 ? "warn" : "ok");
+  document.getElementById("fig-summary").textContent =
+    `Con ${rps} rps de entrada, ${Math.round(r.served)} se atienden y ${Math.round(r.rejected)} se rechazan ` +
+    `(${pct}). La DB ve ${Math.round(r.dbRps)} rps. Limite: ${neckTxt}.`;
+  document.getElementById("cap-note").innerHTML =
+    `Ahora: min(400 x ${webServers()}, 700 / ${cache ? "(1 - 0.65)" : "1"}) = ` +
+    `<b>${Number.isFinite(r.effectiveCapacity) ? Math.round(r.effectiveCapacity) : "∞"} rps</b>.`;
 }
 
-/* controles */
-Figure.slider(document.getElementById("sl"), {
-  label: "Tráfico entrante (RPS)", min: 50, max: 1200, step: 25, value: rps,
-  fmt: v => v + " rps", oninput: v => { rps = v; }
-});
+function draw() {
+  const { ctx, w, h } = fig;
+  if (!ctx) return;
+  const C = Figure.colors();
+  ctx.clearRect(0, 0, w, h);
+  const N = NODES();
+  const r = result();
+  const websAlive = N.webs.filter(s => !s.dead);
+  const dbSaturated = r.bottleneck === "db" && r.rejectedRate > 0;
+  const appSaturated = r.bottleneck === "app" && r.rejectedRate > 0;
+
+  const edge = (a, b, dash) => {
+    ctx.strokeStyle = C.line; ctx.lineWidth = 1.6;
+    ctx.setLineDash(dash ? [5, 4] : []);
+    ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+    ctx.setLineDash([]);
+  };
+  edge(N.client, N.lb);
+  for (const s of N.webs) if (!s.dead) edge(N.lb, s);
+  if (cache) {
+    for (const s of N.webs) if (!s.dead) { edge(s, N.cache); edge(s, N.db); }
+    edge(N.cache, N.sink);
+    edge(N.db, N.sink);
+  } else {
+    for (const s of N.webs) if (!s.dead) edge(s, N.db);
+    edge(N.db, N.sink);
+  }
+
+  /* Los puntos vivos van debajo de las cajas para no tapar etiquetas; los
+   * rechazados se dibujan despues como marcador en la esquina de la pieza. */
+  for (const d of dots) {
+    if (d.dead) continue;
+    ctx.fillStyle = C.blue;
+    ctx.beginPath(); ctx.arc(d.x, d.y, 3, 0, 7); ctx.fill();
+  }
+
+  const node = (p, label, col, dead) => {
+    ctx.globalAlpha = dead ? .3 : 1;
+    ctx.fillStyle = C.panel;
+    ctx.strokeStyle = col; ctx.lineWidth = 2;
+    const rw = 30, rh = 22;
+    ctx.beginPath(); ctx.roundRect(p.x - rw * 1.4, p.y - rh, rw * 2.8, rh * 2, 9);
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = dead ? C.red : C.ink;
+    ctx.font = "600 11px 'Space Grotesk', sans-serif"; ctx.textAlign = "center";
+    ctx.fillText(label, p.x, p.y + 4);
+    ctx.globalAlpha = 1;
+  };
+  node(N.client, "cliente", C.muted, false);
+  node(N.lb, "LB", C.accent, websAlive.length === 0);
+  for (const s of N.webs) node(s, s.dead ? s.id + " x" : s.id,
+    s.dead ? C.red : (appSaturated ? C.orange : C.green), s.dead);
+  if (cache) node(N.cache, "cache", C.blue, false);
+  node(N.db, "DB", dbSaturated ? C.red : C.orange, false);
+  node(N.sink, "ok", C.muted, false);
+
+  /* El punto rechazado se detiene en el centro de la pieza que fallo y las
+   * cajas son opacas: el marcador rojo va arriba a la derecha de la caja,
+   * encima de todo, para que el rechazo se vea. */
+  for (const d of dots) {
+    if (!d.dead) continue;
+    ctx.fillStyle = C.red;
+    ctx.beginPath(); ctx.arc(d.x + 30, d.y - 12, 3, 0, 7); ctx.fill();
+  }
+}
+
+function tick(dt) {
+  const N = NODES();
+  const r = result();
+  const websAlive = N.webs.filter(s => !s.dead);
+
+  if (Math.random() < rps * dt / 10 && dots.length < 500) {
+    dots.push({ leg: 0, prog: 0, dead: false,
+                web: websAlive[Math.floor(Math.random() * websAlive.length)] || null,
+                hit: cache && Math.random() < CACHE_HIT,
+                rejected: Math.random() < r.rejectedRate });
+  }
+
+  for (const d of dots) {
+    /* Un request rechazado se queda quieto en la pieza que fallo ~0.4 s
+       antes de desaparecer: el rojo se ve, no se evapora. */
+    if (d.dead) { d.hold -= dt; if (d.hold <= 0) d.gone = true; continue; }
+    d.prog += dt * 1.3;
+    /* Tramo actual del request. */
+    const legs = [];
+    legs.push([N.client, N.lb]);
+    legs.push([N.lb, d.web || N.lb]);
+    if (cache && d.hit) {
+      legs.push([d.web || N.lb, N.cache]);
+      legs.push([N.cache, N.sink]);
+    } else {
+      legs.push([d.web || N.lb, N.db]);
+      legs.push([N.db, N.sink]);
+    }
+    const seg = legs[Math.min(d.leg, legs.length - 1)];
+    const t = Math.min(d.prog, 1);
+    d.x = seg[0].x + (seg[1].x - seg[0].x) * t;
+    d.y = seg[0].y + (seg[1].y - seg[0].y) * t;
+    if (d.prog >= 1) {
+      d.prog = 0; d.leg++;
+      /* El request muere en la primera pieza que no lo puede atender:
+         sin apps vivas en el LB; en su app si el cuello es la capa web;
+         en la DB si el cuello es la DB y el request no sale del cache. */
+      if (d.leg === 1 && !websAlive.length) d.dead = true;
+      else if (d.leg === 2 && (!d.web || d.web.dead)) d.dead = true;
+      else if (d.leg === 2 && r.bottleneck === "app" && d.rejected) d.dead = true;
+      else if (d.leg === 3 && r.bottleneck === "db" && d.rejected && !(cache && d.hit)) d.dead = true;
+      if (d.dead) {
+        d.x = seg[1].x; d.y = seg[1].y; d.hold = 0.4;
+      } else if (d.leg >= legs.length) d.gone = true;
+    }
+  }
+  for (let i = dots.length - 1; i >= 0; i--) if (dots[i].gone) dots.splice(i, 1);
+  draw();
+}
+
+const loop = Figure.animate(tick, { el: fig.el, autoplay: false });
+
 const tWeb = document.getElementById("t-web"),
       tKill = document.getElementById("t-kill"),
-      tCache = document.getElementById("t-cache");
-const paintT = () => {
-  tWeb.classList.toggle("on", extraWeb);
-  tKill.classList.toggle("dead", web1dead);
-  tCache.classList.toggle("on", cache);
-};
-tWeb.onclick = () => { extraWeb = !extraWeb; paintT(); };
-tKill.onclick = () => { web1dead = !web1dead; paintT(); };
-tCache.onclick = () => { cache = !cache; paintT(); };
-paintT();
-Figure.animate(tick);
+      tCache = document.getElementById("t-cache"),
+      tPlay = document.getElementById("t-play");
 
-/* check yourself */
-let best = +(localStorage.getItem("hypatia.labs.bottleneck") || 0), run = 0, answered = 0;
-const streakEl = document.getElementById("streak"), doneEl = document.getElementById("done");
-const paint = () => streakEl.innerHTML = `aciertos seguidos: <b>${run}</b> · mejor marca: <b>${best}</b>`;
-document.querySelectorAll(".q").forEach(q => {
-  const ok = +q.dataset.ok;
-  q.querySelectorAll(".opts button").forEach((b, i) => {
-    b.onclick = () => {
-      if (q.dataset.done) return;
-      q.dataset.done = 1; answered++;
-      const good = i === ok;
-      b.classList.add(good ? "ok" : "no");
-      if (!good) q.querySelectorAll(".opts button")[ok].classList.add("ok");
-      q.querySelector(".why").classList.add("on");
-      run = good ? run + 1 : 0;
-      if (run > best) { best = run; localStorage.setItem("hypatia.labs.bottleneck", best); }
-      if (answered === document.querySelectorAll(".q").length) {
-        localStorage.setItem("hypatia.labs.01-bottleneck.done", "1");
-        doneEl.style.display = "block";
-      }
-      paint();
-    };
-  });
+function sync() {
+  tWeb.setAttribute("aria-pressed", extraWeb ? "true" : "false");
+  tKill.setAttribute("aria-pressed", web1dead ? "true" : "false");
+  tCache.setAttribute("aria-pressed", cache ? "true" : "false");
+  const playing = loop.playing;
+  tPlay.setAttribute("aria-pressed", playing ? "true" : "false");
+  tPlay.disabled = !loop.enabled;
+  tPlay.textContent = !loop.enabled
+    ? "Animacion no disponible (movimiento reducido)"
+    : playing ? "Pausar flujo" : "Reproducir flujo";
+  paintReads();
+  draw();
+}
+/* Al cambiar la topologia los puntos en vuelo quedaban apuntando a piezas
+   viejas; se limpian y el flujo arranca con el sistema actual. */
+tWeb.onclick = () => { extraWeb = !extraWeb; dots.length = 0; sync(); };
+tKill.onclick = () => { web1dead = !web1dead; dots.length = 0; sync(); };
+tCache.onclick = () => { cache = !cache; dots.length = 0; sync(); };
+tPlay.onclick = () => { loop.playing ? loop.pause() : loop.play(); sync(); };
+loop.onChange = () => sync();
+fig.onRedraw = draw;
+
+Figure.slider(document.getElementById("sl"), {
+  label: "Trafico entrante (RPS)", min: 50, max: 1200, step: 25, value: rps,
+  fmt: v => v + " rps", oninput: v => { rps = v; sync(); }
 });
-paint();
+
+StudioQuiz.mount(document.querySelectorAll("section")[5], { track: TRACK, slug: SLUG });
+StudioMap.connect(document.getElementById("connect"), TOPIC, {
+  data: KNOWLEDGE_MAP, homeHref: "../../../index.html",
+});
+StudioResources.mount(document.getElementById("biblioteca-leccion"), {
+  trackId: TOPIC, title: "Tus materiales de esta area", fixedTopic: true, heading: "h2",
+});
+
+sync();
 </script>
 </body>
 </html>

@@ -46,3 +46,6 @@ AUTH_INTEGRATION.md
 PHASE2_AUTH_SUMMARY.md
 .env
 .vercel
+
+# Local semantic code index
+.cocoindex_code/
