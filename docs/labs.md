@@ -31,6 +31,57 @@ archivo para no mantener dos mapas distintos.
 4. Marcar los huecos como `PENDIENTE`. Un catalogo de libros no prueba que se
    hayan leido; una ruta propuesta no cuenta como contenido publicado.
 
+## Encargar una leccion
+
+El responsable del contenido decide el concepto, las fuentes, el modelo y las
+claves de las preguntas. El implementador redacta y construye dentro de ese
+alcance. La revision posterior sigue siendo necesaria aunque los checks pasen.
+
+1. Completar [el brief](templates/lesson-brief.md). Guardar los paquetes con
+   fuentes privadas fuera del repositorio y del directorio servido. Ignorarlos
+   en Git no impide que un servidor estatico los exponga.
+2. Revisar el brief y marcarlo `aprobado-para-implementar`, con una referencia
+   real de aprobacion. Esto no autoriza publicar ni crear un track completo.
+3. Asignar una sola ruta en un worktree propio. Copiar
+   [`templates/lab/index.html`](../templates/lab/index.html) a esa ruta, sin
+   sobrescribir otro archivo. Las rutas de importacion presuponen el destino
+   `Labs/<track>/<NN-slug>/index.html`, no la carpeta de la plantilla.
+4. Implementar el texto y la figura siguiendo [Labs/AGENTS.md](../Labs/AGENTS.md).
+   Reemplazar todos los tokens `__TOKEN__`; el bloque `__INTERACTION_JS__`
+   contiene solo el montaje de la interaccion autorizada. El shell ya conecta
+   tema, progreso, quiz, mapa y biblioteca. No duplicar esos motores.
+5. Ejecutar el preflight sobre el borrador y las acciones de navegador del
+   brief. Entregar [el informe de revision](templates/lesson-review.md) con
+   evidencia real, separando fallos de comprobaciones no ejecutadas.
+6. El revisor comprueba contenido e interaccion, devuelve los hallazgos juntos
+   y revisa las correcciones. Solo con `APROBADO-PARA-CATALOGO`, la persona
+   responsable registra la ruta en `tracks.js` y en el tema correspondiente
+   del mapa. No hacerlo en paralelo desde varios encargos.
+
+Los estados son acuerdos editoriales, no un control de acceso. Un HTML no
+listado puede seguir siendo accesible en un hosting estatico. No incluir datos
+privados ni en un borrador.
+
+### Instruccion para el implementador
+
+Usar este encargo despues de completar y aprobar el brief:
+
+```text
+Implementa una sola leccion usando el brief <ruta-autorizada-del-brief>.
+Lee Labs/AGENTS.md, docs/labs.md y templates/lab/index.html.
+Crea solo <ruta-de-destino-aprobada> y los assets autorizados por el brief.
+Conserva modelo, fuentes, preguntas, opciones, claves y limites aprobados.
+No edites shared/, registry, mapa o CI; no publiques ni marques aprobacion.
+Si faltan datos o necesitas otro modelo/helper, entrega BLOQUEADO y explica que falta.
+Ejecuta el preflight y los casos del brief. Entrega el informe lesson-review.md
+con archivos cambiados, fuentes por seccion, evidencia y pendientes.
+```
+
+Enviar solo ese paquete y los archivos necesarios, no la conversacion completa
+ni el vault. Elegir un modelo compatible con la privacidad del material antes
+de buscar el menor costo. Si una ronda de correcciones no resuelve el problema,
+escalar con el diff y los logs en vez de repetir generacion.
+
 ## Construir la leccion
 
 Crear `Labs/<track>/<NN-slug>/index.html`, sin cambiar las rutas ya publicadas.
@@ -64,6 +115,13 @@ Las dos lecciones publicadas son `ai-math/01-bayes` y
 `system-design/01-bottleneck`. Los demas patrones son opciones de autoria,
 no lecciones existentes.
 
+La plantilla usa dos preguntas con tres opciones como punto de partida.
+Ajustar esos bloques a las opciones exactas del brief, sin redactar distractores
+o claves nuevos. Usar `#quiz` para el montaje; no depender del numero de seccion.
+Si la figura usa canvas, `Figure.canvas` debe recibir `label` y
+`describedBy: "fig-summary"`. Actualizar tambien ese resumen al cambiar el
+modelo. Para un diagrama DOM, conservar una alternativa textual equivalente.
+
 ## Verificar el modelo
 
 - Mantener los calculos puros en `shared/lab-models.js` y probar casos conocidos.
@@ -88,6 +146,30 @@ no lecciones existentes.
    recarga y almacenamiento bloqueado. La tabla o descripcion debe comunicar
    lo importante sin depender del canvas o del color.
 5. Ejecutar los checks documentados en el README y revisar el diff completo.
+
+### Preflight tecnico
+
+```bash
+# Una leccion aun no registrada:
+node scripts/check-lesson.mjs Labs/<track>/<NN-slug>/index.html
+
+# Todas las lecciones del catalogo:
+node scripts/check-lesson.mjs
+
+# Regresiones del preflight:
+node scripts/test-lesson-check.mjs
+```
+
+El preflight comprueba convenciones estructurales del HTML: rutas y referencias
+locales, imports sin CDN, sintaxis de scripts, campos sin completar, identidad
+de progreso y rango de los indices del quiz. No ejecuta la pagina ni verifica
+que una fuente respalde el texto, que una respuesta sea verdadera o que un
+control funcione. Tampoco sustituye una revision de privacidad o accesibilidad.
+La revision de navegador debe comprobarlo sobre el archivo que se va a publicar.
+
+En un borrador, el catalogo debe conservar sus conteos y sus rutas. Tras la
+integracion, ejecutar el preflight sin argumentos y el resto de los checks de
+CI. Conservar logs y capturas fuera de los archivos publicados.
 
 ## Vincular materiales personales
 
