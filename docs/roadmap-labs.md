@@ -23,8 +23,8 @@ Todo se apoya en piezas que ya existen: `LearningState` (progreso local),
 | # | Entregable | Donde | Depende de |
 |---|---|---|---|
 | 1.1 | Chip de racha en hub de Labs (dias consecutivos con visita, local) — **hecho** e9b9136 | `Labs/index.html` + `shared/learning-state.js` (`activityDays` + `streak()`) | nada |
-| 1.2 | `level` en lessons (base/intermedio/avanzado) + chip en kicker | `tracks.js`, template, CSS | nada |
-| 1.3 | Progreso por area: "2/6" en nodos del mapa y en tarjetas del hub | `knowledge-map.js` render + `LearningState` | 1.1 opcional |
+| 1.2 | `level` en lessons (base/intermedio/avanzado) + chip en kicker — **hecho** | `tracks.js`, template, CSS | nada |
+| 1.3 | Progreso por area: "x/y" en detalle del mapa y chip en tarjetas del hub — **hecho** | `knowledge-map.js` render + `LearningState` | 1.1 opcional |
 | 1.4 | Desafio del dia: rotacion determinista de 1 pregunta en hub | mini question bank en `shared/` o `Labs/` | banco minimo (ver 2.2) |
 | 1.5 | Beat "rompe esto" estandar en template: modo extremo que revele falla | `templates/lab/`, retrofit bottleneck | contrato de brief (nuevo campo) |
 

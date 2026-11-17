@@ -26,6 +26,8 @@ const StudioMap = (() => {
       title: lesson.title,
       href: `${root}Labs/${trackId}/${slug}/index.html`,
       mins: lesson.mins,
+      track: trackId,
+      slug,
     };
   }
 
@@ -64,6 +66,21 @@ const StudioMap = (() => {
       origins.appendChild(mk("span", "chip", (data.origins || {})[o] || o));
     }
     box.appendChild(origins);
+
+    const resolved = (t.lessonKeys || [])
+      .map(k => resolveLesson(k, tracks, root))
+      .filter(Boolean);
+    if (resolved.length) {
+      let done = 0;
+      if (typeof LearningState !== "undefined" && LearningState.getLesson) {
+        done = resolved.filter(l =>
+          LearningState.getLesson(l.track, l.slug).completed).length;
+      }
+      const prog = mk("p", "map-progress", "Progreso en esta area: ");
+      prog.appendChild(mk("b", null, `${done}/${resolved.length}`));
+      prog.appendChild(document.createTextNode(" lecciones completadas"));
+      box.appendChild(prog);
+    }
 
     box.appendChild(mk("p", null, t.description));
     if (t.evidence) {

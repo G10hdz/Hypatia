@@ -468,6 +468,8 @@ pre {
 .map-neighbors .rel.proposal { color: var(--warn); }
 .map-neighbors .rsn { display: block; color: var(--muted); font-size: 0.82rem; margin-top: 4px; }
 .map-empty { color: var(--muted); font-size: 0.88rem; margin-top: 12px; }
+.map-progress { color: var(--muted); font-size: 0.85rem; margin: 6px 0 10px; }
+.map-progress b { color: var(--accent); font-weight: 600; }
 
 .map-list { display: none; }
 @media (max-width: 767px) {

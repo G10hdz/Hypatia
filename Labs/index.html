@@ -86,6 +86,15 @@ if (streakInfo.days > 0) {
 }
 
 const grid = document.getElementById("lessons");
+const topicProg = {};
+for (const tr of LABS_TRACKS) {
+  for (const l2 of tr.lessons) {
+    if (!l2.topic) continue;
+    const p = topicProg[l2.topic] || (topicProg[l2.topic] = { done: 0, total: 0 });
+    p.total++;
+    if (LearningState.getLesson(tr.id, l2.slug).completed) p.done++;
+  }
+}
 const statusChip = rec => {
   if (rec.completed) {
     const c = document.createElement("span");
@@ -114,6 +123,12 @@ for (const t of LABS_TRACKS) {
     const meta = document.createElement("div");
     meta.className = "meta";
     meta.appendChild(statusChip(rec));
+    if (l.level) {
+      const lv = document.createElement("span");
+      lv.className = "chip";
+      lv.textContent = `nivel ${l.level}`;
+      meta.appendChild(lv);
+    }
     for (const b of l.beats) {
       const s = document.createElement("span");
       s.className = "chip";
@@ -124,6 +139,13 @@ for (const t of LABS_TRACKS) {
     m.className = "chip";
     m.textContent = `~${l.mins} min`;
     meta.appendChild(m);
+    const tp = l.topic && topicProg[l.topic];
+    if (tp) {
+      const pc = document.createElement("span");
+      pc.className = "chip";
+      pc.textContent = `progreso ${tp.done}/${tp.total}`;
+      meta.appendChild(pc);
+    }
     const src = document.createElement("span");
     src.className = "src";
     src.textContent = `Origen: ${t.sourceSystem}`;
