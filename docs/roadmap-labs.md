@@ -13,6 +13,11 @@ Referencias de diseno (enviadas por Gio):
 - TrenTorch — https://trentorch.com/ — "learn by building": problemas con
   tests ocultos en browser, case studies de empresas, papers anotados.
   Aporto: code runner, lector de fuentes con notas, caso aplicado.
+- AI Learning Tube — https://aswinis94.github.io/ai-learning-tube/ — catalogo
+  de videos para aprender ML (derivado de HackerTube de Karpathy:
+  hackertube.org, 6,454 videos recomendados en HN por tema, curados por
+  senal, estado local, datos exportables). Aporto: fuentes en video por
+  tema con senal de curacion, patron para 2.3/2.6.
 
 Todo se apoya en piezas que ya existen: `LearningState` (progreso local),
 `StudioQuiz`/`StudioMap`/`StudioResources`, `tracks.js` + `knowledge-map.js`,
