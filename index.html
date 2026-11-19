@@ -54,14 +54,6 @@
       <ul class="anden" id="anden"></ul>
     </section>
 
-    <section id="desafio" aria-labelledby="desafio-h" hidden>
-      <div class="red-h">
-        <h2 id="desafio-h">Desafio del dia</h2>
-        <p>Contesta antes de ver la explicacion. Cuenta para tu racha.</p>
-      </div>
-      <div id="desafio-box" hidden></div>
-    </section>
-
     <section id="lecciones" aria-labelledby="lec-h">
       <div class="red-h">
         <h2 id="lec-h">Lineas</h2>
@@ -74,6 +66,14 @@
           <li><a href="Labs/system-design/01-bottleneck/index.html">El viaje de un request</a></li>
         </ul>
       </noscript>
+    </section>
+
+    <section id="desafio" aria-labelledby="desafio-h" hidden>
+      <div class="red-h">
+        <h2 id="desafio-h">Desafio del dia</h2>
+        <p>Contesta antes de ver la explicacion. Cuenta para tu racha.</p>
+      </div>
+      <div id="desafio-box" hidden></div>
     </section>
 
     <section id="mapa" aria-labelledby="mapa-h">
@@ -163,7 +163,7 @@ const box = (id, line, size) => {
   const badge = document.createElement("span");
   badge.className = "line-badge";
   badge.textContent = `L${x.t.line}`;
-  const state = !pending ? "Todo recorrido" : x.rec.started ? "Vas a medio camino" : "Proxima estacion";
+  const state = !pending ? "Todo recorrido" : x.rec.started ? "En curso" : "Proxima estacion";
   bandEl.append(badge, `${x.t.name} · ${state}`);
   document.getElementById("hoy-where").textContent =
     `Estacion ${n} de ${x.t.lessons.length} · ~${x.l.mins} min${!pending ? " · repasa a tu ritmo" : ""}`;
@@ -203,7 +203,10 @@ paintStreak();
     const u = document.createElement("small");
     u.textContent = r.due === 1 ? "tarjeta" : "tarjetas";
     num.appendChild(u);
-    a.append(box("flashcards", "l5"), t, num);
+    const go = document.createElement("span");
+    go.className = "btn primary";
+    go.textContent = r.due ? "Repasar" : "Ver";
+    a.append(box("flashcards", "l5", "56px"), t, num, go);
     li.appendChild(a);
     ul.appendChild(li);
   }
@@ -228,6 +231,7 @@ StudioLines.mount(document.getElementById("lineas"), { tracks: LABS_TRACKS, root
 
 /* Terminales de practica con su pictograma. */
 for (const a of document.querySelectorAll(".terminal[data-picto]")) {
+  a.style.setProperty("--line-c", `var(--${a.dataset.line})`);
   a.prepend(box(a.dataset.picto, a.dataset.line));
 }
 
