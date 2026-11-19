@@ -113,6 +113,14 @@ const LearningState = (() => {
     return { days: n, activeToday, atRisk: n > 0 && atRisk };
   }
 
+  /* Texto corto de la racha, el mismo en portada y hub. */
+  function streakText(st) {
+    if (!st.days) return "Hoy puede ser el dia 1 de tu racha.";
+    if (st.activeToday) return "Hoy ya cuenta.";
+    if (st.atRisk) return "Ayer no conto. Estudia hoy y la mantienes.";
+    return "Un minuto hoy la suma.";
+  }
+
   /* Registra estudio hoy sin leccion (p. ej. el desafio del dia). */
   function checkIn() { markActivity(); save(); }
 
@@ -314,7 +322,7 @@ const LearningState = (() => {
     KEY, RESOURCE_TYPES, LABEL_MAX, URL_MAX,
     get persistent() { return persistent; },
     key, canonical, getLesson, visit, recordAttempt,
-    validateResource, listResources, addResource, mountWarning, streak, checkIn, today: () => dayKey(),
+    validateResource, listResources, addResource, mountWarning, streak, streakText, checkIn, today: () => dayKey(),
   };
 })();
 
