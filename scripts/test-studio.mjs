@@ -210,6 +210,48 @@ t("racha cuenta dias consecutivos y sobrevive sin actividad hoy", () => {
   assert.equal(JSON.parse(store.getItem("hypatia.learning.v1")).activityDays.length, 3);
 });
 
+const streakAt = days => {
+  const FIXED = Date.parse("2026-11-17T12:00:00");
+  class FD extends Date {
+    constructor(...a) { super(...(a.length ? a : [FIXED])); }
+    static now() { return FIXED; }
+  }
+  const key = off => {
+    const d = new Date(FIXED + off * 86400000);
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  };
+  const store = makeStorage({
+    "hypatia.learning.v1": JSON.stringify({ lessons: {}, resources: [], activityDays: days.map(key) }),
+  });
+  return ctx([FILES.state], store, { Date: FD }).sandbox.LearningState;
+};
+
+t("racha: un dia sin estudiar no la rompe (dia de gracia)", () => {
+  const st = streakAt([-4, -3, -1, 0]).streak();
+  assert.equal(st.days, 4, "cuenta dias con estudio, salta el hueco de un dia");
+  assert.equal(st.activeToday, true);
+  assert.equal(st.atRisk, false);
+});
+
+t("racha: ayer sin estudiar la deja en riesgo, no en cero", () => {
+  const st = streakAt([-3, -2]).streak();
+  assert.equal(st.days, 2);
+  assert.equal(st.atRisk, true, "hoy es el ultimo dia para mantenerla");
+});
+
+t("racha: dos dias seguidos sin estudiar la rompen", () => {
+  assert.equal(streakAt([-3]).streak().days, 0);
+  assert.equal(streakAt([-6, -5, -2, -1]).streak().days, 2, "hueco de dos dias corta");
+});
+
+t("checkIn marca hoy y suma a la racha", () => {
+  const LS = streakAt([-1]);
+  LS.checkIn();
+  const st = LS.streak();
+  assert.equal(st.days, 2); assert.equal(st.activeToday, true);
+  assert.match(LS.today(), /^2026-11-17$/);
+});
+
 t("racha en cero sin dias y activityDays corrupto se sanea", () => {
   const { sandbox } = ctx([FILES.state], makeStorage({
     "hypatia.learning.v1": JSON.stringify({ lessons: {}, resources: [], activityDays: ["ayer", 5] }),

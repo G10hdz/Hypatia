@@ -94,18 +94,27 @@ const LearningState = (() => {
       if (days.length > ACTIVITY_MAX) days.splice(0, days.length - ACTIVITY_MAX);
     }
   }
-  /* Racha: dias consecutivos terminando hoy o ayer (sigue viva hasta que
-   * termine el dia sin actividad). */
+  /* Racha: dias con estudio sin dos dias seguidos de hueco. Un dia sin
+   * estudiar no la rompe (dia de gracia); hoy cuenta hasta que termina.
+   * atRisk: ayer no hubo estudio, hoy es el ultimo dia para mantenerla. */
   function streak() {
     const days = activityDays();
+    const has = k => days.includes(k);
     const today = dayKey();
-    const activeToday = days.includes(today);
-    let cursor = activeToday ? today : (days.includes(prevDay(today)) ? prevDay(today) : null);
-    if (!cursor) return { days: 0, activeToday };
+    const activeToday = has(today);
+    const atRisk = !activeToday && !has(prevDay(today));
+    let cursor = activeToday ? today : prevDay(today);
     let n = 0;
-    while (days.includes(cursor)) { n++; cursor = prevDay(cursor); }
-    return { days: n, activeToday };
+    for (;;) {
+      if (has(cursor)) { n++; cursor = prevDay(cursor); }
+      else if (has(prevDay(cursor))) cursor = prevDay(cursor);
+      else break;
+    }
+    return { days: n, activeToday, atRisk: n > 0 && atRisk };
   }
+
+  /* Registra estudio hoy sin leccion (p. ej. el desafio del dia). */
+  function checkIn() { markActivity(); save(); }
 
   function load() {
     persistent = probe();
@@ -305,7 +314,7 @@ const LearningState = (() => {
     KEY, RESOURCE_TYPES, LABEL_MAX, URL_MAX,
     get persistent() { return persistent; },
     key, canonical, getLesson, visit, recordAttempt,
-    validateResource, listResources, addResource, mountWarning, streak,
+    validateResource, listResources, addResource, mountWarning, streak, checkIn, today: () => dayKey(),
   };
 })();
 
