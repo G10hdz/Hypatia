@@ -77,10 +77,8 @@ LearningState.mountWarning(document.querySelector("[data-store-warning]"));
 const streakInfo = LearningState.streak();
 if (streakInfo.days > 0) {
   const el = document.getElementById("streak");
-  const dias = streakInfo.days === 1 ? "dia seguido" : "dias seguidos";
-  el.textContent = streakInfo.activeToday
-    ? `${streakInfo.days} ${dias} · hoy ya cuenta.`
-    : `${streakInfo.days} ${dias} · un minuto hoy la mantiene.`;
+  const dias = streakInfo.days === 1 ? "dia de racha" : "dias de racha";
+  el.textContent = `${streakInfo.days} ${dias} · ${LearningState.streakText(streakInfo)}`;
   el.style.color = "var(--accent)";
   el.hidden = false;
 }
