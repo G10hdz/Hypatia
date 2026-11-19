@@ -29,15 +29,14 @@
   <div class="store-warning" data-store-warning hidden></div>
 
   <main id="contenido">
-  <div class="kicker">
-    <span class="chip todo">system-design</span>
-    <span class="chip">leccion 01</span>
-    <span class="chip">nivel base</span>
-    <span class="chip">diagrama interactivo</span>
-    <span class="chip">~12 min</span>
-  </div>
-  <h1>El viaje de un request</h1>
-  <p class="sub" style="color:var(--muted)">Todos los sistemas tienen un cuello de botella. La habilidad es encontrarlo antes de que te encuentre.</p>
+  <header class="estacion-top" style="--line-c: var(--l2)">
+    <span class="picto-box" data-picto="system-design/01-bottleneck"></span>
+    <div>
+      <h1>El viaje de un request</h1>
+      <p class="where"><span class="line-badge">L2</span> System Design · estacion 1 · nivel base · diagrama interactivo · ~12 min</p>
+      <p class="sub">Todos los sistemas tienen un cuello de botella. La habilidad es encontrarlo antes de que te encuentre.</p>
+    </div>
+  </header>
 
   <section aria-labelledby="sec-1">
     <h2 id="sec-1">1. La idea</h2>
@@ -154,6 +153,7 @@ unserved = arrival_rps - served</pre>
 <script src="../../../shared/figures.js"></script>
 <script src="../../../shared/theme.js"></script>
 <script src="../../../shared/learning-state.js"></script>
+<script src="../../../shared/pictograms.js"></script>
 <script src="../../../shared/quiz.js"></script>
 <script src="../../../shared/resources.js"></script>
 <script src="../../tracks.js"></script>
