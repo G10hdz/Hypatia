@@ -37,6 +37,8 @@
       <div class="panel"><p>__IDEA_WITHOUT_SPOILER__</p></div>
     </section>
 
+  <aside class="margin-note" id="margen" aria-label="Nota al margen" hidden></aside>
+
     <section aria-labelledby="prediction-title">
       <h2 id="prediction-title">2. Antes de explorar</h2>
       <div class="panel">
@@ -124,6 +126,8 @@
 <script src="../../../shared/quiz.js"></script>
 <script src="../../../shared/resources.js"></script>
 <script src="../../tracks.js"></script>
+<script src="../../books.js"></script>
+<script src="../../../shared/margin.js"></script>
 <script src="../../knowledge-map.js"></script>
 <script src="../../../shared/map.js"></script>
 <script>
@@ -170,6 +174,8 @@
   StudioMap.connect(document.getElementById("connect"), TOPIC, {
     data: KNOWLEDGE_MAP, homeHref: "../../../index.html",
   });
+  StudioMargin.mount(document.getElementById("margen"),
+    LABS_TRACKS.find(t => t.id === TRACK)?.lessons.find(l => l.slug === SLUG)?.margin, BOOKS);
   StudioResources.mount(document.getElementById("biblioteca-leccion"), {
     trackId: TOPIC, title: "Tus materiales de esta area", fixedTopic: true, heading: "h2",
   });

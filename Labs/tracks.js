@@ -24,6 +24,11 @@ const LABS_TRACKS = [
         mins: 12,
         level: "base",
         topic: "matematicas",
+        margin: {
+          read: [{ book: "think-bayes", where: "cap. 2", href: "https://allendowney.github.io/ThinkBayes2/chap02.html" }],
+          watch: { title: "Bayes theorem, the geometry of changing beliefs", by: "3Blue1Brown", url: "https://www.youtube.com/watch?v=HZGCoVF3YvM" },
+          try: "Sin formulas, explicale a alguien por que una prueba que acierta 99% puede equivocarse casi siempre con una enfermedad rara. Usa 1000 personas, como en la figura.",
+        },
       },
     ],
   },
@@ -43,6 +48,11 @@ const LABS_TRACKS = [
         mins: 12,
         level: "base",
         topic: "sistemas",
+        margin: {
+          read: [{ book: "samwho-queue" }, { book: "ddia", where: "cap. 1" }],
+          watch: { title: "How NOT to Measure Latency", by: "Gil Tene, Strange Loop", url: "https://www.youtube.com/watch?v=lJ8ydIuPFeU" },
+          try: "Dibuja el camino de un request en una app que uses a diario. Marca la pieza que crees que se satura primero y que medirias para comprobarlo.",
+        },
       },
     ],
   },

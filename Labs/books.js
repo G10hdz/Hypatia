@@ -18,6 +18,7 @@ const BOOKS = [
   { id: "sre-book", title: "Site Reliability Engineering", author: "Beyer, Jones, Petoff y Murphy", tracks: ["system-design"], free: "https://sre.google/sre-book/table-of-contents/" },
   { id: "sre-workbook", title: "The Site Reliability Workbook", author: "Beyer, Murphy, Rensin, Kawahara y Thorne", tracks: ["system-design"], free: "https://sre.google/workbook/table-of-contents/" },
   { id: "samwho-lb", title: "Load Balancing", author: "Sam Rose", tracks: ["system-design"], free: "https://samwho.dev/load-balancing/", kind: "web" },
+  { id: "samwho-queue", title: "Queueing", author: "Sam Rose", tracks: ["system-design"], free: "https://encore.dev/blog/queueing", kind: "web" },
 
   // comunicacion
   { id: "resonate", title: "Resonate", author: "Nancy Duarte", tracks: ["comunicacion"] },

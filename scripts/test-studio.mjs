@@ -123,6 +123,7 @@ const FILES = {
   challenge: ["shared/challenge.js", ["StudioChallenge"]],
   books: ["Labs/books.js", ["BOOKS", "AMAZON_TAG", "amazonUrl"]],
   bank: ["Labs/bank.js", ["QUESTION_BANK"]],
+  margin: ["shared/margin.js", ["StudioMargin"]],
 };
 
 function ctx(files, storage, extra = {}) {
@@ -790,6 +791,46 @@ t("lecciones publicadas: cada seccion tiene un h2 que la nombra", () => {
     }
     assert.match(html, /<nav aria-label="Principal">/, `${l.slug}: nav sin aria-label`);
   }
+});
+
+t("nota al margen: cada leccion publicada la trae, con libros del catalogo y video de YouTube", () => {
+  const { LABS_TRACKS, BOOKS } = ctx(["tracks", "books"], makeStorage()).sandbox;
+  const ids = new Set(BOOKS.map(b => b.id));
+  for (const tr of LABS_TRACKS) for (const l of tr.lessons) {
+    const m = l.margin;
+    assert.ok(m, `${l.slug}: sin nota al margen`);
+    assert.ok(m.read.length >= 1, `${l.slug}: sin lectura`);
+    for (const r of m.read) assert.ok(ids.has(r.book), `${l.slug}: libro ${r.book} fuera del catalogo`);
+    if (m.watch) assert.match(m.watch.url, /^https:\/\/www\.youtube\.com\/watch\?v=/);
+    assert.ok(m.try && m.try.trim(), `${l.slug}: sin practica`);
+    const html = readFileSync(join(ROOT_DIR, `Labs/${tr.id}/${l.slug}/index.html`), "utf8");
+    assert.match(html, /<aside class="margin-note" id="margen"/, `${l.slug}: falta el aside`);
+    assert.match(html, /shared\/margin\.js/, `${l.slug}: no carga margin.js`);
+    assert.match(html, /Labs\/books\.js|\.\.\/\.\.\/books\.js/, `${l.slug}: no carga books.js`);
+  }
+});
+
+t("nota al margen: lectura gratis, compra y video con target externo", () => {
+  const { StudioMargin, BOOKS, document } = ctx(["books", "margin"], makeStorage()).sandbox;
+  const el = document.createElement("aside");
+  el.hidden = true;
+  StudioMargin.mount(el, {
+    read: [{ book: "think-bayes", where: "cap. 2", href: "https://allendowney.github.io/ThinkBayes2/chap02.html" }, { book: "ddia", where: "cap. 1" }],
+    watch: { title: "Bayes", by: "3Blue1Brown", url: "https://www.youtube.com/watch?v=x" },
+    try: "Explicalo con 1000 personas.",
+  }, BOOKS);
+  assert.equal(el.hidden, false);
+  const links = el._descendants().filter(n => n.tagName === "a");
+  const by = txt => links.find(a => a.textContent.includes(txt));
+  assert.equal(by("Leer gratis").href, "https://allendowney.github.io/ThinkBayes2/chap02.html");
+  assert.match(by("En Amazon").href, /amazon\.com\.mx/);
+  assert.equal(by("Bayes").target, "_blank");
+  assert.ok(el.textContent.includes("Explicalo con 1000 personas."));
+
+  const empty = document.createElement("aside");
+  empty.hidden = true;
+  StudioMargin.mount(empty, null, BOOKS);
+  assert.equal(empty.hidden, true);
 });
 
 console.log(process.exitCode ? "\nFallaron pruebas" : "\nTodas las pruebas del estudio pasaron");

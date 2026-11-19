@@ -46,6 +46,8 @@
     </div>
   </section>
 
+  <aside class="margin-note" id="margen" aria-label="Nota al margen" hidden></aside>
+
   <section aria-labelledby="sec-2">
     <h2 id="sec-2">2. La figura</h2>
     <div class="panel">
@@ -163,6 +165,8 @@ print(f"{posterior:.2%}")   # ≈ 41%</pre>
 <script src="../../../shared/quiz.js"></script>
 <script src="../../../shared/resources.js"></script>
 <script src="../../tracks.js"></script>
+<script src="../../books.js"></script>
+<script src="../../../shared/margin.js"></script>
 <script src="../../knowledge-map.js"></script>
 <script src="../../../shared/map.js"></script>
 <script>
@@ -298,6 +302,8 @@ StudioQuiz.mount(document.querySelectorAll("section")[5], { track: TRACK, slug: 
 StudioMap.connect(document.getElementById("connect"), TOPIC, {
   data: KNOWLEDGE_MAP, homeHref: "../../../index.html",
 });
+StudioMargin.mount(document.getElementById("margen"),
+  LABS_TRACKS.find(t => t.id === TRACK)?.lessons.find(l => l.slug === SLUG)?.margin, BOOKS);
 StudioResources.mount(document.getElementById("biblioteca-leccion"), {
   trackId: TOPIC, title: "Tus materiales de esta area", fixedTopic: true, heading: "h2",
 });
