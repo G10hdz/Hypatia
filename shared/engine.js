@@ -326,7 +326,8 @@
     }
 
     function reloadQuestions() {
-      const bundled = Array.isArray(window.QUESTIONS) ? window.QUESTIONS : [];
+      const bundled = (Array.isArray(window.QUESTIONS) ? window.QUESTIONS : [])
+        .filter(q => typeof brokenByOwnExplanation !== "function" || !brokenByOwnExplanation(q));
       const merged = new Map();
       [...bundled, ...state.customQuestions]
         .filter(isValidQuestion)
