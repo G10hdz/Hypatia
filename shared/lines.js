@@ -20,7 +20,7 @@ const StudioLines = (() => {
       const done = t.lessons.filter(l => LearningState.getLesson(t.id, l.slug).completed).length;
       const meta = document.createElement("span");
       meta.className = "meta";
-      meta.textContent = `${done} de ${t.lessons.length} estaciones`;
+      meta.textContent = `${done} de ${t.lessons.length} ${t.lessons.length === 1 ? "estación" : "estaciones"}`;
       head.append(badge, h, meta);
       const ol = document.createElement("ol");
       ol.className = "estaciones";
@@ -40,7 +40,7 @@ const StudioLines = (() => {
         st.className = "st";
         st.textContent = rec.completed
           ? (rec.scoreUnknown ? "recorrida" : `recorrida · ${rec.bestCorrect}/${rec.total}`)
-          : `estacion ${i + 1} · ~${l.mins} min${rec.started ? " · en curso" : ""}`;
+          : `estación ${i + 1} · ~${l.mins} min${rec.started ? " · en curso" : ""}`;
         a.append(dot, nm, st);
         li.appendChild(a);
         ol.appendChild(li);

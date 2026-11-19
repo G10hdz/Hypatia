@@ -844,7 +844,7 @@ t("navegacion: mismas entradas en el estudio y cada ancla existe en la portada",
     const nav = (html.match(/<nav aria-label="Principal">([\s\S]*?)<\/nav>/) || [])[1];
     assert.ok(nav, `${f}: falta nav Principal`);
     const links = [...nav.matchAll(/<a href="([^"]+)"[^>]*>([^<]+)<\/a>/g)];
-    assert.deepEqual(links.map(m => m[2]), ["Labs", "Mapa", "Practica", "Biblioteca"], `${f}: entradas`);
+    assert.deepEqual(links.map(m => m[2]), ["Labs", "Mapa", "Práctica", "Biblioteca"], `${f}: entradas`);
     for (const [, href] of links) {
       const hash = (href.match(/^(?:[./]*index\.html)?#(.+)$/) || [])[1];
       if (hash) assert.match(home, new RegExp(`id="${hash}"`), `${f}: ancla #${hash} no existe en la portada`);

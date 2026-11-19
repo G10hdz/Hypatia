@@ -20,7 +20,7 @@
     <nav aria-label="Principal">
       <a href="index.html" aria-current="page">Labs</a>
       <a href="../index.html#mapa">Mapa</a>
-      <a href="../index.html#practica">Practica</a>
+      <a href="../index.html#practica">Práctica</a>
       <a href="../index.html#biblioteca">Biblioteca</a>
     </nav>
     <button class="theme-toggle" type="button" data-theme-toggle>Tema</button>
@@ -33,12 +33,12 @@
     <span class="picto-box" data-picto="ia"></span>
     <div>
       <h1>Labs</h1>
-      <p class="where" id="streak">Lecciones interactivas: idea, figura que se mueve, modelo declarado, codigo y preguntas.</p>
+      <p class="where" id="streak">Lecciones interactivas: idea, figura que se mueve, modelo declarado, código y preguntas.</p>
     </div>
   </header>
 
   <section aria-labelledby="lineas-h">
-    <div class="red-h"><h2 id="lineas-h">Lineas</h2><p>Cada track es una linea; cada leccion, una estacion.</p></div>
+    <div class="red-h"><h2 id="lineas-h">Líneas</h2><p>Cada track es una línea; cada lección, una estación.</p></div>
     <div class="lineas" id="lineas"></div>
     <noscript>
       <ul>
@@ -49,7 +49,7 @@
   </section>
 
   <section aria-labelledby="lecturas-h">
-    <div class="red-h"><h2 id="lecturas-h">Lecturas recomendadas</h2><p>Fuentes publicas para seguir cada tema.</p></div>
+    <div class="red-h"><h2 id="lecturas-h">Lecturas recomendadas</h2><p>Fuentes públicas para seguir cada tema.</p></div>
     <div class="module-list" id="sources"></div>
   </section>
 
@@ -72,7 +72,7 @@ LearningState.mountWarning(document.querySelector("[data-store-warning]"));
 
 const streakInfo = LearningState.streak();
 if (streakInfo.days > 0) {
-  const dias = streakInfo.days === 1 ? "dia de racha" : "dias de racha";
+  const dias = streakInfo.days === 1 ? "día de racha" : "días de racha";
   document.getElementById("streak").textContent = `${streakInfo.days} ${dias}. ${LearningState.streakText(streakInfo)}`;
 }
 StudioLines.mount(document.getElementById("lineas"), { tracks: LABS_TRACKS, root: "" });
