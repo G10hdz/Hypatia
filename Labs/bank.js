@@ -6,6 +6,12 @@
  * { id, track, status: "borrador" | "aprobada",
  *   prompt, options: [3-4 textos], ok: indice correcto, why,
  *   ref: { book: id de BOOKS, where: "cap. 7" } }
+ *
+ * Citas cotejadas el 2026-11-18 contra indices reales: PDF oficial (MML),
+ * sitio del autor (Think Bayes, SRE), editorial (Release It!), repo de
+ * referencias del autor (DDIA), indices escaneados o de catalogo (Getting to
+ * Yes, What Works for Women at Work) y resumenes por capitulo (Made to Stick,
+ * Never Split the Difference). Una cita nueva se coteja igual antes de aprobar.
  */
 const QUESTION_BANK = [
   // ai-math: piloto docs/briefs/bank-ai-math.md
