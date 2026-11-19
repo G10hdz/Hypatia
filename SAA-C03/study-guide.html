@@ -1,51 +1,86 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PrepAWS | Guia de estudio SAA-C03</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PrepAWS · SAA-C03 - Guía de Estudio</title>
   <link rel="stylesheet" href="../shared/tokens.css">
+  <link rel="stylesheet" href="../shared/studio.css">
   <script>
     (function(){try{var v=localStorage.getItem("hypatia.theme.v1");
     document.documentElement.dataset.theme=(v==="dark"||v==="light")?v:
     (matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");}catch(e){}})();
   </script>
   <style>
-    body { margin: 0; padding: 2rem 1rem; font: 1rem/var(--leading) var(--font-body); background: var(--bg); color: var(--ink); }
-    main { max-width: 760px; margin: 0 auto; }
-    h1, h2 { font-family: var(--font-display); line-height: var(--leading-tight); }
-    h1 { font-size: var(--text-2xl); margin: 0; }
-    h2 { font-size: var(--text-lg); color: var(--accent); margin: var(--space-6) 0 var(--space-2); }
-    ul { list-style: none; padding: 0; }
-    li { padding: var(--space-2) 0; border-bottom: 1px solid var(--line); }
-    li small { display: block; color: var(--muted); }
-    a { color: var(--accent); }
-    .back-home-link { display: inline-block; margin-top: var(--space-6); }
+    .srcs { list-style: none; display: grid; gap: var(--space-2); margin-top: var(--space-3); }
+    .srcs li {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: var(--space-3) var(--space-4);
+      box-shadow: var(--shadow);
+    }
+    .srcs a { color: var(--ink); font-weight: 700; text-decoration: none; }
+    .srcs a:hover { color: var(--line-c); text-decoration: underline; }
+    .srcs small { display: block; color: var(--muted); font-size: var(--text-sm); margin-top: 2px; }
   </style>
-  <script defer src="/positronica-analytics.js"></script>
+<script defer src="/positronica-analytics.js"></script>
 </head>
 <body>
-  <main>
-    <h1>Guia de estudio SAA-C03</h1>
-    <p>El simulacro de PrepAWS tiene 65 preguntas y dura 130 minutos. La meta de practica es acertar 47. AWS usa una escala propia con un puntaje minimo de 720 sobre 1000.</p>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<div class="wrap" style="--line-c: var(--l7)">
+  <header class="topbar">
+    <a class="brand" href="../index.html">Hypatia</a>
+    <nav aria-label="Principal">
+      <a href="./index.html">PrepAWS</a>
+      <a href="../index.html#mapa">Mapa</a>
+      <a href="../index.html#practica">Práctica</a>
+      <a href="../index.html#biblioteca">Biblioteca</a>
+    </nav>
+    <button class="theme-toggle" type="button" data-theme-toggle>Tema</button>
+  </header>
 
-    <h2>Dominios del examen</h2>
-    <ul>
-      <li><strong>Seguridad</strong> (30%, 19 preguntas en el simulacro)<small>Elige roles y politicas de IAM con los permisos minimos. Revisa el acceso a S3 y las politicas de claves de KMS.</small></li>
-      <li><strong>Resiliencia</strong> (26%, 17 preguntas)<small>Compara RDS Multi-AZ con las replicas de lectura. Decide cuando usar conmutacion por error en Route 53 o desacoplar servicios con SQS.</small></li>
-      <li><strong>Rendimiento</strong> (24%, 16 preguntas)<small>Compara tipos de instancia EC2 y volumenes EBS segun la carga. Revisa como los indices de DynamoDB y la cache de CloudFront afectan la latencia.</small></li>
-      <li><strong>Costos</strong> (20%, 13 preguntas)<small>Elige clases de almacenamiento y reglas de ciclo de vida de S3 segun la frecuencia de acceso. Compara opciones de compra de EC2 segun la demanda.</small></li>
+  <main id="contenido">
+  <header class="estacion-top" style="--line-c: var(--l7)">
+    <span class="picto-box" data-picto="prepaws"></span>
+    <div>
+      <h1>PrepAWS&nbsp;· SAA-C03</h1>
+      <p class="where"><span class="line-badge">L7</span> Guía de estudio · acceso abierto</p>
+      <p class="sub">El simulacro de PrepAWS tiene 65 preguntas y dura 130 minutos. La meta de práctica es acertar 47. AWS usa una escala propia con un puntaje mínimo de 720 sobre 1000.</p>
+    </div>
+  </header>
+
+  <section aria-labelledby="sec-dominios">
+    <h2 id="sec-dominios">Dominios del examen</h2>
+    <ul class="srcs">
+      <li><strong>Seguridad</strong> (30%, 19 preguntas en el simulacro)<small>Elige roles y políticas de IAM con los permisos mínimos. Revisa el acceso a S3 y las políticas de claves de KMS.</small></li>
+      <li><strong>Resiliencia</strong> (26%, 17 preguntas)<small>Compara RDS Multi-AZ con las réplicas de lectura. Decide cuándo usar conmutación por error en Route 53 o desacoplar servicios con SQS.</small></li>
+      <li><strong>Rendimiento</strong> (24%, 16 preguntas)<small>Compara tipos de instancia EC2 y volúmenes EBS según la carga. Revisa cómo los índices de DynamoDB y la caché de CloudFront afectan la latencia.</small></li>
+      <li><strong>Costos</strong> (20%, 13 preguntas)<small>Elige clases de almacenamiento y reglas de ciclo de vida de S3 según la frecuencia de acceso. Compara opciones de compra de EC2 según la demanda.</small></li>
     </ul>
+  </section>
 
-    <h2>Practica por tema</h2>
-    <p>Elige un dominio para practicar un bloque de 15 preguntas. Usa el filtro de tema para concentrarte en un servicio. Excelencia operativa y General tambien estan disponibles para practicar por separado.</p>
-    <ul>
-      <li><strong>Redes</strong><small>Compara Direct Connect y las interfaces virtuales para redes hibridas. Distingue entre VPC endpoints de interfaz y de gateway.</small></li>
-      <li><strong>Aplicaciones</strong><small>Revisa los tipos de invocacion de Lambda, las suscripciones de SNS y las colas FIFO de SQS. Compara las opciones de ECS y EKS con Fargate.</small></li>
+  <section aria-labelledby="sec-practica">
+    <h2 id="sec-practica">Práctica por tema</h2>
+    <p>Elige un dominio para practicar un bloque de 15 preguntas. Usa el filtro de tema para concentrarte en un servicio. Excelencia operativa y General también están disponibles para practicar por separado.</p>
+    <ul class="srcs">
+      <li><strong>Redes</strong><small>Compara Direct Connect y las interfaces virtuales para redes híbridas. Distingue entre VPC endpoints de interfaz y de gateway.</small></li>
+      <li><strong>Aplicaciones</strong><small>Revisa los tipos de invocación de Lambda, las suscripciones de SNS y las colas FIFO de SQS. Compara las opciones de ECS y EKS con Fargate.</small></li>
       <li><strong>Datos</strong><small>Repasa las copias de seguridad de RDS y los endpoints de Aurora. Revisa el particionado en Athena y las claves de ordenamiento de Redshift.</small></li>
-      <li><strong>Excelencia operativa</strong><small>Usa CloudWatch para metricas y alarmas, CloudTrail para auditar llamadas a la API y AWS Config para revisar cambios de configuracion.</small></li>
+      <li><strong>Excelencia operativa</strong><small>Usa CloudWatch para métricas y alarmas, CloudTrail para auditar llamadas a la API y AWS Config para revisar cambios de configuración.</small></li>
     </ul>
-    <a class="back-home-link" href="./index.html">Volver al simulador</a>
+  </section>
+
+  <a class="back-link" href="./index.html">← Volver al simulador</a>
   </main>
+  <footer class="site">Hypatia · HTML estático, sin build · tu progreso queda en este navegador</footer>
+</div>
+
+<script src="../shared/theme.js"></script>
+<script src="../shared/pictograms.js"></script>
+<script>
+"use strict";
+StudioTheme.init();
+</script>
 </body>
 </html>
