@@ -17,7 +17,7 @@
 <div class="wrap">
   <header class="topbar">
     <a class="brand" href="../../../index.html">Hypatia</a>
-    <nav>
+    <nav aria-label="Principal">
       <a href="../../../index.html#mapa">Mapa</a>
       <a href="../../index.html">Labs</a>
       <a href="../../../index.html#biblioteca">Biblioteca</a>
@@ -38,16 +38,16 @@
   <h1>El viaje de un request</h1>
   <p class="sub" style="color:var(--muted)">Todos los sistemas tienen un cuello de botella. La habilidad es encontrarlo antes de que te encuentre.</p>
 
-  <section>
-    <div class="kicker"><span class="chip">01 · la idea</span></div>
+  <section aria-labelledby="sec-1">
+    <h2 id="sec-1">1. La idea</h2>
     <div class="panel">
       <p>Un request viaja: <b>cliente → load balancer → app servers → base de datos</b>. Cada pieza tiene una capacidad maxima. Mientras el trafico quepa, todo va fino; en cuanto una pieza se satura, el exceso no se atiende.</p>
       <p>La regla de oro: <b>el sistema va tan rapido como su pieza mas lenta.</b> Escalar cualquier otra es decorar.</p>
     </div>
   </section>
 
-  <section>
-    <div class="kicker"><span class="chip">02 · la figura</span></div>
+  <section aria-labelledby="sec-2">
+    <h2 id="sec-2">2. La figura</h2>
     <div class="panel">
       <div id="fig"></div>
       <div class="controls">
@@ -69,8 +69,8 @@
     </div>
   </section>
 
-  <section>
-    <div class="kicker"><span class="chip">03 · la matematica</span></div>
+  <section aria-labelledby="sec-3">
+    <h2 id="sec-3">3. La matematica</h2>
     <div class="panel">
       <div class="formula">Capacidad efectiva = min(400 x servidores activos, 700 / (1 - hit rate))</div>
       <p class="nums" id="cap-note">Ahora: min(400 x 2, 700 / 1) = <b>700 rps</b>.</p>
@@ -80,8 +80,8 @@
     </div>
   </section>
 
-  <section>
-    <div class="kicker"><span class="chip">04 · el codigo</span></div>
+  <section aria-labelledby="sec-4">
+    <h2 id="sec-4">4. El codigo</h2>
     <div class="panel">
 <pre>web_capacity = 400 * active_servers
 miss_rate = 1 - cache_hit_rate
@@ -93,16 +93,16 @@ unserved = arrival_rps - served</pre>
     </div>
   </section>
 
-  <section>
-    <div class="kicker"><span class="chip">05 · en el trabajo real</span></div>
+  <section aria-labelledby="sec-5">
+    <h2 id="sec-5">5. En el trabajo real</h2>
     <div class="panel">
       <p>En una entrevista de diseno te piden "diseña Twitter": lo que evaluan no son las cajas que dibujas sino si calculas <b>donde se satura primero</b>: lecturas contra escrituras, fan-out y que rompe cuando una pieza cae.</p>
       <p>En produccion: capacity planning es estimar llegadas, medir tiempos y poner el limite donde sea barato y visible (una cola explicita) en vez de implicito (timeouts en cadena).</p>
     </div>
   </section>
 
-  <section>
-    <div class="kicker"><span class="chip">06 · check yourself</span></div>
+  <section aria-labelledby="sec-6">
+    <h2 id="sec-6">6. Comprueba lo aprendido</h2>
     <div class="q" data-ok="1">
       <p>Llegan 600 rps sostenidos a un servidor de 400 rps, con una cola sin limite. ¿Que pasa con la espera?</p>
       <div class="opts">
@@ -134,8 +134,8 @@ unserved = arrival_rps - served</pre>
     </div>
   </section>
 
-  <section>
-    <div class="kicker"><span class="chip">conecta con</span></div>
+  <section aria-labelledby="sec-conecta">
+    <h2 id="sec-conecta">Conecta con</h2>
     <div id="connect"></div>
   </section>
 
@@ -145,7 +145,7 @@ unserved = arrival_rps - served</pre>
   <footer class="site">Hypatia Labs · HTML estatico, sin build · tu progreso queda en este navegador</footer>
 </div>
 
-<noscript><p style="max-width:880px;margin:0 auto;color:#b23842">La figura interactiva y el registro de progreso necesitan JavaScript. Las explicaciones y las preguntas se pueden leer igual.</p></noscript>
+<noscript><p class="wrap note">La figura interactiva y el registro de progreso necesitan JavaScript. Las explicaciones y las preguntas se pueden leer igual.</p></noscript>
 
 <script src="../../../shared/lab-models.js"></script>
 <script src="../../../shared/figures.js"></script>

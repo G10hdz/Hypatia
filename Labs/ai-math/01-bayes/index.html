@@ -17,7 +17,7 @@
 <div class="wrap">
   <header class="topbar">
     <a class="brand" href="../../../index.html">Hypatia</a>
-    <nav>
+    <nav aria-label="Principal">
       <a href="../../../index.html#mapa">Mapa</a>
       <a href="../../index.html">Labs</a>
       <a href="../../../index.html#biblioteca">Biblioteca</a>
@@ -38,16 +38,16 @@
   <h1>Bayes, con 1000 personas</h1>
   <p class="sub" style="color:var(--muted)">El teorema mas malintuicionado de la probabilidad: la evidencia pesa, pero el punto de partida tambien cuenta.</p>
 
-  <section>
-    <div class="kicker"><span class="chip">01 · la idea</span></div>
+  <section aria-labelledby="sec-1">
+    <h2 id="sec-1">1. La idea</h2>
     <div class="panel">
       <p>Un testigo ve un accidente de noche y dice que el taxi era <b>azul</b>. En la ciudad el 85% de los taxis son verdes y solo 15% azules. El testigo acierta el color el 80% de las veces, igual para los taxis azules que para los verdes.</p>
       <p>¿Que tan probable es que el taxi fuera realmente azul? Puede parecer que la respuesta es 80%. Con estos supuestos es aproximadamente 41.4%: el testimonio se combina con la frecuencia de cada color. Bayes es eso: actualizar lo que creias con lo que viste, sin olvidar que tan comun era cada cosa.</p>
     </div>
   </section>
 
-  <section>
-    <div class="kicker"><span class="chip">02 · la figura</span></div>
+  <section aria-labelledby="sec-2">
+    <h2 id="sec-2">2. La figura</h2>
     <div class="panel">
       <div id="fig"></div>
       <p class="nums">Los 1000 bloques son una <b>aproximacion visual</b>: los valores exactos, calculados para 10 000 personas, estan en la tabla de abajo.</p>
@@ -80,16 +80,16 @@
     </div>
   </section>
 
-  <section>
-    <div class="kicker"><span class="chip">03 · la matematica</span></div>
+  <section aria-labelledby="sec-3">
+    <h2 id="sec-3">3. La matematica</h2>
     <div class="panel">
       <div class="formula" id="formula">P(azul | dijo azul) = 0.8 × 0.15 / (0.8 × 0.15 + 0.2 × 0.85) = 0.414</div>
       <p class="nums" id="formula-note">El numerador suma solo los casos "dijo azul y era azul": 1,200 de 10,000. El denominador suma todos los "dijo azul": 1,200 + 1,700 = 2,900.</p>
     </div>
   </section>
 
-  <section>
-    <div class="kicker"><span class="chip">04 · el codigo</span></div>
+  <section aria-labelledby="sec-4">
+    <h2 id="sec-4">4. El codigo</h2>
     <div class="panel">
 <pre>import numpy as np
 
@@ -103,15 +103,15 @@ print(f"{posterior:.2%}")   # ≈ 41%</pre>
     </div>
   </section>
 
-  <section>
-    <div class="kicker"><span class="chip">05 · en el trabajo real</span></div>
+  <section aria-labelledby="sec-5">
+    <h2 id="sec-5">5. En el trabajo real</h2>
     <div class="panel">
       <p>En tests medicos y deteccion de fraude, la frecuencia base, la sensibilidad y la especificidad ayudan a interpretar un positivo. En evaluacion de clasificadores, la exactitud global por si sola no indica la probabilidad de que una prediccion positiva sea correcta.</p>
     </div>
   </section>
 
-  <section>
-    <div class="kicker"><span class="chip">06 · check yourself</span></div>
+  <section aria-labelledby="sec-6">
+    <h2 id="sec-6">6. Comprueba lo aprendido</h2>
     <div class="q" data-ok="1">
       <p>Una enfermedad afecta al 1% de la poblacion. El test tiene sensibilidad del 95% y especificidad del 95%. Si da positivo, cual es la probabilidad de enfermedad?</p>
       <div class="opts">
@@ -143,8 +143,8 @@ print(f"{posterior:.2%}")   # ≈ 41%</pre>
     </div>
   </section>
 
-  <section>
-    <div class="kicker"><span class="chip">conecta con</span></div>
+  <section aria-labelledby="sec-conecta">
+    <h2 id="sec-conecta">Conecta con</h2>
     <div id="connect"></div>
   </section>
 
@@ -154,7 +154,7 @@ print(f"{posterior:.2%}")   # ≈ 41%</pre>
   <footer class="site">Hypatia Labs · HTML estatico, sin build · tu progreso queda en este navegador</footer>
 </div>
 
-<noscript><p style="max-width:880px;margin:0 auto;color:#b23842">La figura interactiva y el registro de progreso necesitan JavaScript. Las explicaciones y las preguntas se pueden leer igual.</p></noscript>
+<noscript><p class="wrap note">La figura interactiva y el registro de progreso necesitan JavaScript. Las explicaciones y las preguntas se pueden leer igual.</p></noscript>
 
 <script src="../../../shared/lab-models.js"></script>
 <script src="../../../shared/figures.js"></script>
