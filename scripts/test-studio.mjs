@@ -7,6 +7,7 @@ import { readFileSync } from "node:fs";
 import vm from "node:vm";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+const ROOT_DIR = join(dirname(fileURLToPath(import.meta.url)), "..");
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const src = p => readFileSync(join(ROOT, p), "utf8");
@@ -662,6 +663,20 @@ t("URL unicode corta se acepta y sobrevive recarga", () => {
   const list = b.listResources();
   assert.equal(list.length, 1, "sobrevive a la recarga");
   assert.equal(list[0].label, "uni");
+});
+
+t("clases del template y lecciones tienen estilo en studio.css", () => {
+  const cssText = ["shared/studio.css", "shared/tokens.css"]
+    .map(f => readFileSync(join(ROOT_DIR, f), "utf8")).join("\n");
+  const defined = new Set([...cssText.matchAll(/\.([a-zA-Z][\w-]*)/g)].map(m => m[1]));
+  const hooks = new Set(["quiz-live"]); /* ganchos de JS, sin estilo propio */
+  for (const f of ["templates/lab/index.html", "Labs/ai-math/01-bayes/index.html",
+                   "Labs/system-design/01-bottleneck/index.html"]) {
+    const html = readFileSync(join(ROOT_DIR, f), "utf8");
+    const used = [...html.matchAll(/class="([^"]+)"/g)].flatMap(m => m[1].split(/\s+/));
+    const missing = [...new Set(used)].filter(c => c && !defined.has(c) && !hooks.has(c));
+    assert.deepEqual(missing, [], `${f} usa clases sin estilo`);
+  }
 });
 
 console.log(process.exitCode ? "\nFallaron pruebas" : "\nTodas las pruebas del estudio pasaron");

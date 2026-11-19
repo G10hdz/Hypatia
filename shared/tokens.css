@@ -1,0 +1,109 @@
+/* tokens.css — un solo set de tokens para todo Hypatia.
+   studio.css lo importa; engine.css lo adopta en la fase 5 del rediseno. */
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("fonts/SpaceGrotesk-var.ttf") format("truetype");
+  font-weight: 300 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Outfit";
+  src: url("fonts/Outfit-var.ttf") format("truetype");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  --font-body: "Space Grotesk", system-ui, -apple-system, sans-serif;
+  --font-display: "Outfit", "Space Grotesk", system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Tipo: escala ~1.2 sobre 16px */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.625rem;
+  --text-3xl: 2.25rem;
+  --leading: 1.6;
+  --leading-tight: 1.3;
+  --tracking-caps: 0.07em;
+
+  /* Espaciado: base 4px */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* Radio */
+  --radius-ctl: 8px;
+  --radius-md: 12px;
+  --radius-panel: 16px;
+  --radius-pill: 999px;
+
+  --tap: 44px;
+
+  /* Color: claro */
+  --bg: #f3f6f7;
+  --panel: #ffffff;
+  --panel-2: #edf2f4;
+  --ink: #19364b;
+  --muted: #53707f;
+  --line: #d4dfe4;
+  --accent: #15588e;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(21, 88, 142, 0.08);
+
+  --ok: #2c7a4b;
+  --warn: #8a6116;
+  --bad: #b23842;
+
+  --data-blue: #2f6fb3;
+  --data-green: #3d8a4e;
+  --data-amber: #a5751c;
+  --data-red: #b23842;
+  --data-orange: #c2602f;
+
+  --fig-bg: #eef3f5;
+  --code-bg: #e9f0f3;
+  --stage-line: #c3d3da;
+  --grid-line: rgba(21, 88, 142, 0.05);
+
+  --shadow: 0 1px 2px rgba(25, 54, 75, 0.06);
+  --focus: 0 0 0 3px rgba(21, 88, 142, 0.35);
+}
+
+[data-theme="dark"] {
+  --bg: #101b24;
+  --panel: #182731;
+  --panel-2: #14222c;
+  --ink: #e4edf2;
+  --muted: #93a9b8;
+  --line: #294252;
+  --accent: #9ac5ea;
+  --accent-ink: #0d1c26;
+  --accent-soft: rgba(154, 197, 234, 0.12);
+
+  --ok: #7cc79a;
+  --warn: #e0b25c;
+  --bad: #e3898f;
+
+  --data-blue: #8fbde8;
+  --data-green: #7fc98f;
+  --data-amber: #e0b25c;
+  --data-red: #e3898f;
+  --data-orange: #e09a6b;
+
+  --fig-bg: #132430;
+  --code-bg: #0e1b25;
+  --stage-line: #2c4556;
+  --grid-line: rgba(154, 197, 234, 0.06);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --focus: 0 0 0 3px rgba(154, 197, 234, 0.4);
+}
