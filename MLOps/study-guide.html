@@ -1,78 +1,103 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>MLOps · Track B - Guía de Estudio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/tokens.css">
+  <link rel="stylesheet" href="../shared/studio.css">
+  <script>
+    (function(){try{var v=localStorage.getItem("hypatia.theme.v1");
+    document.documentElement.dataset.theme=(v==="dark"||v==="light")?v:
+    (matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");}catch(e){}})();
+  </script>
   <style>
-    :root {
-      --bg: #0c0f0f;
-      --surface: #1a1d1d;
-      --accent: #00d4aa;
-      --text: #e1e3e2;
-      --text-muted: #9a9ca0;
-      --border: rgba(42, 45, 45, 0.4);
-      --radius: 1rem;
+    .srcs { list-style: none; display: grid; gap: var(--space-2); }
+    .srcs li {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: var(--space-3) var(--space-4);
+      box-shadow: var(--shadow);
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Space Grotesk', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      padding: 2rem 1rem;
-    }
-    .wrap { max-width: 760px; margin: 0 auto; }
-    h1 { font-family: 'Outfit', sans-serif; font-size: 1.8rem; margin-bottom: 0.25rem; }
-    .sub { color: var(--text-muted); margin-bottom: 2rem; }
-    h2 { font-family: 'Outfit', sans-serif; font-size: 1.1rem; color: var(--accent); margin: 1.75rem 0 0.6rem; }
-    ul { list-style: none; }
-    li { padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
-    a { color: var(--text); text-decoration: none; }
-    a:hover { color: var(--accent); }
-    li small { color: var(--text-muted); display: block; }
-    .back { display: inline-block; margin-top: 2rem; color: var(--accent); }
+    .srcs a { color: var(--ink); font-weight: 700; text-decoration: none; }
+    .srcs a:hover { color: var(--line-c); text-decoration: underline; }
+    .srcs small { display: block; color: var(--muted); font-size: var(--text-sm); margin-top: 2px; }
   </style>
 <script defer src="/positronica-analytics.js"></script>
 </head>
 <body>
-<div class="wrap">
-  <h1>MLOps · Track B</h1>
-  <p class="sub">Fuentes del módulo (libreta <em>Capital Cultural - Código MLOps</em>). Todo acceso abierto.</p>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<div class="wrap" style="--line-c: var(--l7)">
+  <header class="topbar">
+    <a class="brand" href="../index.html">Hypatia</a>
+    <nav aria-label="Principal">
+      <a href="./index.html">MLOps</a>
+      <a href="../index.html#mapa">Mapa</a>
+      <a href="../index.html#practica">Práctica</a>
+      <a href="../index.html#biblioteca">Biblioteca</a>
+    </nav>
+    <button class="theme-toggle" type="button" data-theme-toggle>Tema</button>
+  </header>
 
-  <h2>Currículos guía</h2>
-  <ul>
-    <li><a href="https://github.com/GokuMohandas/Made-With-ML">Made With ML — GokuMohandas</a><small>Currículo MLOps end-to-end más pulido. Espina recomendada.</small></li>
-    <li><a href="https://github.com/imShakil/100-days-mlops-kodekloud">100 Days of MLOps — KodeKloud</a></li>
-    <li><a href="https://github.com/elizabetht/100-days-of-inference">100 Days of Inference</a></li>
-    <li><a href="https://github.com/element665/100-Days-of-MLOps">100 Days of MLOps</a></li>
-  </ul>
+  <main id="contenido">
+  <header class="estacion-top" style="--line-c: var(--l7)">
+    <span class="picto-box" data-picto="mlops"></span>
+    <div>
+      <h1>MLOps · Track B</h1>
+      <p class="where"><span class="line-badge">L7</span> Guía de estudio · acceso abierto</p>
+      <p class="sub">Fuentes del módulo (libreta <em>Capital Cultural - Código MLOps</em>). Todo acceso abierto.</p>
+    </div>
+  </header>
 
-  <h2>Inference engineering</h2>
-  <ul>
-    <li><a href="https://github.com/modular/llm-inference-handbook">LLM Inference Handbook — Modular</a><small>TTFT/TBT, KV cache, batching, cuantización.</small></li>
-    <li><a href="https://github.com/zenrran4nlp/Awesome-LLM-Inference-Serving">Awesome LLM Inference Serving</a></li>
-    <li><a href="https://github.com/sihyeong/Awesome-LLM-Inference-Engine">Awesome LLM Inference Engine</a></li>
-    <li><a href="https://github.com/gpu-mode/lectures">GPU MODE Lectures</a><small>Kernels y hardware, nivel profundo.</small></li>
-  </ul>
+  <section aria-labelledby="sec-curriculos">
+    <h2 id="sec-curriculos">Currículos guía</h2>
+    <ul class="srcs">
+      <li><a href="https://github.com/GokuMohandas/Made-With-ML">Made With ML — GokuMohandas</a><small>Currículo MLOps end-to-end más pulido. Espina recomendada.</small></li>
+      <li><a href="https://github.com/imShakil/100-days-mlops-kodekloud">100 Days of MLOps — KodeKloud</a></li>
+      <li><a href="https://github.com/elizabetht/100-days-of-inference">100 Days of Inference</a></li>
+      <li><a href="https://github.com/element665/100-Days-of-MLOps">100 Days of MLOps</a></li>
+    </ul>
+  </section>
 
-  <h2>Serving stack</h2>
-  <ul>
-    <li><a href="https://github.com/bentoml/BentoML">BentoML</a></li>
-    <li><a href="https://github.com/ray-project/ray">Ray / Ray Serve</a></li>
-    <li><a href="https://github.com/nirdiamant/genai_agents">GenAI Agents — nirdiamant</a></li>
-  </ul>
+  <section aria-labelledby="sec-inference">
+    <h2 id="sec-inference">Inference engineering</h2>
+    <ul class="srcs">
+      <li><a href="https://github.com/modular/llm-inference-handbook">LLM Inference Handbook — Modular</a><small>TTFT/TBT, KV cache, batching, cuantización.</small></li>
+      <li><a href="https://github.com/zenrran4nlp/Awesome-LLM-Inference-Serving">Awesome LLM Inference Serving</a></li>
+      <li><a href="https://github.com/sihyeong/Awesome-LLM-Inference-Engine">Awesome LLM Inference Engine</a></li>
+      <li><a href="https://github.com/gpu-mode/lectures">GPU MODE Lectures</a><small>Kernels y hardware, nivel profundo.</small></li>
+    </ul>
+  </section>
 
-  <h2>Fundamentos</h2>
-  <ul>
-    <li><a href="https://karpathy.ai/zero-to-hero.html">Neural Networks: Zero to Hero — Karpathy</a></li>
-    <li><a href="https://github.com/d2l-ai/d2l-en">Dive into Deep Learning</a></li>
-    <li><a href="https://github.com/mlabonne/llm-course">LLM Course — mlabonne</a></li>
-  </ul>
+  <section aria-labelledby="sec-serving">
+    <h2 id="sec-serving">Serving stack</h2>
+    <ul class="srcs">
+      <li><a href="https://github.com/bentoml/BentoML">BentoML</a></li>
+      <li><a href="https://github.com/ray-project/ray">Ray / Ray Serve</a></li>
+      <li><a href="https://github.com/nirdiamant/genai_agents">GenAI Agents — nirdiamant</a></li>
+    </ul>
+  </section>
 
-  <a class="back" href="./index.html">← Volver al módulo</a>
+  <section aria-labelledby="sec-fundamentos">
+    <h2 id="sec-fundamentos">Fundamentos</h2>
+    <ul class="srcs">
+      <li><a href="https://karpathy.ai/zero-to-hero.html">Neural Networks: Zero to Hero — Karpathy</a></li>
+      <li><a href="https://github.com/d2l-ai/d2l-en">Dive into Deep Learning</a></li>
+      <li><a href="https://github.com/mlabonne/llm-course">LLM Course — mlabonne</a></li>
+    </ul>
+  </section>
+
+  <a class="back-link" href="./index.html">← Volver al módulo</a>
+  </main>
+  <footer class="site">Hypatia · HTML estático, sin build · tu progreso queda en este navegador</footer>
 </div>
+
+<script src="../shared/theme.js"></script>
+<script src="../shared/pictograms.js"></script>
+<script>
+"use strict";
+StudioTheme.init();
+</script>
 </body>
 </html>
