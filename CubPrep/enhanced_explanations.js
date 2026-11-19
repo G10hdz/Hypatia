@@ -3,7 +3,6 @@ window.ENHANCED_EXPLANATIONS = {
     "version": "3.0",
     "source": "NotebookLM + YouTube Skills Integration",
     "generated": "2026-04-14",
-    "notebook_url": "https://notebooklm.google.com/notebook/bd80433d-f3bd-47f5-a680-d9ffae921650",
     "description": "Enhanced explanations using official UNAM Area 1 classification (25 topics)",
     "migration_note": "Phase 2 complete - restructured to use official tags (mat_*, fis_*, qui_*). Legacy mapping preserved below."
   },
