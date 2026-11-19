@@ -10,7 +10,7 @@ const KNOWLEDGE_MAP = {
   },
   topics: [
     {
-      id: "matematicas", title: "Matematicas", x: 140, y: 65,
+      id: "matematicas", title: "Matemáticas", x: 140, y: 65,
       description: "Probabilidad, algebra y modelos para razonar con precision.",
       origins: ["study-buddy", "capital-cultural", "hypatia"],
       lessonKeys: ["ai-math/01-bayes"], practicePaths: ["CubPrep/index.html"],
@@ -32,7 +32,7 @@ const KNOWLEDGE_MAP = {
       evidence: "Study-buddy: System Design & Architecture. Hypatia: leccion de capacidad.",
     },
     {
-      id: "optimizacion", title: "Optimizacion", x: 140, y: 195,
+      id: "optimizacion", title: "Optimización", x: 140, y: 195,
       description: "Objetivos, variables y restricciones para formular decisiones.",
       origins: ["study-buddy", "capital-cultural"],
       lessonKeys: [], practicePaths: [],
@@ -46,7 +46,7 @@ const KNOWLEDGE_MAP = {
       evidence: "Capital Cultural: codigos VC y Comercial. Founder Guide: catalogo de aprendizaje para founders.",
     },
     {
-      id: "gestion", title: "Gestion", x: 640, y: 195,
+      id: "gestion", title: "Gestión", x: 640, y: 195,
       description: "Equipos, coordinacion y ejecucion. Un puente entre negocio y trabajo tecnico.",
       origins: ["capital-cultural", "founder-guide", "study-buddy"],
       lessonKeys: [], practicePaths: [],
@@ -60,7 +60,7 @@ const KNOWLEDGE_MAP = {
       evidence: "Capital Cultural: codigos Ivy y Cultural. Study-buddy: recursos de filosofia, arte y retorica.",
     },
     {
-      id: "comunicacion", title: "Comunicacion", x: 390, y: 325,
+      id: "comunicacion", title: "Comunicación", x: 390, y: 325,
       description: "Argumentos, relatos y explicaciones para otras personas.",
       origins: ["capital-cultural", "study-buddy"],
       lessonKeys: [], practicePaths: [],

@@ -24,7 +24,7 @@
     <nav aria-label="Principal">
       <a href="Labs/index.html">Labs</a>
       <a href="#mapa">Mapa</a>
-      <a href="#practica">Practica</a>
+      <a href="#practica">Práctica</a>
       <a href="#biblioteca">Biblioteca</a>
     </nav>
     <button class="theme-toggle" type="button" data-theme-toggle>Tema</button>
@@ -34,14 +34,14 @@
 
   <main id="contenido">
     <section class="hoy" id="hoy" aria-labelledby="hoy-h">
-      <p class="hoy-band" id="hoy-band">Proxima estacion</p>
+      <p class="hoy-band" id="hoy-band">Próxima estación</p>
       <span class="picto-box" id="hoy-picto"></span>
       <div>
-        <h1 id="hoy-h">Empieza aqui</h1>
+        <h1 id="hoy-h">Empieza aquí</h1>
         <p class="where" id="hoy-where">Lecciones cortas con una figura que puedes mover.</p>
         <div class="go">
           <a class="btn primary" id="hoy-go" href="Labs/index.html">Ver las lecciones</a>
-          <p class="racha-line" id="racha" hidden><b id="racha-n">0</b> <span id="racha-lab">dias de racha</span>. <span id="racha-copy"></span></p>
+          <p class="racha-line" id="racha" hidden><b id="racha-n">0</b> <span id="racha-lab">días de racha</span>. <span id="racha-copy"></span></p>
         </div>
       </div>
     </section>
@@ -49,15 +49,15 @@
     <section id="repaso" aria-labelledby="repaso-h">
       <div class="red-h">
         <h2 id="repaso-h">Por pasar hoy</h2>
-        <p>Tarjetas que vencen segun tu repaso espaciado. Cinco minutos bastan.</p>
+        <p>Tarjetas que vencen según tu repaso espaciado. Cinco minutos bastan.</p>
       </div>
       <ul class="anden" id="anden"></ul>
     </section>
 
     <section id="lecciones" aria-labelledby="lec-h">
       <div class="red-h">
-        <h2 id="lec-h">Lineas</h2>
-        <p>Cada track es una linea y cada leccion una estacion. Las estaciones llenas ya las recorriste.</p>
+        <h2 id="lec-h">Líneas</h2>
+        <p>Cada track es una línea y cada lección una estación. El tramo se pinta hasta donde ya recorriste.</p>
       </div>
       <div class="lineas" id="lineas"></div>
       <noscript>
@@ -70,8 +70,8 @@
 
     <section id="desafio" aria-labelledby="desafio-h" hidden>
       <div class="red-h">
-        <h2 id="desafio-h">Desafio del dia</h2>
-        <p>Contesta antes de ver la explicacion. Cuenta para tu racha.</p>
+        <h2 id="desafio-h">Desafío del día</h2>
+        <p>Contesta antes de ver la explicación. Cuenta para tu racha.</p>
       </div>
       <div id="desafio-box" hidden></div>
     </section>
@@ -79,7 +79,7 @@
     <section id="mapa" aria-labelledby="mapa-h">
       <div class="red-h">
         <h2 id="mapa-h">La red</h2>
-        <p>Como se conectan los temas. Toca una estacion para ver sus lecciones y practica.</p>
+        <p>Cómo se conectan los temas. Toca una estación para ver sus lecciones y práctica.</p>
       </div>
       <div id="map-root"></div>
       <noscript><p>El mapa necesita JavaScript.</p></noscript>
@@ -87,12 +87,12 @@
 
     <section id="practica" aria-labelledby="pra-h">
       <div class="red-h">
-        <h2 id="pra-h">Practica</h2>
+        <h2 id="pra-h">Práctica</h2>
         <p>Simuladores de examen y repaso con tarjetas.</p>
       </div>
       <div class="terminales">
         <a class="terminal" href="Flashcards/index.html" data-picto="flashcards" data-line="l5"><b>Flashcards</b><span>Repaso espaciado con FSRS</span></a>
-        <a class="terminal" href="CubPrep/index.html" data-picto="cubprep" data-line="l6"><b>CubPrep</b><span>Simulador UNAM area 1</span></a>
+        <a class="terminal" href="CubPrep/index.html" data-picto="cubprep" data-line="l6"><b>CubPrep</b><span>Simulador UNAM área 1</span></a>
         <a class="terminal" href="SAA-C03/index.html" data-picto="prepaws" data-line="l7"><b>PrepAWS</b><span>AWS Solutions Architect Associate</span></a>
         <a class="terminal" href="MLOps/index.html" data-picto="mlops" data-line="l8"><b>MLOps</b><span>Ciclo de vida e inferencia</span></a>
       </div>
@@ -103,11 +103,11 @@
 
   <footer class="site">
     <details>
-      <summary>Como esta hecha una leccion</summary>
-      <p>Una idea, una prediccion antes de explorar, una figura que se mueve, el modelo con sus limites, una aplicacion y preguntas con reintento libre. Completar una leccion es haberla recorrido, no dominarla.</p>
+      <summary>Cómo está hecha una lección</summary>
+      <p>Una idea, una predicción antes de explorar, una figura que se mueve, el modelo con sus límites, una aplicación y preguntas con reintento libre. Completar una lección es haberla recorrido, no dominarla.</p>
     </details>
     <details>
-      <summary>De donde sale el catalogo</summary>
+      <summary>De dónde sale el catálogo</summary>
       <div class="module-list" id="fuentes-list"></div>
     </details>
     <p>Hypatia · sin cuentas · tu progreso vive en este navegador.</p>
@@ -163,7 +163,7 @@ const box = (id, line, size) => {
   const badge = document.createElement("span");
   badge.className = "line-badge";
   badge.textContent = `L${x.t.line}`;
-  const state = !pending ? "Todo recorrido" : x.rec.started ? "En curso" : "Proxima estacion";
+  const state = !pending ? "Todo recorrido" : x.rec.started ? "En curso" : "Próxima estación";
   bandEl.append(badge, `${x.t.name} · ${state}`);
   const whereEl = document.getElementById("hoy-where");
   whereEl.textContent = "";
@@ -176,7 +176,7 @@ const box = (id, line, size) => {
     if (l === x.l) d.className += " aqui";
     mini.appendChild(d);
   }
-  whereEl.append(mini, `Estacion ${n} de ${x.t.lessons.length} · ~${x.l.mins} min${!pending ? " · repasa a tu ritmo" : ""}`);
+  whereEl.append(mini, `Estación ${n} de ${x.t.lessons.length} · ~${x.l.mins} min${!pending ? " · repasa a tu ritmo" : ""}`);
   const go = document.getElementById("hoy-go");
   go.href = x.href;
   go.textContent = !pending ? "Repasar" : x.rec.started ? "Retomar" : "Entrar";
@@ -186,7 +186,7 @@ const box = (id, line, size) => {
 function paintStreak() {
   const st = LearningState.streak();
   document.getElementById("racha-n").textContent = st.days;
-  document.getElementById("racha-lab").textContent = st.days === 1 ? "dia de racha" : "dias de racha";
+  document.getElementById("racha-lab").textContent = st.days === 1 ? "día de racha" : "días de racha";
   document.getElementById("racha-copy").textContent = LearningState.streakText(st);
   document.getElementById("racha").hidden = false;
 }
@@ -205,7 +205,7 @@ paintStreak();
     t.className = "t";
     t.textContent = r.title;
     const sm = document.createElement("small");
-    sm.textContent = r.due ? `${r.total} tarjetas en el mazo` : "Al dia. Vuelve manana.";
+    sm.textContent = r.due ? `${r.total} tarjetas en el mazo` : "Al día. Vuelve mañana.";
     t.appendChild(sm);
     const num = document.createElement("span");
     num.className = "n";
@@ -267,7 +267,7 @@ StudioMap.mount(document.getElementById("map-root"), {
     const chip = document.createElement("span");
     const prep = s.status === "esquema-en-revision";
     chip.className = "chip" + (prep ? " pending" : "");
-    chip.textContent = prep ? "en preparacion" : "activa";
+    chip.textContent = prep ? "en preparación" : "activa";
     top.append(b, chip);
     const p = document.createElement("p");
     p.textContent = s.note;

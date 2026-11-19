@@ -204,15 +204,15 @@ const StudioMap = (() => {
     cols.appendChild(left);
 
     const legend = mk("div", "legend");
-    for (const [type, name] of [["foundation", "Linea Fundamentos"], ["application", "Linea Aplicacion"],
-                                ["shared-material", "Linea Material compartido"], ["proposal", "En construccion"]]) {
+    for (const [type, name] of [["foundation", "Línea Fundamentos"], ["application", "Línea Aplicación"],
+                                ["shared-material", "Línea Material compartido"], ["proposal", "En construcción"]]) {
       const item = mk("span", null);
       const sw = mk("span", "linea-sw");
       sw.style.background = type === "proposal" ? "var(--stage-line)" : `var(--l${{ foundation: 3, application: 7, "shared-material": 8 }[type]})`;
       item.append(sw, document.createTextNode(name));
       legend.appendChild(item);
     }
-    legend.appendChild(mk("span", null, "Doble aro: transbordo. Ninguna linea es requisito."));
+    legend.appendChild(mk("span", null, "Doble aro: transbordo. Ninguna línea es requisito."));
     left.appendChild(legend);
 
     const detail = mk("div", "map-detail panel");

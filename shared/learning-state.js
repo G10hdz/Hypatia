@@ -115,9 +115,9 @@ const LearningState = (() => {
 
   /* Texto corto de la racha, el mismo en portada y hub. */
   function streakText(st) {
-    if (!st.days) return "Hoy puede ser el dia 1 de tu racha.";
+    if (!st.days) return "Hoy puede ser el día 1 de tu racha.";
     if (st.activeToday) return "Hoy ya cuenta.";
-    if (st.atRisk) return "Ayer no conto. Estudia hoy y la mantienes.";
+    if (st.atRisk) return "Ayer no contó. Estudia hoy y la mantienes.";
     return "Un minuto hoy la suma.";
   }
 

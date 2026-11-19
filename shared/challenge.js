@@ -64,7 +64,7 @@ const StudioChallenge = (() => {
       return l;
     };
     if (it.lesson) {
-      from.append("Viene de la leccion ", a(it.lesson.href, it.lesson.title), ".");
+      from.append("Viene de la lección ", a(it.lesson.href, it.lesson.title), ".");
     } else {
       from.append(`Para profundizar: ${it.book.title}, ${it.ref.where}.`);
       if (it.book.free) from.append(" ", a(it.book.free, "Leer gratis"));

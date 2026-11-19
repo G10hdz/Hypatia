@@ -836,3 +836,5 @@ a { text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
   .map-stage .map-node .nm { font-size: 11px; letter-spacing: 0; }
   .map-stage .map-node.transfer { gap: 8px; }
 }
+.btn.primary:hover { background: var(--pill); border-color: var(--pill); color: var(--pill-ink); box-shadow: 0 0 0 3px var(--bg), 0 0 0 6px var(--line-c, var(--accent)); }
+.theme-toggle { border-radius: var(--radius-pill); }
