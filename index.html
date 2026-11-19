@@ -33,37 +33,40 @@
   <div class="store-warning" data-store-warning hidden></div>
 
   <main id="contenido">
-    <section class="panel hero" aria-labelledby="hoy-h">
+    <section class="hoy" id="hoy" aria-labelledby="hoy-h">
+      <span class="picto-box" id="hoy-picto"></span>
       <div>
-        <p class="eyebrow">Hoy</p>
         <h1 id="hoy-h">Empieza aqui</h1>
-        <p class="sub" id="hoy-copy">Lecciones cortas con una figura que puedes mover.</p>
-        <div class="actions" id="hoy-actions">
-          <a class="btn primary" href="Labs/index.html">Ver las lecciones</a>
+        <p class="where" id="hoy-where">Lecciones cortas con una figura que puedes mover.</p>
+        <div class="go">
+          <a class="btn primary" id="hoy-go" href="Labs/index.html">Ver las lecciones</a>
+          <p class="racha-line" id="racha" hidden><b id="racha-n">0</b> <span id="racha-lab">dias de racha</span>. <span id="racha-copy"></span></p>
         </div>
-      </div>
-      <div class="streak-stat" id="racha" hidden>
-        <b id="racha-n">0</b>
-        <span id="racha-lab">dias de racha</span>
-        <p id="racha-copy"></p>
       </div>
     </section>
 
+    <section id="repaso" aria-labelledby="repaso-h">
+      <div class="red-h">
+        <h2 id="repaso-h">Por pasar hoy</h2>
+        <p>Tarjetas que vencen segun tu repaso espaciado. Cinco minutos bastan.</p>
+      </div>
+      <ul class="anden" id="anden"></ul>
+    </section>
+
     <section id="desafio" aria-labelledby="desafio-h" hidden>
-      <div class="section-head">
-        <p class="eyebrow">Desafio del dia</p>
-        <h2 id="desafio-h">Una pregunta, antes de ver la respuesta</h2>
-        <p class="sub">Intenta primero. La explicacion aparece despues y cuenta para tu racha.</p>
+      <div class="red-h">
+        <h2 id="desafio-h">Desafio del dia</h2>
+        <p>Contesta antes de ver la explicacion. Cuenta para tu racha.</p>
       </div>
       <div id="desafio-box" hidden></div>
     </section>
 
     <section id="lecciones" aria-labelledby="lec-h">
-      <div class="section-head">
-        <p class="eyebrow">Labs</p>
-        <h2 id="lec-h">Lecciones</h2>
+      <div class="red-h">
+        <h2 id="lec-h">Lineas</h2>
+        <p>Cada track es una linea y cada leccion una estacion. Las estaciones llenas ya las recorriste.</p>
       </div>
-      <div class="card-grid" id="labs-grid"></div>
+      <div class="lineas" id="lineas"></div>
       <noscript>
         <ul>
           <li><a href="Labs/ai-math/01-bayes/index.html">Bayes, con 1000 personas</a></li>
@@ -73,25 +76,24 @@
     </section>
 
     <section id="mapa" aria-labelledby="mapa-h">
-      <div class="section-head">
-        <p class="eyebrow">Mapa</p>
-        <h2 id="mapa-h">Como se conectan los temas</h2>
-        <p class="sub">Por idea, no por herramienta. Linea continua: conexion documentada. Punteada: propuesta.</p>
+      <div class="red-h">
+        <h2 id="mapa-h">La red</h2>
+        <p>Como se conectan los temas. Toca una estacion para ver sus lecciones y practica.</p>
       </div>
       <div id="map-root"></div>
       <noscript><p>El mapa necesita JavaScript.</p></noscript>
     </section>
 
     <section id="practica" aria-labelledby="pra-h">
-      <div class="section-head">
-        <p class="eyebrow">Practica</p>
-        <h2 id="pra-h">Simuladores y repaso</h2>
+      <div class="red-h">
+        <h2 id="pra-h">Practica</h2>
+        <p>Simuladores de examen y repaso con tarjetas.</p>
       </div>
-      <div class="module-list">
-        <a class="module-row" href="CubPrep/index.html"><b>CubPrep</b><span>Simulador de examen UNAM area 1</span></a>
-        <a class="module-row" href="SAA-C03/index.html"><b>PrepAWS</b><span>Simulador AWS Solutions Architect Associate</span></a>
-        <a class="module-row" href="MLOps/index.html"><b>MLOps</b><span>Banco de practica de ciclo de vida e inferencia</span></a>
-        <a class="module-row" href="Flashcards/index.html"><b>Flashcards</b><span>Tarjetas de repaso espaciado</span></a>
+      <div class="terminales">
+        <a class="terminal" href="Flashcards/index.html" data-picto="flashcards" data-line="l5"><b>Flashcards</b><span>Repaso espaciado con FSRS</span></a>
+        <a class="terminal" href="CubPrep/index.html" data-picto="cubprep" data-line="l6"><b>CubPrep</b><span>Simulador UNAM area 1</span></a>
+        <a class="terminal" href="SAA-C03/index.html" data-picto="prepaws" data-line="l7"><b>PrepAWS</b><span>AWS Solutions Architect Associate</span></a>
+        <a class="terminal" href="MLOps/index.html" data-picto="mlops" data-line="l8"><b>MLOps</b><span>Ciclo de vida e inferencia</span></a>
       </div>
     </section>
 
@@ -113,6 +115,10 @@
 
 <script src="shared/theme.js"></script>
 <script src="shared/learning-state.js"></script>
+<script src="shared/pictograms.js"></script>
+<script src="shared/due.js"></script>
+<script src="Flashcards/decks/mlops.js"></script>
+<script src="Flashcards/decks/fde.js"></script>
 <script src="shared/resources.js"></script>
 <script src="shared/challenge.js"></script>
 <script src="Labs/tracks.js"></script>
@@ -130,21 +136,36 @@ for (const t of LABS_TRACKS) for (const l of t.lessons) {
   lessons.push({ t, l, href: `Labs/${t.id}/${l.slug}/index.html`, rec: LearningState.getLesson(t.id, l.slug) });
 }
 
-/* Hoy: siguiente leccion sin completar; si todas estan, repasar la primera. */
+const box = (id, line, size) => {
+  const el = document.createElement("span");
+  el.className = "picto-box" + (line === "l5" ? " l5" : "");
+  el.style.setProperty("--line-c", `var(--${line})`);
+  if (size) el.style.setProperty("--pb", size);
+  el.appendChild(picto(id));
+  return el;
+};
+
+/* Hoy: la proxima estacion sin recorrer; si todas estan, repasar la primera. */
 (function hoy() {
   if (!lessons.length) return;
   const pending = lessons.find(x => !x.rec.completed);
   const x = pending || lessons[0];
-  document.getElementById("hoy-h").textContent = !pending ? "Todo recorrido: repasa a tu ritmo"
-    : x.rec.started ? "Continua donde ibas" : "Empieza aqui";
-  document.getElementById("hoy-copy").textContent = `${x.l.title} · ${x.t.name} · ~${x.l.mins} min`;
-  const actions = document.getElementById("hoy-actions");
-  actions.textContent = "";
-  const a = document.createElement("a");
-  a.className = "btn primary";
-  a.href = x.href;
-  a.textContent = !pending ? "Repasar la leccion" : x.rec.started ? "Retomar la leccion" : "Empezar la leccion";
-  actions.appendChild(a);
+  const band = document.getElementById("hoy");
+  band.style.setProperty("--line-c", `var(--${x.t.color})`);
+  const slot = document.getElementById("hoy-picto");
+  slot.replaceWith(Object.assign(box(`${x.t.id}/${x.l.slug}`, x.t.color), { id: "hoy-picto" }));
+  document.getElementById("hoy-h").textContent = x.l.title;
+  const where = document.getElementById("hoy-where");
+  where.textContent = "";
+  const badge = document.createElement("span");
+  badge.className = "line-badge";
+  badge.textContent = `L${x.t.line}`;
+  const n = x.t.lessons.indexOf(x.l) + 1;
+  const state = !pending ? "Todo recorrido, repasa a tu ritmo" : x.rec.started ? "Vas a medio camino" : "Proxima estacion";
+  where.append(badge, `${x.t.name} · estacion ${n} de ${x.t.lessons.length} · ~${x.l.mins} min · ${state}`);
+  const go = document.getElementById("hoy-go");
+  go.href = x.href;
+  go.textContent = !pending ? "Repasar" : x.rec.started ? "Retomar" : "Entrar";
 })();
 
 /* Racha por dias, con un dia de gracia. */
@@ -157,6 +178,39 @@ function paintStreak() {
 }
 paintStreak();
 
+/* Por pasar hoy: mazos con tarjetas vencidas. */
+(function anden() {
+  const ul = document.getElementById("anden");
+  const rows = StudioDue.byDeck(window.FLASHCARD_DECKS, StudioDue.load());
+  for (const r of rows) {
+    const li = document.createElement("li");
+    if (!r.due) li.className = "done";
+    const a = document.createElement("a");
+    a.href = "Flashcards/index.html";
+    const t = document.createElement("span");
+    t.className = "t";
+    t.textContent = r.title;
+    const sm = document.createElement("small");
+    sm.textContent = r.due ? `${r.total} tarjetas en el mazo` : "Al dia. Vuelve manana.";
+    t.appendChild(sm);
+    const num = document.createElement("span");
+    num.className = "n";
+    num.textContent = r.due;
+    const u = document.createElement("small");
+    u.textContent = r.due === 1 ? "tarjeta" : "tarjetas";
+    num.appendChild(u);
+    a.append(box("flashcards", "l5"), t, num);
+    li.appendChild(a);
+    ul.appendChild(li);
+  }
+  if (!rows.length) {
+    const p = document.createElement("li");
+    p.className = "anden-empty";
+    p.textContent = "No hay mazos cargados.";
+    ul.appendChild(p);
+  }
+})();
+
 const desafioBox = document.getElementById("desafio-box");
 StudioChallenge.mount(desafioBox, {
   lessons: lessons.map(x => ({ href: x.href, title: x.l.title })),
@@ -166,33 +220,57 @@ StudioChallenge.mount(desafioBox, {
   onAnswer() { LearningState.checkIn(); paintStreak(); },
 }).then(() => { document.getElementById("desafio").hidden = desafioBox.hidden; });
 
-/* Tarjetas de Labs con progreso real. */
-(function labsGrid() {
-  const grid = document.getElementById("labs-grid");
-  for (const { t, l, href, rec } of lessons) {
-    const a = document.createElement("a");
-    a.className = "lesson-card";
-    a.href = href;
-    const num = document.createElement("span");
-    num.className = "num";
-    num.textContent = `${t.name} · ${l.slug.slice(0, 2)}`;
+/* Lineas: un track por linea, una estacion por leccion. */
+(function lineas() {
+  const root = document.getElementById("lineas");
+  const next = lessons.find(x => !x.rec.completed);
+  for (const t of LABS_TRACKS) {
+    const wrap = document.createElement("div");
+    wrap.style.setProperty("--line-c", `var(--${t.color})`);
+    const head = document.createElement("div");
+    head.className = "linea-head";
+    const badge = document.createElement("span");
+    badge.className = "line-badge";
+    badge.textContent = `L${t.line}`;
     const h = document.createElement("h3");
-    h.textContent = l.title;
-    const meta = document.createElement("div");
+    h.textContent = t.name;
+    const done = t.lessons.filter(l => LearningState.getLesson(t.id, l.slug).completed).length;
+    const meta = document.createElement("span");
     meta.className = "meta";
-    const chip = document.createElement("span");
-    chip.className = "chip " + (rec.completed ? "done" : "todo");
-    chip.textContent = rec.completed
-      ? (rec.scoreUnknown ? "completada" : `completada · mejor ${rec.bestCorrect}/${rec.total}`)
-      : (rec.started ? "en curso" : "sin empezar");
-    const m = document.createElement("span");
-    m.className = "chip";
-    m.textContent = `~${l.mins} min`;
-    meta.append(chip, m);
-    a.append(num, h, meta);
-    grid.appendChild(a);
+    meta.textContent = `${done} de ${t.lessons.length} estaciones`;
+    head.append(badge, h, meta);
+    const ol = document.createElement("ol");
+    ol.className = "estaciones";
+    t.lessons.forEach((l, i) => {
+      const rec = LearningState.getLesson(t.id, l.slug);
+      const li = document.createElement("li");
+      li.className = "estacion" + (rec.completed ? " done" : "") + (next && next.l === l ? " proxima" : "");
+      const a = document.createElement("a");
+      a.href = `Labs/${t.id}/${l.slug}/index.html`;
+      const dot = document.createElement("span");
+      dot.className = "dot";
+      dot.appendChild(picto(`${t.id}/${l.slug}`));
+      const nm = document.createElement("span");
+      nm.className = "nm";
+      nm.textContent = l.title;
+      const st = document.createElement("span");
+      st.className = "st";
+      st.textContent = rec.completed
+        ? (rec.scoreUnknown ? "recorrida" : `recorrida · ${rec.bestCorrect}/${rec.total}`)
+        : `estacion ${i + 1} · ~${l.mins} min${rec.started ? " · en curso" : ""}`;
+      a.append(dot, nm, st);
+      li.appendChild(a);
+      ol.appendChild(li);
+    });
+    wrap.append(head, ol);
+    root.appendChild(wrap);
   }
 })();
+
+/* Terminales de practica con su pictograma. */
+for (const a of document.querySelectorAll(".terminal[data-picto]")) {
+  a.prepend(box(a.dataset.picto, a.dataset.line));
+}
 
 StudioMap.mount(document.getElementById("map-root"), {
   data: KNOWLEDGE_MAP,

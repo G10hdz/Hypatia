@@ -358,7 +358,7 @@ textarea:focus { border-color: var(--accent); }
 
 /* Mapa de temas */
 .map-stage { position: relative; aspect-ratio: 780 / 390; }
-.map-stage svg {
+.map-stage > svg {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -589,3 +589,149 @@ footer.site { margin-top: var(--space-8); color: var(--muted); font-size: var(--
   .margin-note details { padding-top: var(--space-1); }
   .margin-note summary { display: none; }
 }
+
+/* ===== Red: lineas y estaciones ===== */
+h1, h2 { font-stretch: var(--stretch-display); font-weight: 800; letter-spacing: -0.025em; text-wrap: balance; }
+h3, h4 { font-weight: 700; letter-spacing: -0.01em; }
+::selection { background: var(--l5); color: var(--l5-ink); }
+html { accent-color: var(--accent); caret-color: var(--accent); scrollbar-color: var(--stage-line) transparent; }
+a { text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+:focus-visible { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--ink); }
+
+.topbar .brand { display: inline-flex; align-items: center; gap: var(--space-2); font-stretch: var(--stretch-display); }
+.topbar .brand::before {
+  content: ""; width: 18px; height: 18px; border-radius: 50%;
+  border: 4px solid var(--ink); background: var(--panel); flex: none;
+}
+.topbar nav a { font-stretch: var(--stretch-label); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+
+.btn { border-radius: var(--radius-pill); }
+.btn.primary { background: var(--pill); color: var(--pill-ink); border-color: var(--pill); }
+.btn.primary:hover { filter: none; background: var(--line-c, var(--accent)); border-color: var(--line-c, var(--accent)); color: #fff; }
+
+/* Cuadro de pictograma: blanco sobre el color de la linea */
+.picto-box {
+  display: inline-grid; place-items: center; flex: none;
+  width: var(--pb, 44px); height: var(--pb, 44px);
+  background: var(--line-c, var(--ink)); color: var(--l-ink);
+  border-radius: calc(var(--pb, 44px) * 0.18);
+}
+.picto-box.l5 { color: var(--l5-ink); }
+.picto { width: 62%; height: 62%; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+
+.line-badge {
+  display: inline-grid; place-items: center; min-width: 2.1em; height: 2.1em; padding: 0 0.5em;
+  border-radius: var(--radius-pill); background: var(--line-c, var(--ink)); color: var(--l-ink);
+  font-weight: 800; font-stretch: var(--stretch-label); font-size: var(--text-sm); line-height: 1;
+}
+
+/* Banda de Hoy: la proxima estacion */
+.hoy {
+  --pb: clamp(112px, 16vw, 184px);
+  display: grid; grid-template-columns: auto 1fr; gap: var(--space-5) var(--space-6);
+  align-items: center; margin: var(--space-4) 0 var(--space-7);
+  padding: var(--space-6); border-radius: var(--radius-panel);
+  background: var(--panel); box-shadow: var(--shadow);
+  border-top: 10px solid var(--line-c, var(--ink));
+}
+.hoy h1 { font-size: clamp(2rem, 5.2vw, 3.75rem); line-height: 1.02; margin: var(--space-2) 0 var(--space-3); }
+.hoy .where { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; color: var(--muted); font-weight: 600; font-stretch: var(--stretch-label); }
+.hoy .go { display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; margin-top: var(--space-5); }
+.hoy .go .btn { font-size: var(--text-base); padding: var(--space-3) var(--space-6); }
+.racha-line { color: var(--muted); font-size: var(--text-sm); }
+.racha-line b { color: var(--ink); font-stretch: var(--stretch-display); font-size: var(--text-lg); }
+
+/* Por pasar hoy: filas tipo andén */
+.anden { list-style: none; padding: 0; margin: 0; border-top: 2px solid var(--ink); }
+.anden li { border-bottom: 1px solid var(--line); }
+.anden a, .anden .row {
+  display: grid; grid-template-columns: auto 1fr auto; gap: var(--space-4); align-items: center;
+  padding: var(--space-3) var(--space-2); color: var(--ink); text-decoration: none; min-height: 64px;
+}
+.anden a:hover { background: var(--panel); }
+.anden .t { font-weight: 700; }
+.anden .t small { display: block; color: var(--muted); font-weight: 400; font-size: var(--text-sm); }
+.anden .n { font-stretch: var(--stretch-display); font-weight: 800; font-size: var(--text-2xl); font-variant-numeric: tabular-nums; }
+.anden .n small { font-size: var(--text-xs); font-weight: 600; color: var(--muted); font-stretch: var(--stretch-label); margin-left: 4px; }
+.anden .done .n { color: var(--ok); }
+.anden-empty { color: var(--muted); padding: var(--space-4) var(--space-2); border-bottom: 1px solid var(--line); }
+
+/* Lineas: cada track como una linea con sus estaciones */
+.lineas { display: grid; gap: var(--space-6); }
+.linea-head { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3); }
+.linea-head h3 { font-size: var(--text-xl); font-stretch: var(--stretch-display); }
+.linea-head .meta { color: var(--muted); font-size: var(--text-sm); margin-left: auto; }
+.estaciones {
+  list-style: none; margin: 0; padding: 0; position: relative;
+  display: grid; grid-auto-flow: column; grid-auto-columns: minmax(150px, 1fr); gap: var(--space-4);
+  overflow-x: auto; padding-bottom: var(--space-2);
+}
+.estaciones::before {
+  content: ""; position: absolute; left: 22px; right: 22px; top: 18px; height: 8px;
+  background: var(--line-c); border-radius: 4px;
+}
+.estacion a { display: grid; gap: var(--space-2); justify-items: start; text-decoration: none; color: var(--ink); position: relative; }
+.estacion .dot {
+  width: 44px; height: 44px; border-radius: 50%; background: var(--panel);
+  border: 6px solid var(--line-c); display: grid; place-items: center; color: var(--line-c);
+}
+.estacion .dot .picto { width: 60%; height: 60%; }
+.estacion.done .dot { background: var(--line-c); color: var(--l-ink); }
+.estacion .nm { font-weight: 700; line-height: var(--leading-tight); }
+.estacion .st { font-size: var(--text-xs); color: var(--muted); font-stretch: var(--stretch-label); text-transform: uppercase; letter-spacing: 0.05em; }
+.estacion a:hover .nm { text-decoration: underline; }
+.estacion.proxima .dot { box-shadow: 0 0 0 4px var(--bg), 0 0 0 7px var(--ink); }
+
+/* Practica: terminales */
+.terminales { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-3); }
+.terminal {
+  display: flex; gap: var(--space-3); align-items: center; padding: var(--space-3);
+  border-radius: var(--radius-md); background: var(--panel); text-decoration: none; color: var(--ink);
+  box-shadow: var(--shadow); --pb: 48px;
+}
+.terminal b { display: block; font-stretch: var(--stretch-display); }
+.terminal span { color: var(--muted); font-size: var(--text-sm); line-height: var(--leading-tight); }
+.terminal:hover b { text-decoration: underline; }
+
+/* Encabezado de seccion sin etiqueta encima */
+.red-h { display: flex; align-items: baseline; gap: var(--space-4); flex-wrap: wrap; margin: var(--space-8) 0 var(--space-4); }
+.red-h h2 { font-size: clamp(1.6rem, 3.4vw, 2.4rem); }
+.red-h p { color: var(--muted); max-width: 52ch; font-size: var(--text-sm); }
+
+/* Mapa como diagrama de metro */
+.map-stage { margin-top: var(--space-2); }
+.map-edge { stroke-width: 9; stroke-linecap: round; opacity: 1; }
+.map-edge.t-foundation { stroke: var(--l3); }
+.map-edge.t-application { stroke: var(--l7); }
+.map-edge.t-shared-material { stroke: var(--l8); }
+.map-edge.proposal { stroke: var(--stage-line); stroke-dasharray: 2 14; stroke-width: 7; }
+.map-edge.dim { opacity: 0.28; }
+.map-edge.on { stroke-width: 12; opacity: 1; }
+.map-stage .map-node {
+  min-width: 0; padding: 0; border: 0; background: none; box-shadow: none; border-radius: 0;
+  display: grid; justify-items: center; gap: 6px; transform: translate(-50%, -24px);
+}
+.map-stage .map-node .picto-box { --pb: 48px; background: var(--ink); color: var(--bg); box-shadow: 0 0 0 5px var(--bg); transition: background-color 200ms cubic-bezier(.2,.8,.2,1), transform 200ms cubic-bezier(.2,.8,.2,1); }
+.map-stage .map-node .nm {
+  font-size: var(--text-sm); font-weight: 700; font-stretch: var(--stretch-label); text-transform: uppercase; letter-spacing: 0.04em;
+  background: var(--bg); padding: 0 6px; border-radius: 4px;
+}
+.map-stage .map-node:hover .picto-box { transform: scale(1.06); }
+.map-stage .map-node[aria-pressed="true"] { background: none; color: var(--ink); }
+.map-stage .map-node[aria-pressed="true"] .picto-box { background: var(--l1); color: #fff; transform: scale(1.12); }
+.map-list .map-node { display: flex; align-items: center; gap: var(--space-2); }
+.map-list .map-node .picto-box { --pb: 28px; }
+.legend .linea-sw { display: inline-block; width: 26px; height: 7px; border-radius: 4px; vertical-align: middle; margin-right: 6px; }
+
+@media (max-width: 640px) {
+  .hoy { grid-template-columns: 1fr; padding: var(--space-5); --pb: 96px; }
+  .estaciones { grid-auto-columns: 140px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+.map-stage > svg { z-index: 0; }
+.map-stage .map-node { z-index: 1; }
+.map-edge.dim { opacity: 0.5; }
+.terminal { display: grid; grid-template-columns: auto 1fr; column-gap: var(--space-3); row-gap: 2px; align-items: center; }
+.terminal .picto-box { grid-row: span 2; }
+.terminal b { align-self: end; }
+.terminal span:not(.picto-box) { align-self: start; }
