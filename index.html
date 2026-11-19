@@ -116,6 +116,8 @@
 <script src="shared/resources.js"></script>
 <script src="shared/challenge.js"></script>
 <script src="Labs/tracks.js"></script>
+<script src="Labs/books.js"></script>
+<script src="Labs/bank.js"></script>
 <script src="Labs/knowledge-map.js"></script>
 <script src="shared/map.js"></script>
 <script>
@@ -158,6 +160,8 @@ paintStreak();
 const desafioBox = document.getElementById("desafio-box");
 StudioChallenge.mount(desafioBox, {
   lessons: lessons.map(x => ({ href: x.href, title: x.l.title })),
+  bank: QUESTION_BANK,
+  books: BOOKS,
   today: LearningState.today(),
   onAnswer() { LearningState.checkIn(); paintStreak(); },
 }).then(() => { document.getElementById("desafio").hidden = desafioBox.hidden; });
