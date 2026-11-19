@@ -85,3 +85,32 @@ console.log("ok sin cuadernos de NotebookLM");
   }
 }
 console.log("ok tema compartido");
+
+/* Preguntas rotas: su propia explicacion dice que no se entienden. No entran al bloque. */
+{
+  const vm = await import("node:vm");
+  const { readdirSync } = await import("node:fs");
+  const sandbox = { window: {} };
+  vm.createContext(sandbox);
+  vm.runInContext(read("shared/question-quality.js") + "\nglobalThis.brokenByOwnExplanation = brokenByOwnExplanation;", sandbox);
+  const broken = sandbox.brokenByOwnExplanation;
+  assert.equal(broken({ explicacion: "La pregunta no se entiende porque las opciones son de otro tema." }), true);
+  assert.equal(broken({ explicacion_correcta: "La pregunta contiene errores en la redaccion y no se entiende completamente." }), true);
+  assert.equal(broken({ explicacion: "La oracion esta incompleta y por eso falta el verbo." }), false);
+  assert.equal(broken({ explicacion: "" }), false);
+  assert.equal(broken({}), false);
+
+  const dir = "CubPrep/questions_by_materia/";
+  for (const f of readdirSync(new URL("../" + dir, import.meta.url))) {
+    if (f !== "loader.js") vm.runInContext(read(dir + f), sandbox);
+  }
+  const all = Object.values(sandbox.window).filter(Array.isArray).flat();
+  const n = all.filter(broken).length;
+  assert.ok(n > 1500 && n < all.length / 2, `CubPrep rotas: ${n} de ${all.length}`);
+  assert.match(engine, /brokenByOwnExplanation/, "el motor filtra las rotas al cargar");
+  for (const p of ["CubPrep/index.html", "MLOps/index.html"]) {
+    const html = read(p);
+    assert.ok(html.indexOf("question-quality.js") > 0 && html.indexOf("question-quality.js") < html.indexOf("engine.js"), `${p} carga question-quality antes del motor`);
+  }
+}
+console.log("ok preguntas rotas fuera");
