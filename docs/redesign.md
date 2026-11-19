@@ -89,7 +89,9 @@ Fuentes: [OLJ 2026](https://olj.onlinelearningconsortium.org/index.php/olj/artic
    colapsan a nota al margen o footer.
 4. **Labs y lecciones** — beats mas concisos, slot "nota al margen" (2.6:
    fuente recomendada + prompt de ensayo, card derecha desktop / details
-   movil, estilo libro de texto).
+   movil, estilo libro de texto). Videos para la nota al margen: sacarlos de las
+   referencias del roadmap (AI Learning Tube y HackerTube, curados por senal
+   en HN), con el link oficial de YouTube.
 5. **Modulos legacy** — reskin bajo el tema calmado o decision de mantener
    "modo examen" por modulo; unificar navegacion (topbar consistente).
 
