@@ -735,3 +735,11 @@ a { text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
 .terminal .picto-box { grid-row: span 2; }
 .terminal b { align-self: end; }
 .terminal span:not(.picto-box) { align-self: start; }
+.estacion-top { display: grid; grid-template-columns: auto 1fr; gap: var(--space-5); align-items: center; margin: var(--space-4) 0 var(--space-6); --pb: clamp(88px, 12vw, 128px); }
+.estacion-top h1 { font-size: clamp(2rem, 4.6vw, 3.25rem); line-height: 1.04; margin-bottom: var(--space-2); }
+.estacion-top .where { display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap; color: var(--muted); font-weight: 600; font-stretch: var(--stretch-label); }
+.estacion-top .sub { color: var(--muted); margin-top: var(--space-3); max-width: 60ch; }
+.estacion-top .picto-box.l5 { color: var(--l5-ink); }
+@media (max-width: 640px) { .estacion-top { grid-template-columns: 1fr; --pb: 72px; } }
+.estaciones { padding: 8px 8px var(--space-2); }
+.estaciones::before { left: 30px; right: 30px; top: 26px; }

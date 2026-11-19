@@ -34,3 +34,10 @@ function picto(id, { label = "", cls = "picto" } = {}) {
   svg.innerHTML = PICTOS[id] || PICTOS.gestion;
   return svg;
 }
+
+/* Llena los cuadros vacios marcados con data-picto. */
+try {
+  for (const el of document.querySelectorAll(".picto-box[data-picto]")) {
+    if (!el.firstChild) el.appendChild(picto(el.dataset.picto));
+  }
+} catch (e) { /* sin DOM */ }

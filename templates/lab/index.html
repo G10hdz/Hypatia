@@ -25,13 +25,14 @@
 
   <main id="contenido">
     <p class="note" id="template-notice" hidden>Plantilla sin completar. No registra visitas ni intentos.</p>
-    <div class="kicker">
-      <span class="chip">__TRACK__</span>
-      <span class="chip">__LEVEL__</span>
-      <span class="chip">~__MINUTES__ min</span>
-    </div>
-    <h1>__TITLE__</h1>
-    <p class="sub">__OUTCOME__</p>
+    <header class="estacion-top" style="--line-c: var(--__LINE_COLOR__)">
+      <span class="picto-box" data-picto="__TRACK__/__SLUG__"></span>
+      <div>
+        <h1>__TITLE__</h1>
+        <p class="where"><span class="line-badge">L__LINE__</span> __TRACK__ · __LEVEL__ · ~__MINUTES__ min</p>
+        <p class="sub">__OUTCOME__</p>
+      </div>
+    </header>
 
     <section aria-labelledby="idea-title">
       <h2 id="idea-title">1. La idea</h2>
@@ -124,6 +125,7 @@
 <script src="../../../shared/figures.js"></script>
 <script src="../../../shared/theme.js"></script>
 <script src="../../../shared/learning-state.js"></script>
+<script src="../../../shared/pictograms.js"></script>
 <script src="../../../shared/quiz.js"></script>
 <script src="../../../shared/resources.js"></script>
 <script src="../../tracks.js"></script>

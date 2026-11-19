@@ -29,15 +29,14 @@
   <div class="store-warning" data-store-warning hidden></div>
 
   <main id="contenido">
-  <div class="kicker">
-    <span class="chip todo">ai-math</span>
-    <span class="chip">leccion 01</span>
-    <span class="chip">nivel base</span>
-    <span class="chip">figura interactiva</span>
-    <span class="chip">~12 min</span>
-  </div>
-  <h1>Bayes, con 1000 personas</h1>
-  <p class="sub" style="color:var(--muted)">El teorema mas malintuicionado de la probabilidad: la evidencia pesa, pero el punto de partida tambien cuenta.</p>
+  <header class="estacion-top" style="--line-c: var(--l1)">
+    <span class="picto-box" data-picto="ai-math/01-bayes"></span>
+    <div>
+      <h1>Bayes, con 1000 personas</h1>
+      <p class="where"><span class="line-badge">L1</span> AI &amp; Math · estacion 1 · nivel base · figura interactiva · ~12 min</p>
+      <p class="sub">El teorema mas malintuicionado de la probabilidad: la evidencia pesa, pero el punto de partida tambien cuenta.</p>
+    </div>
+  </header>
 
   <section aria-labelledby="sec-1">
     <h2 id="sec-1">1. La idea</h2>
@@ -163,6 +162,7 @@ print(f"{posterior:.2%}")   # ≈ 41%</pre>
 <script src="../../../shared/figures.js"></script>
 <script src="../../../shared/theme.js"></script>
 <script src="../../../shared/learning-state.js"></script>
+<script src="../../../shared/pictograms.js"></script>
 <script src="../../../shared/quiz.js"></script>
 <script src="../../../shared/resources.js"></script>
 <script src="../../tracks.js"></script>

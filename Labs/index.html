@@ -29,44 +29,39 @@
   <div class="store-warning" data-store-warning hidden></div>
 
   <main id="contenido">
-  <h1>Labs</h1>
-  <p class="sub" style="color:var(--muted)">Lecciones interactivas: idea, figura que se mueve, modelo declarado, codigo y un check-yourself. Dos publicadas por ahora.</p>
-  <p class="sub" id="streak" hidden></p>
+  <header class="estacion-top" style="--line-c: var(--ink)">
+    <span class="picto-box" data-picto="ia"></span>
+    <div>
+      <h1>Labs</h1>
+      <p class="where" id="streak">Lecciones interactivas: idea, figura que se mueve, modelo declarado, codigo y preguntas.</p>
+    </div>
+  </header>
 
-  <div class="section-head">
-    <p class="eyebrow">Lecciones disponibles</p>
-  </div>
-  <div class="card-grid" id="lessons"></div>
-  <noscript>
-    <ul>
-      <li><a href="ai-math/01-bayes/index.html">Bayes, con 1000 personas</a></li>
-      <li><a href="system-design/01-bottleneck/index.html">El viaje de un request</a></li>
-    </ul>
-  </noscript>
+  <section aria-labelledby="lineas-h">
+    <div class="red-h"><h2 id="lineas-h">Lineas</h2><p>Cada track es una linea; cada leccion, una estacion.</p></div>
+    <div class="lineas" id="lineas"></div>
+    <noscript>
+      <ul>
+        <li><a href="ai-math/01-bayes/index.html">Bayes, con 1000 personas</a></li>
+        <li><a href="system-design/01-bottleneck/index.html">El viaje de un request</a></li>
+      </ul>
+    </noscript>
+  </section>
 
-  <div class="section-head" style="margin-top:36px">
-    <p class="eyebrow">En el mapa</p>
-    <p class="sub">Cada leccion vive dentro de un tema del catalogo.</p>
-  </div>
-  <div class="module-list">
-    <a class="module-row" href="../index.html?topic=matematicas#mapa"><b>Matematicas</b><span>Bayes, con 1000 personas</span></a>
-    <a class="module-row" href="../index.html?topic=sistemas#mapa"><b>Sistemas</b><span>El viaje de un request</span></a>
-  </div>
+  <section aria-labelledby="lecturas-h">
+    <div class="red-h"><h2 id="lecturas-h">Lecturas recomendadas</h2><p>Fuentes publicas para seguir cada tema.</p></div>
+    <div class="module-list" id="sources"></div>
+  </section>
 
-  <div class="section-head" style="margin-top:36px">
-    <p class="eyebrow">Lecturas recomendadas</p>
-    <p class="sub">Fuentes publicas para seguir cada tema. No son extracciones de una libreta.</p>
-  </div>
-  <div class="module-list" id="sources"></div>
-
-  <section class="panel" id="biblioteca" style="margin-top:36px"></section>
-
+  <section class="panel spaced" id="biblioteca"></section>
   </main>
-  <footer class="site">Hypatia Labs · HTML estatico, sin build · formato inspirado en hft.md</footer>
+  <footer class="site">Hypatia · sin cuentas · tu progreso vive en este navegador.</footer>
 </div>
 
 <script src="../shared/theme.js"></script>
 <script src="../shared/learning-state.js"></script>
+<script src="../shared/pictograms.js"></script>
+<script src="../shared/lines.js"></script>
 <script src="../shared/resources.js"></script>
 <script src="tracks.js"></script>
 <script src="knowledge-map.js"></script>
@@ -77,81 +72,10 @@ LearningState.mountWarning(document.querySelector("[data-store-warning]"));
 
 const streakInfo = LearningState.streak();
 if (streakInfo.days > 0) {
-  const el = document.getElementById("streak");
   const dias = streakInfo.days === 1 ? "dia de racha" : "dias de racha";
-  el.textContent = `${streakInfo.days} ${dias} · ${LearningState.streakText(streakInfo)}`;
-  el.style.color = "var(--accent)";
-  el.hidden = false;
+  document.getElementById("streak").textContent = `${streakInfo.days} ${dias}. ${LearningState.streakText(streakInfo)}`;
 }
-
-const grid = document.getElementById("lessons");
-const topicProg = {};
-for (const tr of LABS_TRACKS) {
-  for (const l2 of tr.lessons) {
-    if (!l2.topic) continue;
-    const p = topicProg[l2.topic] || (topicProg[l2.topic] = { done: 0, total: 0 });
-    p.total++;
-    if (LearningState.getLesson(tr.id, l2.slug).completed) p.done++;
-  }
-}
-const statusChip = rec => {
-  if (rec.completed) {
-    const c = document.createElement("span");
-    c.className = "chip done";
-    c.textContent = rec.scoreUnknown ? "completada" :
-      `completada · mejor ${rec.bestCorrect}/${rec.total}`;
-    return c;
-  }
-  const c = document.createElement("span");
-  c.className = "chip todo";
-  c.textContent = rec.started ? "en curso" : "sin empezar";
-  return c;
-};
-
-for (const t of LABS_TRACKS) {
-  for (const l of t.lessons) {
-    const rec = LearningState.getLesson(t.id, l.slug);
-    const a = document.createElement("a");
-    a.className = "lesson-card";
-    a.href = `${t.id}/${l.slug}/index.html`;
-    const num = document.createElement("span");
-    num.className = "num";
-    num.textContent = `${t.name} · ${l.slug.slice(0, 2)}`;
-    const h = document.createElement("h2");
-    h.textContent = l.title;
-    const meta = document.createElement("div");
-    meta.className = "meta";
-    meta.appendChild(statusChip(rec));
-    if (l.level) {
-      const lv = document.createElement("span");
-      lv.className = "chip";
-      lv.textContent = `nivel ${l.level}`;
-      meta.appendChild(lv);
-    }
-    for (const b of l.beats) {
-      const s = document.createElement("span");
-      s.className = "chip";
-      s.textContent = b;
-      meta.appendChild(s);
-    }
-    const m = document.createElement("span");
-    m.className = "chip";
-    m.textContent = `~${l.mins} min`;
-    meta.appendChild(m);
-    const tp = l.topic && topicProg[l.topic];
-    if (tp) {
-      const pc = document.createElement("span");
-      pc.className = "chip";
-      pc.textContent = `progreso ${tp.done}/${tp.total}`;
-      meta.appendChild(pc);
-    }
-    const src = document.createElement("span");
-    src.className = "src";
-    src.textContent = `Origen: ${t.sourceSystem}`;
-    a.append(num, h, meta, src);
-    grid.appendChild(a);
-  }
-}
+StudioLines.mount(document.getElementById("lineas"), { tracks: LABS_TRACKS, root: "" });
 
 const srcBox = document.getElementById("sources");
 for (const t of LABS_TRACKS) {

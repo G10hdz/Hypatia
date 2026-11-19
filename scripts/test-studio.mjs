@@ -875,4 +875,15 @@ t("por pasar hoy: cuenta nuevas, vencidas y en aprendizaje; no las futuras", () 
   assert.deepEqual([...StudioDue.byDeck(decks, null, now).map(r => r.due)], [4, 1], "sin progreso todo es nuevo");
 });
 
+t("lecciones: el encabezado de estacion usa la linea y el color de su track", () => {
+  const { LABS_TRACKS } = ctx(["tracks"], makeStorage()).sandbox;
+  for (const tr of LABS_TRACKS) for (const l of tr.lessons) {
+    const html = readFileSync(join(ROOT_DIR, `Labs/${tr.id}/${l.slug}/index.html`), "utf8");
+    assert.match(html, new RegExp(`class="estacion-top" style="--line-c: var\\(--${tr.color}\\)"`), `${l.slug}: color de linea`);
+    assert.match(html, new RegExp(`data-picto="${tr.id}/${l.slug}"`), `${l.slug}: pictograma`);
+    assert.match(html, new RegExp(`class="line-badge">L${tr.line}<`), `${l.slug}: numero de linea`);
+    assert.ok(!html.includes('class="kicker"'), `${l.slug}: etiqueta encima del titulo`);
+  }
+});
+
 console.log(process.exitCode ? "\nFallaron pruebas" : "\nTodas las pruebas del estudio pasaron");
