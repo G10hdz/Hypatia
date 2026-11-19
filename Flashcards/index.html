@@ -8,14 +8,19 @@
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../apple-touch-icon.png">
   <link rel="stylesheet" href="../shared/engine.css">
+  <script>
+    (function(){try{var v=localStorage.getItem("hypatia.theme.v1");
+    document.documentElement.dataset.theme=(v==="dark"||v==="light")?v:
+    (matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");}catch(e){}})();
+  </script>
   <style>
     .deck-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
     .deck-btn {
-      padding: 10px 18px; border-radius: 10px; border: 1px solid var(--border, #2a2d2d);
-      background: var(--surface, #1a1d1d); color: var(--text, #e1e3e2); cursor: pointer;
+      padding: 10px 18px; border-radius: 10px; border: 1px solid var(--line);
+      background: var(--panel); color: var(--ink); cursor: pointer;
       font-size: 0.9rem; transition: border-color .15s;
     }
-    .deck-btn.active { border-color: var(--accent-mint, #98FF98); color: var(--accent-mint, #98FF98); }
+    .deck-btn.active { border-color: var(--ok); color: var(--ok); }
     .card-stage { perspective: 1200px; margin: 24px 0; }
     .flashcard {
       position: relative; width: 100%; min-height: 260px; cursor: pointer;
@@ -25,30 +30,30 @@
     .card-face {
       position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      padding: 32px; border-radius: 16px; border: 1px solid var(--border, #2a2d2d);
-      background: var(--surface, #1a1d1d); text-align: center;
+      padding: 32px; border-radius: 16px; border: 1px solid var(--line);
+      background: var(--panel); text-align: center;
     }
-    .card-face.back { transform: rotateY(180deg); border-color: var(--accent-mint, #98FF98); }
+    .card-face.back { transform: rotateY(180deg); border-color: var(--ok); }
     .card-face .face-label { font-size: .7rem; text-transform: uppercase; letter-spacing: .12em;
-      color: var(--text-dim, #9a9ca0); margin-bottom: 14px; }
+      color: var(--muted); margin-bottom: 14px; }
     .card-face .face-text { font-size: 1.05rem; line-height: 1.55; }
     .card-nav { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
     .card-nav .btn-secondary, .card-nav .btn-primary { width: auto; padding: 10px 20px; }
-    .card-nav small { font-size: .68rem; color: var(--text-dim, #9a9ca0); font-weight: 400; }
-    .btn-know { border-color: var(--accent-mint, #98FF98) !important; color: var(--accent-mint, #98FF98) !important; }
+    .card-nav small { font-size: .68rem; color: var(--muted); font-weight: 400; }
+    .btn-know { border-color: var(--ok) !important; color: var(--ok) !important; }
     .progress-line { display: flex; justify-content: space-between; gap: 12px; font-size: .8rem;
-      color: var(--text-dim, #9a9ca0); margin-bottom: 8px; }
-    .progress-track { height: 6px; border-radius: 3px; background: var(--border, #2a2d2d); overflow: hidden; }
-    .progress-fill { height: 100%; background: var(--accent-mint, #98FF98); transition: width .3s; }
-    .hint { text-align: center; font-size: .75rem; color: var(--text-dim, #9a9ca0); margin-top: 16px; }
-    kbd { background: var(--border,#2a2d2d); border-radius: 4px; padding: 1px 6px; font-size: .7rem; }
+      color: var(--muted); margin-bottom: 8px; }
+    .progress-track { height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--ok); transition: width .3s; }
+    .hint { text-align: center; font-size: .75rem; color: var(--muted); margin-top: 16px; }
+    kbd { background: var(--line); border-radius: 4px; padding: 1px 6px; font-size: .7rem; }
     .summary-panel {
       margin: 24px 0; padding: 32px; border-radius: 16px; text-align: center;
-      border: 1px solid var(--border, #2a2d2d); background: var(--surface, #1a1d1d);
+      border: 1px solid var(--line); background: var(--panel);
     }
     .summary-panel h2 { font-size: 1.05rem; margin-bottom: 14px; }
-    .summary-panel .sum-row { font-size: .88rem; color: var(--text-dim, #9a9ca0); margin: 6px 0; }
-    .summary-panel .sum-row b { color: var(--text, #e1e3e2); }
+    .summary-panel .sum-row { font-size: .88rem; color: var(--muted); margin: 6px 0; }
+    .summary-panel .sum-row b { color: var(--ink); }
     .summary-panel .btn-primary { width: auto; padding: 10px 22px; margin-top: 14px; }
   </style>
 <script defer src="/positronica-analytics.js"></script>
@@ -56,9 +61,9 @@
 <body>
   <main class="container" style="max-width: 720px;">
     <header style="margin-bottom: 8px;">
-      <a href="../" style="font-size:.8rem;color:var(--text-dim,#9a9ca0);text-decoration:none;">← Hypatia</a>
+      <a href="../" style="font-size:.8rem;color:var(--muted);text-decoration:none;">← Hypatia</a>
       <h1 style="margin:6px 0 2px;">Flashcards</h1>
-      <p id="deck-meta" style="color:var(--text-dim,#9a9ca0);font-size:.85rem;margin:0;"></p>
+      <p id="deck-meta" style="color:var(--muted);font-size:.85rem;margin:0;"></p>
     </header>
 
     <div id="deck-bar" class="deck-bar"></div>

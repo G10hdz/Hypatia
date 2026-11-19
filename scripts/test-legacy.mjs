@@ -71,3 +71,17 @@ console.log("ok opciones barajadas");
   assert.deepEqual(hits, [], "links a cuadernos de NotebookLM en el repo publico");
 }
 console.log("ok sin cuadernos de NotebookLM");
+
+/* Tema: engine.css hereda los tokens del estudio y ninguna pagina legacy pide Google Fonts. */
+{
+  const css = read("shared/engine.css");
+  assert.match(css, /^@import url\("tokens\.css"\);/, "engine.css importa tokens.css");
+  const colors = css.match(/#[0-9a-fA-F]{3,8}\b|rgba\((?!0,\s*0,\s*0)[^)]*\)/g) || [];
+  assert.deepEqual(colors, [], "engine.css sin colores fijos");
+  for (const p of ["CubPrep/index.html", "MLOps/index.html", "Flashcards/index.html"]) {
+    const html = read(p);
+    assert.ok(!html.includes("fonts.googleapis"), `${p} pide Google Fonts`);
+    assert.ok(html.includes("hypatia.theme.v1"), `${p} no aplica el tema guardado`);
+  }
+}
+console.log("ok tema compartido");
