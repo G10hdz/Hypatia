@@ -566,3 +566,25 @@ footer.site { margin-top: var(--space-8); color: var(--muted); font-size: var(--
 .res-list a { min-width: 0; }
 .res-list a > span { min-width: 0; }
 .res-list a span:not(.t):not(.u) { overflow-wrap: anywhere; word-break: break-word; white-space: normal; }
+
+/* Nota al margen: card a la derecha del texto en pantallas anchas, details en movil */
+.margin-note { margin: var(--space-4) 0; }
+.margin-note details {
+  background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-4); font-size: var(--text-sm); line-height: var(--leading);
+}
+.margin-note summary { cursor: pointer; font-weight: 600; min-height: var(--tap); display: flex; align-items: center; list-style: none; }
+.margin-note summary::-webkit-details-marker { display: none; }
+.margin-note summary::after { content: "+"; margin-left: auto; color: var(--muted); font-weight: 400; }
+.margin-note details[open] summary::after { content: "\2212"; }
+.margin-note h3 {
+  font-size: var(--text-xs); text-transform: uppercase; letter-spacing: var(--tracking-caps);
+  color: var(--muted); margin: var(--space-3) 0 var(--space-1);
+}
+.margin-note ul { margin: 0; padding-left: 1.1em; }
+.margin-note li, .margin-note p { margin: 0 0 var(--space-2); font-size: inherit; line-height: inherit; }
+@media (min-width: 1400px) {
+  .margin-note { float: right; clear: right; width: 220px; margin: 0 calc(-220px - var(--space-6)) var(--space-4) 0; }
+  .margin-note details { padding-top: var(--space-1); }
+  .margin-note summary { display: none; }
+}

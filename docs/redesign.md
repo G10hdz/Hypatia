@@ -1,6 +1,6 @@
 # Rediseño completo — Hypatia
 
-Estado: planeado, no iniciado. Decidido por Gio el 2026-11-18: scope = **todo
+Estado: fases 1 a 3 en main (2026-11-19); fase 4 en curso. Decidido por Gio el 2026-11-18: scope = **todo
 Hypatia** (estudio + modulos legacy). Direccion: "textbook mezclado con un
 videojuego" — calma visual, anti-slop, conciso, mas aprendible.
 
@@ -91,7 +91,9 @@ Fuentes: [OLJ 2026](https://olj.onlinelearningconsortium.org/index.php/olj/artic
    fuente recomendada + prompt de ensayo, card derecha desktop / details
    movil, estilo libro de texto). Videos para la nota al margen: sacarlos de las
    referencias del roadmap (AI Learning Tube y HackerTube, curados por senal
-   en HN), con el link oficial de YouTube.
+   en HN), con el link oficial de YouTube. Los datos viven en `lesson.margin`
+   de `Labs/tracks.js` y los pinta `shared/margin.js` con los libros de
+   `Labs/books.js`.
 5. **Modulos legacy** — reskin bajo el tema calmado o decision de mantener
    "modo examen" por modulo; unificar navegacion (topbar consistente).
 
@@ -103,7 +105,8 @@ Fuentes: [OLJ 2026](https://olj.onlinelearningconsortium.org/index.php/olj/artic
 - Lecciones publicadas no se reescriben de contenido sin brief; el rediseno
   toca estructura/CSS/copy de UI, no el material pedagogico.
 - Catalogo sigue detras del gate humano (tracks.js).
-- Progreso local; nada de telemetria.
+- Progreso local: nunca sale del navegador. La analitica del sitio
+  (`positronica-analytics.js`) solo cuenta vistas de pagina.
 
 ## Como retomar
 
