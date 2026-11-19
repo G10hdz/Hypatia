@@ -114,3 +114,13 @@ console.log("ok tema compartido");
   }
 }
 console.log("ok preguntas rotas fuera");
+
+/* Sin emojis decorativos en la interfaz legacy (los simbolos de acierto/error se quedan). */
+{
+  const decor = /[\u{1F300}-\u{1FAFF}\u{2600}-\u{26FF}\u{2728}]/u;
+  for (const p of ["CubPrep/index.html", "MLOps/index.html", "Flashcards/index.html", "shared/engine.js"]) {
+    const line = read(p).split("\n").findIndex(l => decor.test(l));
+    assert.equal(line, -1, `${p}:${line + 1} trae un emoji decorativo`);
+  }
+}
+console.log("ok sin emojis decorativos");
