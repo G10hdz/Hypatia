@@ -676,4 +676,365 @@ const QUESTION_BANK = [
       "where": "cap. 22"
     }
   },
+  // comunicacion: piloto docs/briefs/bank-comunicacion.md
+  {
+    "id": "com-001",
+    "track": "comunicacion",
+    "status": "borrador",
+    "prompt": "Tienes diez minutos con la direccion para presentar la estrategia de un producto y tu mazo tiene cuarenta diapositivas con todas las funciones. Segun Simple, la mejor jugada es:",
+    "options": [
+      "recortar palabras en cada diapositiva para que el mazo se vea mas ligero",
+      "agregar mas datos y graficas para que la direccion confie en el plan",
+      "dividir el mazo en dos presentaciones para cubrir cada tema con calma",
+      "encontrar el nucleo: una sola idea central que, si se olvida todo lo demas, siga guiando la decision"
+    ],
+    "ok": 3,
+    "why": "Simple no consiste en acortar frases ni comprimir todo, sino en encontrar el nucleo y expresarlo en una idea que sobreviva al olvido. Recortar palabras deja las cuarenta ideas intactas, agregar datos no vuelve simple el mensaje y partir el mazo en dos evita elegir el nucleo.",
+    "ref": {
+      "book": "made-to-stick",
+      "where": "cap. 1"
+    }
+  },
+  {
+    "id": "com-002",
+    "track": "comunicacion",
+    "status": "borrador",
+    "prompt": "En la sesion de induccion sobre seguridad todos asienten y despues nadie aplica nada. Quieres que recuerden el riesgo de reutilizar contrasenas. La jugada mas fiel a Unexpected es:",
+    "options": [
+      "mostrar una estadistica larga de incidentes y pedir que la memoricen",
+      "abrir con un caso inesperado: un correo viejo que revela la contrasena de un empleado, y despues explicar como evitarlo",
+      "repartir el manual de politicas y pedir la firma al final",
+      "decir que esto es importante y que luego habra una evaluacion"
+    ],
+    "ok": 1,
+    "why": "Lo inesperado abre un hueco de curiosidad: se muestra algo que rompe el guion y la explicacion lo cierra, y asi el mensaje se recuerda. La estadistica larga y el manual no crean ese hueco, y anunciar una evaluacion genera presion pero no interes.",
+    "ref": {
+      "book": "made-to-stick",
+      "where": "cap. 2"
+    }
+  },
+  {
+    "id": "com-003",
+    "track": "comunicacion",
+    "status": "borrador",
+    "prompt": "El equipo de soporte no logra explicar un cambio en el sistema de facturacion y los clientes llaman confundidos. La opcion mas alineada con Concrete es:",
+    "options": [
+      "explicar el cambio con tres principios abstractos de eficiencia y control",
+      "pedir a los clientes que lean la nota tecnica antes de llamar",
+      "recorrer un caso concreto: la factura de una panaderia pequena, paso por paso, con nombres y montos",
+      "crear una sigla con las cinco etapas del proceso"
+    ],
+    "ok": 2,
+    "why": "Concreto significa describir en terminos de acciones, sentidos y objetos, y un caso con nombres y montos se puede imaginar y repetir. Los principios abstractos y la sigla suenan expertos pero no dan nada que visualizar, y mandar a leer la nota tecnica no explica el cambio.",
+    "ref": {
+      "book": "made-to-stick",
+      "where": "cap. 3"
+    }
+  },
+  {
+    "id": "com-004",
+    "track": "comunicacion",
+    "status": "borrador",
+    "prompt": "Vendes un proceso nuevo a un equipo de operaciones esceptico y afirmas que reduce errores. Para que te crean, la via mas propia de Credible es:",
+    "options": [
+      "contar que un consultor externo muy reconocido lo recomienda",
+      "repetir con mas enfasis que el proceso reduce errores",
+      "mostrar el registro real de un pedido que fallo y como el proceso lo detecto antes del envio, para que ellos lo revisen",
+      "presentar una lista de adjetivos sobre la calidad del metodo"
+    ],
+    "ok": 2,
+    "why": "Credible distingue fuentes externas, como expertos, de credenciales internas que el publico puede comprobar. Ante un equipo esceptico que conoce su operacion, un caso propio y rastreable que ellos revisan pesa mas que el nombre de un consultor. Repetir con enfasis o listar adjetivos no aporta prueba.",
+    "ref": {
+      "book": "made-to-stick",
+      "where": "cap. 4"
+    }
+  },
+  {
+    "id": "com-005",
+    "track": "comunicacion",
+    "status": "borrador",
+    "prompt": "La campana interna para reportar casi-accidentes no despega; la gente dice que las cifras no le dicen nada. La mejor jugada segun Emotional es:",
+    "options": [
+      "subir el tamano de la letra de las estadisticas en los carteles",
+      "explicar el reglamento y las sanciones por no reportar",
+      "pedir al area legal una definicion precisa de casi-accidente",
+      "contar el turno concreto de una companera que casi pierde la mano y lo que cambio para su familia"
+    ],
+    "ok": 3,
+    "why": "Emotional funciona cuando la gente siente algo por personas concretas y no por cifras o definiciones. Agrandar numeros, citar sanciones o pedir una definicion legal mantiene el tema en el terreno abstracto, donde nadie se identifica ni actua.",
+    "ref": {
+      "book": "made-to-stick",
+      "where": "cap. 5"
+    }
+  },
+  {
+    "id": "com-006",
+    "track": "comunicacion",
+    "status": "borrador",
+    "prompt": "Estas entrenando vendedores nuevos y tienes una lista de doce reglas para manejar objeciones. Quieres que las apliquen en llamadas reales. La opcion mas fiel a Stories es:",
+    "options": [
+      "contar la historia de una vendedora que casi pierde una cuenta, que hizo en el momento y como termino, para que ellos ensayen esa misma decision",
+      "ordenar las doce reglas por importancia y pedir que las memoricen",
+      "contar la historia de un fundador que se hizo rico, sin relacion con las llamadas",
+      "darles una presentacion con las doce reglas y un examen escrito"
+    ],
+    "ok": 0,
+    "why": "Una historia con protagonista, dificultad y desenlace muestra la regla en accion y sirve de ensayo mental para la llamada real, que es como se recuerda y se aplica. Memorizar reglas o examinarlas no entrena la decision, y una historia ajena al trabajo no es un simulacro util.",
+    "ref": {
+      "book": "made-to-stick",
+      "where": "cap. 6"
+    }
+  },
+  {
+    "id": "com-007",
+    "track": "comunicacion",
+    "status": "borrador",
+    "prompt": "Un cliente llega furioso por un retraso y empieza a gritar que tu equipo es un desastre. La jugada mas alineada con Separate the People from the Problem es:",
+    "options": [
+      "dejarle claro de inmediato que el retraso lo causo su propia area",
+      "ofrecer un descuento antes de hablar del problema para bajar la tension",
+      "reconocer su molestia y su percepcion, y tratar el retraso como un problema comun a resolver con datos",
+      "escalar el caso a tu jefe para que el cliente entienda la jerarquia"
+    ],
+    "ok": 2,
+    "why": "La persona y el problema se tratan por separado: primero se reconocen la emocion y la percepcion, y luego se resuelve el fondo con criterios claros. Culpar al cliente o pagar para callarlo mezclan la relacion con el asunto, y escalar sin escuchar agranda el conflicto.",
+    "ref": {
+      "book": "getting-to-yes",
+      "where": "cap. 2"
+    }
+  },
+  {
+    "id": "com-008",
+    "track": "comunicacion",
+    "status": "borrador",
+    "prompt": "Tu proveedor pide un alza de 10 por ciento y tu presupuesto no admite nada. Antes de discutir el numero, lo propio de Focus on Interests, Not Positions es:",
+    "options": [
+      "preguntar que hay detras del pedido: sus costos, su flujo de caja, sus tiempos, y que necesita tu area en realidad",
+      "contraofertar con cero de inmediato para anclar la conversacion",
+      "proponer partir la diferencia en 5 por ciento y cerrar rapido",
+      "advertir que evaluaras cambiar de proveedor"
+    ],
+    "ok": 0,
+    "why": "Detras de las posiciones hay intereses distintos, y explorarlos permite encontrar arreglos que no estaban sobre la mesa. Contraofertar de inmediato o partir la diferencia se queda en las posiciones, y la amenaza presiona sin revelar que necesita cada parte.",
+    "ref": {
+      "book": "getting-to-yes",
+      "where": "cap. 3"
+    }
+  },
+  {
+    "id": "com-009",
+    "track": "comunicacion",
+    "status": "borrador",
+    "prompt": "Dos areas pelean por el mismo presupuesto de marketing y cada una pide quedarse con el 80 por ciento. Segun Invent Options for Mutual Gain, conviene:",
+    "options": [
+      "dividir el presupuesto 50 y 50 a la primera",
+      "separar la lluvia de ideas de la decision y generar varias alternativas: campanas conjuntas, aportes en especie, calendarios distintos",
+      "decidir con el jefe y no gastar tiempo en un taller",
+      "repetir que ambas areas ganan si colaboran, sin proponer nada concreto"
+    ],
+    "ok": 1,
+    "why": "Inventar opciones antes de decidir, y buscar intereses distintos que permitan combinarlas, es lo que crea ganancias mutuas. Partir por mitad o recurrir al jefe cierra la invencion antes de explorar, y decir que todos ganan sin opciones concretas no es inventar nada.",
+    "ref": {
+      "book": "getting-to-yes",
+      "where": "cap. 4"
+    }
+  },
+  {
+    "id": "com-010",
+    "track": "comunicacion",
+    "status": "borrador",
+    "prompt": "Negocias salario para un puesto y el reclutador dice que el presupuesto es lo que se pueda. La via mas propia de Insist on Using Objective Criteria es:",
+    "options": [
+      "argumentar que mereces mas porque te esfuerzas mucho",
+      "amenazar con aceptar otra oferta si no suben",
+      "pedir una cifra alta y ceder a la mitad para llegar rapido a un acuerdo",
+      "acordar con el reclutador criterios externos e internos: bandas salariales, encuestas de mercado, casos comparables en la empresa"
+    ],
+    "ok": 3,
+    "why": "Los criterios objetivos hacen que la decision no dependa de la voluntad de nadie, sino de parametros que ambas partes pueden revisar. El esfuerzo y la amenaza son presion, y pedir alto para luego partir a la mitad es regateo de posiciones sin criterio.",
+    "ref": {
+      "book": "getting-to-yes",
+      "where": "cap. 5"
+    }
+  },
+  {
+    "id": "com-011",
+    "track": "comunicacion",
+    "status": "borrador",
+    "prompt": "Tu cliente mas grande exige una exclusividad que te obligaria a dejar otros clientes y amenaza con irse. Antes de ceder, lo propio de What If They Are More Powerful? es:",
+    "options": [
+      "aceptar todo para no perderlo y luego ver como cumples",
+      "desarrollar y conocer tu mejor alternativa real: que haces si se va y cuanto vale, para decidir desde ahi",
+      "decirle que tienes otros clientes grandes esperando, aunque no sea cierto",
+      "confiar en que la buena relacion hara que no se vaya"
+    ],
+    "ok": 1,
+    "why": "La fuerza en la mesa depende de la mejor alternativa al acuerdo, y conviene mejorarla y conocerla antes de negociar. Aceptar por miedo o blufear con alternativas falsas dejan el poder en manos del otro, y confiar en la relacion no reemplaza un plan para el caso de no acuerdo.",
+    "ref": {
+      "book": "getting-to-yes",
+      "where": "cap. 6"
+    }
+  },
+  {
+    "id": "com-012",
+    "track": "comunicacion",
+    "status": "borrador",
+    "prompt": "Un cliente dice: no creo que puedan entregar en la fecha. Quieres que explique mas antes de responder. La tecnica mas fiel a Be a Mirror es:",
+    "options": [
+      "responder de inmediato con un plan de entregas",
+      "decirle que se equivoca y mostrarle el cronograma",
+      "repetir sus ultimas palabras: que no cree que podamos entregar en la fecha?",
+      "subir el tono y preguntar por que siempre duda"
+    ],
+    "ok": 2,
+    "why": "El espejo repite las ultimas palabras con tono curioso y hacia arriba para que el otro aclare o se explaye sin sentirse confrontado. Responder de inmediato cierra la informacion, contradecir genera defensa y subir el tono rompe la conversacion.",
+    "ref": {
+      "book": "never-split",
+      "where": "cap. 2"
+    }
+  },
+  {
+    "id": "com-013",
+    "track": "comunicacion",
+    "status": "borrador",
+    "prompt": "Un miembro de tu equipo dice que no pasa nada por no haber recibido el ascenso, pero evita mirarte. Quieres abrir la conversacion. La jugada propiamente de Label es:",
+    "options": [
+      "etiquetar lo que notas: parece que esto te dejo mas frustrado de lo que esperabas",
+      "preguntar por que estas molesto para ir al grano",
+      "decirle que entender su dolor no es tu trabajo y hablar del siguiente proyecto",
+      "decirle que se calme y que ya habra otras oportunidades"
+    ],
+    "ok": 0,
+    "why": "Etiquetar la emocion con un parece que invita a confirmarla o corregirla y abre el tema sin acusar. Preguntar por que esta molesto suena a juicio, negar el dolor cierra la puerta y pedir calma minimiza lo que la persona siente.",
+    "ref": {
+      "book": "never-split",
+      "where": "cap. 3"
+    }
+  },
+  {
+    "id": "com-014",
+    "track": "comunicacion",
+    "status": "borrador",
+    "prompt": "En una junta todos dicen si rapido a tu propuesta, pero nadie se compromete despues. Para obtener un si real, lo mas alineado con Beware Yes, Master No es:",
+    "options": [
+      "preguntar estan de acuerdo y anotar los si como compromiso",
+      "cerrar la junta antes de que aparezcan dudas",
+      "repetir la propuesta con mas entusiasmo hasta que firme cada uno",
+      "invitar al no: seria una locura probar esto solo un mes en un area? y escuchar lo que sale"
+    ],
+    "ok": 3,
+    "why": "Un si apresurado suele ser falso; invitar al no da control al otro y produce respuestas verdaderas y compromisos reales. Preguntar si estan de acuerdo fabrica cortesias, cerrar rapido evita la informacion y el entusiasmo no reemplaza una decision.",
+    "ref": {
+      "book": "never-split",
+      "where": "cap. 4"
+    }
+  },
+  {
+    "id": "com-015",
+    "track": "comunicacion",
+    "status": "borrador",
+    "prompt": "Un proveedor dice: el precio es 100 mil y no bajo ni un peso. Quieres un mejor arreglo sin romper la relacion. Lo mas propio de Bend Their Reality es:",
+    "options": [
+      "aceptar la cifra porque dijo que era final",
+      "tratar la cifra como un ancla y no como un hecho: preguntar como llego a ella y reencuadrar la conversacion en valor y en un rango justificado",
+      "responder con el mismo tono duro para que vea que no cedes",
+      "ofrecer la mitad sin explicar nada y esperar su contraoferta"
+    ],
+    "ok": 1,
+    "why": "Un numero de apertura es un ancla que se puede mover si se cambia el marco y se justifica con criterios, y preguntar por su logica abre esa puerta. Tomarlo como definitivo o responder con dureza lo fija, y tirar una cifra sin razones solo invita a otro regateo.",
+    "ref": {
+      "book": "never-split",
+      "where": "cap. 6"
+    }
+  },
+  {
+    "id": "com-016",
+    "track": "comunicacion",
+    "status": "borrador",
+    "prompt": "Necesitas que un gerente de otra area libere tiempo de su equipo para un proyecto conjunto, y hasta ahora solo te ha dicho que no. La via mas propia de Create the Illusion of Control es:",
+    "options": [
+      "enviarle el plan completo y pedirle que lo apruebe o lo rechace",
+      "preguntarle por que no quieres ayudar para que vea lo irracional",
+      "preguntarle como harias tu para que esto quepa en tu carga sin romper tus entregas, y dejar que proponga",
+      "escalar a su jefe para forzar la decision"
+    ],
+    "ok": 2,
+    "why": "Las preguntas calibradas de como y que hacen que el otro sienta que el arreglo es suyo, y lo comprometen con lo que propone. Mandar un plan a aprobar, preguntar por que no ayuda o escalar le quitan la agencia y provocan resistencia.",
+    "ref": {
+      "book": "never-split",
+      "where": "cap. 7"
+    }
+  },
+  {
+    "id": "com-017",
+    "track": "comunicacion",
+    "status": "borrador",
+    "prompt": "Una ingeniera presenta resultados trimestrales con datos solidos y su jefa le pide demuestralo otra vez; a su companero, con los mismos numeros, no le pidieron nada. Lo mas util segun Prove-It-Again es:",
+    "options": [
+      "nombrar el patron, responder con evidencia ya preparada y proponer criterios de evaluacion iguales para todos",
+      "trabajar el doble en silencio hasta que su jefa cambie de opinion",
+      "responder con el mismo enfasis y evitar el tema para no parecer conflictiva",
+      "pedir el cambio de equipo sin decir por que"
+    ],
+    "ok": 0,
+    "why": "Prove-It-Again describe la exigencia repetida de pruebas que recae de forma desigual; la salida no es esforzarse mas en silencio sino hacer visible la evidencia y cambiar la regla de evaluacion. Trabajar el doble sin decir nada, callar o cambiar de equipo dejan el patron intacto.",
+    "ref": {
+      "book": "wwww",
+      "where": "parte 1"
+    }
+  },
+  {
+    "id": "com-018",
+    "track": "comunicacion",
+    "status": "borrador",
+    "prompt": "En una revision de desempeno le dicen a una gerenta que es muy directa y que deberia suavizar su estilo, aunque su par hombre dice lo mismo y a el lo llaman lider. Lo mas fiel a The Tightrope es:",
+    "options": [
+      "dejar de ser directa y aceptar el comentario sin discusion",
+      "exagerar los rasgos duros para que no la vean blanda",
+      "pedir que la cambien de jefa para no lidiar con eso",
+      "combinar competencia y calidez de forma explicita, por ejemplo mostrar interes por el equipo, y cuestionar el doble estandar con ejemplos"
+    ],
+    "ok": 3,
+    "why": "The Tightrope describe el doble vinculo entre ser competente y ser querida; se recorre mostrando calidez sin ceder competencia y nombrando el doble estandar. Apagar la fortaleza o endurecerla refuerzan el dilema, y cambiar de equipo no lo resuelve.",
+    "ref": {
+      "book": "wwww",
+      "where": "parte 2"
+    }
+  },
+  {
+    "id": "com-019",
+    "track": "comunicacion",
+    "status": "borrador",
+    "prompt": "Una analista vuelve de licencia de maternidad y su jefe no la considera para un proyecto visible porque con un bebe va a estar cansada. Lo mas util segun The Maternal Wall es:",
+    "options": [
+      "aceptar el desaire y esperar un mejor momento para no parecer dificil",
+      "pedir el proyecto mostrando disponibilidad y resultados concretos, y mencionar la suposicion para que se decida con hechos",
+      "esconder que tiene hijos y no hablar nunca del tema",
+      "trabajar de noche para compensar lo que el jefe supone"
+    ],
+    "ok": 1,
+    "why": "The Maternal Wall describe suposiciones de menor compromiso que se aplican a las madres sin evidencia; se responde con hechos y visibilidad, no con silencio. Aceptarlo o esconder la familia deja la suposicion en pie, y compensar de noche la refuerza sin cambiar el criterio de decision.",
+    "ref": {
+      "book": "wwww",
+      "where": "parte 3"
+    }
+  },
+  {
+    "id": "com-020",
+    "track": "comunicacion",
+    "status": "borrador",
+    "prompt": "Dos coordinadoras del mismo equipo compiten por la unica promocion disponible y empiezan a desacreditarse entre ellas; el jefe observa sin intervenir. Lo mas alineado con The Tug of War es:",
+    "options": [
+      "redoblar la competencia para que la mejor gane limpio",
+      "retirarse de la contienda para no romper la relacion con la otra coordinadora",
+      "reconocer el juego de escasez, hablar entre ellas y proponer criterios y opciones justas en vez de pelear por un solo lugar",
+      "contarle a todo el equipo lo que la otra hace mal"
+    ],
+    "ok": 2,
+    "why": "The Tug of War muestra que la escasez y los roles asignados enfrentan a las mujeres entre si; la salida es coordinarse y cambiar las reglas, no pelear por el unico lugar. Competir con mas fuerza, retirarse o desacreditar deja intacto el juego que las enfrenta.",
+    "ref": {
+      "book": "wwww",
+      "where": "parte 4"
+    }
+  },
 ];
