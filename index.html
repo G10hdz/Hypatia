@@ -34,6 +34,7 @@
 
   <main id="contenido">
     <section class="hoy" id="hoy" aria-labelledby="hoy-h">
+      <p class="hoy-band" id="hoy-band">Proxima estacion</p>
       <span class="picto-box" id="hoy-picto"></span>
       <div>
         <h1 id="hoy-h">Empieza aqui</h1>
@@ -156,14 +157,16 @@ const box = (id, line, size) => {
   const slot = document.getElementById("hoy-picto");
   slot.replaceWith(Object.assign(box(`${x.t.id}/${x.l.slug}`, x.t.color), { id: "hoy-picto" }));
   document.getElementById("hoy-h").textContent = x.l.title;
-  const where = document.getElementById("hoy-where");
-  where.textContent = "";
+  const n = x.t.lessons.indexOf(x.l) + 1;
+  const bandEl = document.getElementById("hoy-band");
+  bandEl.textContent = "";
   const badge = document.createElement("span");
   badge.className = "line-badge";
   badge.textContent = `L${x.t.line}`;
-  const n = x.t.lessons.indexOf(x.l) + 1;
-  const state = !pending ? "Todo recorrido, repasa a tu ritmo" : x.rec.started ? "Vas a medio camino" : "Proxima estacion";
-  where.append(badge, `${x.t.name} · estacion ${n} de ${x.t.lessons.length} · ~${x.l.mins} min · ${state}`);
+  const state = !pending ? "Todo recorrido" : x.rec.started ? "Vas a medio camino" : "Proxima estacion";
+  bandEl.append(badge, `${x.t.name} · ${state}`);
+  document.getElementById("hoy-where").textContent =
+    `Estacion ${n} de ${x.t.lessons.length} · ~${x.l.mins} min${!pending ? " · repasa a tu ritmo" : ""}`;
   const go = document.getElementById("hoy-go");
   go.href = x.href;
   go.textContent = !pending ? "Repasar" : x.rec.started ? "Retomar" : "Entrar";

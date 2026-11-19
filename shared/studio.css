@@ -285,7 +285,7 @@ pre {
 .q .opts button:hover { border-color: var(--accent); }
 .q .opts button.ok { border-color: var(--ok); background: color-mix(in srgb, var(--ok) 10%, var(--panel)); }
 .q .opts button.no { border-color: var(--bad); background: color-mix(in srgb, var(--bad) 10%, var(--panel)); }
-.q .why { display: none; margin-top: var(--space-3); color: var(--muted); font-size: var(--text-sm); border-left: 3px solid var(--ok); padding-left: var(--space-3); }
+.q .why { display: none; margin-top: var(--space-3); color: var(--muted); font-size: var(--text-sm); background: color-mix(in srgb, var(--ok) 8%, var(--panel)); border-radius: var(--radius-ctl); padding: var(--space-3); color: var(--ink); }
 .q .why.on { display: block; }
 
 .quiz-status { margin-top: var(--space-4); font-size: var(--text-sm); color: var(--muted); }
@@ -632,7 +632,7 @@ a { text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
   align-items: center; margin: var(--space-4) 0 var(--space-7);
   padding: var(--space-6); border-radius: var(--radius-panel);
   background: var(--panel); box-shadow: var(--shadow);
-  border-top: 10px solid var(--line-c, var(--ink));
+  overflow: hidden; padding-top: 0;
 }
 .hoy h1 { font-size: clamp(2rem, 5.2vw, 3.75rem); line-height: 1.02; margin: var(--space-2) 0 var(--space-3); }
 .hoy .where { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; color: var(--muted); font-weight: 600; font-stretch: var(--stretch-label); }
@@ -743,3 +743,11 @@ a { text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
 @media (max-width: 640px) { .estacion-top { grid-template-columns: 1fr; --pb: 72px; } }
 .estaciones { padding: 8px 8px var(--space-2); }
 .estaciones::before { left: 30px; right: 30px; top: 26px; }
+.hoy-band {
+  grid-column: 1 / -1; margin: 0 calc(-1 * var(--space-6)); padding: var(--space-2) var(--space-6);
+  background: var(--line-c, var(--ink)); color: var(--l-ink);
+  display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;
+  font-weight: 700; font-stretch: var(--stretch-label); text-transform: uppercase; letter-spacing: 0.05em; font-size: var(--text-sm);
+}
+.hoy-band .line-badge { background: var(--l-ink); color: var(--line-c, var(--ink)); }
+@media (max-width: 640px) { .hoy-band { margin: 0 calc(-1 * var(--space-5)); padding: var(--space-2) var(--space-5); } }

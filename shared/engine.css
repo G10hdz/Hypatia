@@ -167,7 +167,7 @@
     }
 
     .video-references {
-      border-left: 3px solid var(--accent-2);
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-2) 35%, transparent); background-color: color-mix(in srgb, var(--accent-2) 7%, transparent);
       background: color-mix(in srgb, var(--accent) 5%, transparent);
       padding: 12px;
       border-radius: 8px;
@@ -654,7 +654,7 @@
 
     .tip {
       margin-top: 12px;
-      border-left: 3px solid var(--accent-3);
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-3) 35%, transparent); background-color: color-mix(in srgb, var(--accent-3) 7%, transparent);
       padding-left: 10px;
       color: var(--ok);
       font-size: 0.92rem;
@@ -737,12 +737,12 @@
     }
 
     .explanation-section.correct-reason {
-      border-left: 3px solid var(--accent-3);
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-3) 35%, transparent); background-color: color-mix(in srgb, var(--accent-3) 7%, transparent);
       background: color-mix(in srgb, var(--ok) 6%, transparent);
     }
 
     .explanation-section.distractor-analysis {
-      border-left: 3px solid var(--accent);
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent); background-color: color-mix(in srgb, var(--accent) 7%, transparent);
       background: color-mix(in srgb, var(--accent) 6%, transparent);
     }
 
@@ -979,7 +979,7 @@
       border-radius: 1rem;
       padding: 14px;
       background: color-mix(in srgb, var(--accent) 5%, transparent);
-      border-left: 3px solid var(--accent);
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent); background-color: color-mix(in srgb, var(--accent) 7%, transparent);
       margin-top: 10px;
     }
 
@@ -1163,15 +1163,15 @@
 
     /* === FEATURE 1: Subject card color coding by accuracy === */
     .subject-item.accuracy-good {
-      border-left: 3px solid var(--accent-3);
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-3) 35%, transparent); background-color: color-mix(in srgb, var(--accent-3) 7%, transparent);
       background: color-mix(in srgb, var(--ok) 4%, transparent);
     }
     .subject-item.accuracy-mid {
-      border-left: 3px solid var(--warn);
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--warn) 35%, transparent); background-color: color-mix(in srgb, var(--warn) 7%, transparent);
       background: color-mix(in srgb, var(--warn) 4%, transparent);
     }
     .subject-item.accuracy-bad {
-      border-left: 3px solid var(--danger);
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--danger) 35%, transparent); background-color: color-mix(in srgb, var(--danger) 7%, transparent);
       background: color-mix(in srgb, var(--bad) 6%, transparent);
     }
 
@@ -1194,9 +1194,9 @@
       border-radius: 10px;
       background: color-mix(in srgb, var(--ink) 2%, transparent);
     }
-    .topic-breakdown-item.accuracy-bad  { border-left: 3px solid var(--danger); }
-    .topic-breakdown-item.accuracy-mid  { border-left: 3px solid var(--warn); }
-    .topic-breakdown-item.accuracy-good { border-left: 3px solid var(--accent-3); }
+    .topic-breakdown-item.accuracy-bad  { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--danger) 35%, transparent); background-color: color-mix(in srgb, var(--danger) 7%, transparent); }
+    .topic-breakdown-item.accuracy-mid  { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--warn) 35%, transparent); background-color: color-mix(in srgb, var(--warn) 7%, transparent); }
+    .topic-breakdown-item.accuracy-good { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-3) 35%, transparent); background-color: color-mix(in srgb, var(--accent-3) 7%, transparent); }
     .topic-breakdown-meta {
       display: flex;
       justify-content: space-between;
