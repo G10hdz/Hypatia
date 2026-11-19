@@ -120,6 +120,7 @@ const FILES = {
   map: ["shared/map.js", ["StudioMap"]],
   tracks: ["Labs/tracks.js", ["LABS_TRACKS", "LEGACY_MODULES", "SOURCE_COLLECTIONS"]],
   knowledge: ["Labs/knowledge-map.js", ["KNOWLEDGE_MAP"]],
+  challenge: ["shared/challenge.js", ["StudioChallenge"]],
 };
 
 function ctx(files, storage, extra = {}) {
@@ -719,6 +720,29 @@ t("clases del template y lecciones tienen estilo en studio.css", () => {
     const missing = [...new Set(used)].filter(c => c && !defined.has(c) && !hooks.has(c));
     assert.deepEqual(missing, [], `${f} usa clases sin estilo`);
   }
+});
+
+t("desafio del dia: misma pregunta todo el dia, rota al siguiente", () => {
+  const { pick } = ctx(["challenge"], makeStorage()).sandbox.StudioChallenge;
+  const items = ["a", "b", "c"];
+  assert.equal(pick([], "2026-11-17"), null);
+  assert.equal(pick(items, "2026-11-17"), pick(items, "2026-11-17"));
+  const seen = new Set(["2026-11-17", "2026-11-18", "2026-11-19"].map(d => pick(items, d)));
+  assert.equal(seen.size, 3, "tres dias seguidos dan tres preguntas distintas");
+});
+
+t("lecciones publicadas exponen preguntas legibles para el desafio", () => {
+  const { LABS_TRACKS } = ctx(["tracks"], makeStorage()).sandbox;
+  let total = 0;
+  for (const tr of LABS_TRACKS) for (const l of tr.lessons) {
+    const html = readFileSync(join(ROOT_DIR, `Labs/${tr.id}/${l.slug}/index.html`), "utf8");
+    for (const m of html.matchAll(/<div class="q" data-ok="(\d+)">([\s\S]*?)<\/div>\s*<div class="why">/g)) {
+      const opts = (m[2].match(/<button/g) || []).length;
+      assert.ok(+m[1] < opts, `${l.slug}: data-ok fuera de rango`);
+      total++;
+    }
+  }
+  assert.ok(total >= 2, `se esperaban preguntas, hay ${total}`);
 });
 
 console.log(process.exitCode ? "\nFallaron pruebas" : "\nTodas las pruebas del estudio pasaron");
