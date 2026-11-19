@@ -823,3 +823,16 @@ a { text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
   .anden .btn { display: none; }
   .anden .t { min-width: 0; overflow-wrap: anywhere; }
 }
+/* Mini linea "estas aqui" dentro de Hoy */
+.mini-linea { list-style: none; margin: 0 var(--space-2) 0 0; padding: 0; display: inline-flex; align-items: center; position: relative; gap: 22px; }
+.mini-linea::before { content: ""; position: absolute; left: 6px; right: 6px; height: 5px; border-radius: 3px; background: var(--line-c); }
+.mini-linea li { position: relative; width: 14px; height: 14px; border-radius: 50%; background: var(--panel); border: 3px solid var(--line-c); }
+.mini-linea li.done { background: var(--line-c); }
+.mini-linea li.aqui { box-shadow: 0 0 0 3px var(--panel), 0 0 0 5px var(--ink); }
+.hoy .where { gap: var(--space-3); }
+/* Transbordo: etiqueta libre del doble aro */
+.map-stage .map-node.transfer { gap: 14px; }
+@media (max-width: 767px) {
+  .map-stage .map-node .nm { font-size: 11px; letter-spacing: 0; }
+  .map-stage .map-node.transfer { gap: 8px; }
+}

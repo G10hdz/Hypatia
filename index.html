@@ -165,8 +165,18 @@ const box = (id, line, size) => {
   badge.textContent = `L${x.t.line}`;
   const state = !pending ? "Todo recorrido" : x.rec.started ? "En curso" : "Proxima estacion";
   bandEl.append(badge, `${x.t.name} · ${state}`);
-  document.getElementById("hoy-where").textContent =
-    `Estacion ${n} de ${x.t.lessons.length} · ~${x.l.mins} min${!pending ? " · repasa a tu ritmo" : ""}`;
+  const whereEl = document.getElementById("hoy-where");
+  whereEl.textContent = "";
+  const mini = document.createElement("ol");
+  mini.className = "mini-linea";
+  mini.setAttribute("aria-hidden", "true");
+  for (const l of x.t.lessons) {
+    const d = document.createElement("li");
+    if (LearningState.getLesson(x.t.id, l.slug).completed) d.className = "done";
+    if (l === x.l) d.className += " aqui";
+    mini.appendChild(d);
+  }
+  whereEl.append(mini, `Estacion ${n} de ${x.t.lessons.length} · ~${x.l.mins} min${!pending ? " · repasa a tu ritmo" : ""}`);
   const go = document.getElementById("hoy-go");
   go.href = x.href;
   go.textContent = !pending ? "Repasar" : x.rec.started ? "Retomar" : "Entrar";
