@@ -18,7 +18,7 @@ const QUESTION_BANK = [
   {
     "id": "aim-001",
     "track": "ai-math",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Se lanza un dado justo de seis caras. Cual es la probabilidad de que salga par o mayor que 4?",
     "options": [
       "1/2",
@@ -36,7 +36,7 @@ const QUESTION_BANK = [
   {
     "id": "aim-002",
     "track": "ai-math",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "En un grupo de 100 personas, 60 toman te y 30 toman te y cafe. Si una persona toma te, cual es la probabilidad de que tambien tome cafe?",
     "options": [
       "0.3",
@@ -54,7 +54,7 @@ const QUESTION_BANK = [
   {
     "id": "aim-003",
     "track": "ai-math",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "A y B son independientes, con P(A) = 0.5 y P(B) = 0.4. Cual es P(A|B)?",
     "options": [
       "0.5",
@@ -72,7 +72,7 @@ const QUESTION_BANK = [
   {
     "id": "aim-004",
     "track": "ai-math",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Un proceso tiene exito con probabilidad 0.2 en cada intento, y los intentos son independientes. Si se hacen dos intentos, cual es la probabilidad de al menos un exito?",
     "options": [
       "0.4",
@@ -90,7 +90,7 @@ const QUESTION_BANK = [
   {
     "id": "aim-005",
     "track": "ai-math",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Una enfermedad afecta al 1% de una poblacion. Una prueba detecta al 99% de los enfermos y da falso positivo en el 5% de los sanos. Si una persona da positivo, cual es la probabilidad de que tenga la enfermedad?",
     "options": [
       "0.99",
@@ -108,7 +108,7 @@ const QUESTION_BANK = [
   {
     "id": "aim-006",
     "track": "ai-math",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Hay dos bolsas. La bolsa A tiene 2 fichas rojas y 3 azules; la bolsa B tiene 4 rojas y 1 azul. Se elige una bolsa al azar y se saca una ficha roja. Cual es la probabilidad de haber elegido la bolsa A?",
     "options": [
       "2/5",
@@ -126,7 +126,7 @@ const QUESTION_BANK = [
   {
     "id": "aim-007",
     "track": "ai-math",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "En un pueblo de 1000 personas, 100 tienen gripe. El 80% de los enfermos tiene fiebre y el 10% de los sanos tambien. Si una persona tiene fiebre, cual es la probabilidad de que tenga gripe?",
     "options": [
       "0.8",
@@ -144,7 +144,7 @@ const QUESTION_BANK = [
   {
     "id": "aim-009",
     "track": "ai-math",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Hay dos monedas: una justa y otra con dos caras. Se elige una al azar y sale cara. Cual es la probabilidad de haber elegido la moneda de dos caras?",
     "options": [
       "2/3",
@@ -162,7 +162,7 @@ const QUESTION_BANK = [
   {
     "id": "aim-010",
     "track": "ai-math",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Un dado esta cargado de modo que el 6 tiene probabilidad 0.25 y las otras cinco caras tienen la misma probabilidad entre si. Cual es la probabilidad de sacar un numero par?",
     "options": [
       "0.5",
@@ -180,7 +180,7 @@ const QUESTION_BANK = [
   {
     "id": "aim-011",
     "track": "ai-math",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Se lanzan dos dados justos. Cual es la probabilidad de que la suma sea exactamente 7?",
     "options": [
       "1/6",
@@ -198,7 +198,7 @@ const QUESTION_BANK = [
   {
     "id": "aim-012",
     "track": "ai-math",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Se lanzan dos dados justos. Cual es la probabilidad de que la suma sea impar?",
     "options": [
       "1/2",
@@ -216,7 +216,7 @@ const QUESTION_BANK = [
   {
     "id": "aim-013",
     "track": "ai-math",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Las odds de un evento son 3 a 1 a favor. Cual es su probabilidad?",
     "options": [
       "1/4",
@@ -234,7 +234,7 @@ const QUESTION_BANK = [
   {
     "id": "aim-014",
     "track": "ai-math",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Las odds previas de una hipotesis son 1 a 9, es decir, probabilidad 0.1. Llega un dato con razon de verosimilitud 4 a favor de la hipotesis. Cual es la probabilidad posterior?",
     "options": [
       "0.4",
@@ -252,7 +252,7 @@ const QUESTION_BANK = [
   {
     "id": "aim-015",
     "track": "ai-math",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "La probabilidad previa de una hipotesis es 0.5. Llegan dos datos independientes, cada uno con razon de verosimilitud 3 a favor. Cual es la probabilidad posterior?",
     "options": [
       "0.75",
@@ -270,7 +270,7 @@ const QUESTION_BANK = [
   {
     "id": "aim-016",
     "track": "ai-math",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Cual es el producto punto de u = (2, 3) y v = (4, -1)?",
     "options": [
       "5",
@@ -288,7 +288,7 @@ const QUESTION_BANK = [
   {
     "id": "aim-017",
     "track": "ai-math",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Sea A = [[2, 1], [0, 3]] y x = (1, 2). Cual es el vector A x?",
     "options": [
       "(3, 6)",
@@ -306,7 +306,7 @@ const QUESTION_BANK = [
   {
     "id": "aim-018",
     "track": "ai-math",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Cual es la similitud coseno entre u = (1, 0) y v = (1, 1)?",
     "options": [
       "0.5",
@@ -324,7 +324,7 @@ const QUESTION_BANK = [
   {
     "id": "aim-019",
     "track": "ai-math",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Si Var(X) = 3, cuanto vale Var(2X)?",
     "options": [
       "6",
@@ -342,7 +342,7 @@ const QUESTION_BANK = [
   {
     "id": "aim-020",
     "track": "ai-math",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "X sigue una normal con media 10 y varianza 4. Cual es su desviacion estandar y, aproximadamente, que probabilidad hay de que X caiga entre 8 y 12?",
     "options": [
       "desv. 4; 68%",
@@ -361,7 +361,7 @@ const QUESTION_BANK = [
   {
     "id": "sd-002",
     "track": "system-design",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Un servidor con una sola cola trabaja al 50% de utilizacion y responde en 40 ms. El trafico sube un 80% y la utilizacion pasa al 90%, sin cambiar el tiempo de servicio. Que es lo mas probable que pase con la latencia?",
     "options": [
       "Se mantiene en 40 ms, porque el tiempo de servicio no cambio",
@@ -379,7 +379,7 @@ const QUESTION_BANK = [
   {
     "id": "sd-004",
     "track": "system-design",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "El 98% de las lecturas acierta en cache y responde en 10 ms. El 2% restante falla, va a la base y tarda 2 segundos. Un usuario se queja de que 'a veces' la app tarda 2 segundos. Que explica mejor la latencia p99?",
     "options": [
       "La p99 ronda los 2 s, porque el 2% de fallos cubre el percentil 99 y domina la cola",
@@ -397,7 +397,7 @@ const QUESTION_BANK = [
   {
     "id": "sd-005",
     "track": "system-design",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Una clave muy consultada expira cada 60 segundos. Al expirar, 5,000 solicitudes simultaneas no la encuentran y todas van a la base; la base se satura. Cual es la correccion mas directa?",
     "options": [
       "Bajar el TTL a 10 segundos para que el dato sea mas fresco",
@@ -415,7 +415,7 @@ const QUESTION_BANK = [
   {
     "id": "sd-006",
     "track": "system-design",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Un usuario edita su perfil y la escritura actualiza la base. La vista de perfil se lee de una cache con TTL de 60 segundos y no se invalida al escribir. El usuario recarga y sigue viendo el nombre viejo. Que cambia el comportamiento de forma mas directa?",
     "options": [
       "Reducir el TTL a 5 segundos",
@@ -433,7 +433,7 @@ const QUESTION_BANK = [
   {
     "id": "sd-007",
     "track": "system-design",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Diez servidores identicos reciben solicitudes con duraciones muy dispares: algunas tardan 5 ms y otras 2 s. El balanceador reparte en round robin estricto y algunas solicitudes esperan detras de las lentas. Que estrategia suele mejorar mas la latencia sin cambiar los servidores?",
     "options": [
       "Mandar cada solicitud al servidor con menos solicitudes en curso (least connections)",
@@ -451,7 +451,7 @@ const QUESTION_BANK = [
   {
     "id": "sd-008",
     "track": "system-design",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "El cliente llama al servicio A con timeout de 2 s. A llama a B con timeout de 5 s. B se degrada y tarda 4 s. El cliente ya se fue, pero A y B siguen trabajando y reciben reintentos. Que correccion ataca la causa?",
     "options": [
       "Subir el timeout del cliente a 6 s para que espere a A",
@@ -469,7 +469,7 @@ const QUESTION_BANK = [
   {
     "id": "sd-009",
     "track": "system-design",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Un servicio downstream falla de forma intermitente. Todos los clientes reintentan 3 veces sin espera y sin jitter. El trafico se multiplica y el downstream termina de caer. Que combinacion es la mas adecuada?",
     "options": [
       "Reintentar mas veces y en paralelo para ganar latencia",
@@ -487,7 +487,7 @@ const QUESTION_BANK = [
   {
     "id": "sd-010",
     "track": "system-design",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Un servicio depende de una API externa que esta caida. El circuit breaker esta abierto. Que debe hacer una llamada nueva mientras siga abierto?",
     "options": [
       "Intentar la llamada igual, pero con un timeout mas largo",
@@ -505,7 +505,7 @@ const QUESTION_BANK = [
   {
     "id": "sd-011",
     "track": "system-design",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "El cliente crea una orden con una llamada que no es idempotente. La respuesta se pierde por un timeout, el cliente reintenta y se crean dos ordenes. Cual es la correccion mas solida?",
     "options": [
       "Enviar una clave de idempotencia por operacion y que el servidor deduplique",
@@ -523,7 +523,7 @@ const QUESTION_BANK = [
   {
     "id": "sd-012",
     "track": "system-design",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Un cluster reparte claves con hash(key) mod 10. Se agrega un nodo y se pasa a mod 11. Aproximadamente que fraccion de las claves cambia de nodo?",
     "options": [
       "Cerca del 9%, porque solo se agrega 1 de 11 nodos",
@@ -541,7 +541,7 @@ const QUESTION_BANK = [
   {
     "id": "sd-013",
     "track": "system-design",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Se particiona por user_id. Una celebridad con millones de seguidores genera la mayoria de las escrituras de una particion. Agregar mas particiones no baja la carga de esa particion. Que es cierto?",
     "options": [
       "El hash de user_id distribuye mal y hay que cambiar la funcion hash",
@@ -559,7 +559,7 @@ const QUESTION_BANK = [
   {
     "id": "sd-014",
     "track": "system-design",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Un usuario guarda un cambio en el lider y recarga la pagina; la lectura va a una replica asincrona que aun no recibio el cambio, y ve el dato viejo. Que solucion garantiza que el usuario vea su propia escritura?",
     "options": [
       "Enviar las lecturas de ese usuario al lider, o esperar a que la replica alcance la posicion de la escritura",
@@ -577,7 +577,7 @@ const QUESTION_BANK = [
   {
     "id": "sd-015",
     "track": "system-design",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Un sistema con N=3 replicas usa quorum. Cual configuracion garantiza que una lectura vea la ultima escritura confirmada, sin depender de reparaciones posteriores?",
     "options": [
       "W=1, R=1",
@@ -595,7 +595,7 @@ const QUESTION_BANK = [
   {
     "id": "sd-016",
     "track": "system-design",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Dos medicos de guardia consultan cuantos companeros quedan de guardia y cada uno decide irse, confiando en que el otro se queda. Cada transaccion lee el mismo dato y escribe su propia baja. Bajo aislamiento snapshot, ambas confirman. Que anomalia ocurrio?",
     "options": [
       "Lost update, porque una escritura piso a la otra",
@@ -613,7 +613,7 @@ const QUESTION_BANK = [
   {
     "id": "sd-017",
     "track": "system-design",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Un SLO de disponibilidad de 99.9% en un mes de 30 dias. Cuanto tiempo de indisponibilidad permite el presupuesto de error, aproximadamente?",
     "options": [
       "4.3 minutos",
@@ -631,7 +631,7 @@ const QUESTION_BANK = [
   {
     "id": "sd-018",
     "track": "system-design",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "A mitad del mes, el equipo ya consumio el 100% del error budget de su SLO. Que es lo mas alineado con la practica de error budgets?",
     "options": [
       "Congelar o reducir cambios riesgosos y priorizar trabajo de confiabilidad hasta recuperar el margen",
@@ -649,7 +649,7 @@ const QUESTION_BANK = [
   {
     "id": "sd-019",
     "track": "system-design",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Un servicio esta sobrecargado y la cola de entrada crece sin limite. Las solicitudes esperan minutos y muchas terminan en timeout; el throughput util baja. Que estrategia protege mejor a las solicitudes que si pueden atenderse?",
     "options": [
       "Aceptar todo y agrandar la cola para no perder ninguna solicitud",
@@ -667,7 +667,7 @@ const QUESTION_BANK = [
   {
     "id": "sd-020",
     "track": "system-design",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Un servicio lento retiene hilos de un servicio A; A se queda sin hilos y empieza a fallar; los clientes de A reintentan y el fallo llega a otros servicios. Que conjunto de medidas corta mejor la cascada?",
     "options": [
       "Aumentar el pool de hilos de A y el timeout del servicio lento",
@@ -686,7 +686,7 @@ const QUESTION_BANK = [
   {
     "id": "com-001",
     "track": "comunicacion",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Tienes diez minutos con la direccion para presentar la estrategia de un producto y tu mazo tiene cuarenta diapositivas con todas las funciones. Segun Simple, la mejor jugada es:",
     "options": [
       "recortar palabras en cada diapositiva para que el mazo se vea mas ligero",
@@ -704,7 +704,7 @@ const QUESTION_BANK = [
   {
     "id": "com-002",
     "track": "comunicacion",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "En la sesion de induccion sobre seguridad todos asienten y despues nadie aplica nada. Quieres que recuerden el riesgo de reutilizar contrasenas. La jugada mas fiel a Unexpected es:",
     "options": [
       "mostrar una estadistica larga de incidentes y pedir que la memoricen",
@@ -722,7 +722,7 @@ const QUESTION_BANK = [
   {
     "id": "com-003",
     "track": "comunicacion",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "El equipo de soporte no logra explicar un cambio en el sistema de facturacion y los clientes llaman confundidos. La opcion mas alineada con Concrete es:",
     "options": [
       "explicar el cambio con tres principios abstractos de eficiencia y control",
@@ -740,7 +740,7 @@ const QUESTION_BANK = [
   {
     "id": "com-004",
     "track": "comunicacion",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Vendes un proceso nuevo a un equipo de operaciones esceptico y afirmas que reduce errores. Para que te crean, la via mas propia de Credible es:",
     "options": [
       "contar que un consultor externo muy reconocido lo recomienda",
@@ -758,7 +758,7 @@ const QUESTION_BANK = [
   {
     "id": "com-005",
     "track": "comunicacion",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "La campana interna para reportar casi-accidentes no despega; la gente dice que las cifras no le dicen nada. La mejor jugada segun Emotional es:",
     "options": [
       "subir el tamano de la letra de las estadisticas en los carteles",
@@ -776,7 +776,7 @@ const QUESTION_BANK = [
   {
     "id": "com-006",
     "track": "comunicacion",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Estas entrenando vendedores nuevos y tienes una lista de doce reglas para manejar objeciones. Quieres que las apliquen en llamadas reales. La opcion mas fiel a Stories es:",
     "options": [
       "contar la historia de una vendedora que casi pierde una cuenta, que hizo en el momento y como termino, para que ellos ensayen esa misma decision",
@@ -794,7 +794,7 @@ const QUESTION_BANK = [
   {
     "id": "com-007",
     "track": "comunicacion",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Un cliente llega furioso por un retraso y empieza a gritar que tu equipo es un desastre. La jugada mas alineada con Separate the People from the Problem es:",
     "options": [
       "dejarle claro de inmediato que el retraso lo causo su propia area",
@@ -812,7 +812,7 @@ const QUESTION_BANK = [
   {
     "id": "com-008",
     "track": "comunicacion",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Tu proveedor pide un alza de 10 por ciento y tu presupuesto no admite nada. Antes de discutir el numero, lo propio de Focus on Interests, Not Positions es:",
     "options": [
       "preguntar que hay detras del pedido: sus costos, su flujo de caja, sus tiempos, y que necesita tu area en realidad",
@@ -830,7 +830,7 @@ const QUESTION_BANK = [
   {
     "id": "com-009",
     "track": "comunicacion",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Dos areas pelean por el mismo presupuesto de marketing y cada una pide quedarse con el 80 por ciento. Segun Invent Options for Mutual Gain, conviene:",
     "options": [
       "dividir el presupuesto 50 y 50 a la primera",
@@ -848,7 +848,7 @@ const QUESTION_BANK = [
   {
     "id": "com-010",
     "track": "comunicacion",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Negocias salario para un puesto y el reclutador dice que el presupuesto es lo que se pueda. La via mas propia de Insist on Using Objective Criteria es:",
     "options": [
       "argumentar que mereces mas porque te esfuerzas mucho",
@@ -866,7 +866,7 @@ const QUESTION_BANK = [
   {
     "id": "com-011",
     "track": "comunicacion",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Tu cliente mas grande exige una exclusividad que te obligaria a dejar otros clientes y amenaza con irse. Antes de ceder, lo propio de What If They Are More Powerful? es:",
     "options": [
       "aceptar todo para no perderlo y luego ver como cumples",
@@ -884,7 +884,7 @@ const QUESTION_BANK = [
   {
     "id": "com-012",
     "track": "comunicacion",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Un cliente dice: no creo que puedan entregar en la fecha. Quieres que explique mas antes de responder. La tecnica mas fiel a Be a Mirror es:",
     "options": [
       "responder de inmediato con un plan de entregas",
@@ -902,7 +902,7 @@ const QUESTION_BANK = [
   {
     "id": "com-013",
     "track": "comunicacion",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Un miembro de tu equipo dice que no pasa nada por no haber recibido el ascenso, pero evita mirarte. Quieres abrir la conversacion. La jugada propiamente de Label es:",
     "options": [
       "etiquetar lo que notas: parece que esto te dejo mas frustrado de lo que esperabas",
@@ -920,7 +920,7 @@ const QUESTION_BANK = [
   {
     "id": "com-014",
     "track": "comunicacion",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "En una junta todos dicen si rapido a tu propuesta, pero nadie se compromete despues. Para obtener un si real, lo mas alineado con Beware Yes, Master No es:",
     "options": [
       "preguntar estan de acuerdo y anotar los si como compromiso",
@@ -938,7 +938,7 @@ const QUESTION_BANK = [
   {
     "id": "com-015",
     "track": "comunicacion",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Un proveedor dice: el precio es 100 mil y no bajo ni un peso. Quieres un mejor arreglo sin romper la relacion. Lo mas propio de Bend Their Reality es:",
     "options": [
       "aceptar la cifra porque dijo que era final",
@@ -956,7 +956,7 @@ const QUESTION_BANK = [
   {
     "id": "com-016",
     "track": "comunicacion",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Necesitas que un gerente de otra area libere tiempo de su equipo para un proyecto conjunto, y hasta ahora solo te ha dicho que no. La via mas propia de Create the Illusion of Control es:",
     "options": [
       "enviarle el plan completo y pedirle que lo apruebe o lo rechace",
@@ -974,7 +974,7 @@ const QUESTION_BANK = [
   {
     "id": "com-017",
     "track": "comunicacion",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Una ingeniera presenta resultados trimestrales con datos solidos y su jefa le pide demuestralo otra vez; a su companero, con los mismos numeros, no le pidieron nada. Lo mas util segun Prove-It-Again es:",
     "options": [
       "nombrar el patron, responder con evidencia ya preparada y proponer criterios de evaluacion iguales para todos",
@@ -992,7 +992,7 @@ const QUESTION_BANK = [
   {
     "id": "com-018",
     "track": "comunicacion",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "En una revision de desempeno le dicen a una gerenta que es muy directa y que deberia suavizar su estilo, aunque su par hombre dice lo mismo y a el lo llaman lider. Lo mas fiel a The Tightrope es:",
     "options": [
       "dejar de ser directa y aceptar el comentario sin discusion",
@@ -1010,7 +1010,7 @@ const QUESTION_BANK = [
   {
     "id": "com-019",
     "track": "comunicacion",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Una analista vuelve de licencia de maternidad y su jefe no la considera para un proyecto visible porque con un bebe va a estar cansada. Lo mas util segun The Maternal Wall es:",
     "options": [
       "aceptar el desaire y esperar un mejor momento para no parecer dificil",
@@ -1028,7 +1028,7 @@ const QUESTION_BANK = [
   {
     "id": "com-020",
     "track": "comunicacion",
-    "status": "borrador",
+    "status": "aprobada",
     "prompt": "Dos coordinadoras del mismo equipo compiten por la unica promocion disponible y empiezan a desacreditarse entre ellas; el jefe observa sin intervenir. Lo mas alineado con The Tug of War es:",
     "options": [
       "redoblar la competencia para que la mejor gane limpio",
