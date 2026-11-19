@@ -47,10 +47,10 @@
   --tap: 44px;
 
   /* Color: claro */
-  --bg: #f3f4f6;
+  --bg: #eef1f5;
   --panel: #ffffff;
-  --panel-2: #e9ebef;
-  --ink: #121316;
+  --panel-2: #e4e8ed;
+  --ink: #12151b;
   --muted: #555b66;
   --line: #d6d9df;
   --accent: #0a5ba8;
@@ -76,7 +76,7 @@
   --focus: 0 0 0 3px rgba(10, 91, 168, 0.35);
 
   /* Pildora Positronica y colores de linea (cada track es una linea) */
-  --pill: #121316;
+  --pill: #12151b;
   --pill-ink: #ffffff;
   --l1: #e2007a;
   --l2: #0a5ba8;
@@ -91,10 +91,10 @@
 }
 
 [data-theme="dark"] {
-  --bg: #0f1115;
-  --panel: #181b21;
-  --panel-2: #14171c;
-  --ink: #eceef2;
+  --bg: #0b0d12;
+  --panel: #151921;
+  --panel-2: #1a1e27;
+  --ink: #e8ebf2;
   --muted: #a0a6b1;
   --line: #2b3039;
   --accent: #79b0ee;
@@ -117,7 +117,7 @@
   --grid-line: rgba(236, 238, 242, 0.05);
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   --focus: 0 0 0 3px rgba(121, 176, 238, 0.4);
-  --pill: #eceef2;
+  --pill: #e8ebf2;
   --pill-ink: #0f1115;
   --l1: #ff3d9e;
   --l2: #3d8fe0;

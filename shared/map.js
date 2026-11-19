@@ -191,6 +191,8 @@ const StudioMap = (() => {
           b.style.top = (t.y / STAGE_H * 100) + "%";
         }
         b.setAttribute("aria-pressed", "false");
+        const degree = (data.relations || []).filter(r => r.from === t.id || r.to === t.id).length;
+        if (degree >= 3) b.classList.add("transfer");
         b.addEventListener("click", () => select(t.id, { user: true }));
         parent.appendChild(b);
         nodeButtons.push({ b, parent });
@@ -202,15 +204,15 @@ const StudioMap = (() => {
     cols.appendChild(left);
 
     const legend = mk("div", "legend");
-    for (const [type, name] of [["foundation", "Fundamentos"], ["application", "Aplicacion"],
-                                ["shared-material", "Material compartido"], ["proposal", "Por construir"]]) {
+    for (const [type, name] of [["foundation", "Linea Fundamentos"], ["application", "Linea Aplicacion"],
+                                ["shared-material", "Linea Material compartido"], ["proposal", "En construccion"]]) {
       const item = mk("span", null);
       const sw = mk("span", "linea-sw");
       sw.style.background = type === "proposal" ? "var(--stage-line)" : `var(--l${{ foundation: 3, application: 7, "shared-material": 8 }[type]})`;
       item.append(sw, document.createTextNode(name));
       legend.appendChild(item);
     }
-    legend.appendChild(mk("span", null, "Ninguna linea es requisito: empieza por el tema que quieras."));
+    legend.appendChild(mk("span", null, "Doble aro: transbordo. Ninguna linea es requisito."));
     left.appendChild(legend);
 
     const detail = mk("div", "map-detail panel");

@@ -45,6 +45,9 @@ const StudioLines = (() => {
         li.appendChild(a);
         ol.appendChild(li);
       });
+      ol.style.setProperty("--done", "0");
+      const frac = t.lessons.length > 1 ? Math.max(0, done - 1) / (t.lessons.length - 1) : done ? 1 : 0;
+      requestAnimationFrame(() => requestAnimationFrame(() => ol.style.setProperty("--done", String(frac))));
       wrap.append(head, ol);
       el.appendChild(wrap);
     }
