@@ -142,7 +142,7 @@ console.log("ok sin cuadernos de NotebookLM");
   assert.match(css, /^@import url\("tokens\.css"\);/, "engine.css importa tokens.css");
   const colors = css.match(/#[0-9a-fA-F]{3,8}\b|rgba\((?!0,\s*0,\s*0)[^)]*\)/g) || [];
   assert.deepEqual(colors, [], "engine.css sin colores fijos");
-  for (const p of ["CubPrep/index.html", "MLOps/index.html", "Flashcards/index.html"]) {
+  for (const p of ["CubPrep/index.html", "MLOps/index.html", "Flashcards/index.html", "SAA-C03/index.html"]) {
     const html = read(p);
     assert.ok(!html.includes("fonts.googleapis"), `${p} pide Google Fonts`);
     assert.ok(html.includes("hypatia.theme.v1"), `${p} no aplica el tema guardado`);
@@ -172,7 +172,7 @@ console.log("ok tema compartido");
   const n = all.filter(broken).length;
   assert.ok(n > 1500 && n < all.length / 2, `CubPrep rotas: ${n} de ${all.length}`);
   assert.match(engine, /brokenByOwnExplanation/, "el motor filtra las rotas al cargar");
-  for (const p of ["CubPrep/index.html", "MLOps/index.html"]) {
+  for (const p of ["CubPrep/index.html", "MLOps/index.html", "SAA-C03/index.html"]) {
     const html = read(p);
     assert.ok(html.indexOf("question-quality.js") > 0 && html.indexOf("question-quality.js") < html.indexOf("engine.js"), `${p} carga question-quality antes del motor`);
   }
@@ -182,7 +182,7 @@ console.log("ok preguntas rotas fuera");
 /* Sin emojis decorativos en la interfaz legacy (los simbolos de acierto/error se quedan). */
 {
   const decor = /[\u{1F300}-\u{1FAFF}\u{2600}-\u{26FF}\u{2728}]/u;
-  for (const p of ["CubPrep/index.html", "MLOps/index.html", "Flashcards/index.html", "shared/engine.js"]) {
+  for (const p of ["CubPrep/index.html", "MLOps/index.html", "Flashcards/index.html", "SAA-C03/index.html", "SAA-C03/study-guide.html", "shared/engine.js"]) {
     const line = read(p).split("\n").findIndex(l => decor.test(l));
     assert.equal(line, -1, `${p}:${line + 1} trae un emoji decorativo`);
   }
