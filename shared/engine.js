@@ -862,6 +862,7 @@
     }
 
     function updateTimerUI(seconds) {
+      if (state.isSimulacro) return;
       els.quizTimer.textContent = `${seconds}s`;
 
       // Update ring progress (0-60s full circle)
@@ -937,15 +938,17 @@
         state.simulacroRemaining = SIMULACRO_DURATION_MS;
         state.simulacroStartTime = Date.now();
       }
+      const endTime = Date.now() + state.simulacroRemaining;
       updateSimulacroTimerUI();
       state.isSimulacro = true;
       state.simulacroTimerId = setInterval(() => {
-        state.simulacroRemaining -= 1000;
+        state.simulacroRemaining = Math.max(0, endTime - Date.now());
         updateSimulacroTimerUI();
         saveSimulacroTimer(state.simulacroRemaining);
         // Auto-submit when time runs out
         if (state.simulacroRemaining <= 0) {
-          finishSimulacroTimeout();
+          finishQuiz();
+          showToast("Se termino el tiempo del simulacro.");
         }
       }, 1000);
     }
@@ -956,6 +959,8 @@
         state.simulacroTimerId = null;
       }
       state.isSimulacro = false;
+      els.timerRingFill.style.display = "";
+      els.quizTimer.classList.remove("simulacro");
       clearSimulacroTimer();
     }
 
@@ -974,34 +979,6 @@
         els.quizTimer.classList.add("critical");
       } else if (state.simulacroRemaining <= SIMULACRO_WARNING_MS) {
         els.quizTimer.classList.add("warn");
-      }
-    }
-
-    function finishSimulacroTimeout() {
-      stopSimulacroTimer();
-      // Show timeout message inline (no alert)
-      showSimulacroTimeoutMessage();
-      // Auto-submit current state
-      if (state.quizQuestions.length > 0 && !state.answeredCurrent) {
-        selectOption(-1); // Mark as skipped
-      }
-      setTimeout(() => {
-        showReportScreen();
-      }, 500);
-    }
-
-    function showSimulacroTimeoutMessage() {
-      // Inject timeout message into the quiz header
-      const metaLine = els.quizProgress?.closest(".meta-line");
-      if (metaLine) {
-        const existing = metaLine.querySelector(".simulacro-timeout-msg");
-        if (!existing) {
-          const msg = document.createElement("div");
-          msg.className = "simulacro-timeout-msg";
-          msg.textContent = "Se acabó el tiempo — así se siente el examen real.";
-          msg.style.cssText = "color:var(--bad);font-size:0.85rem;font-weight:600;margin-top:4px;";
-          metaLine.appendChild(msg);
-        }
       }
     }
 
@@ -1112,19 +1089,10 @@
         }
       }
 
-      // NEW: Mock exam timer (3 hours = 10800 seconds)
-      if (mode === "mock") {
-        state.mockElapsed = 0;
-        state.mockTimerId = setInterval(() => {
-          state.mockElapsed += 1;
-        }, 1000);
-      }
-
       setStatus(els.startStatus, `${label} iniciado.`, "success");
       showScreen("quiz-screen");
 
-      // Start simulacro timer if in mock mode with 100+ questions
-      if (state.selectedMode === "mock" && state.quizQuestions.length >= 100) {
+      if (mode === "mock" && (MOD.timedMock || questions.length >= 100)) {
         startSimulacroTimer();
       }
 
@@ -1407,9 +1375,8 @@
       const avgTime = answers.length === 0
         ? 0
         : Math.round(answers.reduce((sum, item) => sum + item.tiempo, 0) / answers.length);
-      const accuracy = answers.length === 0
-        ? 0
-        : Math.round((state.blockStats.correct / answers.length) * 100);
+      const total = state.blockStats.materia === "mock" ? state.blockStats.total : answers.length;
+      const accuracy = total === 0 ? 0 : Math.round((state.blockStats.correct / total) * 100);
       const slowTopics = rankedTopicTimes(state.blockStats.topicTimes);
       const wrongTopics = rankedWrongTopics(state.blockStats.wrongTopics);
 
@@ -1425,7 +1392,7 @@
       return {
         finishedAt: new Date().toISOString(),
         materia: state.blockStats.materia,
-        total: answers.length,
+        total,
         correct: state.blockStats.correct,
         accuracy,
         avgTime,
@@ -1669,7 +1636,12 @@
 
       // NEW: Quiz back-to-home button
       const quizBackBtn = document.getElementById("quiz-back-home-btn");
-      if (quizBackBtn) quizBackBtn.addEventListener("click", () => { showScreen("home-screen"); renderHome(); });
+      if (quizBackBtn) quizBackBtn.addEventListener("click", () => {
+        stopTimer();
+        stopSimulacroTimer();
+        showScreen("home-screen");
+        renderHome();
+      });
 
       // Report wrong answer button
       els.reportAnswerBtn.addEventListener("click", () => {
@@ -1769,8 +1741,9 @@
       const formBody  = document.getElementById("custom-form-body");
       if (toggleBtn && formBody) {
         toggleBtn.addEventListener("click", () => {
-          const open = formBody.style.display === "none" || formBody.style.display === "";
-          formBody.style.display = open ? "" : "none";
+          const open = toggleBtn.getAttribute("aria-expanded") === "false";
+          formBody.style.display = "";
+          formBody.hidden = !open;
           formBody.style.animation = open ? "slide-up-in 320ms var(--ease-out-quart) both" : "none";
           toggleBtn.textContent = open ? "✕ Cerrar" : "+ Agregar";
           toggleBtn.setAttribute("aria-expanded", String(open));

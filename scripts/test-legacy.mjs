@@ -1,9 +1,74 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import * as vm from "node:vm";
 
 const read = path => readFileSync(new URL("../" + path, import.meta.url), "utf8");
 const engine = read("shared/engine.js");
-const pages = ["CubPrep/index.html", "MLOps/index.html"];
+const pages = ["CubPrep/index.html", "MLOps/index.html", "SAA-C03/index.html"];
+
+{
+  const elements = new Map();
+  const timers = new Set();
+  const storage = new Map();
+  let now = Date.now();
+  const element = () => ({
+    style: {}, classList: { add() {}, remove() {}, toggle() {} },
+    addEventListener(type, listener) { this[type] = listener; },
+    appendChild() {}, closest() { return this; },
+    querySelector: () => ({}), querySelectorAll: () => [],
+  });
+  const mockCard = { ...element(), dataset: { mode: "mock" } };
+  const document = {
+    getElementById(id) {
+      if (!elements.has(id)) elements.set(id, element());
+      return elements.get(id);
+    },
+    createElement: element, addEventListener() {}, querySelector: () => null,
+    querySelectorAll: selector => selector === ".mode-card" ? [mockCard] : [],
+  };
+  const ctx = vm.createContext({
+    window: { scrollTo() {} }, document, performance, requestAnimationFrame() {},
+    localStorage: {
+      getItem: key => storage.get(key) ?? null,
+      setItem: (key, value) => storage.set(key, value),
+      removeItem: key => storage.delete(key),
+    },
+    Date: class extends Date { static now() { return now; } },
+    setInterval(fn) { timers.add(fn); return fn; },
+    clearInterval: fn => timers.delete(fn),
+    setTimeout: fn => fn(),
+  });
+  for (const file of ["SAA-C03/questions.js", "SAA-C03/module.js", "shared/shuffle-options.js", "shared/engine.js"]) {
+    vm.runInContext(read(file), ctx, { filename: file });
+  }
+  assert.equal(ctx.window.HYPATIA_MODULE.storagePrefix, "prepaws.", "PrepAWS conserva el progreso guardado");
+  for (const question of ctx.window.QUESTIONS) {
+    assert.ok(question.opciones.every(option => option.trim() && !option.includes("<details>")),
+      `La pregunta ${question.id} debe ofrecer opciones sin revelar la respuesta`);
+  }
+  mockCard.click();
+  elements.get("start-form").submit({ preventDefault() {} });
+  assert.equal(elements.get("quiz-progress").textContent, "Pregunta 1 / 65");
+  assert.equal(elements.get("quiz-timer").textContent, "2:10:00");
+  for (let second = 0; second < 130 * 60; second++) {
+    now += 1000;
+    for (const tick of timers) tick();
+  }
+  assert.match(elements.get("report-summary").innerHTML, /Simulacro de examen/);
+  const reports = JSON.parse(storage.get("prepaws.mock-history.v1"));
+  assert.equal(reports.length, 1);
+  assert.equal(reports[0].total, 65);
+  const distribution = Object.fromEntries(
+    Object.entries(reports[0].subjectBreakdown).map(([subject, result]) => [subject, result.total])
+  );
+  assert.deepEqual(distribution, {
+    "Design Secure Architectures": 19,
+    "Design Resilient Architectures": 17,
+    "Design High-Performing Architectures": 16,
+    "Design Cost-Optimized Architectures": 13,
+  });
+}
+
 const removed = [
   "xp-pop", "xp-toast", "confetti", "avatar", "quiz-combo", "quiz-streak-fire",
   "top-streak-pill", "top-best-pill", "stat-streak", "top-total-points", "report-points",
@@ -31,7 +96,6 @@ console.log("Pasaron las pruebas de los modulos de practica.");
 
 /* Opciones barajadas: la correcta no puede vivir siempre en la A. */
 {
-  const vm = await import("node:vm");
   const sandbox = {};
   vm.createContext(sandbox);
   vm.runInContext(read("shared/shuffle-options.js") + "\nglobalThis.shuffleOptions = shuffleOptions;", sandbox);
