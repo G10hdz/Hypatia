@@ -4,15 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PrepAWS | Guia de estudio SAA-C03</title>
+  <link rel="stylesheet" href="../shared/tokens.css">
+  <script>
+    (function(){try{var v=localStorage.getItem("hypatia.theme.v1");
+    document.documentElement.dataset.theme=(v==="dark"||v==="light")?v:
+    (matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");}catch(e){}})();
+  </script>
   <style>
-    body { margin: 0; padding: 2rem 1rem; font: 1rem/1.5 system-ui, sans-serif; background: #0c0f0f; color: #e1e3e2; }
+    body { margin: 0; padding: 2rem 1rem; font: 1rem/var(--leading) var(--font-body); background: var(--bg); color: var(--ink); }
     main { max-width: 760px; margin: 0 auto; }
-    h1 { font-size: 1.8rem; margin: 0; }
-    h2 { font-size: 1.1rem; color: #00d4aa; margin: 1.75rem 0 0.6rem; }
+    h1, h2 { font-family: var(--font-display); line-height: var(--leading-tight); }
+    h1 { font-size: var(--text-2xl); margin: 0; }
+    h2 { font-size: var(--text-lg); color: var(--accent); margin: var(--space-6) 0 var(--space-2); }
     ul { list-style: none; padding: 0; }
-    li { padding: 0.5rem 0; border-bottom: 1px solid #2a2d2d; }
-    li small { display: block; color: #bfc3c2; }
-    .back-home-link { display: inline-block; margin-top: 2rem; color: #00d4aa; }
+    li { padding: var(--space-2) 0; border-bottom: 1px solid var(--line); }
+    li small { display: block; color: var(--muted); }
+    a { color: var(--accent); }
+    .back-home-link { display: inline-block; margin-top: var(--space-6); }
   </style>
   <script defer src="/positronica-analytics.js"></script>
 </head>

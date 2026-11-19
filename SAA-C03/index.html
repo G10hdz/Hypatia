@@ -8,6 +8,11 @@
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../apple-touch-icon.png">
   <link rel="stylesheet" href="../shared/engine.css">
+  <script>
+    (function(){try{var v=localStorage.getItem("hypatia.theme.v1");
+    document.documentElement.dataset.theme=(v==="dark"||v==="light")?v:
+    (matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");}catch(e){}})();
+  </script>
 <script defer src="/positronica-analytics.js"></script>
 </head>
 <body>
@@ -334,6 +339,7 @@
 
   <script src="./questions.js"></script>
   <script src="./module.js"></script>
+  <script src="../shared/question-quality.js"></script>
   <script src="../shared/shuffle-options.js"></script>
   <script src="../shared/engine.js"></script>
 </body>
