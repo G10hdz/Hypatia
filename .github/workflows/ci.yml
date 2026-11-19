@@ -21,6 +21,8 @@ jobs:
 
       - run: node scripts/test-studio.mjs
 
+      - run: node scripts/test-legacy.mjs
+
       - run: node scripts/test-lesson-check.mjs
 
       - run: node scripts/check-lesson.mjs

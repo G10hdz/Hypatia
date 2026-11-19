@@ -7,9 +7,7 @@
       customQuestions: `${P}custom-questions.v1`,
       wrongQuestions: `${P}wrong-questions.v1`,
       mockHistory: `${P}mock-history.v1`,
-      flaggedAnswers: `${P}flagged-answers.v1`,
-      avatar: `${P}avatar.v1`,
-      avatarCustom: `${P}avatar.custom.v1`
+      flaggedAnswers: `${P}flagged-answers.v1`
     };
     const SIMULACRO_DURATION_MS = (MOD.simulacroMinutes || 180) * 60 * 1000;
     const SIMULACRO_STORAGE_KEY = `${MODID}_simulacro_timer`;
@@ -25,15 +23,6 @@
     const QUESTION_TYPE_MAP = MOD.temaTypes || {};
     const LEARNING_OBJECTIVES = MOD.objectives || {};
     const ID_PREFIX_BY_SUBJECT = MOD.idPrefixes || {};
-    const MOTIVATIONAL_PHRASES = MOD.phrases || [
-      "Acierto! Eres una maquina.",
-      "Correcto. Asi se responde en un panel.",
-      "Streak! Imparable.",
-      "Bien! Rompiéndola como siempre.",
-      "Correcto! +{puntos} puntos. Sigue asi."
-    ];
-    const STREAK_MESSAGES = MOD.streakMessages || {};
-
     // Pre-flight check: verify questions loaded
     if (typeof window.QUESTIONS === "undefined" || !Array.isArray(window.QUESTIONS) || window.QUESTIONS.length === 0) {
       console.error(`[${MODID}] questions FAILED to load! window.QUESTIONS =`, typeof window.QUESTIONS);
@@ -46,54 +35,6 @@
     } else {
       console.log(`[${MODID}] ${window.QUESTIONS.length} questions loaded`);
     }
-
-    // === AVATAR SYSTEM ===
-    const AVATARS = [
-      { id: "cat",    emoji: "🐱", name: "Nyan",    tagline: "speedrun master" },
-      { id: "robot",  emoji: "🤖", name: "Unit-01",  tagline: "never crashes" },
-      { id: "fire",   emoji: "🔥", name: "Pyro",     tagline: "combo lord" },
-      { id: "alien",  emoji: "👾", name: "Glitch",   tagline: "bug hunter" },
-      { id: "dragon", emoji: "🐉", name: "Drak",     tagline: "lore master" },
-      { id: "skull",  emoji: "💀", name: "Ded",      tagline: "respawn champ" },
-      { id: "ninja",  emoji: "🥷", name: "Sombra",   tagline: "silent grinder" },
-      { id: "star",   emoji: "⭐", name: "Lumina",   tagline: "accuracy queen" }
-    ];
-
-    // Quick emoji picker options
-    const EMOJI_OPTIONS = [
-      "🐱", "🐶", "🐼", "🦊", "🦁", "🐸", "🐵", "🐧", "🦉", "🦋",
-      "🌟", "🔥", "⚡", "🌈", "🎯", "🚀", "💎", "🎮", "🎵", "🎨",
-      "🤖", "👾", "👻", "🦄", "🐉", "🦖", "🐙", "🍕", "🌸", "🍀",
-      "💜", "💙", "💚", "🧡", "❤️", "🖤", "🤍", "💛", "🩷", "🩵"
-    ];
-
-    // Random name generator for public avatars
-    const ADJECTIVES = [
-      "Cosmic", "Neon", "Cyber", "Pixel", "Hyper", "Mega", "Ultra", "Turbo",
-      "Quantum", "Stellar", "Lunar", "Solar", "Atomic", "Digital", "Electric",
-      "Crystal", "Shadow", "Thunder", "Blazing", "Frozen", "Golden", "Silver"
-    ];
-
-    const NOUNS = [
-      "Fox", "Wolf", "Hawk", "Bear", "Lion", "Tiger", "Dragon", "Phoenix",
-      "Panther", "Eagle", "Shark", "Whale", "Falcon", "Raven", "Cobra",
-      "Ninja", "Wizard", "Knight", "Samurai", "Pirate", "Robot", "Alien",
-      "Spark", "Bolt", "Flame", "Frost", "Storm", "Blade", "Arrow", "Star"
-    ];
-
-    function generateRandomName() {
-      const adj = ADJECTIVES[Math.floor(Math.random() * ADJECTIVES.length)];
-      const noun = NOUNS[Math.floor(Math.random() * NOUNS.length)];
-      return `${adj}${noun}`;
-    }
-
-    let currentAvatar = AVATARS[0];
-
-    
-
-
-
-
 
     // ADHD-friendly: Question type categorization
 
@@ -153,13 +94,9 @@
     };
 
     const els = {
-      topTotalPoints: document.getElementById("top-total-points"),
-      topStreakPill: document.getElementById("top-streak-pill"),
-      topBestPill: document.getElementById("top-best-pill"),
       targetScore: document.getElementById("target-score"),
       targetBarFill: document.getElementById("target-bar-fill"),
       targetLabel: document.getElementById("target-label"),
-      statStreak: document.getElementById("stat-streak"),
       statAnswered: document.getElementById("stat-answered"),
       statAccuracy: document.getElementById("stat-accuracy"),
       trendSection: document.getElementById("trend-section"),
@@ -188,7 +125,6 @@
       customForm: document.getElementById("custom-question-form"),
       quizProgress: document.getElementById("quiz-progress"),
       quizMateria: document.getElementById("quiz-materia"),
-      quizCombo: document.getElementById("quiz-combo"),
       quizTimer: document.getElementById("quiz-timer"),
       timerRingFill: document.getElementById("timer-ring-fill"),
       speedBadge: document.getElementById("speed-badge"),
@@ -216,27 +152,18 @@
       reportSummary: document.getElementById("report-summary"),
       reportAccuracy: document.getElementById("report-accuracy"),
       reportAvgTime: document.getElementById("report-avg-time"),
-      reportPoints: document.getElementById("report-points"),
       reportSlowTopics: document.getElementById("report-slow-topics"),
       reportWrongTopics: document.getElementById("report-wrong-topics"),
       retryBtn: document.getElementById("retry-btn"),
       backHomeBtn: document.getElementById("back-home-btn"),
       toast: document.getElementById("toast"),
-      xpPop: document.getElementById("xp-pop"),
-      confettiLayer: document.getElementById("confetti-layer"),
-      reportBanner: document.getElementById("report-banner"),
-      quizProgressLabel: document.getElementById("quiz-progress-label"),
-      topbarAvatar: document.getElementById("topbar-avatar"),
-      avatarPicker: document.getElementById("avatar-picker")
+      quizProgressLabel: document.getElementById("quiz-progress-label")
     };
 
     function defaultStats() {
       return {
         totalAnswered: 0,
         totalCorrect: 0,
-        streak: 0,
-        bestStreak: 0,
-        totalPoints: 0,
         bySubject: {},
         history: []
       };
@@ -488,13 +415,8 @@
     function renderHomeStats() {
       const answered = state.appStats.totalAnswered;
       const accuracy = answered === 0 ? 0 : (state.appStats.totalCorrect / answered) * 100;
-      els.statStreak.textContent = String(state.appStats.streak);
       els.statAnswered.textContent = String(answered);
       els.statAccuracy.textContent = formatPercent(accuracy);
-      els.topTotalPoints.textContent = String(state.appStats.totalPoints);
-      els.topStreakPill.textContent = `Racha ${state.appStats.streak}`;
-      els.topBestPill.textContent = `Mejor ${state.appStats.bestStreak}`;
-      els.topStreakPill.classList.toggle("hot", state.appStats.streak >= 3);
 
       const nudge = document.getElementById("onboarding-nudge");
       if (nudge) nudge.style.display = answered === 0 ? "" : "none";
@@ -720,17 +642,6 @@
         }
       }
 
-      // Streak recommendation
-      if (state.appStats.bestStreak >= 5 && state.appStats.streak < 3) {
-        recommendations.push({
-          title: "Recupera tu racha!",
-          text: `Tu mejor racha fue ${state.appStats.bestStreak} respuestas correctas. Ahora tienes ${state.appStats.streak}. Vamos por otra racha!`,
-          action: "Modo practica",
-          actionType: "focus",
-          actionValue: "streak"
-        });
-      }
-
       // If no specific recommendations, give general encouragement
       if (recommendations.length === 0) {
         const accuracy = (state.appStats.totalCorrect / state.appStats.totalAnswered) * 100;
@@ -793,130 +704,6 @@
       saveJSON(STORAGE_KEYS.mockHistory, state.mockHistory);
     }
 
-    function loadAvatar() {
-      // Try loading custom avatar first
-      const custom = loadJSON(STORAGE_KEYS.avatarCustom, null);
-      if (custom && custom.emoji && custom.name) {
-        return { id: "custom", emoji: custom.emoji, name: custom.name, tagline: "custom avatar" };
-      }
-      // Fall back to preset avatars
-      const savedId = localStorage.getItem(STORAGE_KEYS.avatar);
-      const found = AVATARS.find(a => a.id === savedId);
-      return found || AVATARS[0];
-    }
-
-    function saveAvatar(avatarId) {
-      localStorage.setItem(STORAGE_KEYS.avatar, avatarId);
-      // Clear custom avatar if selecting a preset
-      if (avatarId !== "custom") {
-        localStorage.removeItem(STORAGE_KEYS.avatarCustom);
-      }
-    }
-
-    function saveCustomAvatar(emoji, name) {
-      saveJSON(STORAGE_KEYS.avatarCustom, { emoji, name });
-      currentAvatar = { id: "custom", emoji, name, tagline: "custom avatar" };
-    }
-
-    function renderAvatarPicker() {
-      if (!els.avatarPicker) return;
-      els.avatarPicker.innerHTML = AVATARS.map(av => `
-        <button class="avatar-btn${av.id === currentAvatar.id ? " selected" : ""}"
-          data-avatar-id="${av.id}" title="${av.tagline}" aria-label="Seleccionar avatar ${av.name}">
-          <span class="av-emoji">${av.emoji}</span>
-          <span class="av-name">${av.name}</span>
-        </button>
-      `).join("");
-      els.avatarPicker.querySelectorAll(".avatar-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const av = AVATARS.find(a => a.id === btn.dataset.avatarId);
-          if (!av) return;
-          currentAvatar = av;
-          saveAvatar(av.id);
-          renderAvatarPicker();
-          updateTopbarAvatar();
-          // Hide custom avatar creator when selecting preset
-          const customCreator = document.getElementById("custom-avatar-creator");
-          if (customCreator) customCreator.style.display = "none";
-          const toggleBtn = document.getElementById("toggle-custom-avatar-btn");
-          if (toggleBtn) toggleBtn.textContent = "+ Crear personalizado";
-        });
-      });
-    }
-
-    function updateTopbarAvatar() {
-      if (els.topbarAvatar) els.topbarAvatar.textContent = currentAvatar.emoji;
-    }
-
-    // NEW: Custom avatar system
-    function initCustomAvatarSystem() {
-      const toggleBtn = document.getElementById("toggle-custom-avatar-btn");
-      const customCreator = document.getElementById("custom-avatar-creator");
-      const emojiInput = document.getElementById("custom-avatar-emoji");
-      const nameInput = document.getElementById("custom-avatar-name");
-      const randomizeBtn = document.getElementById("randomize-name-btn");
-      const applyBtn = document.getElementById("apply-custom-avatar-btn");
-      const emojiGrid = document.getElementById("emoji-grid");
-
-      if (!toggleBtn || !customCreator) return;
-
-      // Toggle custom avatar creator
-      toggleBtn.addEventListener("click", () => {
-        const isVisible = customCreator.style.display !== "none";
-        customCreator.style.display = isVisible ? "none" : "block";
-        toggleBtn.textContent = isVisible ? "+ Crear personalizado" : "− Ocultar";
-        if (!isVisible && emojiGrid && !emojiGrid.hasChildNodes()) {
-          renderEmojiGrid();
-        }
-      });
-
-      // Randomize name
-      if (randomizeBtn) {
-        randomizeBtn.addEventListener("click", () => {
-          nameInput.value = generateRandomName();
-          nameInput.focus();
-        });
-      }
-
-      // Apply custom avatar
-      if (applyBtn) {
-        applyBtn.addEventListener("click", () => {
-          const emoji = emojiInput.value.trim() || "🐱";
-          const name = nameInput.value.trim() || generateRandomName();
-          saveCustomAvatar(emoji, name);
-          renderAvatarPicker();
-          updateTopbarAvatar();
-          showToast(`✨ Avatar "${name}" ${emoji} aplicado!`);
-        });
-      }
-
-      // Render emoji grid
-      function renderEmojiGrid() {
-        if (!emojiGrid) return;
-        emojiGrid.innerHTML = EMOJI_OPTIONS.map(emoji => `
-          <button class="emoji-option" data-emoji="${emoji}" type="button" aria-label="Seleccionar emoji ${emoji}">
-            ${emoji}
-          </button>
-        `).join("");
-        emojiGrid.querySelectorAll(".emoji-option").forEach(btn => {
-          btn.addEventListener("click", () => {
-            emojiGrid.querySelectorAll(".emoji-option").forEach(b => b.classList.remove("selected"));
-            btn.classList.add("selected");
-            emojiInput.value = btn.dataset.emoji;
-          });
-        });
-      }
-    }
-
-    function reactAvatar(type) {
-      const el = els.topbarAvatar;
-      if (!el) return;
-      el.classList.remove("react-correct", "react-wrong");
-      void el.offsetWidth;
-      el.classList.add(type === "correct" ? "react-correct" : "react-wrong");
-      setTimeout(() => el.classList.remove("react-correct", "react-wrong"), 500);
-    }
-
     function renderMockHistory() {
       const mocks = state.mockHistory || [];
       if (mocks.length === 0) {
@@ -965,7 +752,7 @@
             <article class="history-item">
               <strong>${subjectLabel(item.materia)}</strong>
               <small><span class="num-correct">✓ ${item.correct}</span> / <span class="num-wrong">✗ ${wrong}</span> de ${item.total} (${item.accuracy}%)</small><br>
-              <small>${item.avgTime}s por pregunta | +${item.points} pts</small><br>
+              <small>${item.avgTime}s por pregunta</small><br>
               <small>${when}</small>
             </article>
           `;
@@ -999,22 +786,6 @@
         setTimeout(() => {
           animateCounter(els.reportAccuracy, _reportTargets.accuracy, "%", 900);
           animateCounter(els.reportAvgTime, _reportTargets.avgTime, "s", 700);
-          const ptsEl = els.reportPoints;
-          const start = performance.now();
-          const target = _reportTargets.points;
-          function tickPts(now) {
-            const t = Math.min((now - start) / 1100, 1);
-            const eased = 1 - Math.pow(1 - t, 4);
-            ptsEl.textContent = `+${Math.round(target * eased)}`;
-            if (t < 1) requestAnimationFrame(tickPts);
-            else {
-              ptsEl.textContent = `+${target}`;
-              ptsEl.classList.add("counter-done");
-              setTimeout(() => ptsEl.classList.remove("counter-done"), 300);
-            }
-          }
-          ptsEl.textContent = "+0";
-          requestAnimationFrame(tickPts);
         }, 180);
       }
 
@@ -1040,7 +811,7 @@
       }, 2000);
     }
 
-    let _reportTargets = { accuracy: 0, avgTime: 0, points: 0 };
+    let _reportTargets = { accuracy: 0, avgTime: 0 };
 
     function animateCounter(el, target, suffix = "", duration = 900) {
       const start = performance.now();
@@ -1060,58 +831,6 @@
       requestAnimationFrame(tick);
     }
 
-    function showXp(points) {
-      els.xpPop.textContent = `+${points} XP`;
-      els.xpPop.classList.remove("show");
-      void els.xpPop.offsetWidth;
-      els.xpPop.classList.add("show");
-      setTimeout(() => {
-        els.xpPop.classList.remove("show");
-      }, 760);
-    }
-
-    const STREAK_MILESTONES = {
-      5:  "🔥 ¡Racha x5! ¡Imparable!",
-      10: "⚡ ¡10 seguidas! ¡Eres una máquina!",
-      15: "🚀 ¡15 en racha! " + (STREAK_MESSAGES[15] || "¡Nivel pro!"),
-      20: "💥 ¡20 seguidas! ¡LEGEND!"
-    };
-
-    function showStreakMilestone(streak) {
-      const msg = STREAK_MILESTONES[streak] || `🔥 ¡${streak} en racha!`;
-      els.toast.textContent = msg;
-      els.toast.className = "toast milestone show";
-      setTimeout(() => { els.toast.classList.remove("show", "milestone"); }, 2400);
-      createConfetti(45);
-      const fireEl = document.getElementById("quiz-streak-fire");
-      if (fireEl) {
-        fireEl.style.animation = "none";
-        void fireEl.offsetWidth;
-        fireEl.style.animation = "streak-burst 480ms var(--ease-out-expo)";
-        setTimeout(() => { fireEl.style.animation = ""; }, 500);
-      }
-    }
-
-    function updateComboUI() {
-      const streak = state.appStats.streak;
-      els.quizCombo.textContent = `Combo x${streak}`;
-      els.quizCombo.classList.toggle("hot", streak >= 3);
-
-      const fireEl = document.getElementById("quiz-streak-fire");
-      if (fireEl) {
-        if (streak === 0) {
-          fireEl.textContent = "🔥 0";
-          fireEl.className = "streak-fire";
-        } else if (streak >= 10) {
-          fireEl.textContent = `⚡ ${streak}`;
-          fireEl.className = "streak-fire blazing";
-        } else {
-          fireEl.textContent = `🔥 ${streak}`;
-          fireEl.className = `streak-fire${streak >= 3 ? " active" : ""}`;
-        }
-      }
-    }
-
     function shuffle(array) {
       const arr = [...array];
       for (let i = arr.length - 1; i > 0; i -= 1) {
@@ -1119,13 +838,6 @@
         [arr[i], arr[j]] = [arr[j], arr[i]];
       }
       return arr;
-    }
-
-    function calculatePoints(difficulty, streak) {
-      const base = 8 + (Number(difficulty) || 1) * 4;
-      const steps = Math.floor(Math.max(streak - 1, 0) / 3);
-      const multiplier = Math.min(2.5, 1 + steps * 0.25);
-      return Math.round(base * multiplier);
     }
 
     // TIMER_RING_CIRCUMFERENCE already declared at line 2291
@@ -1381,7 +1093,6 @@
         materia: state.lastSelectedSubject,
         total: questions.length,
         correct: 0,
-        points: 0,
         startedAt: new Date().toISOString(),
         answers: [],
         topicTimes: {},
@@ -1416,7 +1127,6 @@
         startSimulacroTimer();
       }
 
-      updateComboUI();
       renderQuestion();
     }
 
@@ -1435,7 +1145,6 @@
         els.quizProgressLabel.textContent = `${state.currentIndex + 1} / ${state.quizQuestions.length}`;
       }
       els.quizMateria.textContent = subjectLabel(question.materia);
-      updateComboUI();
       const progress = ((state.currentIndex + 1) / state.quizQuestions.length) * 100;
       els.quizProgressFill.style.width = `${progress}%`;
       els.quizQuestion.textContent = question.pregunta;
@@ -1495,25 +1204,6 @@
       startTimer();
     }
 
-    function randomMotivation(pointsEarned) {
-      const phrase = MOTIVATIONAL_PHRASES[Math.floor(Math.random() * MOTIVATIONAL_PHRASES.length)];
-      return phrase.replace("{puntos}", String(pointsEarned));
-    }
-
-    function createConfetti(count = 14) {
-      const colors = ["#C4B5E3", "#ffcfec", "#98FF98"];
-      for (let i = 0; i < count; i += 1) {
-        const part = document.createElement("span");
-        part.className = "particle";
-        part.style.left = `${Math.random() * 100}%`;
-        part.style.animationDelay = `${Math.random() * 100}ms`;
-        part.style.background = colors[Math.floor(Math.random() * colors.length)];
-        part.style.transform = `translateY(-12px) rotate(${Math.random() * 180}deg)`;
-        els.confettiLayer.appendChild(part);
-        setTimeout(() => part.remove(), 900);
-      }
-    }
-
     function addTopicTiming(topic, time) {
       if (!state.blockStats.topicTimes[topic]) {
         state.blockStats.topicTimes[topic] = { total: 0, count: 0 };
@@ -1537,42 +1227,20 @@
       const isCorrect = selectedIndex === question.correcta;
       const answerTime = state.elapsed;
 
-      let pointsEarned = 0;
-      const prevStreak = state.appStats.streak;
       if (isCorrect) {
-        state.appStats.streak += 1;
-        state.appStats.bestStreak = Math.max(state.appStats.bestStreak, state.appStats.streak);
         state.appStats.totalCorrect += 1;
         state.blockStats.correct += 1;
         // Track per-subject correct for mixed exams
         if (state.blockStats.subjectBreakdown[question.materia]) {
           state.blockStats.subjectBreakdown[question.materia].correct += 1;
         }
-        pointsEarned = calculatePoints(question.dificultad, state.appStats.streak);
-        state.appStats.totalPoints += pointsEarned;
-        state.blockStats.points += pointsEarned;
-        const confettiCount = Math.min(10 + Math.floor(state.appStats.streak / 3) * 4, 38);
-        createConfetti(confettiCount);
-        showXp(pointsEarned);
-        if (STREAK_MILESTONES[state.appStats.streak]) {
-          showStreakMilestone(state.appStats.streak);
-        }
         markQuestionCorrect(question);
-        reactAvatar("correct");
       } else {
-        state.appStats.streak = 0;
         markWrongTopic(question.tema);
         els.questionCard.classList.add("shake");
         setTimeout(() => els.questionCard.classList.remove("shake"), 300);
-        // Streak break visual sting
-        if (prevStreak >= 3) {
-          els.questionCard.classList.add("streak-lost");
-          setTimeout(() => els.questionCard.classList.remove("streak-lost"), 650);
-          showToast(`💔 Racha x${prevStreak} perdida`);
-        }
         // Spaced repetition: track wrong answer
         markQuestionWrong(question);
-        reactAvatar("wrong");
       }
 
       state.appStats.totalAnswered += 1;
@@ -1597,8 +1265,7 @@
         id: question.id,
         tema: question.tema,
         correcta: isCorrect,
-        tiempo: answerTime,
-        puntos: pointsEarned
+        tiempo: answerTime
       });
 
       const optionButtons = [...els.quizOptions.querySelectorAll(".option")];
@@ -1615,7 +1282,7 @@
       els.quizFeedback.className = `feedback visible ${isCorrect ? "success" : "error"}`;
       els.feedbackTitle.textContent = isCorrect ? "Correcto" : "Incorrecto";
       els.feedbackMessage.textContent = isCorrect
-        ? `${randomMotivation(pointsEarned)} (+${pointsEarned} pts)`
+        ? ""
         : "No pasa nada. Esta respuesta te muestra exactamente el gap.";
 
       // ADHD-friendly: Extended pedagogical feedback
@@ -1699,7 +1366,6 @@
 
       saveStats();
       renderHomeStats();
-      updateComboUI();
       els.nextQuestionBtn.disabled = false;
     }
 
@@ -1760,7 +1426,6 @@
         materia: state.blockStats.materia,
         total: answers.length,
         correct: state.blockStats.correct,
-        points: state.blockStats.points,
         accuracy,
         avgTime,
         slowTopics,
@@ -1772,7 +1437,7 @@
 
     function renderTopicList(target, entries, mapper) {
       if (!entries.length) {
-        target.innerHTML = `<li style="color:var(--muted);font-size:0.85rem;text-align:center;padding:12px;">✓ Sin puntos débiles en este bloque</li>`;
+        target.innerHTML = `<li style="color:var(--muted);font-size:0.85rem;text-align:center;padding:12px;">Sin temas que reforzar en este bloque</li>`;
         return;
       }
       target.innerHTML = entries.map(mapper).join("");
@@ -1786,26 +1451,9 @@
 
       const wrongCount = report.total - report.correct;
       els.reportSummary.innerHTML = `${label}: <span class="num-correct">${report.correct}</span> correctas / <span class="num-wrong">${wrongCount}</span> incorrectas de ${report.total} (<strong>${report.accuracy}%</strong>). Revisa en que tema tardas mas o fallas mas.`;
-      _reportTargets = { accuracy: report.accuracy, avgTime: report.avgTime, points: report.points };
+      _reportTargets = { accuracy: report.accuracy, avgTime: report.avgTime };
       els.reportAccuracy.textContent = "0%";
       els.reportAvgTime.textContent = "0s";
-      els.reportPoints.textContent = "+0";
-
-      // Motivational banner for good scores
-      if (els.reportBanner) {
-        const GOOD_MESSAGES = [
-          `${currentAvatar.emoji} ¡Eso es, ${currentAvatar.name}! ${report.accuracy}% — sigues subiendo. 🚀`,
-          `${currentAvatar.emoji} ACIERTO. ${report.correct}/${report.total} — nivel ${currentAvatar.name} desbloqueado 🔓`,
-          `${currentAvatar.emoji} ¡Modo bestia activado! ${report.accuracy}% de precisión. Imparable. ⚡`,
-          `${currentAvatar.emoji} ${report.accuracy}% — este bloque fue tuyo. Eso es racha. 🔥`
-        ];
-        if (report.accuracy >= 80) {
-          els.reportBanner.textContent = GOOD_MESSAGES[Math.floor(Math.random() * GOOD_MESSAGES.length)];
-          els.reportBanner.style.display = "";
-        } else {
-          els.reportBanner.style.display = "none";
-        }
-      }
 
       // Update retry button label based on mode
       const retryLabels = { mock: "Nuevo simulacro", area1: "Otro examen", quick: "Otro examen rapido", review: "Repasar de nuevo" };
@@ -2145,12 +1793,11 @@
         const btn = els.startForm.querySelector('button[type="submit"]');
         if (btn) btn.textContent = "Iniciar bloque (15 preguntas)";
         els.startForm.scrollIntoView({ behavior: "smooth", block: "center" });
-        showToast(`▶ ${subjectLabel(subject)} seleccionada`);
+        showToast(`${subjectLabel(subject)} seleccionada`);
       });
     }
 
     function init() {
-      currentAvatar = loadAvatar();
       state.customQuestions = loadCustomQuestions();
       state.wrongQuestions = loadWrongQuestions();
       state.mockHistory = loadMockHistory();
@@ -2158,9 +1805,6 @@
       setupSubjectSelects();
       bindEvents();
       renderHome();
-      renderAvatarPicker();
-      initCustomAvatarSystem();
-      updateTopbarAvatar();
       updateReviewErrorsButton();
       showScreen("home-screen");
 

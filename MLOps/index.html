@@ -22,15 +22,6 @@
         <p>Bloques cortos, feedback inmediato y reportes de gaps para el track B: MLOps / AI Engineer.</p>
       </div>
       <a href="study-guide.html" class="study-guide-link" title="Guía de Estudio con Videos" target="_blank">📚 Guía</a>
-      <div id="topbar-avatar" class="topbar-avatar" title="Tu avatar" aria-hidden="true">🐱</div>
-      <div class="points-chip">
-        <small>Puntos totales</small>
-        <strong id="top-total-points">0</strong>
-        <div class="chip-row">
-          <span id="top-streak-pill" class="chip-pill">Racha 0</span>
-          <span id="top-best-pill" class="chip-pill">Mejor 0</span>
-        </div>
-      </div>
       <div class="target-chip">
         <small>Meta Ing. Computacion (FI)</small>
         <strong id="target-score">--</strong>
@@ -51,10 +42,6 @@
             <p>Estadisticas guardadas en localStorage para retomar donde te quedaste.</p>
             <div class="stats-grid">
               <div class="stat-card">
-                <span>Racha actual</span>
-                <strong id="stat-streak">0</strong>
-              </div>
-              <div class="stat-card">
                 <span>Total respondidas</span>
                 <strong id="stat-answered">0</strong>
               </div>
@@ -66,27 +53,6 @@
             <div id="onboarding-nudge" class="onboarding-nudge" style="display:none;">
               <h4>¡Tu primer bloque te espera! 🚀</h4>
               <p>Elige un modo de estudio a la derecha y presiona <strong>Iniciar</strong>. Tus estadísticas y gaps aparecerán aquí automáticamente.</p>
-            </div>
-
-            <!-- Avatar picker -->
-            <div style="margin-top:16px;">
-              <small style="color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-size:0.7rem;">Tu avatar</small>
-              <div id="avatar-picker" class="avatar-picker"></div>
-
-              <!-- Custom avatar creator -->
-              <div id="custom-avatar-creator" class="custom-avatar-creator" style="display:none;">
-                <h4>✨ Crear avatar personalizado</h4>
-                <div class="custom-avatar-controls">
-                  <input id="custom-avatar-emoji" class="emoji-input" type="text" maxlength="2" value="🐱" placeholder="🐱">
-                  <input id="custom-avatar-name" class="name-input" type="text" maxlength="20" placeholder="Nombre de tu avatar">
-                  <button id="randomize-name-btn" class="randomize-btn" type="button">🎲 Aleatorio</button>
-                  <button id="apply-custom-avatar-btn" class="apply-avatar-btn" type="button">Aplicar</button>
-                </div>
-                <!-- Quick emoji grid -->
-                <div id="emoji-grid" class="emoji-grid"></div>
-              </div>
-
-              <button id="toggle-custom-avatar-btn" class="toggle-btn" style="margin-top:10px;" type="button">+ Crear personalizado</button>
             </div>
 
             <div id="trend-section" style="margin-top:14px;display:none;">
@@ -268,8 +234,6 @@
             <div class="meta-line">
               <span id="quiz-progress">Pregunta 1 / 15</span>
               <span id="quiz-materia">Materia</span>
-              <span id="quiz-combo" class="combo">Combo x0</span>
-              <span id="quiz-streak-fire" class="streak-fire" aria-label="Racha actual">🔥 0</span>
               <div class="timer-container">
                 <div class="timer-ring">
                   <svg width="32" height="32">
@@ -353,12 +317,7 @@
               <small>Tiempo promedio</small>
               <h3 id="report-avg-time">0s</h3>
             </div>
-            <div class="report-box">
-              <small>Puntos del bloque</small>
-              <h3 id="report-points">0</h3>
-            </div>
           </div>
-          <div id="report-banner" class="report-banner" style="display:none;"></div>
 
           <div class="grid">
             <article class="panel" style="grid-column: span 6;">
@@ -386,8 +345,6 @@
   </div>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <div id="xp-pop" class="xp-pop" aria-hidden="true"></div>
-  <div id="confetti-layer" class="confetti-layer" aria-hidden="true"></div>
 
   <!-- Questions loader - loads split files by materia -->
   <script src="./questions_by_materia/inference.js"></script>
