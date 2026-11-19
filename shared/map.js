@@ -170,7 +170,7 @@ const StudioMap = (() => {
       const line = document.createElementNS(svgNS, "line");
       line.setAttribute("x1", a.x); line.setAttribute("y1", a.y);
       line.setAttribute("x2", b.x); line.setAttribute("y2", b.y);
-      line.setAttribute("class", "map-edge" + (r.status === "proposal" ? " proposal" : ""));
+      line.setAttribute("class", `map-edge t-${r.type}` + (r.status === "proposal" ? " proposal" : ""));
       svg.appendChild(line);
       lines[r.id] = { line, from: r.from, to: r.to };
     }
@@ -180,8 +180,11 @@ const StudioMap = (() => {
     const nodeButtons = [];
     for (const t of data.topics || []) {
       for (const parent of [stage, list]) {
-        const b = mk("button", "map-node", t.title);
+        const b = mk("button", "map-node");
         b.type = "button";
+        const box = mk("span", "picto-box");
+        if (typeof picto === "function") box.appendChild(picto(t.id));
+        b.append(box, mk("span", "nm", t.title));
         b.dataset.topic = t.id;
         if (parent === stage) {
           b.style.left = (t.x / STAGE_W * 100) + "%";
@@ -199,12 +202,15 @@ const StudioMap = (() => {
     cols.appendChild(left);
 
     const legend = mk("div", "legend");
-    const s1 = mk("span", null); s1.appendChild(mk("span", "solid"));
-    s1.appendChild(document.createTextNode("Conexion documentada"));
-    const s2 = mk("span", null); s2.appendChild(mk("span", "dash"));
-    s2.appendChild(document.createTextNode("Puente por explorar (propuesta)"));
-    const s3 = mk("span", null, "Ninguna linea es requisito: empieza por el tema que quieras.");
-    legend.append(s1, s2, s3);
+    for (const [type, name] of [["foundation", "Fundamentos"], ["application", "Aplicacion"],
+                                ["shared-material", "Material compartido"], ["proposal", "Por construir"]]) {
+      const item = mk("span", null);
+      const sw = mk("span", "linea-sw");
+      sw.style.background = type === "proposal" ? "var(--stage-line)" : `var(--l${{ foundation: 3, application: 7, "shared-material": 8 }[type]})`;
+      item.append(sw, document.createTextNode(name));
+      legend.appendChild(item);
+    }
+    legend.appendChild(mk("span", null, "Ninguna linea es requisito: empieza por el tema que quieras."));
     left.appendChild(legend);
 
     const detail = mk("div", "map-detail panel");

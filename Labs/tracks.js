@@ -10,6 +10,8 @@
 const LABS_TRACKS = [
   {
     id: "ai-math",
+    line: 1,
+    color: "l1",
     name: "AI & Math",
     desc: "Probabilidad, estadistica y matematica para ML.",
     sourceSystem: "study-buddy",
@@ -34,6 +36,8 @@ const LABS_TRACKS = [
   },
   {
     id: "system-design",
+    line: 2,
+    color: "l2",
     name: "System Design",
     desc: "Requests, caches y cuellos de botella en sistemas conectados.",
     sourceSystem: "study-buddy",

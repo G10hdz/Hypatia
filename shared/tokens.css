@@ -2,21 +2,18 @@
    studio.css lo importa; engine.css lo adopta en la fase 5 del rediseno. */
 
 @font-face {
-  font-family: "Space Grotesk";
-  src: url("fonts/SpaceGrotesk-var.ttf") format("truetype");
-  font-weight: 300 700;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Outfit";
-  src: url("fonts/Outfit-var.ttf") format("truetype");
+  font-family: "Archivo";
+  src: url("fonts/archivo-latin-wdth.woff2") format("woff2");
   font-weight: 100 900;
+  font-stretch: 62% 125%;
   font-display: swap;
 }
 
 :root {
-  --font-body: "Space Grotesk", system-ui, -apple-system, sans-serif;
-  --font-display: "Outfit", "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Archivo", system-ui, -apple-system, sans-serif;
+  --font-display: "Archivo", system-ui, sans-serif;
+  --stretch-display: 112%;
+  --stretch-label: 82%;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* Tipo: escala ~1.2 sobre 16px */
@@ -50,15 +47,15 @@
   --tap: 44px;
 
   /* Color: claro */
-  --bg: #f3f6f7;
+  --bg: #f3f4f6;
   --panel: #ffffff;
-  --panel-2: #edf2f4;
-  --ink: #19364b;
-  --muted: #53707f;
-  --line: #d4dfe4;
-  --accent: #15588e;
+  --panel-2: #e9ebef;
+  --ink: #121316;
+  --muted: #555b66;
+  --line: #d6d9df;
+  --accent: #0a5ba8;
   --accent-ink: #ffffff;
-  --accent-soft: rgba(21, 88, 142, 0.08);
+  --accent-soft: rgba(10, 91, 168, 0.08);
 
   --ok: #2c7a4b;
   --warn: #8a6116;
@@ -70,25 +67,39 @@
   --data-red: #b23842;
   --data-orange: #c2602f;
 
-  --fig-bg: #eef3f5;
-  --code-bg: #e9f0f3;
-  --stage-line: #c3d3da;
-  --grid-line: rgba(21, 88, 142, 0.05);
+  --fig-bg: #eef0f3;
+  --code-bg: #eceef2;
+  --stage-line: #c9cdd4;
+  --grid-line: rgba(18, 19, 22, 0.05);
 
-  --shadow: 0 1px 2px rgba(25, 54, 75, 0.06);
-  --focus: 0 0 0 3px rgba(21, 88, 142, 0.35);
+  --shadow: 0 1px 2px rgba(18, 19, 22, 0.06), 0 8px 24px -12px rgba(18, 19, 22, 0.18);
+  --focus: 0 0 0 3px rgba(10, 91, 168, 0.35);
+
+  /* Pildora Positronica y colores de linea (cada track es una linea) */
+  --pill: #121316;
+  --pill-ink: #ffffff;
+  --l1: #e2007a;
+  --l2: #0a5ba8;
+  --l3: #7d8c00;
+  --l4: #1597b8;
+  --l5: #f2c200;
+  --l6: #d4252b;
+  --l7: #e06c00;
+  --l8: #0f8a55;
+  --l-ink: #ffffff;
+  --l5-ink: #121316;
 }
 
 [data-theme="dark"] {
-  --bg: #101b24;
-  --panel: #182731;
-  --panel-2: #14222c;
-  --ink: #e4edf2;
-  --muted: #93a9b8;
-  --line: #294252;
-  --accent: #9ac5ea;
-  --accent-ink: #0d1c26;
-  --accent-soft: rgba(154, 197, 234, 0.12);
+  --bg: #0f1115;
+  --panel: #181b21;
+  --panel-2: #14171c;
+  --ink: #eceef2;
+  --muted: #a0a6b1;
+  --line: #2b3039;
+  --accent: #79b0ee;
+  --accent-ink: #0f1115;
+  --accent-soft: rgba(121, 176, 238, 0.12);
 
   --ok: #7cc79a;
   --warn: #e0b25c;
@@ -100,10 +111,20 @@
   --data-red: #e3898f;
   --data-orange: #e09a6b;
 
-  --fig-bg: #132430;
-  --code-bg: #0e1b25;
-  --stage-line: #2c4556;
-  --grid-line: rgba(154, 197, 234, 0.06);
+  --fig-bg: #14171c;
+  --code-bg: #101317;
+  --stage-line: #353b45;
+  --grid-line: rgba(236, 238, 242, 0.05);
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --focus: 0 0 0 3px rgba(154, 197, 234, 0.4);
+  --focus: 0 0 0 3px rgba(121, 176, 238, 0.4);
+  --pill: #eceef2;
+  --pill-ink: #0f1115;
+  --l1: #ff3d9e;
+  --l2: #3d8fe0;
+  --l3: #a9b829;
+  --l4: #3cc0e0;
+  --l5: #f5cc2a;
+  --l6: #ef4f54;
+  --l7: #ff8a2a;
+  --l8: #2fb47a;
 }

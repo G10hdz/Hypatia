@@ -50,3 +50,6 @@ PHASE2_AUTH_SUMMARY.md
 # Local semantic code index
 .cocoindex_code/
 eval/runs/.probe-*.json
+
+# Notas de diseno locales (no se sirven)
+.impeccable/

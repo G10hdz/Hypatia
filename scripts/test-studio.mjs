@@ -124,6 +124,8 @@ const FILES = {
   books: ["Labs/books.js", ["BOOKS", "AMAZON_TAG", "amazonUrl"]],
   bank: ["Labs/bank.js", ["QUESTION_BANK"]],
   margin: ["shared/margin.js", ["StudioMargin"]],
+  due: ["shared/due.js", ["StudioDue"]],
+  pictos: ["shared/pictograms.js", ["PICTOS", "picto"]],
 };
 
 function ctx(files, storage, extra = {}) {
@@ -848,6 +850,29 @@ t("navegacion: mismas entradas en el estudio y cada ancla existe en la portada",
       if (hash) assert.match(home, new RegExp(`id="${hash}"`), `${f}: ancla #${hash} no existe en la portada`);
     }
   }
+});
+
+t("red: cada track es una linea con numero y color unicos, y cada estacion tiene pictograma", () => {
+  const { LABS_TRACKS, KNOWLEDGE_MAP, PICTOS } = ctx(["tracks", "knowledge", "pictos"], makeStorage()).sandbox;
+  const nums = new Set(), colors = new Set();
+  for (const tr of LABS_TRACKS) {
+    assert.ok(Number.isInteger(tr.line) && tr.line > 0, `${tr.id}: sin numero de linea`);
+    assert.match(tr.color, /^l[1-8]$/, `${tr.id}: color fuera de la paleta`);
+    assert.ok(!nums.has(tr.line) && !colors.has(tr.color), `${tr.id}: linea repetida`);
+    nums.add(tr.line); colors.add(tr.color);
+    for (const l of tr.lessons) assert.ok(PICTOS[`${tr.id}/${l.slug}`], `${l.slug}: sin pictograma`);
+  }
+  for (const t of KNOWLEDGE_MAP.topics) assert.ok(PICTOS[t.id], `${t.id}: tema sin pictograma`);
+});
+
+t("por pasar hoy: cuenta nuevas, vencidas y en aprendizaje; no las futuras", () => {
+  const { StudioDue } = ctx(["due"], makeStorage()).sandbox;
+  const now = 1_000_000;
+  const decks = { a: { title: "A", cards: [{}, {}, {}, {}] }, b: { title: "B", cards: [{}] } };
+  const store = { decks: { a: { 0: { state: "review", due: now - 1 }, 1: { state: "review", due: now + 9e6 }, 2: { state: "learning", due: now + 60 } } } };
+  const rows = StudioDue.byDeck(decks, store, now);
+  assert.deepEqual(JSON.parse(JSON.stringify(rows.map(r => [r.id, r.due, r.total]))), [["a", 3, 4], ["b", 1, 1]]);
+  assert.deepEqual([...StudioDue.byDeck(decks, null, now).map(r => r.due)], [4, 1], "sin progreso todo es nuevo");
 });
 
 console.log(process.exitCode ? "\nFallaron pruebas" : "\nTodas las pruebas del estudio pasaron");
