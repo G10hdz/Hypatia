@@ -68,8 +68,9 @@ const StudioChallenge = (() => {
     } else {
       from.append(`Para profundizar: ${it.book.title}, ${it.ref.where}.`);
       if (it.book.free) from.append(" ", a(it.book.free, "Leer gratis"));
+      const sep = it.book.free ? " · " : " ";
       const buy = typeof amazonUrl === "function" && amazonUrl(it.book);
-      if (buy) from.append(" ", a(buy, "En Amazon"));
+      if (buy) from.append(sep, a(buy, "En Amazon"));
     }
 
     it.options.forEach((text, i) => {
