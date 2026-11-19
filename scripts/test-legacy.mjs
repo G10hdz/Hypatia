@@ -61,3 +61,13 @@ console.log("Pasaron las pruebas de los modulos de practica.");
   assert.match(engine, /shuffleOptions\(/, "el motor baraja al armar el bloque");
 }
 console.log("ok opciones barajadas");
+/* Repo publico: ningun cuaderno de NotebookLM. Van en el repo privado. */
+{
+  const { execSync } = await import("node:child_process");
+  const root = new URL("..", import.meta.url).pathname;
+  const files = execSync("git ls-files", { cwd: root, encoding: "utf8" }).split("\n")
+    .filter(f => /\.(js|html|json|md|py|mjs)$/.test(f));
+  const hits = files.filter(f => /notebooklm\.google\.com\/notebook\//.test(read(f)));
+  assert.deepEqual(hits, [], "links a cuadernos de NotebookLM en el repo publico");
+}
+console.log("ok sin cuadernos de NotebookLM");
