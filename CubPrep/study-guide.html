@@ -1,491 +1,303 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PumaPrep - Guía de Estudio UNAM</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CubPrep · UNAM Área 1 - Guía de Estudio</title>
+  <link rel="stylesheet" href="../shared/tokens.css">
+  <link rel="stylesheet" href="../shared/studio.css">
+  <script>
+    (function(){try{var v=localStorage.getItem("hypatia.theme.v1");
+    document.documentElement.dataset.theme=(v==="dark"||v==="light")?v:
+    (matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");}catch(e){}})();
+  </script>
   <style>
-    :root {
-      --bg: #0c0f0f;
-      --surface: #1a1d1d;
-      --surface2: #1f2222;
-      --accent: #C4B5E3;
-      --accent2: #ffcfec;
-      --accent3: #98FF98;
-      --danger: #b41340;
-      --text: #e1e3e2;
-      --text-muted: #9a9ca0;
-      --border: rgba(42, 45, 45, 0.2);
-      --radius: 1rem;
-      --glow-lavender: 0 0 24px rgba(196, 181, 227, 0.2);
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: 'Space Grotesk', sans-serif;
-      background:
-        radial-gradient(circle at 15% 0%, rgba(196, 181, 227, 0.12) 0%, transparent 50%),
-        radial-gradient(circle at 85% 15%, rgba(255, 207, 236, 0.08) 0%, transparent 40%),
-        var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-    }
-
-    .header {
-      background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%);
-      backdrop-filter: blur(12px);
-      padding: 2rem 1rem;
-      text-align: center;
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .header h1 {
-      font-family: 'Outfit', sans-serif;
-      font-weight: 900;
-      font-size: 2rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .header p {
-      color: var(--text-muted);
-      margin-top: 0.5rem;
-      font-size: 0.9rem;
-    }
-
-    .back-link {
-      display: inline-block;
-      margin-top: 1rem;
-      color: var(--accent3);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.9rem;
-    }
-
-    .back-link:hover { text-decoration: underline; }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 2rem 1rem;
-    }
-
-    /* Subject Navigation */
-    .subject-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 2rem;
-      justify-content: center;
-    }
-
+    .subject-nav { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-3) 0 var(--space-4); }
     .subject-btn {
-      background: rgba(42, 45, 45, 0.3);
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      padding: 0.6rem 1rem;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 600;
-      transition: all 0.2s;
-    }
-
-    .subject-btn:hover {
-      border-color: var(--accent);
-      color: var(--text);
-      background: rgba(196, 181, 227, 0.06);
-    }
-
-    .subject-btn.active {
-      background: linear-gradient(135deg, var(--accent), #d7c7f6);
-      color: #0c0f0f;
-      border-color: var(--accent);
-      box-shadow: 0 4px 16px rgba(196, 181, 227, 0.25);
-    }
-
-    /* Videos Section */
-    .videos-section {
-      background: rgba(31, 34, 34, 0.6);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--border);
-      border-radius: 1.5rem;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-    }
-
-    .videos-section h2 {
-      font-family: 'Outfit', sans-serif;
+      min-height: var(--tap);
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      font: inherit;
       font-weight: 700;
-      font-size: 1.3rem;
-      margin-bottom: 1rem;
-      color: var(--accent2);
+      font-size: var(--text-sm);
+      cursor: pointer;
     }
+    .subject-btn:hover { border-color: var(--line-c); color: var(--line-c); }
+    .subject-btn.active { background: var(--line-c); border-color: var(--line-c); color: var(--l-ink); }
 
-    .video-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1rem;
-    }
-
+    .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
     .video-card {
-      background: rgba(27, 29, 29, 0.5);
-      backdrop-filter: blur(8px);
-      border: 1px solid var(--border);
-      border-radius: 0.75rem;
-      padding: 1rem;
-      transition: transform 0.2s, border-color 0.2s;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: var(--space-3) var(--space-4);
+      box-shadow: var(--shadow);
     }
+    .video-card:hover { border-color: var(--line-c); }
+    .video-card a { color: var(--ink); font-weight: 700; text-decoration: none; display: block; }
+    .video-card a:hover { color: var(--line-c); text-decoration: underline; }
+    .video-card .channel { color: var(--muted); font-size: var(--text-sm); margin-top: var(--space-1); }
+    .video-card .topics { margin-top: var(--space-2); font-size: var(--text-xs); color: var(--muted); font-stretch: var(--stretch-label); text-transform: uppercase; letter-spacing: 0.04em; }
 
-    .video-card:hover { transform: translateY(-2px); border-color: rgba(196, 181, 227, 0.3); }
-
-    .video-card a {
-      color: var(--accent3);
-      text-decoration: none;
-      font-weight: 600;
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-
-    .video-card a:hover { text-decoration: underline; }
-
-    .video-card .channel {
-      color: var(--text-muted);
-      font-size: 0.85rem;
-    }
-
-    .video-card .topics {
-      margin-top: 0.5rem;
-      font-size: 0.75rem;
-      color: var(--accent);
-    }
-
-    /* Topics */
     .topic-section { display: none; }
     .topic-section.active { display: block; }
-
     .topic-group {
-      background: rgba(31, 34, 34, 0.6);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--border);
-      border-radius: 1rem;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-panel);
+      padding: var(--space-5);
+      box-shadow: var(--shadow);
+      margin-bottom: var(--space-4);
     }
-
-    .topic-group h3 {
-      font-family: 'Outfit', sans-serif;
-      font-weight: 700;
-      font-size: 1.2rem;
-      color: var(--accent);
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid var(--border);
-      text-transform: capitalize;
-    }
-
+    .topic-group h3 { font-size: var(--text-lg); margin-bottom: var(--space-3); padding-bottom: var(--space-2); border-bottom: 1px solid var(--line); text-transform: capitalize; }
     .explanation-card {
-      background: rgba(27, 29, 29, 0.5);
-      backdrop-filter: blur(8px);
-      border: 1px solid var(--border);
-      border-radius: 0.75rem;
-      padding: 1.2rem;
-      margin-bottom: 1rem;
-      border-left: 4px solid var(--accent3);
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      margin-bottom: var(--space-3);
     }
+    .explanation-card h4 { font-size: var(--text-base); margin-bottom: var(--space-3); text-transform: capitalize; }
+    .exp-block { margin-bottom: var(--space-3); }
+    .exp-label { font-size: var(--text-xs); font-weight: 700; font-stretch: var(--stretch-label); text-transform: uppercase; letter-spacing: var(--tracking-caps); color: var(--muted); margin-bottom: var(--space-1); }
+    .exp-content { line-height: var(--leading); white-space: pre-wrap; overflow-wrap: anywhere; }
 
-    .explanation-card h4 {
-      font-family: 'Outfit', sans-serif;
-      font-weight: 700;
-      color: var(--accent2);
-      margin-bottom: 0.8rem;
-      text-transform: capitalize;
-    }
-
-    .exp-block {
-      margin-bottom: 0.8rem;
-    }
-
-    .exp-label {
-      font-weight: 700;
-      color: var(--accent3);
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      margin-bottom: 0.3rem;
-    }
-
-    .exp-content {
-      color: var(--text);
-      line-height: 1.6;
-      white-space: pre-wrap;
-    }
-
-    .video-ref {
-      background: rgba(31, 34, 34, 0.6);
-      backdrop-filter: blur(8px);
-      border: 1px solid var(--border);
-      border-radius: 0.5rem;
-      padding: 0.8rem;
-      margin-top: 0.8rem;
-    }
-
-    .video-ref-title {
-      font-weight: 600;
-      color: var(--accent2);
-      margin-bottom: 0.5rem;
-    }
-
-    .video-ref a {
-      display: block;
-      color: var(--accent3);
-      text-decoration: none;
-      font-size: 0.9rem;
-      margin-bottom: 0.3rem;
-    }
-
-    .video-ref a:hover { text-decoration: underline; }
+    .video-ref { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-ctl); padding: var(--space-3); margin-top: var(--space-3); }
+    .video-ref-title { font-weight: 600; font-size: var(--text-sm); margin-bottom: var(--space-2); }
+    .video-ref a { display: block; color: var(--accent); font-size: var(--text-sm); margin-bottom: var(--space-1); }
 
     .conamat-ref {
       display: inline-block;
-      background: var(--accent);
-      color: white;
-      padding: 0.3rem 0.6rem;
-      border-radius: 4px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      margin-top: 0.5rem;
+      background: var(--line-c);
+      color: var(--l-ink);
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-pill);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      font-stretch: var(--stretch-label);
+      margin-top: var(--space-2);
     }
 
-    /* Loading */
-    .loading {
-      text-align: center;
-      padding: 3rem;
-      color: var(--text-muted);
-    }
-
+    .loading { text-align: center; padding: var(--space-7); color: var(--muted); }
     .loading::after {
-      content: '';
+      content: "";
       display: block;
-      width: 40px;
-      height: 40px;
-      border: 3px solid var(--surface2);
-      border-top-color: var(--accent);
+      width: 40px; height: 40px;
+      border: 3px solid var(--line);
+      border-top-color: var(--line-c);
       border-radius: 50%;
-      margin: 1rem auto;
+      margin: var(--space-3) auto 0;
       animation: spin 1s linear infinite;
     }
-
     @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .header h1 { font-size: 1.5rem; }
-      .video-grid { grid-template-columns: 1fr; }
-      .container { padding: 1rem 0.5rem; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      * { animation: none !important; transition: none !important; }
-    }
   </style>
 <script defer src="/positronica-analytics.js"></script>
 </head>
 <body>
-  <div class="header">
-    <h1>📚 PumaPrep - Guía de Estudio</h1>
-    <p>Explicaciones mejoradas con NotebookLM + Videos de YouTube (MatematicasprofeAlex, DanielCarreon, MatematicaConJuan) + Referencias CONAMAT</p>
-    <a href="index.html" class="back-link">← Volver a Practicar</a>
-  </div>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<div class="wrap" style="--line-c: var(--l6)">
+  <header class="topbar">
+    <a class="brand" href="../index.html">Hypatia</a>
+    <nav aria-label="Principal">
+      <a href="./index.html">CubPrep</a>
+      <a href="../index.html#mapa">Mapa</a>
+      <a href="../index.html#practica">Práctica</a>
+      <a href="../index.html#biblioteca">Biblioteca</a>
+    </nav>
+    <button class="theme-toggle" type="button" data-theme-toggle>Tema</button>
+  </header>
 
-  <div class="container">
-    <!-- Subject Navigation -->
-    <div class="subject-nav" id="subjectNav"></div>
-
-    <!-- Videos Section -->
-    <div class="videos-section">
-      <h2>📹 Recursos en Video</h2>
-      <div class="video-grid" id="videoGrid"></div>
+  <main id="contenido">
+  <header class="estacion-top" style="--line-c: var(--l6)">
+    <span class="picto-box" data-picto="cubprep"></span>
+    <div>
+      <h1>CubPrep&nbsp;· UNAM Área 1</h1>
+      <p class="where"><span class="line-badge">L6</span> Guía de estudio · acceso abierto</p>
+      <p class="sub">Explicaciones mejoradas con NotebookLM, videos de YouTube (MatematicasprofeAlex, DanielCarreon, MatematicaConJuan) y referencias CONAMAT.</p>
     </div>
+  </header>
 
-    <!-- Topics Content -->
+  <section aria-labelledby="sec-videos">
+    <h2 id="sec-videos">Recursos en video</h2>
+    <div class="video-grid" id="videoGrid"></div>
+  </section>
+
+  <section aria-labelledby="sec-materias">
+    <h2 id="sec-materias">Explicaciones por materia</h2>
+    <div class="subject-nav" id="subjectNav"></div>
     <div id="topicsContent">
       <div class="loading">Cargando explicaciones...</div>
     </div>
-  </div>
+  </section>
 
-  <!-- Load explanations as JS to work with file:// protocol -->
-  <script src="./enhanced_explanations.js"></script>
-  <script src="./video_refs.js"></script>
-  <script>
-    const SUBJECT_NAMES = {
-      matematicas: 'Matemáticas',
-      fisica: 'Física',
-      quimica: 'Química',
-      biologia: 'Biología',
-      espanol: 'Español',
-      literatura: 'Literatura',
-      historia_mx: 'Historia México',
-      geografia: 'Geografía',
-      filosofia: 'Filosofía'
-    };
+  <a class="back-link" href="./index.html">← Volver a Practicar</a>
+  </main>
+  <footer class="site">Hypatia · HTML estático, sin build · tu progreso queda en este navegador</footer>
+</div>
 
-    let enhancedData = null;
-    let currentSubject = 'matematicas';
+<!-- Load explanations as JS to work with file:// protocol -->
+<script src="./enhanced_explanations.js"></script>
+<script src="./video_refs.js"></script>
+<script>
+  const SUBJECT_NAMES = {
+    matematicas: 'Matemáticas',
+    fisica: 'Física',
+    quimica: 'Química',
+    biologia: 'Biología',
+    espanol: 'Español',
+    literatura: 'Literatura',
+    historia_mx: 'Historia México',
+    geografia: 'Geografía',
+    filosofia: 'Filosofía'
+  };
 
-    async function loadData() {
-      try {
-        // Try window variable first (from <script> tag, works with file://)
-        if (typeof window.ENHANCED_EXPLANATIONS !== 'undefined') {
-          enhancedData = window.ENHANCED_EXPLANATIONS;
-        } else {
-          // Fallback to fetch (works with HTTP server)
-          const response = await fetch('enhanced_explanations.json');
-          enhancedData = await response.json();
-        }
-        renderSubjectNav();
-        renderVideos();
-        renderTopics();
-        showSubject(currentSubject);
-      } catch (e) {
-        document.getElementById('topicsContent').innerHTML =
-          '<div class="loading">Error al cargar explicaciones. Verifica que enhanced_explanations.json existe.</div>';
+  let enhancedData = null;
+  let currentSubject = 'matematicas';
+
+  async function loadData() {
+    try {
+      // Try window variable first (from <script> tag, works with file://)
+      if (typeof window.ENHANCED_EXPLANATIONS !== 'undefined') {
+        enhancedData = window.ENHANCED_EXPLANATIONS;
+      } else {
+        // Fallback to fetch (works with HTTP server)
+        const response = await fetch('enhanced_explanations.json');
+        enhancedData = await response.json();
       }
+      renderSubjectNav();
+      renderVideos();
+      renderTopics();
+      showSubject(currentSubject);
+    } catch (e) {
+      document.getElementById('topicsContent').innerHTML =
+        '<div class="loading">Error al cargar explicaciones. Verifica que enhanced_explanations.json existe.</div>';
     }
+  }
 
-    function renderSubjectNav() {
-      const nav = document.getElementById('subjectNav');
-      nav.innerHTML = Object.keys(enhancedData.topics).map(subject => 
-        `<button class="subject-btn ${subject === currentSubject ? 'active' : ''}" data-subject="${subject}">${SUBJECT_NAMES[subject] || subject}</button>`
-      ).join('');
+  function renderSubjectNav() {
+    const nav = document.getElementById('subjectNav');
+    nav.innerHTML = Object.keys(enhancedData.topics).map(subject =>
+      `<button class="subject-btn ${subject === currentSubject ? 'active' : ''}" data-subject="${subject}">${SUBJECT_NAMES[subject] || subject}</button>`
+    ).join('');
 
-      nav.querySelectorAll('.subject-btn').forEach(btn => {
-        btn.addEventListener('click', () => showSubject(btn.dataset.subject));
-      });
-    }
+    nav.querySelectorAll('.subject-btn').forEach(btn => {
+      btn.addEventListener('click', () => showSubject(btn.dataset.subject));
+    });
+  }
 
-     function renderVideos() {
-       const grid = document.getElementById('videoGrid');
-       let allVideos = [];
-       
-       // Add videos from enhanced_explanations.js if available
-       if (enhancedData.videos) {
-         allVideos = allVideos.concat(enhancedData.videos);
-       }
-       
-       // Add videos from video_refs.js (all official tags + legacy)
-       if (typeof window.VIDEO_REFS !== 'undefined') {
-         // Get official topics grouped by subject
-         const subjects = getOfficialTopicsBySubject ? getOfficialTopicsBySubject() : null;
-         
-         if (subjects) {
-           // Use official tags only (skip legacy fallback)
-           const allOfficialTags = [...subjects.math, ...subjects.physics, ...subjects.chemistry];
-           for (const tag of allOfficialTags) {
-             const videos = window.VIDEO_REFS[tag];
-             if (videos && Array.isArray(videos)) {
-               allVideos = allVideos.concat(videos.map(v => ({
-                 ...v, 
-                 topic: tag,
-                 displayTopic: getTopicDisplayName ? getTopicDisplayName(tag) : tag
-               })));
-             }
+   function renderVideos() {
+     const grid = document.getElementById('videoGrid');
+     let allVideos = [];
+
+     // Add videos from enhanced_explanations.js if available
+     if (enhancedData.videos) {
+       allVideos = allVideos.concat(enhancedData.videos);
+     }
+
+     // Add videos from video_refs.js (all official tags + legacy)
+     if (typeof window.VIDEO_REFS !== 'undefined') {
+       // Get official topics grouped by subject
+       const subjects = getOfficialTopicsBySubject ? getOfficialTopicsBySubject() : null;
+
+       if (subjects) {
+         // Use official tags only (skip legacy fallback)
+         const allOfficialTags = [...subjects.math, ...subjects.physics, ...subjects.chemistry];
+         for (const tag of allOfficialTags) {
+           const videos = window.VIDEO_REFS[tag];
+           if (videos && Array.isArray(videos)) {
+             allVideos = allVideos.concat(videos.map(v => ({
+               ...v,
+               topic: tag,
+               displayTopic: getTopicDisplayName ? getTopicDisplayName(tag) : tag
+             })));
            }
-         } else {
-           // Fallback: iterate all keys except legacy
-           for (const [topic, videos] of Object.entries(window.VIDEO_REFS)) {
-             if (topic !== '_legacy_' && Array.isArray(videos)) {
-               allVideos = allVideos.concat(videos.map(v => ({
-                 ...v, 
-                 topic: topic,
-                 displayTopic: topic.replace(/_/g, ' ')
-               })));
-             }
+         }
+       } else {
+         // Fallback: iterate all keys except legacy
+         for (const [topic, videos] of Object.entries(window.VIDEO_REFS)) {
+           if (topic !== '_legacy_' && Array.isArray(videos)) {
+             allVideos = allVideos.concat(videos.map(v => ({
+               ...v,
+               topic: topic,
+               displayTopic: topic.replace(/_/g, ' ')
+             })));
            }
          }
        }
-       
-       // Deduplicate by URL
-       const seen = new Set();
-       allVideos = allVideos.filter(v => {
-         if (seen.has(v.url)) return false;
-         seen.add(v.url);
-         return true;
-       });
-       
-       // Sort by channel for better organization
-       allVideos.sort((a, b) => (a.channel || '').localeCompare(b.channel || ''));
-       
-       grid.innerHTML = allVideos.map(video => `
-         <div class="video-card">
-           <a href="${video.url}" target="_blank" rel="noopener">${video.title}</a>
-           <div class="channel">${video.channel || 'Canal desconocido'}</div>
-           <div class="topics">${video.displayTopic || video.topic || ''}</div>
-         </div>
-       `).join('');
      }
 
-    function renderTopics() {
-      const content = document.getElementById('topicsContent');
-      let html = '';
+     // Deduplicate by URL
+     const seen = new Set();
+     allVideos = allVideos.filter(v => {
+       if (seen.has(v.url)) return false;
+       seen.add(v.url);
+       return true;
+     });
 
-      for (const [subject, subjectData] of Object.entries(enhancedData.topics)) {
-        html += `<div class="topic-section" data-subject="${subject}">`;
+     // Sort by channel for better organization
+     allVideos.sort((a, b) => (a.channel || '').localeCompare(b.channel || ''));
 
-        for (const [tema, temaData] of Object.entries(subjectData)) {
-          html += `<div class="topic-group">`;
-          html += `<h3>${tema.replace(/_/g, ' ')}</h3>`;
+     grid.innerHTML = allVideos.map(video => `
+       <div class="video-card">
+         <a href="${video.url}" target="_blank" rel="noopener">${video.title}</a>
+         <div class="channel">${video.channel || 'Canal desconocido'}</div>
+         <div class="topics">${video.displayTopic || video.topic || ''}</div>
+       </div>
+     `).join('');
+  }
 
-          for (const [subtema, exp] of Object.entries(temaData)) {
-            html += `<div class="explanation-card">`;
-            html += `<h4>${subtema.replace(/_/g, ' ')}</h4>`;
+  function renderTopics() {
+    const content = document.getElementById('topicsContent');
+    let html = '';
 
-            if (exp.concept) {
-              html += `<div class="exp-block"><div class="exp-label">📖 Concepto</div><div class="exp-content">${exp.concept}</div></div>`;
-            }
-            if (exp.example) {
-              html += `<div class="exp-block"><div class="exp-label">✏️ Ejemplo</div><div class="exp-content">${exp.example}</div></div>`;
-            }
-            if (exp.common_mistakes) {
-              html += `<div class="exp-block"><div class="exp-label">⚠️ Errores Comunes</div><div class="exp-content">${exp.common_mistakes}</div></div>`;
-            }
+    for (const [subject, subjectData] of Object.entries(enhancedData.topics)) {
+      html += `<div class="topic-section" data-subject="${subject}">`;
 
-            if (exp.video_ref && exp.video_ref.length > 0) {
-              html += `<div class="video-ref"><div class="video-ref-title">📹 Videos relacionados:</div>`;
-              exp.video_ref.forEach(videoId => {
-                const video = enhancedData.videos.find(v => v.id === videoId);
-                if (video) {
-                  html += `<a href="${video.url}" target="_blank" rel="noopener">▶ ${video.title} - ${video.channel}</a>`;
-                }
-              });
-              html += `</div>`;
-            }
-            
-            if (typeof window.getVideos !== 'undefined') {
-              var topicVideos = window.getVideos(tema);
-              if (topicVideos && topicVideos.length > 0) {
-                html += '<div class="video-ref"><div class="video-ref-title">📹 Canales preferidos (hasta 3):</div>';
-                topicVideos.slice(0, 3).forEach(function(v) {
-                  html += '<a href="' + v.url + '" target="_blank" rel="noopener">▶ ' + v.title + ' - ' + v.channel + '</a>';
-                });
-                html += '</div>';
+      for (const [tema, temaData] of Object.entries(subjectData)) {
+        html += `<div class="topic-group">`;
+        html += `<h3>${tema.replace(/_/g, ' ')}</h3>`;
+
+        for (const [subtema, exp] of Object.entries(temaData)) {
+          html += `<div class="explanation-card">`;
+          html += `<h4>${subtema.replace(/_/g, ' ')}</h4>`;
+
+          if (exp.concept) {
+            html += `<div class="exp-block"><div class="exp-label">Concepto</div><div class="exp-content">${exp.concept}</div></div>`;
+          }
+          if (exp.example) {
+            html += `<div class="exp-block"><div class="exp-label">Ejemplo</div><div class="exp-content">${exp.example}</div></div>`;
+          }
+          if (exp.common_mistakes) {
+            html += `<div class="exp-block"><div class="exp-label">Errores comunes</div><div class="exp-content">${exp.common_mistakes}</div></div>`;
+          }
+
+          if (exp.video_ref && exp.video_ref.length > 0) {
+            html += `<div class="video-ref"><div class="video-ref-title">Videos relacionados:</div>`;
+            exp.video_ref.forEach(videoId => {
+              const video = enhancedData.videos.find(v => v.id === videoId);
+              if (video) {
+                html += `<a href="${video.url}" target="_blank" rel="noopener">${video.title} - ${video.channel}</a>`;
               }
-            }
-
-            if (exp.conamat_pages) {
-              html += `<span class="conamat-ref">📄 CONAMAT: ${exp.conamat_pages}</span>`;
-            }
-
+            });
             html += `</div>`;
+          }
+
+          if (typeof window.getVideos !== 'undefined') {
+            var topicVideos = window.getVideos(tema);
+            if (topicVideos && topicVideos.length > 0) {
+              html += '<div class="video-ref"><div class="video-ref-title">Canales preferidos (hasta 3):</div>';
+              topicVideos.slice(0, 3).forEach(function(v) {
+                html += '<a href="' + v.url + '" target="_blank" rel="noopener">' + v.title + ' - ' + v.channel + '</a>';
+              });
+              html += '</div>';
+            }
+          }
+
+          if (exp.conamat_pages) {
+            html += `<span class="conamat-ref">CONAMAT: ${exp.conamat_pages}</span>`;
           }
 
           html += `</div>`;
@@ -494,24 +306,33 @@
         html += `</div>`;
       }
 
-      content.innerHTML = html;
+      html += `</div>`;
     }
 
-    function showSubject(subject) {
-      currentSubject = subject;
+    content.innerHTML = html;
+  }
 
-      // Update buttons
-      document.querySelectorAll('.subject-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.subject === subject);
-      });
+  function showSubject(subject) {
+    currentSubject = subject;
 
-      // Show/hide sections
-      document.querySelectorAll('.topic-section').forEach(section => {
-        section.classList.toggle('active', section.dataset.subject === subject);
-      });
-    }
+    // Update buttons
+    document.querySelectorAll('.subject-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.subject === subject);
+    });
 
-    loadData();
-  </script>
+    // Show/hide sections
+    document.querySelectorAll('.topic-section').forEach(section => {
+      section.classList.toggle('active', section.dataset.subject === subject);
+    });
+  }
+
+  loadData();
+</script>
+<script src="../shared/theme.js"></script>
+<script src="../shared/pictograms.js"></script>
+<script>
+"use strict";
+StudioTheme.init();
+</script>
 </body>
 </html>
