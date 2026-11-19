@@ -2,7 +2,7 @@
  * Lee KNOWLEDGE_MAP (curado) y LABS_TRACKS; no infiere relaciones ni temas.
  * Escenario: botones de temas sobre conectores SVG en un lienzo de 780x390.
  * En pantallas angostas los mismos temas pasan a una lista. Las aristas son
- * puentes curriculares documentados o propuestos, no prerrequisitos.
+ * puentes documentados o propuestos entre temas; ninguno es requisito.
  */
 const StudioMap = (() => {
   const STAGE_W = 780, STAGE_H = 390;
@@ -203,7 +203,7 @@ const StudioMap = (() => {
     s1.appendChild(document.createTextNode("Conexion documentada"));
     const s2 = mk("span", null); s2.appendChild(mk("span", "dash"));
     s2.appendChild(document.createTextNode("Puente por explorar (propuesta)"));
-    const s3 = mk("span", null, "Los puentes son curriculares, no prerrequisitos.");
+    const s3 = mk("span", null, "Ninguna linea es requisito: empieza por el tema que quieras.");
     legend.append(s1, s2, s3);
     left.appendChild(legend);
 
