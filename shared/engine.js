@@ -28,7 +28,7 @@
       console.error(`[${MODID}] questions FAILED to load! window.QUESTIONS =`, typeof window.QUESTIONS);
       document.body.innerHTML = `
         <div style="max-width:600px;margin:60px auto;padding:32px;background:var(--panel);border-radius:16px;color:var(--ink);font-family:sans-serif;">
-          <h2 style="color:var(--bad);">⚠️ ${MODID}: questions no cargaron</h2>
+          <h2 style="color:var(--bad);">${MODID}: questions no cargaron</h2>
           <p style="color:var(--muted);margin:16px 0;">Los archivos de preguntas no se cargaron correctamente.</p>
           <p style="color:var(--muted);">Sirve el repo con un servidor local (<code style="background:var(--panel-2);padding:2px 8px;border-radius:4px;">python3 -m http.server</code>) — abrir file:// bloquea scripts.</p>
         </div>`;
@@ -427,10 +427,10 @@
         // Show error if no questions loaded
         els.subjectStats.innerHTML = `
           <div class="subject-item" style="border-color:rgba(255,93,115,0.4);background:rgba(255,93,115,0.08);">
-            <strong>⚠️ No hay preguntas cargadas</strong>
+            <strong>No hay preguntas cargadas</strong>
             <small>Parece que el banco de preguntas no se cargó. Abre la consola del navegador (F12) para ver errores.</small><br>
             <small style="color:var(--accent);margin-top:6px;display:inline-block;">
-              💡 Tip: Usa <code style="background:rgba(0,0,0,0.3);padding:2px 6px;border-radius:4px;">python3 -m http.server 8080</code> en vez de abrir el archivo directo.
+              Tip: Usa <code style="background:rgba(0,0,0,0.3);padding:2px 6px;border-radius:4px;">python3 -m http.server 8080</code> en vez de abrir el archivo directo.
             </small>
           </div>`;
         return;
@@ -741,7 +741,7 @@
     function renderHistory() {
       const recent = [...state.appStats.history].slice(-6).reverse();
       if (recent.length === 0) {
-        els.historyList.innerHTML = `<div class="empty-state" style="grid-column:1/-1;"><span class="empty-icon">📋</span><strong>Sin bloques todavía</strong><p>Completa tu primer bloque de estudio para ver tu historial aquí.</p></div>`;
+        els.historyList.innerHTML = `<div class="empty-state" style="grid-column:1/-1;"><strong>Sin bloques todavía</strong><p>Completa tu primer bloque de estudio para ver tu historial aquí.</p></div>`;
         return;
       }
 
