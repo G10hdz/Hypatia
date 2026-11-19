@@ -1,6 +1,6 @@
 /* challenge.js — desafio del dia en la portada.
- * Lee las preguntas (.q[data-ok]) de las lecciones publicadas en tracks.js,
- * asi no hay un segundo banco que mantener. La respuesta y su explicacion
+ * Junta las preguntas (.q[data-ok]) de las lecciones publicadas en tracks.js
+ * y las aprobadas de Labs/bank.js. La respuesta y su explicacion
  * aparecen despues de intentar. Sin red ni lecciones, la seccion no se muestra. */
 "use strict";
 const StudioChallenge = (() => {
@@ -9,6 +9,17 @@ const StudioChallenge = (() => {
     if (!items.length) return null;
     const day = Math.floor(Date.parse(dayKey + "T12:00:00Z") / 86400000);
     return items[((day % items.length) + items.length) % items.length];
+  }
+
+  /* Pregunta del banco usable en el desafio: aprobada y bien formada. */
+  function valid(q, bookIds) {
+    return !!q && q.status === "aprobada" &&
+      typeof q.prompt === "string" && q.prompt.trim() !== "" &&
+      Array.isArray(q.options) && q.options.length >= 3 && q.options.length <= 4 &&
+      q.options.every(o => typeof o === "string" && o.trim() !== "") &&
+      Number.isInteger(q.ok) && q.ok >= 0 && q.ok < q.options.length &&
+      typeof q.why === "string" && q.why.trim() !== "" &&
+      !!q.ref && bookIds.has(q.ref.book) && typeof q.ref.where === "string";
   }
 
   function parse(html, lesson) {
@@ -22,8 +33,9 @@ const StudioChallenge = (() => {
     })).filter(it => it.prompt && it.options.length > it.ok);
   }
 
-  async function mount(el, { lessons, today, onAnswer }) {
-    const all = [];
+  async function mount(el, { lessons, bank = [], books = [], today, onAnswer }) {
+    const byId = new Map(books.map(b => [b.id, b]));
+    const all = bank.filter(q => valid(q, byId)).map(q => ({ ...q, book: byId.get(q.ref.book) }));
     for (const lesson of lessons) {
       try {
         const res = await fetch(lesson.href);
@@ -45,10 +57,20 @@ const StudioChallenge = (() => {
     const from = document.createElement("p");
     from.className = "note";
     from.hidden = true;
-    const link = document.createElement("a");
-    link.href = it.lesson.href;
-    link.textContent = it.lesson.title;
-    from.append("Viene de la leccion ", link, ".");
+    const a = (href, text) => {
+      const l = document.createElement("a");
+      l.href = href; l.textContent = text;
+      if (/^https?:/.test(href)) { l.target = "_blank"; l.rel = "noopener noreferrer"; }
+      return l;
+    };
+    if (it.lesson) {
+      from.append("Viene de la leccion ", a(it.lesson.href, it.lesson.title), ".");
+    } else {
+      from.append(`Para profundizar: ${it.book.title}, ${it.ref.where}.`);
+      if (it.book.free) from.append(" ", a(it.book.free, "Leer gratis"));
+      const buy = typeof amazonUrl === "function" && amazonUrl(it.book);
+      if (buy) from.append(" ", a(buy, "En Amazon"));
+    }
 
     it.options.forEach((text, i) => {
       const b = document.createElement("button");
@@ -71,5 +93,5 @@ const StudioChallenge = (() => {
     el.hidden = false;
   }
 
-  return { pick, parse, mount };
+  return { pick, valid, parse, mount };
 })();

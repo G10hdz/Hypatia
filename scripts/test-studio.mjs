@@ -121,6 +121,8 @@ const FILES = {
   tracks: ["Labs/tracks.js", ["LABS_TRACKS", "LEGACY_MODULES", "SOURCE_COLLECTIONS"]],
   knowledge: ["Labs/knowledge-map.js", ["KNOWLEDGE_MAP"]],
   challenge: ["shared/challenge.js", ["StudioChallenge"]],
+  books: ["Labs/books.js", ["BOOKS", "AMAZON_TAG", "amazonUrl"]],
+  bank: ["Labs/bank.js", ["QUESTION_BANK"]],
 };
 
 function ctx(files, storage, extra = {}) {
@@ -743,6 +745,36 @@ t("lecciones publicadas exponen preguntas legibles para el desafio", () => {
     }
   }
   assert.ok(total >= 2, `se esperaban preguntas, hay ${total}`);
+});
+
+t("banco: valid() rechaza borradores, indices fuera de rango y libros inexistentes", () => {
+  const { StudioChallenge: C } = ctx(["challenge"], makeStorage()).sandbox;
+  const ids = new Map([["mml", {}]]);
+  const good = { status: "aprobada", prompt: "p", options: ["a", "b", "c"], ok: 2, why: "w", ref: { book: "mml", where: "cap. 6" } };
+  assert.equal(C.valid(good, ids), true);
+  assert.equal(C.valid({ ...good, status: "borrador" }, ids), false);
+  assert.equal(C.valid({ ...good, ok: 3 }, ids), false);
+  assert.equal(C.valid({ ...good, options: ["a", "b"] }, ids), false);
+  assert.equal(C.valid({ ...good, ref: { book: "inventado", where: "cap. 1" } }, ids), false);
+  assert.equal(C.valid({ ...good, why: " " }, ids), false);
+});
+
+t("banco y libros: cada pregunta esta bien formada y cita un libro del catalogo", () => {
+  const { QUESTION_BANK, BOOKS, amazonUrl, StudioChallenge: C } =
+    ctx(["challenge", "books", "bank"], makeStorage()).sandbox;
+  const ids = new Map(BOOKS.map(b => [b.id, b]));
+  assert.equal(ids.size, BOOKS.length, "ids de libro unicos");
+  for (const b of BOOKS) {
+    if (b.free) assert.match(b.free, /^https:\/\//, `${b.id}: enlace gratuito https`);
+    const buy = amazonUrl(b);
+    if (buy) assert.match(buy, /^https:\/\/www\.amazon\.com\.mx\/s\?k=/);
+  }
+  const seen = new Set();
+  for (const q of QUESTION_BANK) {
+    assert.ok(!seen.has(q.id), `id repetido ${q.id}`); seen.add(q.id);
+    assert.ok(["borrador", "aprobada"].includes(q.status), `${q.id}: status`);
+    assert.equal(C.valid({ ...q, status: "aprobada" }, ids), true, `${q.id}: mal formada`);
+  }
 });
 
 console.log(process.exitCode ? "\nFallaron pruebas" : "\nTodas las pruebas del estudio pasaron");
