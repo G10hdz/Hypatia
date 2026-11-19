@@ -42,14 +42,6 @@
     .progress-fill { height: 100%; background: var(--accent-mint, #98FF98); transition: width .3s; }
     .hint { text-align: center; font-size: .75rem; color: var(--text-dim, #9a9ca0); margin-top: 16px; }
     kbd { background: var(--border,#2a2d2d); border-radius: 4px; padding: 1px 6px; font-size: .7rem; }
-    .xp-toast {
-      position: fixed; left: 50%; bottom: 88px; transform: translateX(-50%) translateY(8px);
-      padding: 8px 18px; border-radius: 999px; font-size: .85rem; z-index: 20;
-      background: var(--panel-2, #1f2222); border: 1px solid var(--accent-mint, #98FF98);
-      color: var(--accent-mint, #98FF98); opacity: 0; pointer-events: none;
-      transition: opacity .25s, transform .25s;
-    }
-    .xp-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
     .summary-panel {
       margin: 24px 0; padding: 32px; border-radius: 16px; text-align: center;
       border: 1px solid var(--border, #2a2d2d); background: var(--surface, #1a1d1d);
@@ -73,7 +65,7 @@
 
     <div class="progress-line">
       <span id="pos-label">—</span>
-      <span id="game-label"></span>
+      <span id="study-days"></span>
       <span id="known-label"></span>
     </div>
     <div class="progress-track"><div id="progress-fill" class="progress-fill" style="width:0%"></div></div>
@@ -103,7 +95,6 @@
     </div>
 
     <p class="hint"><kbd>espacio</kbd> voltear · <kbd>→</kbd> siguiente · <kbd>←</kbd> anterior · <kbd>1</kbd> otra vez · <kbd>2</kbd> difícil · <kbd>3</kbd> bien · <kbd>4</kbd> fácil</p>
-    <div id="xp-toast" class="xp-toast" role="status"></div>
   </main>
 
   <script src="./fsrs.js"></script>
@@ -205,7 +196,7 @@
         if (!s || s.state === 'new' || s.due <= now) initialWork.add(i);
         else if (s.state === 'learning' || s.state === 'relearning') learnBack[i] = s.due;
       });
-      session = { grades: { 1: 0, 2: 0, 3: 0, 4: 0 }, total: 0, xp: 0, graduated: 0, lapses: 0 };
+      session = { grades: { 1: 0, 2: 0, 3: 0, 4: 0 }, total: 0, graduated: 0, lapses: 0 };
       summaryVisible = false;
       pos = 0;
     }
@@ -232,9 +223,7 @@
       if (res.lapsed) session.lapses++;
       if (res.graduated) session.graduated++;
 
-      const ev = FSRS.applyGame(game, g + 1, now);
-      session.xp += ev.xp;
-      toast(`+${ev.xp} XP`);
+      FSRS.applyGame(game, g + 1, now);
 
       save(STORE_KEY, store);
       save(GAME_KEY, game);
@@ -271,15 +260,6 @@
     const flip = () => {
       if (!summaryVisible) document.getElementById('card').classList.toggle('flipped');
     };
-
-    let toastTimer = null;
-    function toast(msg) {
-      const el = document.getElementById('xp-toast');
-      el.textContent = msg;
-      el.classList.add('show');
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => el.classList.remove('show'), 2000);
-    }
 
     function buildDeckBar() {
       const bar = document.getElementById('deck-bar');
@@ -342,8 +322,7 @@
       document.getElementById('known-label').textContent =
         `${mastered} dominadas · ${stats.length - mastered} aprendiendo · ${d.cards.length - stats.length} nuevas`;
       document.getElementById('progress-fill').style.width = `${(mastered / d.cards.length) * 100}%`;
-      document.getElementById('game-label').textContent =
-        `${game.xp} XP · racha ${game.streak.count}d`;
+      document.getElementById('study-days').textContent = `Racha: ${game.streak.count}d`;
 
       const pv = FSRS.preview(s, now, params);
       document.getElementById('btn-again').innerHTML = `Otra vez<br><small>${fmtDelay(pv.again)}</small>`;
@@ -359,13 +338,13 @@
       const el = document.getElementById('summary');
       el.innerHTML =
         `<h2>Sesión completada</h2>` +
-        `<p class="sum-row"><b>${session.total}</b> repasos · <b>+${session.xp} XP</b></p>` +
+        `<p class="sum-row"><b>${session.total}</b> repasos</p>` +
         `<p class="sum-row">Otra vez ${g[1]} · Difícil ${g[2]} · Bien ${g[3]} · Fácil ${g[4]}</p>` +
         `<p class="sum-row">${session.graduated} graduadas a repaso · ${session.lapses} lapses</p>` +
         (learnPend
           ? `<p class="sum-row">${learnPend} tarjetas siguen en aprendizaje; vuelven al madurar su paso.</p>`
           : '') +
-        `<p class="sum-row">Racha: <b>${game.streak.count} día${game.streak.count === 1 ? '' : 's'}</b> · XP total <b>${game.xp}</b></p>` +
+        `<p class="sum-row">Racha: <b>${game.streak.count} dia${game.streak.count === 1 ? '' : 's'}</b></p>` +
         `<button id="summary-continue" class="btn-primary" type="button">Continuar</button>`;
       document.getElementById('summary-continue').onclick = dismissSummary;
     }
