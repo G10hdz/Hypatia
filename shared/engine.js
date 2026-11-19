@@ -27,10 +27,10 @@
     if (typeof window.QUESTIONS === "undefined" || !Array.isArray(window.QUESTIONS) || window.QUESTIONS.length === 0) {
       console.error(`[${MODID}] questions FAILED to load! window.QUESTIONS =`, typeof window.QUESTIONS);
       document.body.innerHTML = `
-        <div style="max-width:600px;margin:60px auto;padding:32px;background:#1a1d1d;border-radius:16px;color:#e1e3e2;font-family:sans-serif;">
-          <h2 style="color:#ff6b9d;">⚠️ ${MODID}: questions no cargaron</h2>
-          <p style="color:#9a9ca0;margin:16px 0;">Los archivos de preguntas no se cargaron correctamente.</p>
-          <p style="color:#9a9ca0;">Sirve el repo con un servidor local (<code style="background:#2a2d2d;padding:2px 8px;border-radius:4px;">python3 -m http.server</code>) — abrir file:// bloquea scripts.</p>
+        <div style="max-width:600px;margin:60px auto;padding:32px;background:var(--panel);border-radius:16px;color:var(--ink);font-family:sans-serif;">
+          <h2 style="color:var(--bad);">⚠️ ${MODID}: questions no cargaron</h2>
+          <p style="color:var(--muted);margin:16px 0;">Los archivos de preguntas no se cargaron correctamente.</p>
+          <p style="color:var(--muted);">Sirve el repo con un servidor local (<code style="background:var(--panel-2);padding:2px 8px;border-radius:4px;">python3 -m http.server</code>) — abrir file:// bloquea scripts.</p>
         </div>`;
     } else {
       console.log(`[${MODID}] ${window.QUESTIONS.length} questions loaded`);
@@ -515,7 +515,7 @@
       els.trendBars.innerHTML = accuracies
         .map((acc) => {
           const height = Math.max(4, (acc / 100) * 32);
-          const color = acc >= 80 ? "var(--accent-3)" : acc >= 60 ? "#fbbf24" : "var(--danger)";
+          const color = acc >= 80 ? "var(--accent-3)" : acc >= 60 ? "var(--warn)" : "var(--danger)";
           return `<div style="flex:1;height:${height}px;background:${color};border-radius:3px 3px 0 0;transition:height 200ms ease;"></div>`;
         })
         .join("");
@@ -721,7 +721,7 @@
       els.mockBars.innerHTML = estimated
         .map((val, i) => {
           const height = Math.max(4, (val / EXAM_TOTAL) * 48);
-          const color = val >= TARGET_SCORE ? "var(--accent-3)" : val >= TARGET_SCORE - 10 ? "#fbbf24" : "var(--danger)";
+          const color = val >= TARGET_SCORE ? "var(--accent-3)" : val >= TARGET_SCORE - 10 ? "var(--warn)" : "var(--danger)";
           return `<div style="flex:1;height:${height}px;background:${color};border-radius:3px 3px 0 0;position:relative;">
             ${i === estimated.length - 1 ? `<div style="position:absolute;left:-2px;right:-2px;bottom:${(targetPct / 100) * 48}px;height:1px;background:var(--accent-2);opacity:0.6;"></div>` : ""}
           </div>`;
@@ -998,7 +998,7 @@
           const msg = document.createElement("div");
           msg.className = "simulacro-timeout-msg";
           msg.textContent = "Se acabó el tiempo — así se siente el examen real.";
-          msg.style.cssText = "color:#ff4757;font-size:0.85rem;font-weight:600;margin-top:4px;";
+          msg.style.cssText = "color:var(--bad);font-size:0.85rem;font-weight:600;margin-top:4px;";
           metaLine.appendChild(msg);
         }
       }
@@ -1465,7 +1465,7 @@
           .map(([subj, data]) => {
             const acc = data.total === 0 ? 0 : Math.round((data.correct / data.total) * 100);
             const wrong = data.total - data.correct;
-            const barColor = acc >= 80 ? "var(--accent-3)" : acc >= 60 ? "#fbbf24" : "var(--danger)";
+            const barColor = acc >= 80 ? "var(--accent-3)" : acc >= 60 ? "var(--warn)" : "var(--danger)";
             return `
               <li>
                 <strong>${subjectLabel(subj)}</strong>: <span class="num-correct">${data.correct}</span> / <span class="num-wrong">${wrong}</span> (${acc}%)
@@ -1505,7 +1505,7 @@
         breakdownList.innerHTML = report.topicBreakdown
           .map((item, i) => {
             const cls = item.accuracy >= 75 ? "accuracy-good" : item.accuracy >= 50 ? "accuracy-mid" : "accuracy-bad";
-            const barColor = item.accuracy >= 75 ? "var(--accent-3)" : item.accuracy >= 50 ? "#fbbf24" : "var(--danger)";
+            const barColor = item.accuracy >= 75 ? "var(--accent-3)" : item.accuracy >= 50 ? "var(--warn)" : "var(--danger)";
             const delay = `${220 + i * 55}ms`;
             return `
               <li class="topic-breakdown-item ${cls}" style="animation:stagger-in 320ms var(--ease-out-quart) ${delay} both;opacity:0;">
