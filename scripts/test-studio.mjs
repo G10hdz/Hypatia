@@ -886,4 +886,18 @@ t("lecciones: el encabezado de estacion usa la linea y el color de su track", ()
   }
 });
 
+t("guias de estudio: misma linea que su terminal en la portada", () => {
+  const home = readFileSync(join(ROOT_DIR, "index.html"), "utf8");
+  const dirs = { cubprep: "CubPrep", prepaws: "SAA-C03", mlops: "MLOps" };
+  for (const [picto, dir] of Object.entries(dirs)) {
+    const line = home.match(new RegExp(`data-picto="${picto}" data-line="l(\\d)"`))?.[1];
+    assert.ok(line, `${picto}: terminal en la portada`);
+    const html = readFileSync(join(ROOT_DIR, `${dir}/study-guide.html`), "utf8");
+    assert.match(html, new RegExp(`class="estacion-top" style="--line-c: var\\(--l${line}\\)"`), `${dir}: color de linea`);
+    assert.match(html, new RegExp(`data-picto="${picto}"`), `${dir}: pictograma`);
+    assert.match(html, new RegExp(`class="line-badge">L${line}<`), `${dir}: numero de linea`);
+    assert.ok(!html.includes("fonts.googleapis.com"), `${dir}: fuentes viejas`);
+  }
+});
+
 console.log(process.exitCode ? "\nFallaron pruebas" : "\nTodas las pruebas del estudio pasaron");
