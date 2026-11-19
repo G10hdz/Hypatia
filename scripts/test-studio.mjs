@@ -777,4 +777,19 @@ t("banco y libros: cada pregunta esta bien formada y cita un libro del catalogo"
   }
 });
 
+t("lecciones publicadas: cada seccion tiene un h2 que la nombra", () => {
+  const { LABS_TRACKS } = ctx(["tracks"], makeStorage()).sandbox;
+  for (const tr of LABS_TRACKS) for (const l of tr.lessons) {
+    const html = readFileSync(join(ROOT_DIR, `Labs/${tr.id}/${l.slug}/index.html`), "utf8");
+    const sections = [...html.matchAll(/<section([^>]*)>/g)].map(m => m[1]).filter(a => !/biblioteca/.test(a));
+    assert.ok(sections.length >= 5, `${l.slug}: pocas secciones`);
+    for (const attrs of sections) {
+      const id = (attrs.match(/aria-labelledby="([^"]+)"/) || [])[1];
+      assert.ok(id, `${l.slug}: seccion sin aria-labelledby`);
+      assert.match(html, new RegExp(`<h2 id="${id}">`), `${l.slug}: falta h2 #${id}`);
+    }
+    assert.match(html, /<nav aria-label="Principal">/, `${l.slug}: nav sin aria-label`);
+  }
+});
+
 console.log(process.exitCode ? "\nFallaron pruebas" : "\nTodas las pruebas del estudio pasaron");
