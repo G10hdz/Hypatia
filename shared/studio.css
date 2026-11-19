@@ -53,6 +53,7 @@ code { font-family: var(--font-mono); font-size: 0.88em; }
   align-items: center;
 }
 .topbar nav a:hover { color: var(--accent); }
+.topbar nav a[aria-current="page"] { color: var(--ink); font-weight: 600; }
 
 .theme-toggle {
   min-width: var(--tap);

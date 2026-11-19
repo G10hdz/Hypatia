@@ -833,4 +833,21 @@ t("nota al margen: lectura gratis, compra y video con target externo", () => {
   assert.equal(empty.hidden, true);
 });
 
+t("navegacion: mismas entradas en el estudio y cada ancla existe en la portada", () => {
+  const home = readFileSync(join(ROOT_DIR, "index.html"), "utf8");
+  const pages = ["index.html", "Labs/index.html", "templates/lab/index.html",
+    "Labs/ai-math/01-bayes/index.html", "Labs/system-design/01-bottleneck/index.html"];
+  for (const f of pages) {
+    const html = readFileSync(join(ROOT_DIR, f), "utf8");
+    const nav = (html.match(/<nav aria-label="Principal">([\s\S]*?)<\/nav>/) || [])[1];
+    assert.ok(nav, `${f}: falta nav Principal`);
+    const links = [...nav.matchAll(/<a href="([^"]+)"[^>]*>([^<]+)<\/a>/g)];
+    assert.deepEqual(links.map(m => m[2]), ["Labs", "Mapa", "Practica", "Biblioteca"], `${f}: entradas`);
+    for (const [, href] of links) {
+      const hash = (href.match(/^(?:[./]*index\.html)?#(.+)$/) || [])[1];
+      if (hash) assert.match(home, new RegExp(`id="${hash}"`), `${f}: ancla #${hash} no existe en la portada`);
+    }
+  }
+});
+
 console.log(process.exitCode ? "\nFallaron pruebas" : "\nTodas las pruebas del estudio pasaron");
