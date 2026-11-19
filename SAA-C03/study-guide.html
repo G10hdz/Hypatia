@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrepAWS | Guia de estudio SAA-C03</title>
+  <style>
+    body { margin: 0; padding: 2rem 1rem; font: 1rem/1.5 system-ui, sans-serif; background: #0c0f0f; color: #e1e3e2; }
+    main { max-width: 760px; margin: 0 auto; }
+    h1 { font-size: 1.8rem; margin: 0; }
+    h2 { font-size: 1.1rem; color: #00d4aa; margin: 1.75rem 0 0.6rem; }
+    ul { list-style: none; padding: 0; }
+    li { padding: 0.5rem 0; border-bottom: 1px solid #2a2d2d; }
+    li small { display: block; color: #bfc3c2; }
+    .back-home-link { display: inline-block; margin-top: 2rem; color: #00d4aa; }
+  </style>
+  <script defer src="/positronica-analytics.js"></script>
+</head>
+<body>
+  <main>
+    <h1>Guia de estudio SAA-C03</h1>
+    <p>El simulacro de PrepAWS tiene 65 preguntas y dura 130 minutos. La meta de practica es acertar 47. AWS usa una escala propia con un puntaje minimo de 720 sobre 1000.</p>
+
+    <h2>Dominios del examen</h2>
+    <ul>
+      <li><strong>Seguridad</strong> (30%, 19 preguntas en el simulacro)<small>Elige roles y politicas de IAM con los permisos minimos. Revisa el acceso a S3 y las politicas de claves de KMS.</small></li>
+      <li><strong>Resiliencia</strong> (26%, 17 preguntas)<small>Compara RDS Multi-AZ con las replicas de lectura. Decide cuando usar conmutacion por error en Route 53 o desacoplar servicios con SQS.</small></li>
+      <li><strong>Rendimiento</strong> (24%, 16 preguntas)<small>Compara tipos de instancia EC2 y volumenes EBS segun la carga. Revisa como los indices de DynamoDB y la cache de CloudFront afectan la latencia.</small></li>
+      <li><strong>Costos</strong> (20%, 13 preguntas)<small>Elige clases de almacenamiento y reglas de ciclo de vida de S3 segun la frecuencia de acceso. Compara opciones de compra de EC2 segun la demanda.</small></li>
+    </ul>
+
+    <h2>Practica por tema</h2>
+    <p>Elige un dominio para practicar un bloque de 15 preguntas. Usa el filtro de tema para concentrarte en un servicio. Excelencia operativa y General tambien estan disponibles para practicar por separado.</p>
+    <ul>
+      <li><strong>Redes</strong><small>Compara Direct Connect y las interfaces virtuales para redes hibridas. Distingue entre VPC endpoints de interfaz y de gateway.</small></li>
+      <li><strong>Aplicaciones</strong><small>Revisa los tipos de invocacion de Lambda, las suscripciones de SNS y las colas FIFO de SQS. Compara las opciones de ECS y EKS con Fargate.</small></li>
+      <li><strong>Datos</strong><small>Repasa las copias de seguridad de RDS y los endpoints de Aurora. Revisa el particionado en Athena y las claves de ordenamiento de Redshift.</small></li>
+      <li><strong>Excelencia operativa</strong><small>Usa CloudWatch para metricas y alarmas, CloudTrail para auditar llamadas a la API y AWS Config para revisar cambios de configuracion.</small></li>
+    </ul>
+    <a class="back-home-link" href="./index.html">Volver al simulador</a>
+  </main>
+</body>
+</html>
