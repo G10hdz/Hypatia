@@ -1087,7 +1087,7 @@
         state.lastSelectedSubject = subject;
       }
 
-      state.quizQuestions = questions;
+      state.quizQuestions = questions.map(q => shuffleOptions(q));
       state.currentIndex = 0;
       state.blockStats = {
         materia: state.lastSelectedSubject,
