@@ -28,3 +28,36 @@ for (const path of pages) {
 }
 
 console.log("Pasaron las pruebas de los modulos de practica.");
+
+/* Opciones barajadas: la correcta no puede vivir siempre en la A. */
+{
+  const vm = await import("node:vm");
+  const sandbox = {};
+  vm.createContext(sandbox);
+  vm.runInContext(read("shared/shuffle-options.js") + "\nglobalThis.shuffleOptions = shuffleOptions;", sandbox);
+  const { shuffleOptions } = sandbox;
+  const q = {
+    id: "x", opciones: ["uno", "dos", "tres", "cuatro"], correcta: 0,
+    explicacion: "La opcion A es correcta; la opción B confunde.",
+    explicacion_correcta: "Por eso la A (inciso A) gana.",
+    analisis_distractores: [{ opcion: "B. dos", razon: "r2" }, { opcion: "C. tres", razon: "r3" }, { opcion: "D. cuatro", razon: "r4" }],
+  };
+  // Siempre la misma permutacion: [2, 0, 3, 1] -> opciones tres, uno, cuatro, dos
+  const fixed = shuffleOptions(q, () => [2, 0, 3, 1]);
+  assert.deepEqual([...fixed.opciones], ["tres", "uno", "cuatro", "dos"]);
+  assert.equal(fixed.correcta, 1);
+  assert.equal(fixed.explicacion, "La opcion B es correcta; la opción D confunde.");
+  assert.equal(fixed.explicacion_correcta, "Por eso la A (inciso B) gana.");
+  assert.deepEqual(fixed.analisis_distractores.map(d => d.opcion), ["A. tres", "C. cuatro", "D. dos"]);
+  assert.deepEqual([...q.opciones], ["uno", "dos", "tres", "cuatro"], "no muta el original");
+  assert.equal(q.correcta, 0);
+
+  const pos = [0, 0, 0, 0];
+  for (let i = 0; i < 4000; i++) pos[shuffleOptions(q).correcta]++;
+  for (const n of pos) assert.ok(n > 800, `posicion sesgada: ${pos}`);
+
+  const html = read("CubPrep/index.html");
+  assert.ok(html.indexOf("shuffle-options.js") > 0 && html.indexOf("shuffle-options.js") < html.indexOf("engine.js"), "CubPrep carga shuffle-options antes del motor");
+  assert.match(engine, /shuffleOptions\(/, "el motor baraja al armar el bloque");
+}
+console.log("ok opciones barajadas");
