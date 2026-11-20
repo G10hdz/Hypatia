@@ -4,7 +4,7 @@ Adaptive learning for neurodivergent minds: short sessions, clear feedback, and 
 
 ## Architecture and related repositories
 
-Runs static practice modules in the browser. CubPrep and MLOps share an exam engine, SAA-C03 keeps its own implementation, and Flashcards uses its own FSRS scheduler.
+Runs static practice modules in the browser. CubPrep, MLOps and SAA-C03 share an exam engine. Flashcards uses its own FSRS scheduler.
 
 - [Component guide and repository map](docs/stack.md): responsibilities, inputs, outputs and source references.
 - [Explanatory diagram](docs/diagrams/system-map.html): select a node to inspect it. Download the HTML and open it in a browser.
@@ -30,7 +30,9 @@ The home page and `Labs/` are organized as a learning studio around eight concep
 
 ### Local-only data
 
-Progress (`hypatia.learning.v1`), theme (`hypatia.theme.v1`) and the personal resource library live in this browser's `localStorage` only. There are no accounts and nothing is sent anywhere; clearing site data erases them. There is also no memory or cross-device sync: a saved link or a finished quiz on one device does not appear on another. The resource library stores HTTPS links you add yourself (NotebookLM, audio, briefs); it never fetches or embeds them, and the links keep whatever permissions they have at their provider.
+Progress (`hypatia.learning.v1`), theme (`hypatia.theme.v1`) and the personal resource library live in this browser's `localStorage` only. Clearing site data erases that progress and those settings. There is also no memory or cross-device sync: a saved link or a finished quiz on one device does not appear on another. The resource library stores HTTPS links you add yourself (NotebookLM, audio, briefs); it never fetches or embeds them, and the links keep whatever permissions they have at their provider.
+
+After a scored exam or Labs quiz, learners can share their result and a public Hypatia link through their browser or copy the message. Only the score from that attempt is included.
 
 Design notes: `docs/001-learning-studio.md`; Labs background: `docs/labs.md`.
 

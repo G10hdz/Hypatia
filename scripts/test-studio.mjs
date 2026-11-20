@@ -47,9 +47,15 @@ class El {
   addEventListener(t, f) { (this._listeners[t] = this._listeners[t] || []).push(f); }
   click() { (this._listeners.click || []).forEach(f => f({ target: this })); }
   focus() { this._focused = true; }
+  select() { this._selected = true; }
   scrollIntoView() {}
   after(n) { const i = this.parent.children.indexOf(this); this.parent.children.splice(i + 1, 0, n); n.parent = this.parent; }
-  remove() { const i = this.parent.children.indexOf(this); if (i >= 0) this.parent.children.splice(i, 1); this.parent = null; }
+  remove() {
+    if (!this.parent) return;
+    const i = this.parent.children.indexOf(this);
+    if (i >= 0) this.parent.children.splice(i, 1);
+    this.parent = null;
+  }
   get hidden() { return this._hidden; } set hidden(v) { this._hidden = v; }
   set href(v) { this._attrs.href = v; } get href() { return this._attrs.href; }
   set target(v) { this._attrs.target = v; } get target() { return this._attrs.target; }
@@ -116,6 +122,7 @@ const makeStorage = (init = {}, { failGet = false, failSet = false } = {}) => {
 const FILES = {
   state: ["shared/learning-state.js", ["LearningState"]],
   quiz: ["shared/quiz.js", ["StudioQuiz"]],
+  shareScore: ["shared/share-score.js", ["ShareScore"]],
   resources: ["shared/resources.js", ["StudioResources"]],
   map: ["shared/map.js", ["StudioMap"]],
   tracks: ["Labs/tracks.js", ["LABS_TRACKS", "LEGACY_MODULES", "SOURCE_COLLECTIONS"]],
@@ -317,6 +324,61 @@ t("un intento cuenta una vez, reintento mejora el mejor resultado", () => {
   assert.equal(rec.lastCorrect, 2);
   assert.equal(rec.bestCorrect, 2);
 });
+
+/* ---------- Compartir el puntaje del intento recién terminado ---------- */
+{
+  const clipboard = [];
+  const shares = [];
+  const location = new URL("https://hypatia-one.vercel.app/Labs/ai-math/01-bayes/?token=private#progress");
+  const navigator = {
+    share: async data => { shares.push(data); },
+    clipboard: { writeText: async text => { clipboard.push(text); } },
+  };
+  const { sandbox } = ctx([FILES.state, FILES.shareScore, FILES.quiz], makeStorage(), { location, navigator });
+  const { section, retry } = buildQuiz();
+  const done = section.querySelector(".quiz-done");
+  const slot = new El("div");
+  slot.dataset.scoreShare = "";
+  done.appendChild(slot);
+  sandbox.StudioQuiz.mount(section, { track: "ai-math", slug: "01" });
+  const options = question => section.querySelectorAll(".q")[question].querySelectorAll(".opts button");
+  const share = () => slot.querySelector("button")._listeners.click[0]();
+
+  options(0)[0].click();
+  assert.equal(slot.children.length, 0);
+  options(1)[1].click();
+  assert.equal(shares.length, 0, "terminar el quiz requiere una acción adicional para compartir");
+  await share();
+  assert.match(shares[0].text, /2 de 2/);
+  assert.equal(shares[0].url, location.origin + location.pathname);
+  assert.equal(clipboard.length, 0);
+
+  navigator.share = async () => { throw { name: "AbortError" }; };
+  await share();
+  assert.equal(clipboard.length, 0, "cancelar no copia el puntaje");
+  assert.equal(slot.querySelector("textarea"), null);
+
+  delete navigator.share;
+  retry.click();
+  assert.equal(done.classList.contains("on"), false);
+  options(0)[1].click();
+  options(1)[1].click();
+  await share();
+  assert.match(clipboard[0], /1 de 2/);
+  assert.equal(slot.querySelector("textarea"), null);
+
+  navigator.clipboard.writeText = async () => { throw new Error("clipboard unavailable"); };
+  await share();
+  const fallback = slot.querySelector("textarea");
+  assert.equal(fallback._selected, true);
+  assert.equal(fallback.value, clipboard[0]);
+
+  sandbox.location = new URL("https://private.example/Labs/secret/?token=private");
+  sandbox.ShareScore.render(slot, { correct: 1, total: 2 }, "btn ghost");
+  await share();
+  assert.match(slot.querySelector("textarea").value, /https:\/\/hypatia-one\.vercel\.app\/$/);
+  console.log("ok compartir puntaje actual, cancelación, portapapeles y enlace público");
+}
 
 /* ---------- Recursos: validacion y datos persistidos maliciosos ---------- */
 t("addResource rechaza esquemas y credenciales peligrosas", () => {

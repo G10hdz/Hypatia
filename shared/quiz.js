@@ -42,6 +42,10 @@ const StudioQuiz = (() => {
               ? ` · tu mejor resultado es ${rec.bestCorrect} de ${total}`
               : "");
         }
+        const share = doneEl.querySelector("[data-score-share]");
+        if (share && typeof ShareScore !== "undefined") {
+          ShareScore.render(share, { correct, total }, "btn ghost");
+        }
         doneEl.classList.add("on");
       }
       paintStatus();

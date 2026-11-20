@@ -150,6 +150,7 @@
       videoRefList: document.getElementById("video-ref-list"),
       nextQuestionBtn: document.getElementById("next-question-btn"),
       reportSummary: document.getElementById("report-summary"),
+      reportShare: document.getElementById("report-share"),
       reportAccuracy: document.getElementById("report-accuracy"),
       reportAvgTime: document.getElementById("report-avg-time"),
       reportSlowTopics: document.getElementById("report-slow-topics"),
@@ -1419,6 +1420,9 @@
 
       const wrongCount = report.total - report.correct;
       els.reportSummary.innerHTML = `${label}: <span class="num-correct">${report.correct}</span> correctas / <span class="num-wrong">${wrongCount}</span> incorrectas de ${report.total} (<strong>${report.accuracy}%</strong>). Revisa en que tema tardas mas o fallas mas.`;
+      if (els.reportShare && typeof ShareScore !== "undefined") {
+        ShareScore.render(els.reportShare, report, "btn-secondary");
+      }
       _reportTargets = { accuracy: report.accuracy, avgTime: report.avgTime };
       els.reportAccuracy.textContent = "0%";
       els.reportAvgTime.textContent = "0s";
