@@ -11,6 +11,7 @@ const pages = ["CubPrep/index.html", "MLOps/index.html", "SAA-C03/index.html"];
   const timers = new Set();
   const storage = new Map();
   let now = Date.now();
+  let shareScore;
   const element = () => ({
     style: {}, classList: { add() {}, remove() {}, toggle() {} },
     addEventListener(type, listener) { this[type] = listener; },
@@ -28,6 +29,7 @@ const pages = ["CubPrep/index.html", "MLOps/index.html", "SAA-C03/index.html"];
   };
   const ctx = vm.createContext({
     window: { scrollTo() {} }, document, performance, requestAnimationFrame() {},
+    ShareScore: { render(container, report) { shareScore = [report.correct, report.total]; } },
     localStorage: {
       getItem: key => storage.get(key) ?? null,
       setItem: (key, value) => storage.set(key, value),
@@ -55,6 +57,7 @@ const pages = ["CubPrep/index.html", "MLOps/index.html", "SAA-C03/index.html"];
     for (const tick of timers) tick();
   }
   assert.match(elements.get("report-summary").innerHTML, /Simulacro de examen/);
+  assert.deepEqual(shareScore, [0, 65]);
   const reports = JSON.parse(storage.get("prepaws.mock-history.v1"));
   assert.equal(reports.length, 1);
   assert.equal(reports[0].total, 65);
